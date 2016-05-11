@@ -1,0 +1,384 @@
+Manual
+******
+
+.. toctree::
+   :maxdepth: 3
+
+Creating a plugin
+=================
+
+A plugin is 
+
+* a folder that is located in ``CAST_PLUGINS_ROOT_PATH`` whose default value is ``<CAIP Installation Directory>\CustomPlugins``
+* a folder that contains at least one python file that declare a class inheriting from :class:`cast.analysers.Plugin`
+
+Those plugins are meant to be self sufficient. They can contain metamodel files, installation scripts, assessment models fragments, any thing that will make them a whole.
+
+Plugins are identified by the name of their folder.
+
+Implementing extensions
+=======================
+
+An extension is a subclass of :class:`cast.analysers.jee.Extension` or :class:`cast.analysers.dotnet.Extension`. 
+
+Use :func:`cast.analysers.Plugin.register_extension` to register a custom extension for a plugin. Any number of extension can be registered for a plugin.::
+
+
+    def MyExtension(cast.analysers.jee.Extension):
+        pass
+
+    def MyPlugin(cast.analysers.Plugin):
+
+        def __init__(self):
+            cast.analysers.Plugin.__init__(self)
+            self.register_extension(MyExtension())
+
+An extension is a normal python object, it is meant to override the methods of its base class (called extension points). Those methods will be called during analysis following a predictible seuence diagram.
+
+Each technology has its own sequence diagram. 
+
+The order of the declared methods in :class:`cast.analysers.jee.Extension` or :class:`cast.analysers.dotnet.Extension` gives the order in which they will be called.
+
+Accessing analysis options
+==========================
+
+The start_analysis extension point have a :class:`cast.analysers.ExecutionUnit` parameter.
+
+This gives a plugin the opportunity to perform discovering operations on analysed source projects (csproj, vcproj, pom.xml, etc..) or on analysed files.::
+
+    def MyExtension(cast.analysers.dotnet.Extension):
+
+        def start_analysis(self, options):
+            
+            # retreive the pathes of the analysed csproj
+            projects = options.get_source_projects()
+            
+            # we can scan those projects file to retreive some dependencies
+            ...
+
+Querying analysis results
+=========================
+
+Each extension point may provide a context through the form of an analysis object. It is generally the visited element : a file, a type, etc...
+
+For example :func:`cast.analysers.jee.Extension.start_type` has the visited type as a context. See documentation for the type of the contextual parameters.::
+
+
+    def MyExtension(cast.analysers.jee.Extension):
+        
+        def start_type(self, type):
+            
+            # inspect type object to see if it inherits from class com.yourcompany.Root
+            for parent in type.get_inherited_types():
+                
+                if parent.get_fullname() == 'com.yourcompany.Root':
+                    
+                    # perform specific action
+                    # ...
+
+Three types of analysis objects
+-------------------------------
+
+Analysis objects produced by the underlying analyser inherit from :class:`cast.analysers.Object`.
+
+As an additional input, an analysis may have external objects. These generally are database objects comming from a previous database analysis. These objects inherit from :class:`cast.analysers.ExternalObject`.
+
+The third type of objects are the one produced by a plugin, these objects inherit from :class:`cast.analysers.CustomObject`.
+
+These three types of objects are separated.
+
+Producing analysis results
+==========================
+
+Creating objects
+----------------
+
+Class :class:`cast.analysers.CustomObject` allows to create additional objects :
+
+* create a python object of that class
+* set the name
+* set the parent
+* set the type : the name of a metamodel type.
+* finally call :func:`cast.analysers.CustomObject.save`
+
+Example::
+
+    object = cast.analysers.CustomObject()
+    object.set_name('AJavaClass')
+    object.set_type('JV_CLASS')
+    object.set_parent(file)
+    object.save()
+
+The parent can be a object of class :class:`cast.analysers.Object` or :class:`cast.analysers.CustomObject`. In that latter case the parent object must have been previously saved. 
+
+full_name and guid are automatically calculated but can also be user set. 
+
+Once saved the name, type and parrent cannot be changed.
+
+If an object is not saved it will not be visible in the analysis service.
+
+.. note::
+    Those objects cannot be seen from host analyser. Even if you create Java classes during a Java analysis those classes will not interfere with the classical java analysis. 
+
+Creating links
+--------------
+
+Function :func:`cast.analysers.create_link` allows to create links betwwen objects. 
+
+Links can be created between analysis objects, custom objects and to external objects.
+
+Adding properties on objects
+----------------------------
+
+Object can be decorated by additionnal integer or textual properties through the use of : :func:`cast.analysers.Object.save_property`. 
+
+The property names can be found in the metamodel. A property name is *<name of the category>.<name of the property>* For example::
+
+    <Category name="MyCategory">
+      <property name="myProperty" type="integer" rid="1">
+        <description>My description</description>
+        <attribute name="ACCESS_APPVIEW" intValue="1"/>
+        <attribute name="ACCESS_CVS" intValue="1"/>
+        <attribute name="ACCESS_HTML" intValue="1"/>
+        <attribute name="INF_TYPE" intValue="12"/>
+        <attribute name="INF_SUB_TYPE" intValue="7589090953"/>
+      </property>
+    </partialCategory>
+
+This property name is : *MyCategory.myProperty*.
+
+Note that this property must have correct ``INF_TYPE`` and ``INF_SUB_TYPE`` and be present by inheritance on the types of objects you whant to decorate.
+
+Creating violations
+-------------------
+
+A violation is the occurence of a problem for a quality rule. 
+
+Call :func:`cast.analysers.Object.save_violation` to add aviolation on an analysis object and :func:`cast.analysers.CustomObject.save_violation` t oadd violation on custom objects.
+
+You will need a metamodel property defined on that object type, it will identify the violation and count the number of problem that were detected on that object.
+
+The position indicate the source code location where the problem is detected. 
+
+Additional positions may be provided in order to explain the violation.
+
+As an example, consider the rule : *Method override fails due to mismatch of const/volatile qualifiers*:
+
+* the first bookmark is the failing method override
+* the additional bookmark is the not overrided method
+
+Most of the time you will not need additional positions. 
+
+Note that for a given rule any number of violations can be saved on the same object. The number of violations saved on a object should reflect the number of occurence of the problem encountered and thus the effort to correct each of them.
+
+Logging
+-------
+
+Use :
+
+* :func:`cast.analysers.log.info` for sending information messages to the log
+* :func:`cast.analysers.log.warning` for sending warning messages to the log
+* :func:`cast.analysers.log.debug` for debugging messages
+
+Note that you should not log message for fun. 
+
+Logging information only serve for saying 'I am still alive'. 
+
+Logging warning should be used to indicate an issue in the analysis configuration. But in the case of plugins it should be very rare.
+
+Most of the time you will need debug log to help development of plugin.
+
+Unicode support
+===============
+
+All strings manipulated are utf-8 strings. In that we follow the rcommendation from `UTF-8 Everywhere <http://www.utf8everywhere.org/>`_. 
+
+User is responsible for coding in a way that respects this principle. 
+
+Python modularity
+=================
+
+The plugin code can be organised in different python files.
+
+Plugin directory is de facto inside the python search path. 
+
+This even allow to include third party python libraries that you can put in the plugin directory.
+
+Defining custom Metamodel
+=========================
+
+A plugin folder may also contain metamodel files. 
+
+Those files must be named : ``XXXMetaModel.xml`` and put under a subfolder ``Configuration\<my language>\xxxMetaModel.xml``.
+
+
+
+
+Handling errors
+===============
+
+Python overuses exception for handling errors. 
+
+Provided API will raise exceptions when a constraint is not met. 
+
+If an extension point method raise an exception it will be catched by the analyser, a warning message will be logged and analysis will continue. 
+
+Thius you can safely choose not to hanlde exception at all except if wanted.
+
+IDE
+===
+
+A complete itegrated development environment is provided based on `eclipse <http://eclipse.org/eclipse/>`_ and `PyDev plugin <http://pydev.org>`_.
+
+See :doc:`install` for installation and configuration of that IDE.
+
+It provides :
+
+* python source code editor with code completion and cross references
+* a debugger
+* tools for running analysis outside of Management Studio : **no need for any installed Management Base nor Analysis service**
+    * plugins can be tested and develop in a more rapid way
+    * plugin developper can write unit tests
+    * sanity checks are performed, for example if the plugin is ill formed the run will fail
+    * custom metamodel is validated without need for analysis service
+
+This IDE combined with unit testing is clearly a time saver. We can only strongly recommend that you use it.
+
+Testing
+-------
+
+Follow my advice : **test, test, test**. 
+
+Developping analysis tool is hard, time consuming and heavilly error prone. 
+
+It is very hard to plan ahead all analysed code possibilities. A plugin working on some sample projects will probably fail on others.
+
+Writing unit tests will ensure that a plugin still runs on cases where you invested your effort. 
+
+Without unit testing, correcting one **new case** could silently break **cases working in previous version**.
+
+Anatomy of unit test
+++++++++++++++++++++
+
+Use `unittest <https://docs.python.org/3/library/unittest.html>`_ python module.
+
+Basic usage is simple : 
+
+* a class inheriting from `unittest.TestCase <https://docs.python.org/3/library/unittest.html#unittest.TestCase>`_
+* with one method per test
+
+Those test methods will have the same structure :
+
+* create and configure an analysis with options
+* run the analysis : the currently tested plugin will be launched
+* finally assert some expected facts about created objects, created links and properties
+
+
+Sample::
+
+    import unittest
+    import cast.analysers.test
+    import cast.analysers.filter
+
+    class Test(unittest.TestCase):
+
+        def test_check_inheritance_link(self):
+            # create a DotNet analysis
+            analysis = cast.analysers.test.DotNetTestAnalysis()
+        
+            # DotNet need a selection of a csproj or sln
+            analysis.add_selection('AProject/AProject.csproj')
+        
+            # activate log
+            analysis.set_verbose()
+
+            # run analysis
+            analysis.run()
+        
+            # perform some checks
+            my_class = analysis.get_object_by_name('AClass',cast.analysers.filter.classes)
+            object_class = analysis.get_object_by_fullname('System.Object', cast.analysers.filter.classes)
+            link = analysis.get_link_by_caller_callee('link', my_class, object_class)
+            self.assertTrue(link)
+
+    if __name__ == "__main__":
+        unittest.main()
+
+
+Asserting expected results
+++++++++++++++++++++++++++
+
+Once the analysis ran, results can be checked. 
+
+Analysis Service is emulated and query functions are provided :
+
+* :func:`cast.analysers.test.TestAnalysis.get_object_by_name` will retreive an object by name and object kind
+* :func:`cast.analysers.test.TestAnalysis.get_link_by_caller_callee` will retreive a link between two previously retreived objects
+
+Other functions exists for more complex queries.
+
+.. note::
+    Query functions that returns one single object will always fail if several objects meet the filtering criterium. Otherwise tests tend to be purelly random. 
+
+    As an example : one want to assert existence of a link between two objects : this can be assert as following : 
+    self.assertTrue(analysis.get_link_by_caller_callee('link', caller, callee))
+
+    but if several links are created betweeen those two objects, test will fail with an exception.
+
+    In order to circonvein that limit either 
+    - do more specialised tests, for example by specifying a more precise link type
+    - or use get_links_by_caller_callee and be less precise. Beware though, you may expose to some deceipts.
+
+Some classical usefull object kinds are provided in :mod:`cast.analysers.filter`. But any string naming a valid metamodel category or type is allowed.
+
+The general idea is to assert that :
+
+* some object exists
+* some link exists
+
+Which will exactly define the plugin behaviour.
+
+Analysed source code sample can be directly put under the directory/package of tests. They can also be created as temporary files and selected for analysis.
+
+You can provide input to external link module by using :func:`cast.analysers.test.TestAnalysis.add_database_table`. This method returns the table object that you can use 
+latter on to check presence of links to that table.
+
+Sample, asserting links to database tables::
+
+    import unittest
+    import cast.analysers.test
+    import cast.analysers.filter
+
+    class Test(unittest.TestCase):
+    
+        def test_integration(self):
+
+            analysis = cast.analysers.test.DotNetTestAnalysis()
+            analysis.add_selection('ContosoUniversity\DotNet\ContosoUniversity\ContosoUniversity.csproj')
+            #course is the table
+            course = analysis.add_database_table('Course','TSQL')
+
+            analysis.run()
+
+            class_course = analysis.get_object_by_name('Course', cast.analysers.filter.classes)
+            # we have alink between class 'Course' and table 'Course'
+            self.assertTrue(analysis.get_link_by_caller_callee('useSelectLink', class_course, course))
+
+
+
+Location for tests
+++++++++++++++++++
+
+In order to correctly run and automatically detect the plugin tests must reside in a python sub package of the plugin.
+
+Debugging
+---------
+
+1. Start the remote pydev debugger : http://pydev.org/manual_adv_remote_debugger.html
+2. Put your breakpoints
+3. Go to your unit tests file and press ``F11`` or debug it as python unit-test
+
+.. note::
+    Selecting other locations than the unit test code will not work.
+
+

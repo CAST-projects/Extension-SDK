@@ -1,0 +1,9 @@
+Debugging
+*********
+
+1. Start the remote pydev debugger : http://pydev.org/manual_adv_remote_debugger.html
+2. Put your breakpoints
+3. Go to your unit tests file and press ``F11`` or debug it as python unit-test
+
+.. note::
+    Selecting other locations than the unit test code will not work.

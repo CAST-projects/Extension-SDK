@@ -1,0 +1,179 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Installation &mdash; CAST-SDK 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="CAST-SDK 1.0 documentation" href="index.html" />
+    <link rel="next" title="Manual" href="manual.html" />
+    <link rel="prev" title="Overview" href="overview.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="manual.html" title="Manual"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="overview.html" title="Overview"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">CAST-SDK 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="installation">
+<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul class="simple">
+</ul>
+</div>
+<p>This section explains how to install and configure the IDE for CAST-SDK.</p>
+<p>This IDE is based on <a class="reference external" href="http://eclipse.org/eclipse/">eclipse</a>.</p>
+<p>The python interpretor is directly bundled in the CAIP install directory so you do not need to install python.</p>
+<div class="section" id="two-ways-of-installing">
+<h2>Two ways of installing<a class="headerlink" href="#two-ways-of-installing" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="use-a-pre-bundled-eclipse">
+<h3>Use a pre bundled eclipse<a class="headerlink" href="#use-a-pre-bundled-eclipse" title="Permalink to this headline">¶</a></h3>
+<p>First solution is to use a pre-bundled eclipse as follow :</p>
+<ol class="arabic simple">
+<li>You will need a java7 64-bit jre on your machine</li>
+<li>Get <tt class="docutils literal"><span class="pre">\\fs01\fileexchange\MRO\CAST-SDK\eclipse.7z</span></tt></li>
+<li>Unzip it to a folder of your choice.</li>
+<li>Modify <tt class="docutils literal"><span class="pre">eclipse.ini</span></tt> to correctly point to your java7 64-bit</li>
+<li>Run eclipe and check that you can see the Pydev eclipse component</li>
+</ol>
+</div>
+<div class="section" id="use-another-eclipse">
+<h3>Use another eclipse<a class="headerlink" href="#use-another-eclipse" title="Permalink to this headline">¶</a></h3>
+<p>Second solution is to :</p>
+<ol class="arabic simple">
+<li>Install eclipse 3.4</li>
+<li>Install <a class="reference external" href="http://pydev.org/manual_101_install.html">PyDev plugin</a>. Read carefully the installtion manual, you will still need a java 7 jre.</li>
+<li>Run eclipe and check that you can see the Pydev eclipse plugin</li>
+</ol>
+<p>Some other eclipse components may prove usefull :</p>
+<ul class="simple">
+<li>Eclipse XML Editors and Tools for metamodel edition</li>
+</ul>
+</div>
+</div>
+<div class="section" id="configuration-of-eclipse">
+<h2>Configuration of eclipse<a class="headerlink" href="#configuration-of-eclipse" title="Permalink to this headline">¶</a></h2>
+<p>Whatever install soltuion chosen the PyDev eclipse plugin need to be configured in order to point to the python environment providedby CAIP.</p>
+<p>Open your eclipse and go to <tt class="docutils literal"><span class="pre">Window</span> <span class="pre">&gt;</span> <span class="pre">Preferences</span> <span class="pre">&gt;</span> <span class="pre">PyDev</span> <span class="pre">&gt;</span> <span class="pre">Interpreters</span> <span class="pre">&gt;</span> <span class="pre">Python</span> <span class="pre">Interpreter</span></tt> and create a new interpreter.
+Give <em>CAST-Python34</em> as name and select the path to the python provided in the CAIP install dir <tt class="docutils literal"><span class="pre">&lt;CAIP</span> <span class="pre">install</span> <span class="pre">dir&gt;\ThirdParty\Python34\python.exe</span></tt>.</p>
+<p>You should get something like that:</p>
+<div class="figure align-center">
+<img alt="_images/config_interpreter.png" src="_images/config_interpreter.png" />
+<p class="caption">Select the interpreter from the CAIP install directory.</p>
+</div>
+<p>You are now ready to create your first plugin.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You can choose another name for the interpreter then importing sample project will require to change interpreter configuration in order to work.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Installation</a><ul>
+<li><a class="reference internal" href="#two-ways-of-installing">Two ways of installing</a><ul>
+<li><a class="reference internal" href="#use-a-pre-bundled-eclipse">Use a pre bundled eclipse</a></li>
+<li><a class="reference internal" href="#use-another-eclipse">Use another eclipse</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#configuration-of-eclipse">Configuration of eclipse</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="overview.html"
+                        title="previous chapter">Overview</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="manual.html"
+                        title="next chapter">Manual</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/install.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="manual.html" title="Manual"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="overview.html" title="Overview"
+             >previous</a> |</li>
+        <li><a href="index.html">CAST-SDK 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, CAST.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

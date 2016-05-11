@@ -1,0 +1,33 @@
+FAQ
+***
+
+.. warning::
+    
+    In progress...
+
+I need to perform an operation that require the whole set of members of a class 
+===============================================================================
+
+You can memorise the members and process them at the end::
+
+
+    class MyExtension(cast.analysers.dotnet.Extension):
+
+        def __init__(self):
+            
+            # will store the current class members
+            self.members_stack = []
+
+        def start_type((self,type):
+            # types may be recursivelly one inside the other
+            self.members_stack.append([])
+
+        def start_member(self,member):
+            
+            # self.members_stack[-1] : the last element of the list
+            self.members_stack[-1].append(member)
+
+        def end_type((self,type):
+            
+            members = self.members_stack.pop()
+            # do your stuff here

@@ -1,0 +1,168 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Plugin Samples &mdash; CAST-SDK 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="CAST-SDK 1.0 documentation" href="index.html" />
+    <link rel="next" title="Tips and tricks" href="tips_and_tricks.html" />
+    <link rel="prev" title="Debugging" href="debugging.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="tips_and_tricks.html" title="Tips and tricks"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="debugging.html" title="Debugging"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">CAST-SDK 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="plugin-samples">
+<h1>Plugin Samples<a class="headerlink" href="#plugin-samples" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul class="simple">
+</ul>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Samples are importable eclipse projects. It assume that interpreter is named CAST-Python34.</p>
+</div>
+<div class="section" id="my-first-plugin">
+<h2>My first plugin<a class="headerlink" href="#my-first-plugin" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference download internal" href="_downloads/my.company.first_plugin.7z"><tt class="xref download docutils literal"><span class="pre">A</span> <span class="pre">very</span> <span class="pre">basic</span> <span class="pre">plugin</span></tt></a>.</p>
+<p>A &#8216;hello world!&#8217; tutorial sample.</p>
+</div>
+<div class="section" id="running-an-external-program">
+<h2>Running an external program<a class="headerlink" href="#running-an-external-program" title="Permalink to this headline">¶</a></h2>
+<p>It is possible to launch any executable through python.</p>
+<p>In that example we launch nodejs.exe that run jslint on all javascript files present in the analysis.</p>
+<p>We also demonstrate how to declare properties on existing objects and use them as violations.</p>
+<p><a class="reference download internal" href="_downloads/com.castsoftware.jslint.7z"><tt class="xref download docutils literal"><span class="pre">A</span> <span class="pre">basic</span> <span class="pre">jslint</span> <span class="pre">integration</span></tt></a>.</p>
+</div>
+<div class="section" id="create-link-from-class-to-table-through-annotation-or-convention">
+<h2>Create link from class to table through annotation or convention<a class="headerlink" href="#create-link-from-class-to-table-through-annotation-or-convention" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference download internal" href="_downloads/sample.annotation.7z"><tt class="xref download docutils literal"><span class="pre">A</span> <span class="pre">basic</span> <span class="pre">annotation</span> <span class="pre">sample</span></tt></a>.</p>
+<p>Search for a particular annotation on classes, then select the given name or class name as a database table and try to create a use link to that table.</p>
+</div>
+<div class="section" id="create-a-custom-object-from-a-new-type">
+<h2>Create a custom object from a new type<a class="headerlink" href="#create-a-custom-object-from-a-new-type" title="Permalink to this headline">¶</a></h2>
+<p>A plugin can contains its own metamodel files.</p>
+<p>Here we add a new object type, and we create one of those object under each file.</p>
+</div>
+<div class="section" id="getting-the-source-code-of-an-object">
+<h2>Getting the source code of an object<a class="headerlink" href="#getting-the-source-code-of-an-object" title="Permalink to this headline">¶</a></h2>
+<p>Saved objects have positions and those positions allow us to retreive the source code of an object.</p>
+</div>
+<div class="section" id="an-example-of-context-usage">
+<h2>An example of context usage<a class="headerlink" href="#an-example-of-context-usage" title="Permalink to this headline">¶</a></h2>
+<p>Plugin context is kept so it may keep object references throughout the analysis.</p>
+<p>In that example we keep all classes so that we can determine the list of subclasses of any class.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Plugin Samples</a><ul>
+<li><a class="reference internal" href="#my-first-plugin">My first plugin</a></li>
+<li><a class="reference internal" href="#running-an-external-program">Running an external program</a></li>
+<li><a class="reference internal" href="#create-link-from-class-to-table-through-annotation-or-convention">Create link from class to table through annotation or convention</a></li>
+<li><a class="reference internal" href="#create-a-custom-object-from-a-new-type">Create a custom object from a new type</a></li>
+<li><a class="reference internal" href="#getting-the-source-code-of-an-object">Getting the source code of an object</a></li>
+<li><a class="reference internal" href="#an-example-of-context-usage">An example of context usage</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="debugging.html"
+                        title="previous chapter">Debugging</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="tips_and_tricks.html"
+                        title="next chapter">Tips and tricks</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/samples.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="tips_and_tricks.html" title="Tips and tricks"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="debugging.html" title="Debugging"
+             >previous</a> |</li>
+        <li><a href="index.html">CAST-SDK 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, CAST.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

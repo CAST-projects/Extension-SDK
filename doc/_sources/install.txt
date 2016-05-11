@@ -1,0 +1,59 @@
+Installation
+************
+
+.. toctree::
+   :maxdepth: 3
+
+This section explains how to install and configure the IDE for CAST-SDK.
+
+This IDE is based on `eclipse <http://eclipse.org/eclipse/>`_.
+
+The python interpretor is directly bundled in the CAIP install directory so you do not need to install python.
+
+Two ways of installing
+======================
+
+Use a pre bundled eclipse 
+-------------------------
+
+First solution is to use a pre-bundled eclipse as follow :
+
+1. You will need a java7 64-bit jre on your machine
+2. Get ``\\fs01\fileexchange\MRO\CAST-SDK\eclipse.7z``
+3. Unzip it to a folder of your choice.
+4. Modify ``eclipse.ini`` to correctly point to your java7 64-bit
+5. Run eclipe and check that you can see the Pydev eclipse component
+
+Use another eclipse
+-------------------
+
+Second solution is to :
+
+1. Install eclipse 3.4
+2. Install `PyDev plugin <http://pydev.org/manual_101_install.html>`_. Read carefully the installtion manual, you will still need a java 7 jre.
+3. Run eclipe and check that you can see the Pydev eclipse plugin
+
+Some other eclipse components may prove usefull :
+
+* Eclipse XML Editors and Tools for metamodel edition
+
+
+Configuration of eclipse
+========================
+
+Whatever install soltuion chosen the PyDev eclipse plugin need to be configured in order to point to the python environment providedby CAIP.
+
+Open your eclipse and go to ``Window > Preferences > PyDev > Interpreters > Python Interpreter`` and create a new interpreter. 
+Give *CAST-Python34* as name and select the path to the python provided in the CAIP install dir ``<CAIP install dir>\ThirdParty\Python34\python.exe``.
+
+You should get something like that:
+
+.. figure::  config_interpreter.png
+   :align:   center
+
+   Select the interpreter from the CAIP install directory.
+
+You are now ready to create your first plugin.
+
+.. note::
+    You can choose another name for the interpreter then importing sample project will require to change interpreter configuration in order to work.

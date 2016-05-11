@@ -1,0 +1,54 @@
+Plugin Samples
+**************
+
+.. toctree::
+   :maxdepth: 3
+
+
+.. note::
+    Samples are importable eclipse projects. It assume that interpreter is named CAST-Python34.
+
+My first plugin
+===============
+
+:download:`A very basic plugin <samples/my.company.first_plugin.7z>`.
+
+A 'hello world!' tutorial sample.
+
+
+Running an external program
+===========================
+
+It is possible to launch any executable through python. 
+
+In that example we launch nodejs.exe that run jslint on all javascript files present in the analysis.
+
+We also demonstrate how to declare properties on existing objects and use them as violations.
+
+:download:`A basic jslint integration <samples/com.castsoftware.jslint.7z>`. 
+
+Create link from class to table through annotation or convention
+================================================================
+
+:download:`A basic annotation sample <samples/sample.annotation.7z>`. 
+
+Search for a particular annotation on classes, then select the given name or class name as a database table and try to create a use link to that table.
+
+Create a custom object from a new type
+======================================
+
+A plugin can contains its own metamodel files.
+
+Here we add a new object type, and we create one of those object under each file.
+
+Getting the source code of an object
+====================================
+
+Saved objects have positions and those positions allow us to retreive the source code of an object.
+
+An example of context usage
+===========================
+
+Plugin context is kept so it may keep object references throughout the analysis. 
+
+In that example we keep all classes so that we can determine the list of subclasses of any class.

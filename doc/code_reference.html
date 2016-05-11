@@ -1,0 +1,1183 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>API Reference &mdash; CAST-SDK 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="CAST-SDK 1.0 documentation" href="index.html" />
+    <link rel="next" title="FAQ" href="faq.html" />
+    <link rel="prev" title="Tips and tricks" href="tips_and_tricks.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="faq.html" title="FAQ"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="tips_and_tricks.html" title="Tips and tricks"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">CAST-SDK 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="api-reference">
+<h1>API Reference<a class="headerlink" href="#api-reference" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="object-api-reference">
+<h2>Object API Reference<a class="headerlink" href="#object-api-reference" title="Permalink to this headline">¶</a></h2>
+<p>Here are the classes and methods that you can call from your python plugin.</p>
+<div class="section" id="plugin-api">
+<h3>Plugin API<a class="headerlink" href="#plugin-api" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="cast.analysers.Plugin">
+<em class="property">class </em><tt class="descclassname">cast.analysers.</tt><tt class="descname">Plugin</tt><a class="headerlink" href="#cast.analysers.Plugin" title="Permalink to this definition">¶</a></dt>
+<dd><p>CAST Plugin base class</p>
+<dl class="method">
+<dt id="cast.analysers.Plugin.get_name">
+<tt class="descname">get_name</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.Plugin.get_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Name</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.Plugin.register_extension">
+<tt class="descname">register_extension</tt><big>(</big><em>extension</em><big>)</big><a class="headerlink" href="#cast.analysers.Plugin.register_extension" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add an implementation for extensions points</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.Plugin.get_plugin_directory">
+<tt class="descname">get_plugin_directory</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.Plugin.get_plugin_directory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the current plugin directory</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="objects-api">
+<h3>Objects API<a class="headerlink" href="#objects-api" title="Permalink to this headline">¶</a></h3>
+<p>Objects produced by the analyzer and accessed in a read only manner :</p>
+<dl class="class">
+<dt id="cast.analysers.Object">
+<em class="property">class </em><tt class="descclassname">cast.analysers.</tt><tt class="descname">Object</tt><a class="headerlink" href="#cast.analysers.Object" title="Permalink to this definition">¶</a></dt>
+<dd><p>An object that can appear in the knowledge base</p>
+<dl class="method">
+<dt id="cast.analysers.Object.get_name">
+<tt class="descname">get_name</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.Object.get_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the object name</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;rtype: str</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.Object.get_fullname">
+<tt class="descname">get_fullname</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.Object.get_fullname" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the object fullname</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;rtype: string</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.Object.get_children">
+<tt class="descname">get_children</tt><big>(</big><em>type</em><big>)</big><a class="headerlink" href="#cast.analysers.Object.get_children" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the children of a given type</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>type</strong> &#8211; string type name</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">[cast.analysers.Object]</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;rtype: [cast.analysers.Object]</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.Object.get_position">
+<tt class="descname">get_position</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.Object.get_position" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the position of an object</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">cast.analysers.Bookmark</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;rtype: cast.analysers.Bookmark</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.Object.get_annotations">
+<tt class="descname">get_annotations</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.Object.get_annotations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the annotations associated with the object.</p>
+<p>A list of annotations is returned.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list of tuple (cast.analysers.Type,dict)</td>
+</tr>
+</tbody>
+</table>
+<p>An annotation is a tuple (type,parameters) where:</p>
+<ul class="simple">
+<li>type is a Type object</li>
+<li>parameters is a dictionary with the actual parameters</li>
+</ul>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.Object.save_violation">
+<tt class="descname">save_violation</tt><big>(</big><em>rule</em>, <em>bookmark</em>, <em>additional_bookmarks=None</em><big>)</big><a class="headerlink" href="#cast.analysers.Object.save_violation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a violation for the given rule.</p>
+<p>rule is the name of a Metamodel property</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>rule</strong> &#8211; property name</li>
+<li><strong>bookmark</strong> &#8211; a bookmark or a list of bookmarks to indicate position of the violation</li>
+<li><strong>additional_bookmarks</strong> &#8211; additional bookmarks that help understanding the violation</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.Object.save_property">
+<tt class="descname">save_property</tt><big>(</big><em>property_name</em>, <em>value</em><big>)</big><a class="headerlink" href="#cast.analysers.Object.save_property" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save a property on the object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>property_name</strong> &#8211; property name. String</li>
+<li><strong>value</strong> &#8211; property value. String or Integer</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<p>Objects gathered from other analysis due to dependency configuration :</p>
+<dl class="class">
+<dt id="cast.analysers.ExternalObject">
+<em class="property">class </em><tt class="descclassname">cast.analysers.</tt><tt class="descname">ExternalObject</tt><a class="headerlink" href="#cast.analysers.ExternalObject" title="Permalink to this definition">¶</a></dt>
+<dd><p>The class for all external objects.</p>
+<p>External objects are objects comming for a previous analysis and set as input of the current analysis.</p>
+</dd></dl>
+
+<div class="section" id="specialised-object">
+<h4>Specialised Object<a class="headerlink" href="#specialised-object" title="Permalink to this headline">¶</a></h4>
+<dl class="class">
+<dt id="cast.analysers.ExecutionUnit">
+<em class="property">class </em><tt class="descclassname">cast.analysers.</tt><tt class="descname">ExecutionUnit</tt><a class="headerlink" href="#cast.analysers.ExecutionUnit" title="Permalink to this definition">¶</a></dt>
+<dd><p>A particular object that represents the analysis options.</p>
+<dl class="method">
+<dt id="cast.analysers.ExecutionUnit.get_source_projects">
+<tt class="descname">get_source_projects</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.ExecutionUnit.get_source_projects" title="Permalink to this definition">¶</a></dt>
+<dd><p>For analysis that rely on projects, returns the list of project pathes.</p>
+<p>A source project can be a vcproj, a vsproj, an eclipse project, a maven project etc...</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">[str]</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;rtype: [str]</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.ExecutionUnit.get_source_files">
+<tt class="descname">get_source_files</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.ExecutionUnit.get_source_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the selection of analysed source file pathes.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">[str]</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;rtype: [str]</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="cast.analysers.File">
+<em class="property">class </em><tt class="descclassname">cast.analysers.</tt><tt class="descname">File</tt><a class="headerlink" href="#cast.analysers.File" title="Permalink to this definition">¶</a></dt>
+<dd><p>A particular object that is a source file</p>
+<dl class="method">
+<dt id="cast.analysers.File.get_path">
+<tt class="descname">get_path</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.File.get_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the source file path</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;rtype: str</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="cast.analysers.Type">
+<em class="property">class </em><tt class="descclassname">cast.analysers.</tt><tt class="descname">Type</tt><a class="headerlink" href="#cast.analysers.Type" title="Permalink to this definition">¶</a></dt>
+<dd><p>A particular object that is a type in a programming language. 
+It may be a class, an interface, an enum type etc..</p>
+<dl class="method">
+<dt id="cast.analysers.Type.get_inherited_types">
+<tt class="descname">get_inherited_types</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.Type.get_inherited_types" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the list of inherited types</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list of cast.analysers.Type</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;rtype: [cast.analysers.Type]</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="cast.analysers.Member">
+<em class="property">class </em><tt class="descclassname">cast.analysers.</tt><tt class="descname">Member</tt><a class="headerlink" href="#cast.analysers.Member" title="Permalink to this definition">¶</a></dt>
+<dd><p>A particular object that is a class member or apparented.</p>
+<dl class="method">
+<dt id="cast.analysers.Member.get_return_type">
+<tt class="descname">get_return_type</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.Member.get_return_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the &#8216;return type&#8217; of the member
+When a field, it is the member type.
+When a method the return type.
+None for constructors.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">cast.analysers.BaseType</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;rtype: cast.analysers.BaseType</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="cast.analysers.Method">
+<em class="property">class </em><tt class="descclassname">cast.analysers.</tt><tt class="descname">Method</tt><a class="headerlink" href="#cast.analysers.Method" title="Permalink to this definition">¶</a></dt>
+<dd><p>A particular Member that is a method or apparented.</p>
+<dl class="method">
+<dt id="cast.analysers.Method.get_parameters">
+<tt class="descname">get_parameters</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.Method.get_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the dictionnary of parameter name to parameter type</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">{str:cast.analysers.BaseType}</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;rtype: {str:cast.analysers.BaseType}</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="programming-type-representation">
+<h4>Programming type representation<a class="headerlink" href="#programming-type-representation" title="Permalink to this headline">¶</a></h4>
+<dl class="class">
+<dt id="cast.analysers.GenericType">
+<em class="property">class </em><tt class="descclassname">cast.analysers.</tt><tt class="descname">GenericType</tt><a class="headerlink" href="#cast.analysers.GenericType" title="Permalink to this definition">¶</a></dt>
+<dd><p>A particular Type that is a generic type.</p>
+<dl class="method">
+<dt id="cast.analysers.GenericType.get_generic_parameters">
+<tt class="descname">get_generic_parameters</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.GenericType.get_generic_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the list of generic parameter</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">[cast.analysers.BaseType]</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;rtype: [cast.analysers.BaseType]</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="cast.analysers.GenericTypeInstantiation">
+<em class="property">class </em><tt class="descclassname">cast.analysers.</tt><tt class="descname">GenericTypeInstantiation</tt><a class="headerlink" href="#cast.analysers.GenericTypeInstantiation" title="Permalink to this definition">¶</a></dt>
+<dd><p>A particular Type that is an instantiation of a generic type.</p>
+<dl class="method">
+<dt id="cast.analysers.GenericTypeInstantiation.get_generic_type">
+<tt class="descname">get_generic_type</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.GenericTypeInstantiation.get_generic_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the instantiated generic type.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">[cast.analysers.BaseType]</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;rtype: [cast.analysers.BaseType]</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.GenericTypeInstantiation.get_instantiation_parameters">
+<tt class="descname">get_instantiation_parameters</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.GenericTypeInstantiation.get_instantiation_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the instantiation parameters.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">[cast.analysers.BaseType]</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;rtype: [cast.analysers.BaseType]</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="cast.analysers.PrimitiveType">
+<em class="property">class </em><tt class="descclassname">cast.analysers.</tt><tt class="descname">PrimitiveType</tt><big>(</big><em>name</em><big>)</big><a class="headerlink" href="#cast.analysers.PrimitiveType" title="Permalink to this definition">¶</a></dt>
+<dd><p>A primitive type. int, bool etc...</p>
+<dl class="method">
+<dt id="cast.analysers.PrimitiveType.get_name">
+<tt class="descname">get_name</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.PrimitiveType.get_name" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;rtype: str</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="cast.analysers.Array">
+<em class="property">class </em><tt class="descclassname">cast.analysers.</tt><tt class="descname">Array</tt><big>(</big><em>type</em><big>)</big><a class="headerlink" href="#cast.analysers.Array" title="Permalink to this definition">¶</a></dt>
+<dd><p>Array of a TypeBase</p>
+<dl class="method">
+<dt id="cast.analysers.Array.get_type">
+<tt class="descname">get_type</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.Array.get_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Type on which we do an array.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">cast.analysers.TypeBase</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;rtype: cast.analysers.TypeBase</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="cast.analysers.Pointer">
+<em class="property">class </em><tt class="descclassname">cast.analysers.</tt><tt class="descname">Pointer</tt><big>(</big><em>type</em><big>)</big><a class="headerlink" href="#cast.analysers.Pointer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pointer to a TypeBase</p>
+<dl class="method">
+<dt id="cast.analysers.Pointer.get_type">
+<tt class="descname">get_type</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.Pointer.get_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pointed type.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">cast.analysers.TypeBase</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;rtype: cast.analysers.TypeBase</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="cast.analysers.Reference">
+<em class="property">class </em><tt class="descclassname">cast.analysers.</tt><tt class="descname">Reference</tt><big>(</big><em>type</em><big>)</big><a class="headerlink" href="#cast.analysers.Reference" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reference of a TypeBase</p>
+<dl class="method">
+<dt id="cast.analysers.Reference.get_type">
+<tt class="descname">get_type</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.Reference.get_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Referenced type.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">cast.analysers.TypeBase</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;rtype: cast.analysers.TypeBase</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="link-and-object-creation">
+<h4>Link and object creation<a class="headerlink" href="#link-and-object-creation" title="Permalink to this headline">¶</a></h4>
+<dl class="class">
+<dt id="cast.analysers.CustomObject">
+<em class="property">class </em><tt class="descclassname">cast.analysers.</tt><tt class="descname">CustomObject</tt><a class="headerlink" href="#cast.analysers.CustomObject" title="Permalink to this definition">¶</a></dt>
+<dd><p>A custom object.</p>
+<p>This class is designed to be used as is or subclassed for your own need.</p>
+<p>It is also plain Python so it can be serialised.</p>
+<dl class="method">
+<dt id="cast.analysers.CustomObject.set_name">
+<tt class="descname">set_name</tt><big>(</big><em>name</em><big>)</big><a class="headerlink" href="#cast.analysers.CustomObject.set_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the object name.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> &#8211; object&#8217;s name. String</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.CustomObject.set_fullname">
+<tt class="descname">set_fullname</tt><big>(</big><em>fullname</em><big>)</big><a class="headerlink" href="#cast.analysers.CustomObject.set_fullname" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the object&#8217;s fullname. Optional, if not provided, save() will calculate one.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> &#8211; object&#8217;s fullname. String</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.CustomObject.set_type">
+<tt class="descname">set_type</tt><big>(</big><em>typename</em><big>)</big><a class="headerlink" href="#cast.analysers.CustomObject.set_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the type name.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>typename</strong> &#8211; Metamodel type name. String</td>
+</tr>
+</tbody>
+</table>
+<p>Type must respect some constraints for the object to be saved.
+...</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.CustomObject.set_parent">
+<tt class="descname">set_parent</tt><big>(</big><em>parent</em><big>)</big><a class="headerlink" href="#cast.analysers.CustomObject.set_parent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the parent.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>parent</strong> &#8211; the parent of type cast.analysers.BaseObject</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.CustomObject.set_external">
+<tt class="descname">set_external</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.CustomObject.set_external" title="Permalink to this definition">¶</a></dt>
+<dd><p>The object will be an external object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.CustomObject.set_guid">
+<tt class="descname">set_guid</tt><big>(</big><em>guid</em><big>)</big><a class="headerlink" href="#cast.analysers.CustomObject.set_guid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the GUID of the object. Optional, if not provided, save() will calculate one.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>guid</strong> &#8211; object&#8217;s GUID. String</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.CustomObject.save">
+<tt class="descname">save</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.CustomObject.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save the object to Analysis Service.</p>
+<p>Object require a non empty name, a saved parent and a type.
+The type must also follow constraints</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.CustomObject.save_property">
+<tt class="descname">save_property</tt><big>(</big><em>property_name</em>, <em>value</em><big>)</big><a class="headerlink" href="#cast.analysers.CustomObject.save_property" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save a property on an object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>property_name</strong> &#8211; property name. String</li>
+<li><strong>value</strong> &#8211; property value. String or Integer</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Object require to be saved.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.CustomObject.save_position">
+<tt class="descname">save_position</tt><big>(</big><em>bookmark</em><big>)</big><a class="headerlink" href="#cast.analysers.CustomObject.save_position" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save a position on an object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>bookmark</strong> &#8211; position for the object. cast.analysers.Bookmark</td>
+</tr>
+</tbody>
+</table>
+<p>Object require to be saved.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.CustomObject.save_violation">
+<tt class="descname">save_violation</tt><big>(</big><em>rule</em>, <em>bookmark</em>, <em>additional_bookmarks=None</em><big>)</big><a class="headerlink" href="#cast.analysers.CustomObject.save_violation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a violation for the given rule.</p>
+<p>rule is the name of a Metamodel property</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>rule</strong> &#8211; property name</li>
+<li><strong>bookmark</strong> &#8211; a bookmark indicating the position of the violation</li>
+<li><strong>additional_bookmarks</strong> &#8211; additional bookmarks that help understanding the violation</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="cast.analysers.create_link">
+<tt class="descclassname">cast.analysers.</tt><tt class="descname">create_link</tt><big>(</big><em>link_type</em>, <em>caller</em>, <em>callee</em>, <em>bookmark</em><big>)</big><a class="headerlink" href="#cast.analysers.create_link" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a link between two objects.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>link_type</strong> &#8211; name of the link type</li>
+<li><strong>caller</strong> &#8211; source of the link cast.analysers.Object</li>
+<li><strong>callee</strong> &#8211; destination of the link cast.analysers.Object</li>
+<li><strong>bookmark</strong> &#8211; position of the link cast.analysers.Bookmark</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">cast.analysers.Link</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;rtype: cast.analysers.Link</p>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="module-cast.analysers.log">
+<span id="log-api"></span><h3>Log API<a class="headerlink" href="#module-cast.analysers.log" title="Permalink to this headline">¶</a></h3>
+<p>Log messages to CAIP analysis log.</p>
+<p>All log messages are automatically prefixed by the plugin name.</p>
+<dl class="function">
+<dt id="cast.analysers.log.info">
+<tt class="descclassname">cast.analysers.log.</tt><tt class="descname">info</tt><big>(</big><em>message</em><big>)</big><a class="headerlink" href="#cast.analysers.log.info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Log an information message</p>
+<p>&#64;type message: string</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="cast.analysers.log.warning">
+<tt class="descclassname">cast.analysers.log.</tt><tt class="descname">warning</tt><big>(</big><em>message</em><big>)</big><a class="headerlink" href="#cast.analysers.log.warning" title="Permalink to this definition">¶</a></dt>
+<dd><p>Log a warning message</p>
+<p>&#64;type message: string</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="cast.analysers.log.debug">
+<tt class="descclassname">cast.analysers.log.</tt><tt class="descname">debug</tt><big>(</big><em>message</em><big>)</big><a class="headerlink" href="#cast.analysers.log.debug" title="Permalink to this definition">¶</a></dt>
+<dd><p>Log a debug message</p>
+<p>&#64;type message: string</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-cast.analysers.external_link">
+<span id="external-link-api"></span><h3>External link API<a class="headerlink" href="#module-cast.analysers.external_link" title="Permalink to this headline">¶</a></h3>
+<p>API for External Links.</p>
+<p>External Links allow to retreive objects from other analysis marked as dependency.</p>
+<p>For example one can retreive database Tables, View etc...</p>
+<dl class="function">
+<dt id="cast.analysers.external_link.find_objects">
+<tt class="descclassname">cast.analysers.external_link.</tt><tt class="descname">find_objects</tt><big>(</big><em>name</em>, <em>category_name</em><big>)</big><a class="headerlink" href="#cast.analysers.external_link.find_objects" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find all the external objects of a given name and category.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>name</strong> &#8211; name of the object</li>
+<li><strong>category_name</strong> &#8211; name of a metamodel category</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list of cast.analysers.ExternalObject</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Example :</p>
+<p># find all tables named &#8216;Author&#8217;:</p>
+<p>tables = find_objects(&#8216;Author&#8217;,&#8217;Database Table&#8217;)</p>
+<p>&#64;rtype: [cast.analysers.ExternalObject]</p>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="extensions-point-api-reference">
+<span id="extensions-reference"></span><h2>Extensions point API Reference<a class="headerlink" href="#extensions-point-api-reference" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-cast.analysers.jee">
+<span id="jee-extension-points"></span><h3>JEE Extension points<a class="headerlink" href="#module-cast.analysers.jee" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="cast.analysers.jee.Extension">
+<em class="property">class </em><tt class="descclassname">cast.analysers.jee.</tt><tt class="descname">Extension</tt><a class="headerlink" href="#cast.analysers.jee.Extension" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extension points for JEE analyzer.</p>
+<dl class="method">
+<dt id="cast.analysers.jee.Extension.start_analysis">
+<tt class="descname">start_analysis</tt><big>(</big><em>options</em><big>)</big><a class="headerlink" href="#cast.analysers.jee.Extension.start_analysis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called at the beginning of analysis</p>
+<p>&#64;type options: cast.analysers.ExecutionUnit</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.jee.Extension.start_web_xml">
+<tt class="descname">start_web_xml</tt><big>(</big><em>file</em><big>)</big><a class="headerlink" href="#cast.analysers.jee.Extension.start_web_xml" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called at the beginning of the analysis of the web.xml file</p>
+<p>&#64;type file: cast.analysers.File</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.jee.Extension.end_web_xml">
+<tt class="descname">end_web_xml</tt><big>(</big><em>file</em><big>)</big><a class="headerlink" href="#cast.analysers.jee.Extension.end_web_xml" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called at the end of the analysis of the web.xml file</p>
+<p>&#64;type file: cast.analysers.File</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.jee.Extension.start_types">
+<tt class="descname">start_types</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.jee.Extension.start_types" title="Permalink to this definition">¶</a></dt>
+<dd><p>Begin visit of classes, intefaces, etc..</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.jee.Extension.start_type">
+<tt class="descname">start_type</tt><big>(</big><em>type</em><big>)</big><a class="headerlink" href="#cast.analysers.jee.Extension.start_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called on each class, interface, etc...</p>
+<p>&#64;type type: cast.analysers.Type</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.jee.Extension.start_member">
+<tt class="descname">start_member</tt><big>(</big><em>member</em><big>)</big><a class="headerlink" href="#cast.analysers.jee.Extension.start_member" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called on each class member field, method etc...</p>
+<p>&#64;type member: cast.analysers.Member</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.jee.Extension.end_member">
+<tt class="descname">end_member</tt><big>(</big><em>member</em><big>)</big><a class="headerlink" href="#cast.analysers.jee.Extension.end_member" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called on each class member field, method etc...</p>
+<p>&#64;type member: cast.analysers.Member</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.jee.Extension.end_type">
+<tt class="descname">end_type</tt><big>(</big><em>type</em><big>)</big><a class="headerlink" href="#cast.analysers.jee.Extension.end_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called on each class, interface, etc...</p>
+<p>&#64;type type: cast.analysers.Type</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.jee.Extension.end_types">
+<tt class="descname">end_types</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.jee.Extension.end_types" title="Permalink to this definition">¶</a></dt>
+<dd><p>End visit of classes, intefaces, etc..</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.jee.Extension.start_web_files">
+<tt class="descname">start_web_files</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.jee.Extension.start_web_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called at the beginning of the analysis web files</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.jee.Extension.start_web_file">
+<tt class="descname">start_web_file</tt><big>(</big><em>file</em><big>)</big><a class="headerlink" href="#cast.analysers.jee.Extension.start_web_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called at the beginning of the analysis of a specific Web file</p>
+<p>&#64;type file: cast.analysers.File</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.jee.Extension.end_web_file">
+<tt class="descname">end_web_file</tt><big>(</big><em>file</em><big>)</big><a class="headerlink" href="#cast.analysers.jee.Extension.end_web_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called at the end of the analysis of a specific Web file</p>
+<p>&#64;type file: cast.analysers.File</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.jee.Extension.end_web_files">
+<tt class="descname">end_web_files</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.jee.Extension.end_web_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called at the end of the analysis web files</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.jee.Extension.end_analysis">
+<tt class="descname">end_analysis</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.jee.Extension.end_analysis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called at the end of analysis</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-cast.analysers.dotnet">
+<span id="dotnet-extension-points"></span><h3>DotNet Extension points<a class="headerlink" href="#module-cast.analysers.dotnet" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="cast.analysers.dotnet.Extension">
+<em class="property">class </em><tt class="descclassname">cast.analysers.dotnet.</tt><tt class="descname">Extension</tt><a class="headerlink" href="#cast.analysers.dotnet.Extension" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extension points for DotNet analyzer.</p>
+<dl class="method">
+<dt id="cast.analysers.dotnet.Extension.start_analysis">
+<tt class="descname">start_analysis</tt><big>(</big><em>options</em><big>)</big><a class="headerlink" href="#cast.analysers.dotnet.Extension.start_analysis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called at the beginning of analysis.</p>
+<p>&#64;type options: cast.analysers.ExecutionUnit</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.dotnet.Extension.start_types">
+<tt class="descname">start_types</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.dotnet.Extension.start_types" title="Permalink to this definition">¶</a></dt>
+<dd><p>Begin visit of classes, intefaces, etc..</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.dotnet.Extension.start_type">
+<tt class="descname">start_type</tt><big>(</big><em>type</em><big>)</big><a class="headerlink" href="#cast.analysers.dotnet.Extension.start_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Begin visit of a class, interface, etc...</p>
+<p>&#64;type type: cast.analysers.Type</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.dotnet.Extension.start_member">
+<tt class="descname">start_member</tt><big>(</big><em>member</em><big>)</big><a class="headerlink" href="#cast.analysers.dotnet.Extension.start_member" title="Permalink to this definition">¶</a></dt>
+<dd><p>Begin visit of a class&#8217;s member : field, method, etc...</p>
+<p>&#64;type member: cast.analysers.Member</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.dotnet.Extension.end_member">
+<tt class="descname">end_member</tt><big>(</big><em>member</em><big>)</big><a class="headerlink" href="#cast.analysers.dotnet.Extension.end_member" title="Permalink to this definition">¶</a></dt>
+<dd><p>End visit of a class&#8217;s member : field, method, etc...</p>
+<p>&#64;type member: cast.analysers.Member</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.dotnet.Extension.end_type">
+<tt class="descname">end_type</tt><big>(</big><em>type</em><big>)</big><a class="headerlink" href="#cast.analysers.dotnet.Extension.end_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>End visit of a class, interface, etc...</p>
+<p>&#64;type type: cast.analysers.Type</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.dotnet.Extension.end_types">
+<tt class="descname">end_types</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.dotnet.Extension.end_types" title="Permalink to this definition">¶</a></dt>
+<dd><p>End visit of classes, intefaces, etc..</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.dotnet.Extension.start_files">
+<tt class="descname">start_files</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.dotnet.Extension.start_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Begin visit of source files.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.dotnet.Extension.start_file">
+<tt class="descname">start_file</tt><big>(</big><em>file</em><big>)</big><a class="headerlink" href="#cast.analysers.dotnet.Extension.start_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Begin visit of a source file.</p>
+<p>&#64;type file: cast.analysers.File</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.dotnet.Extension.end_file">
+<tt class="descname">end_file</tt><big>(</big><em>file</em><big>)</big><a class="headerlink" href="#cast.analysers.dotnet.Extension.end_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>End visit of a source file.</p>
+<p>&#64;type file: cast.analysers.File</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.dotnet.Extension.end_files">
+<tt class="descname">end_files</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.dotnet.Extension.end_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>End visit of source files.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="module-cast.analysers.test">
+<span id="tests-api-reference"></span><h2>Tests API Reference<a class="headerlink" href="#module-cast.analysers.test" title="Permalink to this headline">¶</a></h2>
+<p>This module provide testing help for developping plugins.</p>
+<p>Simple usage:</p>
+<blockquote>
+<div><p>import cast.analysers.test</p>
+<p>analysis = cast.analysers.test.DotNetTestAnalysis()</p>
+<p>analysis.add_selection(&#8216;path to .csproj&#8217;)</p>
+<p>analysis.run()</p>
+</div></blockquote>
+<dl class="class">
+<dt id="cast.analysers.test.TestAnalysis">
+<em class="property">class </em><tt class="descclassname">cast.analysers.test.</tt><tt class="descname">TestAnalysis</tt><big>(</big><em>technology</em><big>)</big><a class="headerlink" href="#cast.analysers.test.TestAnalysis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base class for all tests analysis.</p>
+<dl class="method">
+<dt id="cast.analysers.test.TestAnalysis.add_selection">
+<tt class="descname">add_selection</tt><big>(</big><em>path</em><big>)</big><a class="headerlink" href="#cast.analysers.test.TestAnalysis.add_selection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Select some path to analyze.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> &#8211; selection path to be added. String.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.test.TestAnalysis.add_database_table">
+<tt class="descname">add_database_table</tt><big>(</big><em>table_name</em>, <em>technology</em><big>)</big><a class="headerlink" href="#cast.analysers.test.TestAnalysis.add_database_table" title="Permalink to this definition">¶</a></dt>
+<dd><p>Register a database table as an dependency.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>table_name</strong> &#8211; table name to be added. String.</li>
+<li><strong>technology</strong> &#8211; technology name of the table. Possible values are : &#8216;Oracle&#8217;, &#8216;TSQL&#8217;. String.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.test.TestAnalysis.set_verbose">
+<tt class="descname">set_verbose</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.test.TestAnalysis.set_verbose" title="Permalink to this definition">¶</a></dt>
+<dd><p>Will print log to console</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.test.TestAnalysis.run">
+<tt class="descname">run</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.test.TestAnalysis.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run the analysis with the current plugin registered.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.test.TestAnalysis.get_objects_by_category">
+<tt class="descname">get_objects_by_category</tt><big>(</big><em>category</em><big>)</big><a class="headerlink" href="#cast.analysers.test.TestAnalysis.get_objects_by_category" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find all produced objects of a given category</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.test.TestAnalysis.get_objects_by_property">
+<tt class="descname">get_objects_by_property</tt><big>(</big><em>property</em>, <em>value</em>, <em>category</em><big>)</big><a class="headerlink" href="#cast.analysers.test.TestAnalysis.get_objects_by_property" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find all produced objects by a property value</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.test.TestAnalysis.get_object_by_name">
+<tt class="descname">get_object_by_name</tt><big>(</big><em>name</em>, <em>category</em><big>)</big><a class="headerlink" href="#cast.analysers.test.TestAnalysis.get_object_by_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find all produced objects by name</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.test.TestAnalysis.get_object_by_fullname">
+<tt class="descname">get_object_by_fullname</tt><big>(</big><em>fullname</em>, <em>category</em><big>)</big><a class="headerlink" href="#cast.analysers.test.TestAnalysis.get_object_by_fullname" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find all produced objects by fullname</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.test.TestAnalysis.get_link_by_caller_callee">
+<tt class="descname">get_link_by_caller_callee</tt><big>(</big><em>category</em>, <em>caller</em>, <em>callee</em><big>)</big><a class="headerlink" href="#cast.analysers.test.TestAnalysis.get_link_by_caller_callee" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find a produced link by link type, caller, callee</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.test.TestAnalysis.get_links_by_caller_callee">
+<tt class="descname">get_links_by_caller_callee</tt><big>(</big><em>category</em>, <em>caller</em>, <em>callee</em><big>)</big><a class="headerlink" href="#cast.analysers.test.TestAnalysis.get_links_by_caller_callee" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find produced links by link type, caller, callee</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="cast.analysers.test.DotNetTestAnalysis">
+<em class="property">class </em><tt class="descclassname">cast.analysers.test.</tt><tt class="descname">DotNetTestAnalysis</tt><a class="headerlink" href="#cast.analysers.test.DotNetTestAnalysis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specialised case for dotnet.</p>
+<p>Selection can be a csproj or a sln file.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="cast.analysers.test.JEETestAnalysis">
+<em class="property">class </em><tt class="descclassname">cast.analysers.test.</tt><tt class="descname">JEETestAnalysis</tt><a class="headerlink" href="#cast.analysers.test.JEETestAnalysis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specialised case for JEE.</p>
+<p>Simplest way of use is :</p>
+<blockquote>
+<div><p>analysis = JEETestAnalysis()</p>
+<p>analysis.add_selection(&#8216;path to my JEE code&#8217;)</p>
+<p>analysis.run()</p>
+</div></blockquote>
+<dl class="method">
+<dt id="cast.analysers.test.JEETestAnalysis.set_java_version">
+<tt class="descname">set_java_version</tt><big>(</big><em>version</em><big>)</big><a class="headerlink" href="#cast.analysers.test.JEETestAnalysis.set_java_version" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specify a Java version as a string, eg. &#8216;1.5&#8217;, &#8216;1.6&#8217;</p>
+<p>Default version is &#8216;1.6&#8217;</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.test.JEETestAnalysis.add_classpath">
+<tt class="descname">add_classpath</tt><big>(</big><em>classpath</em><big>)</big><a class="headerlink" href="#cast.analysers.test.JEETestAnalysis.add_classpath" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specify an additional classpath</p>
+</dd></dl>
+
+</dd></dl>
+
+<div class="section" id="module-cast.analysers.filter">
+<span id="filtering"></span><h3>Filtering<a class="headerlink" href="#module-cast.analysers.filter" title="Permalink to this headline">¶</a></h3>
+<p>Some MetaModel categories that are usefull as a filter.</p>
+<p>Use them in :</p>
+<ul class="simple">
+<li>cast.analysers.external_link.find_objects</li>
+<li>cast.analysers.test.TestAnalysis.get_objects_by_category</li>
+</ul>
+<dl class="data">
+<dt id="cast.analysers.filter.classes">
+<tt class="descclassname">cast.analysers.filter.</tt><tt class="descname">classes</tt><em class="property"> = 'APM Classes'</em><a class="headerlink" href="#cast.analysers.filter.classes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Concrete classes</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="cast.analysers.filter.interfaces">
+<tt class="descclassname">cast.analysers.filter.</tt><tt class="descname">interfaces</tt><em class="property"> = 'APM Interfaces'</em><a class="headerlink" href="#cast.analysers.filter.interfaces" title="Permalink to this definition">¶</a></dt>
+<dd><p>Interfaces</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="cast.analysers.filter.methods">
+<tt class="descclassname">cast.analysers.filter.</tt><tt class="descname">methods</tt><em class="property"> = 'APM Methods'</em><a class="headerlink" href="#cast.analysers.filter.methods" title="Permalink to this definition">¶</a></dt>
+<dd><p>Methods</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="cast.analysers.filter.fields">
+<tt class="descclassname">cast.analysers.filter.</tt><tt class="descname">fields</tt><em class="property"> = 'APM Data Members'</em><a class="headerlink" href="#cast.analysers.filter.fields" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class members</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="cast.analysers.filter.tables">
+<tt class="descclassname">cast.analysers.filter.</tt><tt class="descname">tables</tt><em class="property"> = 'Database Table'</em><a class="headerlink" href="#cast.analysers.filter.tables" title="Permalink to this definition">¶</a></dt>
+<dd><p>Database tables</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="cast.analysers.filter.views">
+<tt class="descclassname">cast.analysers.filter.</tt><tt class="descname">views</tt><em class="property"> = 'Database View'</em><a class="headerlink" href="#cast.analysers.filter.views" title="Permalink to this definition">¶</a></dt>
+<dd><p>Database views</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="cast.analysers.filter.tables_or_views">
+<tt class="descclassname">cast.analysers.filter.</tt><tt class="descname">tables_or_views</tt><em class="property"> = 'CAST_ANSISQL_TableSource'</em><a class="headerlink" href="#cast.analysers.filter.tables_or_views" title="Permalink to this definition">¶</a></dt>
+<dd><p>Database views and tables</p>
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">API Reference</a><ul>
+<li><a class="reference internal" href="#object-api-reference">Object API Reference</a><ul>
+<li><a class="reference internal" href="#plugin-api">Plugin API</a></li>
+<li><a class="reference internal" href="#objects-api">Objects API</a><ul>
+<li><a class="reference internal" href="#specialised-object">Specialised Object</a></li>
+<li><a class="reference internal" href="#programming-type-representation">Programming type representation</a></li>
+<li><a class="reference internal" href="#link-and-object-creation">Link and object creation</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-cast.analysers.log">Log API</a></li>
+<li><a class="reference internal" href="#module-cast.analysers.external_link">External link API</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#extensions-point-api-reference">Extensions point API Reference</a><ul>
+<li><a class="reference internal" href="#module-cast.analysers.jee">JEE Extension points</a></li>
+<li><a class="reference internal" href="#module-cast.analysers.dotnet">DotNet Extension points</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-cast.analysers.test">Tests API Reference</a><ul>
+<li><a class="reference internal" href="#module-cast.analysers.filter">Filtering</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="tips_and_tricks.html"
+                        title="previous chapter">Tips and tricks</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="faq.html"
+                        title="next chapter">FAQ</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/code_reference.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="faq.html" title="FAQ"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="tips_and_tricks.html" title="Tips and tricks"
+             >previous</a> |</li>
+        <li><a href="index.html">CAST-SDK 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, CAST.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>
