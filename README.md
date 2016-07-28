@@ -1,4 +1,5 @@
 # Extension-SDK
 Extension SDK
 
-https://cdn.rawgit.com/CAST-projects/Extension-SDK/master/doc/index.html
+Documentation : http://cast-projects.github.io/Extension-SDK/doc/index.html
+
