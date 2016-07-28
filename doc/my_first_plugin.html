@@ -1,56 +1,152 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>Tutorial : My first plugin &mdash; CAST-SDK 1.0 documentation</title>
-    
-    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    './',
-        VERSION:     '1.0',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="CAST-SDK 1.0 documentation" href="index.html" />
-    <link rel="next" title="Debugging" href="debugging.html" />
-    <link rel="prev" title="Manual" href="manual.html" /> 
-  </head>
-  <body>
-    <div class="related">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
-             accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
-          <a href="debugging.html" title="Debugging"
-             accesskey="N">next</a> |</li>
-        <li class="right" >
-          <a href="manual.html" title="Manual"
-             accesskey="P">previous</a> |</li>
-        <li><a href="index.html">CAST-SDK 1.0 documentation</a> &raquo;</li> 
-      </ul>
-    </div>  
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Tutorial : My first plugin &mdash; CAST Extension SDK 1.0 documentation</title>
+  
 
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          <div class="body">
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="CAST Extension SDK 1.0 documentation" href="index.html"/>
+        <link rel="next" title="Deploying plugins" href="deployment.html"/>
+        <link rel="prev" title="Installation" href="install.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> CAST Extension SDK
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Tutorial : My first plugin</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#setting-up-the-environment">Setting up the environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#create-the-plugin">Create the plugin</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#create-your-first-test">Create your first test</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#perform-some-checks-on-analysis-results">Perform some checks on analysis results</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="deployment.html">Deploying plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="manual.html">Creating a plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="analyser_level.html">Running during analysis of an existing analyser</a></li>
+<li class="toctree-l1"><a class="reference internal" href="application_level.html">Running code after analyzers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data_exchange.html">Exchanging data between analysis level and application level</a></li>
+<li class="toctree-l1"><a class="reference internal" href="analysers_specif.html">Analysers specific events</a></li>
+<li class="toctree-l1"><a class="reference internal" href="debugging.html">Debugging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="code_reference.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="version_compatibility.html">Features and Bugs per CAIP versions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tips_and_tricks.html">Tips and tricks</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">CAST Extension SDK</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Tutorial : My first plugin</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="_sources/my_first_plugin.txt" rel="nofollow"> View page source</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
             
   <div class="section" id="tutorial-my-first-plugin">
 <h1>Tutorial : My first plugin<a class="headerlink" href="#tutorial-my-first-plugin" title="Permalink to this headline">¶</a></h1>
@@ -73,17 +169,18 @@
 </div>
 <div class="section" id="create-the-plugin">
 <h2>Create the plugin<a class="headerlink" href="#create-the-plugin" title="Permalink to this headline">¶</a></h2>
-<p>In that project create a <tt class="docutils literal"><span class="pre">python</span> <span class="pre">module</span></tt> named <tt class="docutils literal"><span class="pre">main.py</span></tt>.</p>
+<p>In that project create a <tt class="docutils literal"><span class="pre">python</span> <span class="pre">module</span></tt> named <tt class="docutils literal"><span class="pre">main</span></tt>.</p>
 <p>Create your plugin class in <tt class="docutils literal"><span class="pre">main.py</span></tt>:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">cast.analysers</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">cast.analysers.dotnet</span>
+<span class="kn">import</span> <span class="nn">cast.analysers.log</span>
 
-<span class="k">class</span> <span class="nc">MyPlugin</span><span class="p">(</span><span class="n">cast</span><span class="o">.</span><span class="n">analysers</span><span class="o">.</span><span class="n">Plugin</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">MyExtension</span><span class="p">(</span><span class="n">cast</span><span class="o">.</span><span class="n">analysers</span><span class="o">.</span><span class="n">dotnet</span><span class="o">.</span><span class="n">Extension</span><span class="p">):</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">cast</span><span class="o">.</span><span class="n">analysers</span><span class="o">.</span><span class="n">Plugin</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">start_analysis</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">options</span><span class="p">):</span>
+        <span class="n">cast</span><span class="o">.</span><span class="n">analysers</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;Hello World!!&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>This will automatically register a plugin called <tt class="docutils literal"><span class="pre">My</span> <span class="pre">first</span> <span class="pre">plugin</span></tt>.</p>
+<p>This will automatically register a .Net extension and create a plugin.</p>
 <div class="section" id="create-your-first-test">
 <h3>Create your first test<a class="headerlink" href="#create-your-first-test" title="Permalink to this headline">¶</a></h3>
 <p>You can then test your plugin directly from eclipse.</p>
@@ -110,8 +207,9 @@ In that new package create a new module named <tt class="docutils literal"><span
 <p>The test should then run and print the CAIP analysis log to console.
 Among the other analysis messages you should see:</p>
 <div class="highlight-python"><div class="highlight"><pre>...
-Registering plugin My first plugin.
+Registering plugin my.company.first_plugin.
 ...
+    [my.company.first_plugin] Hello World!!
 </pre></div>
 </div>
 <p>It means that it works.</p>
@@ -121,36 +219,7 @@ Registering plugin My first plugin.
 <p>The analysis is performed whithout cast-ms. There is no need to have any CAIP databases installed.</p>
 <p class="last">The idea is that developper can tune it&#8217;s plugin code rapidly and build a full non regression test suite.</p>
 </div>
-</div>
-<div class="section" id="implement-extensions-points">
-<h3>Implement extensions points<a class="headerlink" href="#implement-extensions-points" title="Permalink to this headline">¶</a></h3>
-<p>For now the plugin does nothing at all.</p>
-<p>In order to perfom analysis actions it should implementati some extension points.</p>
-<p>For example we can override <a class="reference internal" href="code_reference.html#cast.analysers.dotnet.Extension.start_analysis" title="cast.analysers.dotnet.Extension.start_analysis"><tt class="xref py py-func docutils literal"><span class="pre">cast.analysers.dotnet.Extension.start_analysis()</span></tt></a> that is called once at the very beginning of the analysis.</p>
-<p>In file <tt class="docutils literal"><span class="pre">main.py</span></tt> add the following code:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">cast.analysers.dotnet</span>
-<span class="kn">import</span> <span class="nn">cast.analysers.log</span>
-
-<span class="k">class</span> <span class="nc">MyExtension</span><span class="p">(</span><span class="n">cast</span><span class="o">.</span><span class="n">analysers</span><span class="o">.</span><span class="n">dotnet</span><span class="o">.</span><span class="n">Extension</span><span class="p">):</span>
-
-    <span class="k">def</span> <span class="nf">start_analysis</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">options</span><span class="p">):</span>
-        <span class="n">cast</span><span class="o">.</span><span class="n">analysers</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;Hello World!!&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>This class must be registered in the plugin construcor, so change
-the class <tt class="docutils literal"><span class="pre">MyPlugin</span></tt> in order to call <a class="reference internal" href="code_reference.html#cast.analysers.Plugin.register_extension" title="cast.analysers.Plugin.register_extension"><tt class="xref py py-func docutils literal"><span class="pre">cast.analysers.Plugin.register_extension()</span></tt></a> from the constructor, passing an object of class <tt class="docutils literal"><span class="pre">MyExtension</span></tt>:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">MyPlugin</span><span class="p">(</span><span class="n">cast</span><span class="o">.</span><span class="n">analysers</span><span class="o">.</span><span class="n">Plugin</span><span class="p">):</span>
-
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">cast</span><span class="o">.</span><span class="n">analysers</span><span class="o">.</span><span class="n">Plugin</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">register_extension</span><span class="p">(</span><span class="n">MyExtension</span><span class="p">())</span>
-</pre></div>
-</div>
-<p>Run the test, you should see:</p>
-<div class="highlight-python"><div class="highlight"><pre>[my.company.first_plugin] Hello World!!
-</pre></div>
-</div>
-<p>Now you can override other extension points, see <a class="reference internal" href="code_reference.html#extensions-reference"><em>Extensions point API Reference</em></a>.</p>
+<p>Now you can override other events.</p>
 </div>
 <div class="section" id="perform-some-checks-on-analysis-results">
 <h3>Perform some checks on analysis results<a class="headerlink" href="#perform-some-checks-on-analysis-results" title="Permalink to this headline">¶</a></h3>
@@ -178,93 +247,74 @@ the class <tt class="docutils literal"><span class="pre">MyPlugin</span></tt> in
 <p>In debugging mode, the whole result is accessible through <tt class="docutils literal"><span class="pre">analysis.result</span></tt>.</p>
 </div>
 </div>
-<div class="section" id="deploy-the-plugin-into-caip">
-<h2>Deploy the plugin into CAIP<a class="headerlink" href="#deploy-the-plugin-into-caip" title="Permalink to this headline">¶</a></h2>
-<p>Copy your project folder into : <tt class="docutils literal"><span class="pre">&lt;CASTInstall</span> <span class="pre">Directory&gt;\CustomPlugins</span></tt></p>
-<p>You may also redefine the variable <tt class="docutils literal"><span class="pre">CAST_PLUGINS_ROOT_PATH</span></tt> in <tt class="docutils literal"><span class="pre">CastGlobalSettings.ini</span></tt> for choosing a custom location.</p>
-<p>This should give :</p>
-<div class="figure align-center">
-<img alt="_images/deploy.png" src="_images/deploy.png" />
-<p class="caption">Result of a correct deploy.</p>
-</div>
-<p>Run CAIP as usual, you should see the log messages.</p>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Deploying the tests folder is &#8216;optional&#8217;.</p>
-</div>
-</div>
 </div>
 
 
+           </div>
           </div>
-        </div>
-      </div>
-      <div class="sphinxsidebar">
-        <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">Tutorial : My first plugin</a><ul>
-<li><a class="reference internal" href="#setting-up-the-environment">Setting up the environment</a></li>
-<li><a class="reference internal" href="#create-the-plugin">Create the plugin</a><ul>
-<li><a class="reference internal" href="#create-your-first-test">Create your first test</a></li>
-<li><a class="reference internal" href="#implement-extensions-points">Implement extensions points</a></li>
-<li><a class="reference internal" href="#perform-some-checks-on-analysis-results">Perform some checks on analysis results</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#deploy-the-plugin-into-caip">Deploy the plugin into CAIP</a></li>
-</ul>
-</li>
-</ul>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="deployment.html" class="btn btn-neutral float-right" title="Deploying plugins" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="install.html" class="btn btn-neutral" title="Installation" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="manual.html"
-                        title="previous chapter">Manual</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="debugging.html"
-                        title="next chapter">Debugging</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="_sources/my_first_plugin.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
-  <h3>Quick search</h3>
-    <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
-    </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014, CAST.
+
     </p>
-</div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
         </div>
       </div>
-      <div class="clearer"></div>
-    </div>
-    <div class="related">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
-             >index</a></li>
-        <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
-          <a href="debugging.html" title="Debugging"
-             >next</a> |</li>
-        <li class="right" >
-          <a href="manual.html" title="Manual"
-             >previous</a> |</li>
-        <li><a href="index.html">CAST-SDK 1.0 documentation</a> &raquo;</li> 
-      </ul>
-    </div>
-    <div class="footer">
-        &copy; Copyright 2014, CAST.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
-    </div>
-  </body>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
 </html>

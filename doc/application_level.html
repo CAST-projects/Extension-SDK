@@ -1,0 +1,1772 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Running code after analyzers &mdash; CAST Extension SDK 1.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="CAST Extension SDK 1.0 documentation" href="index.html"/>
+        <link rel="next" title="Exchanging data between analysis level and application level" href="data_exchange.html"/>
+        <link rel="prev" title="Running during analysis of an existing analyser" href="analyser_level.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> CAST Extension SDK
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="my_first_plugin.html">Tutorial : My first plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="deployment.html">Deploying plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="manual.html">Creating a plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="analyser_level.html">Running during analysis of an existing analyser</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Running code after analyzers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#implementing-an-application-level-extension">Implementing An application level extension</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#objects">Objects</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#accessing-objects">Accessing objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#decorating-objects">Decorating objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bookmark">Bookmark</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#specific-object-types">Specific object types</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#file">File</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#project">Project</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#database">Database</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#schema">Schema</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#links">links</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#accessing-existing-links">Accessing existing links</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#decorating-existing-links-with-properties">Decorating existing links with properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#validating-dynamic-links">Validating dynamic links</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#creating-links">Creating links</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#a-reference-finder">A reference finder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#logging">Logging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#using-legacy-tools">Using legacy tools</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#running-tools-after-analysis">Running &#8216;tools after analysis&#8217;</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#interactive-scripting">Interactive scripting</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="data_exchange.html">Exchanging data between analysis level and application level</a></li>
+<li class="toctree-l1"><a class="reference internal" href="analysers_specif.html">Analysers specific events</a></li>
+<li class="toctree-l1"><a class="reference internal" href="debugging.html">Debugging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="code_reference.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="version_compatibility.html">Features and Bugs per CAIP versions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tips_and_tricks.html">Tips and tricks</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">CAST Extension SDK</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Running code after analyzers</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="_sources/application_level.txt" rel="nofollow"> View page source</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="running-code-after-analyzers">
+<h1>Running code after analyzers<a class="headerlink" href="#running-code-after-analyzers" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This is documentation for cast.application version 1.5.0.
+This API can be upgraded separately from AIP.</p>
+</div>
+<p>After all analysis job have ran some code can be launched on the resulting knowledge base.</p>
+<p>During this step, you :</p>
+<ul class="simple">
+<li>can create new links</li>
+<li>can decorate existing objects or links with new properties</li>
+<li>can create new violations on objects</li>
+<li>has access to all objects and links created by any analyzer</li>
+<li>have access to source code</li>
+</ul>
+<div class="section" id="implementing-an-application-level-extension">
+<h2>Implementing An application level extension<a class="headerlink" href="#implementing-an-application-level-extension" title="Permalink to this headline">¶</a></h2>
+<p>A plugin can be called at the end of analysis by implementing a subclass of</p>
+<dl class="class">
+<dt id="cast.application.ApplicationLevelExtension">
+<em class="property">class </em><tt class="descclassname">cast.application.</tt><tt class="descname">ApplicationLevelExtension</tt><a class="headerlink" href="#cast.application.ApplicationLevelExtension" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inherit from this class to be consider as an application level extension.</p>
+<p>Usage :</p>
+<p>class MyExtension(ApplicationLevelExtension):</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>def end_application(self, application):</dt>
+<dd>...</dd>
+</dl>
+</div></blockquote>
+<dl class="method">
+<dt id="cast.application.ApplicationLevelExtension.end_application">
+<tt class="descname">end_application</tt><big>(</big><em>application</em><big>)</big><a class="headerlink" href="#cast.application.ApplicationLevelExtension.end_application" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called at the end of application&#8217;s analysis.</p>
+<p>&#64;type application: cast.application.Application</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.ApplicationLevelExtension.get_intermediate_files">
+<tt class="descname">get_intermediate_files</tt><big>(</big><em>name</em><big>)</big><a class="headerlink" href="#cast.application.ApplicationLevelExtension.get_intermediate_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return all the intermediate files of given name.
+The files are open in read mode.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.ApplicationLevelExtension.get_intermediate_file">
+<tt class="descname">get_intermediate_file</tt><big>(</big><em>name</em><big>)</big><a class="headerlink" href="#cast.application.ApplicationLevelExtension.get_intermediate_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return an intermediate file by name.
+The file is open in read mode.</p>
+<p>Raises an exception when the file does not exist.</p>
+</dd></dl>
+
+</dd></dl>
+
+<p>For example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">cast.application</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="k">class</span> <span class="nc">ExtensionApplication</span><span class="p">(</span><span class="n">cast</span><span class="o">.</span><span class="n">application</span><span class="o">.</span><span class="n">ApplicationLevelExtension</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">end_application</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">application</span><span class="p">):</span>
+
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;running code at the end of an application&quot;</span><span class="p">)</span>
+
+        <span class="n">application</span><span class="o">.</span><span class="n">sql_tool</span><span class="p">(</span><span class="s">&quot;/* put your sql code here*/&quot;</span><span class="p">)</span>
+        <span class="n">application</span><span class="o">.</span><span class="n">update_cast_knowledge_base</span><span class="p">(</span><span class="s">&quot;/* put your sql code here*/&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>It is better to separate code from application level extension from the analyser level extension. They use separate python API and separate process
+launching.</p>
+<p>A plugin can contain any number of ApplicationLevelExtension, they all will be called back.</p>
+<p>Those call backs have the application as context :</p>
+<dl class="class">
+<dt id="cast.application.Application">
+<em class="property">class </em><tt class="descclassname">cast.application.</tt><tt class="descname">Application</tt><big>(</big><em>kb</em>, <em>identifier</em>, <em>name</em>, <em>typ</em><big>)</big><a class="headerlink" href="#cast.application.Application" title="Permalink to this definition">¶</a></dt>
+<dd><p>A kb object representing an application</p>
+</dd></dl>
+
+</div>
+<div class="section" id="objects">
+<h2>Objects<a class="headerlink" href="#objects" title="Permalink to this headline">¶</a></h2>
+<p>Objects from the applications will all be of class :</p>
+<dl class="class">
+<dt id="cast.application.Object">
+<em class="property">class </em><tt class="descclassname">cast.application.</tt><tt class="descname">Object</tt><big>(</big><em>kb</em>, <em>identifier</em>, <em>name</em>, <em>typ</em>, <em>additional_values=None</em><big>)</big><a class="headerlink" href="#cast.application.Object" title="Permalink to this definition">¶</a></dt>
+<dd><p>A KB object of any kind</p>
+<dl class="method">
+<dt id="cast.application.Object.get_name">
+<tt class="descname">get_name</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.Object.get_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns object name.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.Object.get_fullname">
+<tt class="descname">get_fullname</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.Object.get_fullname" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns object fullname.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.Object.get_qualified_name">
+<tt class="descname">get_qualified_name</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.Object.get_qualified_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Give a qualified name usefull for linking.</p>
+<p>Try to compensate fullnames differences</p>
+<p>&#64;since 1.4.0</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.Object.get_type">
+<tt class="descname">get_type</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.Object.get_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns object&#8217;s type name.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.Object.get_property">
+<tt class="descname">get_property</tt><big>(</big><em>prop</em><big>)</big><a class="headerlink" href="#cast.application.Object.get_property" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return an object property.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>or int or Property prop</strong> (<em>str</em>) &#8211; the property fullname, or property id or property to get</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.Object.get_positions">
+<tt class="descname">get_positions</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.Object.get_positions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns object&#8217;s code positions.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#cast.application.Bookmark" title="cast.application.Bookmark"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.Bookmark</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<p>We provide a high level classification of Objects :</p>
+<blockquote>
+<div><dl class="method">
+<dt id="cast.application.Object.is_file">
+<tt class="descclassname">Object.</tt><tt class="descname">is_file</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.Object.is_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>True when object is a file.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.Object.is_program">
+<tt class="descclassname">Object.</tt><tt class="descname">is_program</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.Object.is_program" title="Permalink to this definition">¶</a></dt>
+<dd><p>True when object is a program.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.Object.is_class">
+<tt class="descclassname">Object.</tt><tt class="descname">is_class</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.Object.is_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>True when object is class or interface.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.Object.is_executable">
+<tt class="descclassname">Object.</tt><tt class="descname">is_executable</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.Object.is_executable" title="Permalink to this definition">¶</a></dt>
+<dd><p>True when object is callable and contains executable code.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.Object.is_package">
+<tt class="descclassname">Object.</tt><tt class="descname">is_package</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.Object.is_package" title="Permalink to this definition">¶</a></dt>
+<dd><p>True when object is a package, namespace, module, schema, etc...</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.Object.is_variable">
+<tt class="descclassname">Object.</tt><tt class="descname">is_variable</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.Object.is_variable" title="Permalink to this definition">¶</a></dt>
+<dd><p>True when object is a variable, field, member variable, something that can receive an assignment.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.Object.is_table">
+<tt class="descclassname">Object.</tt><tt class="descname">is_table</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.Object.is_table" title="Permalink to this definition">¶</a></dt>
+<dd><p>True when object is a database table or view.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.Object.is_index">
+<tt class="descclassname">Object.</tt><tt class="descname">is_index</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.Object.is_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>True when object is a database index.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.Object.is_foreignkey">
+<tt class="descclassname">Object.</tt><tt class="descname">is_foreignkey</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.Object.is_foreignkey" title="Permalink to this definition">¶</a></dt>
+<dd><p>True when object is a database foreign key.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.Object.is_form">
+<tt class="descclassname">Object.</tt><tt class="descname">is_form</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.Object.is_form" title="Permalink to this definition">¶</a></dt>
+<dd><p>True for forms, controls and events.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.Object.is_web_service_operation">
+<tt class="descclassname">Object.</tt><tt class="descname">is_web_service_operation</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.Object.is_web_service_operation" title="Permalink to this definition">¶</a></dt>
+<dd><p>True when object is a web service operations (get, post, ...).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.Object.is_dbms">
+<tt class="descclassname">Object.</tt><tt class="descname">is_dbms</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.Object.is_dbms" title="Permalink to this definition">¶</a></dt>
+<dd><p>True when object is an object from a database.</p>
+</dd></dl>
+
+</div></blockquote>
+<div class="section" id="accessing-objects">
+<h3>Accessing objects<a class="headerlink" href="#accessing-objects" title="Permalink to this headline">¶</a></h3>
+<p>Objects can be accessed using one of the following methods on <a class="reference internal" href="#cast.application.Application" title="cast.application.Application"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.Application</span></tt></a> :</p>
+<dl class="method">
+<dt id="cast.application.Application.get_objects">
+<tt class="descclassname">Application.</tt><tt class="descname">get_objects</tt><big>(</big><em>internal=True</em>, <em>external=False</em><big>)</big><a class="headerlink" href="#cast.application.Application.get_objects" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a iterable collection of all the objects of the application.</p>
+<p>Projects are not considered as part of the of the application as they
+already are accessible as direct child through get_projects.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">iterable of <a class="reference internal" href="#cast.application.Object" title="cast.application.Object"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.Object</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.Application.search_objects">
+<tt class="descclassname">Application.</tt><tt class="descname">search_objects</tt><big>(</big><em>name=None</em>, <em>category=None</em>, <em>load_properties=False</em><big>)</big><a class="headerlink" href="#cast.application.Application.search_objects" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search objects by name or/and by type</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>name</strong> (<em>str</em>) &#8211; the name of the searched object</li>
+<li><strong>category</strong> (<em>str</em>) &#8211; the category name of the searched object</li>
+<li><strong>load_properties</strong> (<em>bool</em>) &#8211; if True properties of objects will be available. Slower.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">iterable of <a class="reference internal" href="#cast.application.Object" title="cast.application.Object"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.Object</span></tt></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.5.0.</span></p>
+</div>
+<dl class="method">
+<dt id="cast.application.Application.objects">
+<tt class="descclassname">Application.</tt><tt class="descname">objects</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.Application.objects" title="Permalink to this definition">¶</a></dt>
+<dd><p>All internal objects of the application as an iterable.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#cast.application.ObjectQuery" title="cast.application.ObjectQuery"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.ObjectQuery</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<p>This will be the preferred way for querying objects. It returns a  <a class="reference internal" href="#cast.application.ObjectQuery" title="cast.application.ObjectQuery"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.ObjectQuery</span></tt></a> that represent a query on objects.
+This query can be refined using <a class="reference external" href="https://en.wikipedia.org/wiki/Method_chaining">method chaining</a>.</p>
+<dl class="class">
+<dt id="cast.application.ObjectQuery">
+<em class="property">class </em><tt class="descclassname">cast.application.</tt><tt class="descname">ObjectQuery</tt><big>(</big><em>application=None</em>, <em>object_query=None</em><big>)</big><a class="headerlink" href="#cast.application.ObjectQuery" title="Permalink to this definition">¶</a></dt>
+<dd><p>A query on objects.</p>
+<p>Follow the method chaining pattern.</p>
+<dl class="method">
+<dt id="cast.application.ObjectQuery.has_type">
+<tt class="descname">has_type</tt><big>(</big><em>_types_or_categories</em><big>)</big><a class="headerlink" href="#cast.application.ObjectQuery.has_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filter and return a query that takes only objects of some certain types or categories</p>
+<blockquote>
+<div><p>.has_type([&#8216;Java&#8217;, &#8216;C++&#8217;]) : all types inheriting from Java or C++</p>
+<p>.has_type(&#8216;Java&#8217;).has_type(&#8216;Method&#8217;) all types inheriting from Java and Method</p>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>_types_or_categories</strong> &#8211; category name, id or list of those. If a list is provided, it will act as a logical or.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#cast.application.ObjectQuery" title="cast.application.ObjectQuery"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.ObjectQuery</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.ObjectQuery.is_public">
+<tt class="descname">is_public</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.ObjectQuery.is_public" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filter and return a query that takes only objects that are public.</p>
+<p>Works for C++, Java, .Net, ABAP only and will only return object of those types.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#cast.application.ObjectQuery" title="cast.application.ObjectQuery"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.ObjectQuery</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.ObjectQuery.is_private">
+<tt class="descname">is_private</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.ObjectQuery.is_private" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filter and return a query that takes only objects that are private.</p>
+<p>Works for C++, Java, .Net, ABAP only and will only return object of those types.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#cast.application.ObjectQuery" title="cast.application.ObjectQuery"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.ObjectQuery</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.ObjectQuery.is_protected">
+<tt class="descname">is_protected</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.ObjectQuery.is_protected" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filter and return a query that takes only objects that are protected.</p>
+<p>Works for C++, Java, .Net, ABAP only and will only return object of those types.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#cast.application.ObjectQuery" title="cast.application.ObjectQuery"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.ObjectQuery</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.ObjectQuery.is_static">
+<tt class="descname">is_static</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.ObjectQuery.is_static" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filter and return a query that takes only objects that are static.</p>
+<p>Works for C++, Java, .Net, ABAP only and will only return object of those types.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#cast.application.ObjectQuery" title="cast.application.ObjectQuery"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.ObjectQuery</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.ObjectQuery.is_virtual">
+<tt class="descname">is_virtual</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.ObjectQuery.is_virtual" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filter and return a query that takes only objects that uses late binding.
+So</p>
+<ul class="simple">
+<li>virtual, virtual by inheritance C+ methods</li>
+<li>virtual, overrides and interface .Net methods</li>
+</ul>
+<p>Works for C++, .Net only and will only return object of those types.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#cast.application.ObjectQuery" title="cast.application.ObjectQuery"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.ObjectQuery</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.ObjectQuery.is_abstract">
+<tt class="descname">is_abstract</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.ObjectQuery.is_abstract" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filter and return a query that takes only objects that are abstract. I.e. with empty implementation and &#8216;virtual&#8217;.</p>
+<p>Works for C++, Java, .Net, ABAP only and will only return object of those types.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#cast.application.ObjectQuery" title="cast.application.ObjectQuery"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.ObjectQuery</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.ObjectQuery.is_caller">
+<tt class="descname">is_caller</tt><big>(</big><em>link_query</em><big>)</big><a class="headerlink" href="#cast.application.ObjectQuery.is_caller" title="Permalink to this definition">¶</a></dt>
+<dd><p>Objects that are caller of a given link query.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>linkquery</strong> &#8211; <a class="reference internal" href="#cast.application.LinkQuery" title="cast.application.LinkQuery"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.LinkQuery</span></tt></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#cast.application.ObjectQuery" title="cast.application.ObjectQuery"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.ObjectQuery</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.ObjectQuery.is_callee">
+<tt class="descname">is_callee</tt><big>(</big><em>link_query</em><big>)</big><a class="headerlink" href="#cast.application.ObjectQuery.is_callee" title="Permalink to this definition">¶</a></dt>
+<dd><p>Objects that are callee of a given link query.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>linkquery</strong> &#8211; <a class="reference internal" href="#cast.application.LinkQuery" title="cast.application.LinkQuery"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.LinkQuery</span></tt></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#cast.application.ObjectQuery" title="cast.application.ObjectQuery"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.ObjectQuery</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.ObjectQuery.is_dbms">
+<tt class="descname">is_dbms</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.ObjectQuery.is_dbms" title="Permalink to this definition">¶</a></dt>
+<dd><p>Objects that come from a database.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#cast.application.ObjectQuery" title="cast.application.ObjectQuery"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.ObjectQuery</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.ObjectQuery.is_directory">
+<tt class="descname">is_directory</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.ObjectQuery.is_directory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Objects that are directories.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#cast.application.ObjectQuery" title="cast.application.ObjectQuery"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.ObjectQuery</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.ObjectQuery.is_program">
+<tt class="descname">is_program</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.ObjectQuery.is_program" title="Permalink to this definition">¶</a></dt>
+<dd><p>Objects that are programs.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#cast.application.ObjectQuery" title="cast.application.ObjectQuery"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.ObjectQuery</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.ObjectQuery.is_class">
+<tt class="descname">is_class</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.ObjectQuery.is_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>Objects that are class or interfaces.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#cast.application.ObjectQuery" title="cast.application.ObjectQuery"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.ObjectQuery</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.ObjectQuery.is_executable">
+<tt class="descname">is_executable</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.ObjectQuery.is_executable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Objects that are executable : function, method, trigger, ...
+But not programs.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#cast.application.ObjectQuery" title="cast.application.ObjectQuery"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.ObjectQuery</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.ObjectQuery.is_package">
+<tt class="descname">is_package</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.ObjectQuery.is_package" title="Permalink to this definition">¶</a></dt>
+<dd><p>Objects that are package, namespace, module, schema, etc...</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#cast.application.ObjectQuery" title="cast.application.ObjectQuery"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.ObjectQuery</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.ObjectQuery.is_variable">
+<tt class="descname">is_variable</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.ObjectQuery.is_variable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Objects that are variable, field, member variable, something that can receive an assignment.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#cast.application.ObjectQuery" title="cast.application.ObjectQuery"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.ObjectQuery</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.ObjectQuery.is_table">
+<tt class="descname">is_table</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.ObjectQuery.is_table" title="Permalink to this definition">¶</a></dt>
+<dd><p>Objects that are table or view.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#cast.application.ObjectQuery" title="cast.application.ObjectQuery"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.ObjectQuery</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.ObjectQuery.is_index">
+<tt class="descname">is_index</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.ObjectQuery.is_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Objects that are index.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#cast.application.ObjectQuery" title="cast.application.ObjectQuery"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.ObjectQuery</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.ObjectQuery.is_foreignkey">
+<tt class="descname">is_foreignkey</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.ObjectQuery.is_foreignkey" title="Permalink to this definition">¶</a></dt>
+<dd><p>Objects that are foreign key.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#cast.application.ObjectQuery" title="cast.application.ObjectQuery"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.ObjectQuery</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.ObjectQuery.is_web_service_operation">
+<tt class="descname">is_web_service_operation</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.ObjectQuery.is_web_service_operation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Objects that are web service operations (get, post, ...).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#cast.application.ObjectQuery" title="cast.application.ObjectQuery"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.ObjectQuery</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.ObjectQuery.is_form">
+<tt class="descname">is_form</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.ObjectQuery.is_form" title="Permalink to this definition">¶</a></dt>
+<dd><p>Objects that are forms, controls and events.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#cast.application.ObjectQuery" title="cast.application.ObjectQuery"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.ObjectQuery</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.ObjectQuery.load_property">
+<tt class="descname">load_property</tt><big>(</big><em>properties</em><big>)</big><a class="headerlink" href="#cast.application.ObjectQuery.load_property" title="Permalink to this definition">¶</a></dt>
+<dd><p>Ask for loading of one or some properties.</p>
+<p>Note that loading one or several properties takes longer to perform the query.</p>
+<p>Has no effect when query is used in a LinkQuery.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>properties</strong> &#8211; str or int of list of those.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#cast.application.ObjectQuery" title="cast.application.ObjectQuery"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.ObjectQuery</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<p>Examples:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># iterate all objects of the application</span>
+<span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">application</span><span class="o">.</span><span class="n">objects</span><span class="p">():</span>
+    <span class="o">...</span>
+
+<span class="c"># iterate all java objects of the application</span>
+<span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">application</span><span class="o">.</span><span class="n">objects</span><span class="p">()</span><span class="o">.</span><span class="n">has_type</span><span class="p">(</span><span class="s">&#39;Java&#39;</span><span class="p">):</span>
+    <span class="o">...</span>
+
+<span class="c"># iterate all public java objects of the application</span>
+<span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">application</span><span class="o">.</span><span class="n">objects</span><span class="p">()</span><span class="o">.</span><span class="n">has_type</span><span class="p">(</span><span class="s">&#39;Java&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">is_public</span><span class="p">():</span>
+    <span class="o">...</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="decorating-objects">
+<h3>Decorating objects<a class="headerlink" href="#decorating-objects" title="Permalink to this headline">¶</a></h3>
+<p>Objects can receive new properties</p>
+<blockquote>
+<div><dl class="method">
+<dt id="cast.application.Object.save_property">
+<tt class="descclassname">Object.</tt><tt class="descname">save_property</tt><big>(</big><em>prop</em>, <em>value</em><big>)</big><a class="headerlink" href="#cast.application.Object.save_property" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save a property on current object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>prop</strong> &#8211; the property to save. Either a string for the fullname of the property or an integer for the property id.</li>
+<li><strong>value</strong> &#8211; the value to set, either a integer, a string or a list of those</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>The current plugin must have declared the property has his own.  
+:see <a class="reference internal" href="#cast.application.Application.declare_property_ownership" title="cast.application.Application.declare_property_ownership"><tt class="xref py py-meth docutils literal"><span class="pre">cast.application.Application.declare_property_ownership()</span></tt></a></p>
+</dd></dl>
+
+</div></blockquote>
+<p>And violations for quality rules</p>
+<blockquote>
+<div><dl class="method">
+<dt id="cast.application.Object.save_violation">
+<tt class="descclassname">Object.</tt><tt class="descname">save_violation</tt><big>(</big><em>prop</em>, <em>bookmark</em>, <em>additional_bookmarks=[]</em><big>)</big><a class="headerlink" href="#cast.application.Object.save_violation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a violation for the given rule.</p>
+<p>prop is the fullname of a Metamodel property</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>prop</strong> (<em>str</em>) &#8211; a property full name that count the number of rule violations</li>
+<li><strong>bookmark</strong> (<a class="reference internal" href="#cast.application.Bookmark" title="cast.application.Bookmark"><em>cast.application.Bookmark</em></a>) &#8211; a bookmark to indicate the position of the violation</li>
+<li><strong>additional_bookmarks</strong> (<a class="reference internal" href="#cast.application.Bookmark" title="cast.application.Bookmark"><em>cast.application.Bookmark</em></a>) &#8211; additional bookmarks that help
+understanding the violation</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>The property &#8216;prop&#8217; is automatically valorised with the number of violations for the object. So do not use save_property for this property.</p>
+<p>The current plugin must have declared the prop has his own.  
+:see <a class="reference internal" href="#cast.application.Application.declare_property_ownership" title="cast.application.Application.declare_property_ownership"><tt class="xref py py-meth docutils literal"><span class="pre">cast.application.Application.declare_property_ownership()</span></tt></a></p>
+</dd></dl>
+
+</div></blockquote>
+<p>In either case there are a certain number of preliminary steps to do :</p>
+<ol class="arabic simple">
+<li>having a property applicable for the metamodel type of the object either by :</li>
+</ol>
+<blockquote>
+<div><ol class="loweralpha simple">
+<li>reusing an existing property of the metamodel</li>
+<li>declare a new property in the metamodel of the plugin</li>
+</ol>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li>declare the handling of the property by calling :</li>
+</ol>
+<dl class="method">
+<dt id="cast.application.Application.declare_property_ownership">
+<tt class="descclassname">Application.</tt><tt class="descname">declare_property_ownership</tt><big>(</big><em>prop</em>, <em>scope</em><big>)</big><a class="headerlink" href="#cast.application.Application.declare_property_ownership" title="Permalink to this definition">¶</a></dt>
+<dd><p>State that the current plugin handles the production of a property for some types.
+Also works for links by passing a LinkQuery.</p>
+<p>The current plugin will calculate all the values for that property for all the objects of those types.</p>
+<p>Necessary for saving properties.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>prop</strong> &#8211; the property to save. Either a string for the fullname of the property or an integer for the property id.</li>
+<li><strong>scope</strong> &#8211; list of strings the names of the types or categories, or a <a class="reference internal" href="#cast.application.LinkQuery" title="cast.application.LinkQuery"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.LinkQuery</span></tt></a></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>All given types must have the property.</p>
+</dd></dl>
+
+<p>Here is a complete sample code, assuming that the property exists:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># here say that we take in charge to put the value of the property &#39;CAST_SQL_Object.version&#39; for</span>
+<span class="c"># all objects of type &#39;CAST_MSTSQL_RelationalTable&#39;</span>
+
+<span class="n">application</span><span class="o">.</span><span class="n">declare_property_ownership</span><span class="p">(</span><span class="s">&#39;CAST_SQL_Object.version&#39;</span><span class="p">,[</span><span class="s">&#39;CAST_MSTSQL_RelationalTable&#39;</span><span class="p">])</span>
+
+<span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">application</span><span class="o">.</span><span class="n">objects</span><span class="p">()</span><span class="o">.</span><span class="n">has_type</span><span class="p">(</span><span class="s">&#39;CAST_MSTSQL_RelationalTable&#39;</span><span class="p">):</span>
+    <span class="n">o</span><span class="o">.</span><span class="n">save_property</span><span class="p">(</span><span class="s">&#39;CAST_SQL_Object.version&#39;</span><span class="p">,</span> <span class="s">&quot;my version&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="bookmark">
+<h3>Bookmark<a class="headerlink" href="#bookmark" title="Permalink to this headline">¶</a></h3>
+<p>All code positions are represented by objects of class :</p>
+<dl class="class">
+<dt id="cast.application.Bookmark">
+<em class="property">class </em><tt class="descclassname">cast.application.</tt><tt class="descname">Bookmark</tt><big>(</big><em>file</em>, <em>begin_line</em>, <em>begin_column</em>, <em>end_line</em>, <em>end_column</em><big>)</big><a class="headerlink" href="#cast.application.Bookmark" title="Permalink to this definition">¶</a></dt>
+<dd><p>A bookmark, i.e., a source code area.</p>
+<dl class="method">
+<dt id="cast.application.Bookmark.contains_position">
+<tt class="descname">contains_position</tt><big>(</big><em>line</em>, <em>column</em><big>)</big><a class="headerlink" href="#cast.application.Bookmark.contains_position" title="Permalink to this definition">¶</a></dt>
+<dd><p>True if bookmark contains a given text location.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.Bookmark.contains">
+<tt class="descname">contains</tt><big>(</big><em>position</em><big>)</big><a class="headerlink" href="#cast.application.Bookmark.contains" title="Permalink to this definition">¶</a></dt>
+<dd><p>True if bookmark contains another bookmark.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.Bookmark.get_code">
+<tt class="descname">get_code</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.Bookmark.get_code" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the code corresponding to the bookmark.</p>
+<p>It requires having physical access to the source code.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.Bookmark.get_code_line">
+<tt class="descname">get_code_line</tt><big>(</big><em>additional_lines=0</em><big>)</big><a class="headerlink" href="#cast.application.Bookmark.get_code_line" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns one total line of code containing the bookmark.
+Very useful for link&#8217;s positions.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>additional_lines</strong> &#8211; additional lines (before and after) to be returned.</td>
+</tr>
+</tbody>
+</table>
+<p>Example :</p>
+<p>for a link to &#8216;CodeDetail&#8217;</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">pos</span><span class="o">.</span><span class="n">get_code_line</span><span class="p">()</span> 
+<span class="go">lstReadyForAdmin.DataValueField = &quot;CodeDetail&quot;;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pos</span><span class="o">.</span><span class="n">get_code_line</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="go">lstReadyForAdmin.DataSource = dataSet.Tables[1];</span>
+<span class="go">lstReadyForAdmin.DataTextField = &quot;Description&quot;;</span>
+<span class="go">lstReadyForAdmin.DataValueField = &quot;CodeDetail&quot;;</span>
+<span class="go">lstReadyForAdmin.DataBind();</span>
+<span class="go">lstReadyForAdmin.Items.Insert(0, new ListItem(&quot;*All&quot;, string.Empty));        </span>
+</pre></div>
+</div>
+<p>If the bookmark spans on several lines, this method returns an empty string.</p>
+</dd></dl>
+
+</dd></dl>
+
+<p>Through that class one can access file, file path lines and columns.</p>
+</div>
+<div class="section" id="specific-object-types">
+<h3>Specific object types<a class="headerlink" href="#specific-object-types" title="Permalink to this headline">¶</a></h3>
+<p>Some objects have specific types with specific accessors :</p>
+<div class="section" id="file">
+<h4>File<a class="headerlink" href="#file" title="Permalink to this headline">¶</a></h4>
+<p>Those represent analysed source files.</p>
+<dl class="class">
+<dt id="cast.application.File">
+<em class="property">class </em><tt class="descclassname">cast.application.</tt><tt class="descname">File</tt><big>(</big><em>kb</em>, <em>identifier</em>, <em>name</em>, <em>typ</em>, <em>additional_values=None</em><big>)</big><a class="headerlink" href="#cast.application.File" title="Permalink to this definition">¶</a></dt>
+<dd><p>A kb object representing a source file.</p>
+<dl class="method">
+<dt id="cast.application.File.get_path">
+<tt class="descname">get_path</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.File.get_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the source file path</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<p>Files, with their path loaded can be retrieved using :</p>
+<dl class="method">
+<dt id="cast.application.Application.get_files">
+<tt class="descclassname">Application.</tt><tt class="descname">get_files</tt><big>(</big><em>languages=[]</em><big>)</big><a class="headerlink" href="#cast.application.Application.get_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all the files of the application.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>of str languages</strong> (<em>list</em>) &#8211; possible categories for the searched files.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">iterable of <a class="reference internal" href="#cast.application.File" title="cast.application.File"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.File</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="project">
+<h4>Project<a class="headerlink" href="#project" title="Permalink to this headline">¶</a></h4>
+<p>Those represent result projects (vcproj, jar, dll, .project, pom.xml, ...).</p>
+<dl class="class">
+<dt id="cast.application.Project">
+<em class="property">class </em><tt class="descclassname">cast.application.</tt><tt class="descname">Project</tt><big>(</big><em>kb</em>, <em>identifier</em>, <em>name</em>, <em>typ</em>, <em>additional_values=None</em><big>)</big><a class="headerlink" href="#cast.application.Project" title="Permalink to this definition">¶</a></dt>
+<dd><p>A particular object that is the result of an Analysis Unit</p>
+<p>&#64;todo:
+- get_path on csproj</p>
+<dl class="method">
+<dt id="cast.application.Project.get_objects">
+<tt class="descname">get_objects</tt><big>(</big><em>internal=True</em>, <em>external=False</em><big>)</big><a class="headerlink" href="#cast.application.Project.get_objects" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a iterable collection of all the objects of the project</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list of <a class="reference internal" href="#cast.application.Object" title="cast.application.Object"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.Object</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="database">
+<h4>Database<a class="headerlink" href="#database" title="Permalink to this headline">¶</a></h4>
+<p>Objects representing analysed databases are represneted by the following class :</p>
+<dl class="class">
+<dt id="cast.application.Database">
+<em class="property">class </em><tt class="descclassname">cast.application.</tt><tt class="descname">Database</tt><big>(</big><em>kb</em>, <em>identifier</em>, <em>name</em>, <em>typ</em>, <em>additional_values=None</em><big>)</big><a class="headerlink" href="#cast.application.Database" title="Permalink to this definition">¶</a></dt>
+<dd><p>A kb object representing a database object.</p>
+<dl class="method">
+<dt id="cast.application.Database.get_owners">
+<tt class="descname">get_owners</tt><big>(</big><em>is_sorted=False</em><big>)</big><a class="headerlink" href="#cast.application.Database.get_owners" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all the schemas of the database.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">iterable of <a class="reference internal" href="#cast.application.DatabaseOwner" title="cast.application.DatabaseOwner"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.DatabaseOwner</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<p>They be retrieved using :</p>
+<dl class="method">
+<dt id="cast.application.Application.get_databases">
+<tt class="descclassname">Application.</tt><tt class="descname">get_databases</tt><big>(</big><em>is_sorted=None</em><big>)</big><a class="headerlink" href="#cast.application.Application.get_databases" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all the database objects of the application.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">iterable of <a class="reference internal" href="#cast.application.Database" title="cast.application.Database"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.Database</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="schema">
+<h4>Schema<a class="headerlink" href="#schema" title="Permalink to this headline">¶</a></h4>
+<dl class="class">
+<dt id="cast.application.DatabaseOwner">
+<em class="property">class </em><tt class="descclassname">cast.application.</tt><tt class="descname">DatabaseOwner</tt><big>(</big><em>kb</em>, <em>identifier</em>, <em>name</em>, <em>typ</em>, <em>additional_values=None</em><big>)</big><a class="headerlink" href="#cast.application.DatabaseOwner" title="Permalink to this definition">¶</a></dt>
+<dd><p>A kb object representing a database owner/Schema object.</p>
+<dl class="method">
+<dt id="cast.application.DatabaseOwner.get_tables">
+<tt class="descname">get_tables</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.DatabaseOwner.get_tables" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the tables of the schema.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list of <a class="reference internal" href="#cast.application.Object" title="cast.application.Object"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.Object</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.DatabaseOwner.get_views">
+<tt class="descname">get_views</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.DatabaseOwner.get_views" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the views of the schema.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list of <a class="reference internal" href="#cast.application.Object" title="cast.application.Object"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.Object</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.DatabaseOwner.get_procedures">
+<tt class="descname">get_procedures</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.DatabaseOwner.get_procedures" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the procedures of the schema.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list of <a class="reference internal" href="#cast.application.Object" title="cast.application.Object"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.Object</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.DatabaseOwner.get_functions">
+<tt class="descname">get_functions</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.DatabaseOwner.get_functions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the functions of the schema.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list of <a class="reference internal" href="#cast.application.Object" title="cast.application.Object"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.Object</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+</div>
+<div class="section" id="links">
+<h2>links<a class="headerlink" href="#links" title="Permalink to this headline">¶</a></h2>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.5.0.</span></p>
+</div>
+<p>Iterating on a <a class="reference internal" href="#cast.application.LinkQuery" title="cast.application.LinkQuery"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.LinkQuery</span></tt></a> will gives object of type :</p>
+<dl class="class">
+<dt id="cast.application.EnlightenLink">
+<em class="property">class </em><tt class="descclassname">cast.application.</tt><tt class="descname">EnlightenLink</tt><big>(</big><em>identifier</em>, <em>idfus</em>, <em>acctyplo</em>, <em>acctyphi</em>, <em>caller</em>, <em>callee</em>, <em>kb</em>, <em>application</em>, <em>project_data</em><big>)</big><a class="headerlink" href="#cast.application.EnlightenLink" title="Permalink to this definition">¶</a></dt>
+<dd><p>A link in enlighten.</p>
+<p>It is made of a caller, a callee, and some types of link.</p>
+<dl class="method">
+<dt id="cast.application.EnlightenLink.get_caller">
+<tt class="descname">get_caller</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.EnlightenLink.get_caller" title="Permalink to this definition">¶</a></dt>
+<dd><p>Access to caller object</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#cast.application.Object" title="cast.application.Object"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.Object</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.EnlightenLink.get_callee">
+<tt class="descname">get_callee</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.EnlightenLink.get_callee" title="Permalink to this definition">¶</a></dt>
+<dd><p>Access to called object</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#cast.application.Object" title="cast.application.Object"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.Object</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.EnlightenLink.get_type_names">
+<tt class="descname">get_type_names</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.EnlightenLink.get_type_names" title="Permalink to this definition">¶</a></dt>
+<dd><p>Access to list of link type names.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.EnlightenLink.get_positions">
+<tt class="descname">get_positions</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.EnlightenLink.get_positions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the positions of the links, if loaded.</p>
+<p>It is loaded if it comes from link query constructed with <a class="reference internal" href="#cast.application.LinkQuery.load_positions" title="cast.application.LinkQuery.load_positions"><tt class="xref py py-meth docutils literal"><span class="pre">cast.application.LinkQuery.load_positions()</span></tt></a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list of cast.application.Bookmark.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.EnlightenLink.get_code">
+<tt class="descname">get_code</tt><big>(</big><em>additional_lines=0</em><big>)</big><a class="headerlink" href="#cast.application.EnlightenLink.get_code" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns one total line of code containing the links.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>additional_lines</strong> &#8211; additional lines (before and after) to be returned.</td>
+</tr>
+</tbody>
+</table>
+<p>Example :</p>
+<p>for a link to &#8216;CodeDetail&#8217;</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">pos</span><span class="o">.</span><span class="n">get_code_line</span><span class="p">()</span> 
+<span class="go">lstReadyForAdmin.DataValueField = &quot;CodeDetail&quot;;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pos</span><span class="o">.</span><span class="n">get_code_line</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="go">lstReadyForAdmin.DataSource = dataSet.Tables[1];</span>
+<span class="go">lstReadyForAdmin.DataTextField = &quot;Description&quot;;</span>
+<span class="go">lstReadyForAdmin.DataValueField = &quot;CodeDetail&quot;;</span>
+<span class="go">lstReadyForAdmin.DataBind();</span>
+<span class="go">lstReadyForAdmin.Items.Insert(0, new ListItem(&quot;*All&quot;, string.Empty));        </span>
+</pre></div>
+</div>
+<p>If the bookmark spans on several lines, this method returns an empty string.</p>
+</dd></dl>
+
+</dd></dl>
+
+<div class="section" id="accessing-existing-links">
+<h3>Accessing existing links<a class="headerlink" href="#accessing-existing-links" title="Permalink to this headline">¶</a></h3>
+<p>Already existing links (those created by analysers) can be accessed with</p>
+<dl class="method">
+<dt id="cast.application.Application.links">
+<tt class="descclassname">Application.</tt><tt class="descname">links</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.Application.links" title="Permalink to this definition">¶</a></dt>
+<dd><p>All the links of the application as an iterable.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#cast.application.LinkQuery" title="cast.application.LinkQuery"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.LinkQuery</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<p>Which creates a <a class="reference internal" href="#cast.application.LinkQuery" title="cast.application.LinkQuery"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.LinkQuery</span></tt></a> retrieving all links.
+This query can then be refined using the method chaining pattern API.</p>
+<dl class="class">
+<dt id="cast.application.LinkQuery">
+<em class="property">class </em><tt class="descclassname">cast.application.</tt><tt class="descname">LinkQuery</tt><big>(</big><em>application=None</em>, <em>link_query=None</em><big>)</big><a class="headerlink" href="#cast.application.LinkQuery" title="Permalink to this definition">¶</a></dt>
+<dd><p>A query on links.</p>
+<p>Follows the Method chaining pattern.</p>
+<dl class="method">
+<dt id="cast.application.LinkQuery.has_caller">
+<tt class="descname">has_caller</tt><big>(</big><em>object_query</em><big>)</big><a class="headerlink" href="#cast.application.LinkQuery.has_caller" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filter the links so that caller is in object_query</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>object_query</strong> &#8211; <a class="reference internal" href="#cast.application.ObjectQuery" title="cast.application.ObjectQuery"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.ObjectQuery</span></tt></a> or iterable of <a class="reference internal" href="#cast.application.Object" title="cast.application.Object"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.Object</span></tt></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#cast.application.LinkQuery" title="cast.application.LinkQuery"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.LinkQuery</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.LinkQuery.has_callee">
+<tt class="descname">has_callee</tt><big>(</big><em>object_query</em><big>)</big><a class="headerlink" href="#cast.application.LinkQuery.has_callee" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filter the links so that callee is in object_query</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>object_query</strong> &#8211; <a class="reference internal" href="#cast.application.ObjectQuery" title="cast.application.ObjectQuery"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.ObjectQuery</span></tt></a> or iterable of <a class="reference internal" href="#cast.application.Object" title="cast.application.Object"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.Object</span></tt></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#cast.application.LinkQuery" title="cast.application.LinkQuery"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.LinkQuery</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.LinkQuery.is_not_sure">
+<tt class="descname">is_not_sure</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.LinkQuery.is_not_sure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filter only no sure links.</p>
+<p>Links that are eligible to dynamic link manager.</p>
+<p>Those links are considered as &#8216;not sure&#8217; because they are created from weak strategies.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#cast.application.LinkQuery" title="cast.application.LinkQuery"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.LinkQuery</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.LinkQuery.has_type">
+<tt class="descname">has_type</tt><big>(</big><em>types</em><big>)</big><a class="headerlink" href="#cast.application.LinkQuery.has_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filter the links so that type is in types</p>
+<ul class="simple">
+<li>.has_type(LinkType.call)                 : call links</li>
+<li>.has_type([LinkType.use, LinkType.call]) : use or call links</li>
+</ul>
+<p>:see <tt class="xref py py-class docutils literal"><span class="pre">cast.application.LinkType</span></tt> for known link types</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>or link type types</strong> (<em>list</em>) &#8211; link type(s) allowed</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#cast.application.LinkQuery" title="cast.application.LinkQuery"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.LinkQuery</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.LinkQuery.load_positions">
+<tt class="descname">load_positions</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.LinkQuery.load_positions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Force loading of positions of link and caller.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#cast.application.LinkQuery" title="cast.application.LinkQuery"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.LinkQuery</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<p>Examples:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># iterate all links application</span>
+<span class="k">for</span> <span class="n">link</span> <span class="ow">in</span> <span class="n">application</span><span class="o">.</span><span class="n">links</span><span class="p">():</span>
+    <span class="o">...</span>
+
+<span class="c"># iterate all call links of application</span>
+<span class="k">for</span> <span class="n">link</span> <span class="ow">in</span> <span class="n">application</span><span class="o">.</span><span class="n">links</span><span class="p">()</span><span class="o">.</span><span class="n">has_type</span><span class="p">(</span><span class="n">LinkType</span><span class="o">.</span><span class="n">call</span><span class="p">):</span>
+    <span class="o">...</span>
+
+<span class="c"># iterate all call links to java objects of application</span>
+<span class="k">for</span> <span class="n">link</span> <span class="ow">in</span> <span class="n">application</span><span class="o">.</span><span class="n">links</span><span class="p">()</span><span class="o">.</span><span class="n">has_type</span><span class="p">(</span><span class="n">LinkType</span><span class="o">.</span><span class="n">call</span><span class="p">)</span><span class="o">.</span><span class="n">has_callee</span><span class="p">(</span><span class="n">application</span><span class="o">.</span><span class="n">objects</span><span class="p">()</span><span class="o">.</span><span class="n">has_type</span><span class="p">(</span><span class="s">&#39;Java&#39;</span><span class="p">)):</span>
+    <span class="o">...</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="decorating-existing-links-with-properties">
+<h3>Decorating existing links with properties<a class="headerlink" href="#decorating-existing-links-with-properties" title="Permalink to this headline">¶</a></h3>
+<p>The same way object can be decorated with new properties, existing links can receive new properties :</p>
+<dl class="method">
+<dt id="cast.application.EnlightenLink.save_property">
+<tt class="descclassname">EnlightenLink.</tt><tt class="descname">save_property</tt><big>(</big><em>prop</em>, <em>value</em><big>)</big><a class="headerlink" href="#cast.application.EnlightenLink.save_property" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save a property on current link.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>prop</strong> &#8211; the property to save. Either a string for the fullname of the property or an integer for the property id.</li>
+<li><strong>value</strong> &#8211; the value to set, either a integer, a string or a list of those</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>The current plugin must have declared the property has his own.  
+:see <a class="reference internal" href="#cast.application.Application.declare_property_ownership" title="cast.application.Application.declare_property_ownership"><tt class="xref py py-meth docutils literal"><span class="pre">cast.application.Application.declare_property_ownership()</span></tt></a></p>
+</dd></dl>
+
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The property must have been declared to be handled by using <a class="reference internal" href="#cast.application.Application.declare_property_ownership" title="cast.application.Application.declare_property_ownership"><tt class="xref py py-meth docutils literal"><span class="pre">cast.application.Application.declare_property_ownership()</span></tt></a></p>
+</div>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">links</span> <span class="o">=</span> <span class="n">application</span><span class="o">.</span><span class="n">links</span><span class="p">()</span><span class="o">.</span><span class="n">has_type</span><span class="p">(</span><span class="n">LinkType</span><span class="o">.</span><span class="n">call</span><span class="p">)</span><span class="o">.</span><span class="n">has_caller</span><span class="p">(</span><span class="n">application</span><span class="o">.</span><span class="n">objects</span><span class="p">()</span><span class="o">.</span><span class="n">has_type</span><span class="p">(</span><span class="s">&#39;C/C++&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">is_virtual</span><span class="p">())</span>
+
+<span class="n">application</span><span class="o">.</span><span class="n">declare_property_ownership</span><span class="p">(</span><span class="s">&#39;physicalLink.inferenceEngineRequests&#39;</span><span class="p">,</span> <span class="n">links</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">link</span> <span class="ow">in</span> <span class="n">links</span><span class="p">:</span>
+
+    <span class="n">link</span><span class="o">.</span><span class="n">save_property</span><span class="p">(</span><span class="s">&#39;physicalLink.inferenceEngineRequests&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;virtual call&#39;</span><span class="p">])</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&#39;adding property on </span><span class="si">%s</span><span class="s"> --&gt; </span><span class="si">%s</span><span class="s">&#39;</span><span class="p">,</span> <span class="n">link</span><span class="o">.</span><span class="n">get_caller</span><span class="p">()</span><span class="o">.</span><span class="n">get_qualified_name</span><span class="p">(),</span> <span class="n">link</span><span class="o">.</span><span class="n">get_callee</span><span class="p">()</span><span class="o">.</span><span class="n">get_qualified_name</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="validating-dynamic-links">
+<h3>Validating dynamic links<a class="headerlink" href="#validating-dynamic-links" title="Permalink to this headline">¶</a></h3>
+<p>Dynamic links can be marked as validated or ignored.</p>
+<dl class="method">
+<dt id="cast.application.EnlightenLink.validate">
+<tt class="descclassname">EnlightenLink.</tt><tt class="descname">validate</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.EnlightenLink.validate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Mark current link as valid according to DLM.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.EnlightenLink.ignore">
+<tt class="descclassname">EnlightenLink.</tt><tt class="descname">ignore</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.EnlightenLink.ignore" title="Permalink to this definition">¶</a></dt>
+<dd><p>Mark current link as ignored according to DLM.</p>
+</dd></dl>
+
+<p>Those methods will flag a link with the corresponding state.</p>
+<p>Here is an example conversion from DLM Rule Engine to this API:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># all so called &#39;dynamic&#39; links</span>
+<span class="k">for</span> <span class="n">link</span> <span class="ow">in</span> <span class="n">application</span><span class="o">.</span><span class="n">links</span><span class="p">()</span><span class="o">.</span><span class="n">is_not_sure</span><span class="p">():</span>
+
+    <span class="n">callee</span> <span class="o">=</span> <span class="n">link</span><span class="o">.</span><span class="n">get_callee</span><span class="p">()</span>
+
+    <span class="n">expression</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">expresion</span><span class="p">,</span><span class="n">callee</span><span class="o">.</span><span class="n">get_fullname</span><span class="p">()):</span>
+
+        <span class="n">link</span><span class="o">.</span><span class="n">validate</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="creating-links">
+<h3>Creating links<a class="headerlink" href="#creating-links" title="Permalink to this headline">¶</a></h3>
+<p>New links can be created between two <a class="reference internal" href="#cast.application.Object" title="cast.application.Object"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.Object</span></tt></a></p>
+<dl class="function">
+<dt id="cast.application.create_link">
+<tt class="descclassname">cast.application.</tt><tt class="descname">create_link</tt><big>(</big><em>link_type</em>, <em>caller</em>, <em>callee</em>, <em>bookmark=None</em><big>)</big><a class="headerlink" href="#cast.application.create_link" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a link between two objects.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>link_type</strong> (<em>str</em>) &#8211; name of the link type</li>
+<li><strong>caller</strong> (<a class="reference internal" href="#cast.application.Object" title="cast.application.Object"><em>cast.application.Object</em></a>) &#8211; source of the link</li>
+<li><strong>callee</strong> (<a class="reference internal" href="#cast.application.Object" title="cast.application.Object"><em>cast.application.Object</em></a>) &#8211; destination of the link</li>
+<li><strong>bookmark</strong> (<a class="reference internal" href="#cast.application.Bookmark" title="cast.application.Bookmark"><em>cast.application.Bookmark</em></a>) &#8211; position of the link</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list of <tt class="xref py py-class docutils literal"><span class="pre">cast.application.create_link.AMTLink</span></tt></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<p>Created links can receive properties :</p>
+<dl class="method">
+<dt id="save_property">
+<tt class="descname">save_property</tt><big>(</big><em>prop</em>, <em>value</em><big>)</big><a class="headerlink" href="#save_property" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This time, no need to declare ownership.</p>
+</div>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">link</span> <span class="o">=</span> <span class="n">create_link</span><span class="p">(</span><span class="s">&#39;callLink&#39;</span><span class="p">,</span> <span class="n">o1</span><span class="p">,</span> <span class="n">o2</span><span class="p">)</span>
+<span class="n">link</span><span class="o">.</span><span class="n">save_property</span><span class="p">(</span><span class="s">&#39;physicalLink.inferenceEngineRequests&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;virtual call&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>Created links can be marked as uncertain. They are then eligible to Dynamic Link Manager.</p>
+<dl class="method">
+<dt id="mark_as_not_sure">
+<tt class="descname">mark_as_not_sure</tt><big>(</big><big>)</big><a class="headerlink" href="#mark_as_not_sure" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">link</span> <span class="o">=</span> <span class="n">create_link</span><span class="p">(</span><span class="s">&#39;callLink&#39;</span><span class="p">,</span> <span class="n">o1</span><span class="p">,</span> <span class="n">o2</span><span class="p">)</span>
+<span class="n">link</span><span class="o">.</span><span class="n">mark_as_not_sure</span><span class="p">()</span> <span class="c"># indicate that this link is not certain</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="a-reference-finder">
+<h2>A reference finder<a class="headerlink" href="#a-reference-finder" title="Permalink to this headline">¶</a></h2>
+<p>This API includes a simplified reference finder.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p>This API is different from the CAST-MS Reference Finder.</p>
+<p>Here this API only &#8216;finds&#8217; references. It creates no object, no links.</p>
+<p class="last">Typically :
+CAST-MS Reference Finder
+&lt;=&gt;
+<a class="reference internal" href="#cast.application.Application.get_files" title="cast.application.Application.get_files"><tt class="xref py py-meth docutils literal"><span class="pre">cast.application.Application.get_files()</span></tt></a>
++ <a class="reference internal" href="#cast.application.ReferenceFinder" title="cast.application.ReferenceFinder"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.ReferenceFinder</span></tt></a>
++ <a class="reference internal" href="#cast.application.Application.search_objects" title="cast.application.Application.search_objects"><tt class="xref py py-meth docutils literal"><span class="pre">cast.application.Application.search_objects()</span></tt></a>
++ <a class="reference internal" href="#cast.application.create_link" title="cast.application.create_link"><tt class="xref py py-meth docutils literal"><span class="pre">cast.application.create_link()</span></tt></a></p>
+</div>
+<dl class="class">
+<dt id="cast.application.ReferenceFinder">
+<em class="property">class </em><tt class="descclassname">cast.application.</tt><tt class="descname">ReferenceFinder</tt><a class="headerlink" href="#cast.application.ReferenceFinder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search for patterns in a text or file.</p>
+<dl class="method">
+<dt id="cast.application.ReferenceFinder.add_pattern">
+<tt class="descname">add_pattern</tt><big>(</big><em>name</em>, <em>before</em>, <em>element</em>, <em>after</em><big>)</big><a class="headerlink" href="#cast.application.ReferenceFinder.add_pattern" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a search pattern.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> (<em>str</em>) &#8211; name of the pattern</li>
+<li><strong>element</strong> (<em>str</em>) &#8211; a regular expression that is searched</li>
+<li><strong>before</strong> (<em>str</em>) &#8211; a regular expression that should match before the searched element, may be empty but cannot be of variable length</li>
+<li><strong>after</strong> (<em>str</em>) &#8211; a regular expression that should match after the searched element, may be empty</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>So we search element preceded by before and followed directly by after.</p>
+<p>You may add several patterns. 
+First matching pattern will be recognised, so adding overlapping patterns is not recommended.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.ReferenceFinder.find_references_in_file">
+<tt class="descname">find_references_in_file</tt><big>(</big><em>file</em><big>)</big><a class="headerlink" href="#cast.application.ReferenceFinder.find_references_in_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find references inside a file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>file</strong> &#8211; either a file path or a File object</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">iterable of <a class="reference internal" href="#cast.application.Reference" title="cast.application.Reference"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.Reference</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<p>Basically an object of this class will search one or several patterns in a file, and returns an iterable of <a class="reference internal" href="#cast.application.Reference" title="cast.application.Reference"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.Reference</span></tt></a> objects that represent the matches found.</p>
+<p>Usage sample</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">rf</span> <span class="o">=</span> <span class="n">ReferenceFinder</span><span class="p">()</span>
+
+<span class="c"># declare a pattern named &#39;begin_pattern&#39;</span>
+<span class="n">rf</span><span class="o">.</span><span class="n">add_pattern</span><span class="p">(</span><span class="s">&quot;begin_pattern&quot;</span><span class="p">,</span> <span class="n">before</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span> <span class="n">element</span><span class="o">=</span><span class="s">&quot;begin&quot;</span><span class="p">,</span> <span class="n">after</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+<span class="c"># one can add other patterns in the same reference finder</span>
+<span class="n">rf</span><span class="o">.</span><span class="n">add_pattern</span><span class="p">(</span><span class="s">&quot;end_pattern&quot;</span><span class="p">,</span> <span class="n">before</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span> <span class="n">element</span><span class="o">=</span><span class="s">&quot;end&quot;</span><span class="p">,</span> <span class="n">after</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+
+<span class="c"># we assume here that f is of type cast.application.File</span>
+<span class="n">references</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">rf</span><span class="o">.</span><span class="n">find_references_in_file</span><span class="p">(</span><span class="n">f</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>This works as follow :</p>
+<ol class="arabic simple">
+<li>the file is opened</li>
+<li>the text is scanned till one of the pattern matches (the first in the declaring order)</li>
+<li>apply step 2 on the rest of the text ...</li>
+</ol>
+<p>The result is represented by the following class. Please not that it creates no object in the knowledge base nor any object.
+The &#8216;reaction&#8217; to those patterns found is totally open to developer.</p>
+<dl class="class">
+<dt id="cast.application.Reference">
+<em class="property">class </em><tt class="descclassname">cast.application.</tt><tt class="descname">Reference</tt><a class="headerlink" href="#cast.application.Reference" title="Permalink to this definition">¶</a></dt>
+<dd><p>A reference found in the code.</p>
+<p><cite>pattern_name</cite> Name of the found pattern</p>
+<p><cite>object</cite> object containing the reference</p>
+<p><cite>value</cite> the text that was matched</p>
+<p><cite>bookmark</cite> <a class="reference internal" href="#cast.application.Bookmark" title="cast.application.Bookmark"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.Bookmark</span></tt></a> of the reference found</p>
+</dd></dl>
+
+</div>
+<div class="section" id="logging">
+<h2>Logging<a class="headerlink" href="#logging" title="Permalink to this headline">¶</a></h2>
+<p>Use the standard python <a class="reference external" href="https://docs.python.org/3/library/logging.html">logging</a> module:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="k">class</span> <span class="nc">ExtensionApplication</span><span class="p">(</span><span class="n">cast</span><span class="o">.</span><span class="n">application</span><span class="o">.</span><span class="n">ApplicationLevelExtension</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">end_application</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">application</span><span class="p">):</span>
+
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;hello </span><span class="si">%s</span><span class="s">&quot;</span><span class="p">,</span>  <span class="s">&#39;world!&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="using-legacy-tools">
+<h2>Using legacy tools<a class="headerlink" href="#using-legacy-tools" title="Permalink to this headline">¶</a></h2>
+<p>For the sake of continuity we have kept some of the tools after analysis one can find in CAST-MS.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Those are kept for compatibility. But it is strongly recommended to use programmatic API when possible.</p>
+</div>
+<div class="section" id="running-tools-after-analysis">
+<h3>Running &#8216;tools after analysis&#8217;<a class="headerlink" href="#running-tools-after-analysis" title="Permalink to this headline">¶</a></h3>
+<p>The so called &#8216;Cast-MS tools after analysis&#8217; are generally used to create missing links from frameworks.
+They can be directly used from inside the plugin by using :</p>
+<ul class="simple">
+<li><tt class="xref py py-func docutils literal"><span class="pre">cast.application.Application.sql_tool()</span></tt></li>
+<li><tt class="xref py py-func docutils literal"><span class="pre">cast.application.Application.update_cast_knowledge_base()</span></tt></li>
+</ul>
+<p>Note that it is strongly recommended to use ansi sql code here. The SQL code will be executed in the correct schema so following code is perfectly working:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">ExtensionApplication</span><span class="p">(</span><span class="n">cast</span><span class="o">.</span><span class="n">application</span><span class="o">.</span><span class="n">ApplicationLevelExtension</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">end_application</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">application</span><span class="p">):</span>
+
+        <span class="n">application</span><span class="o">.</span><span class="n">update_cast_knowledge_base</span><span class="p">(</span><span class="s">&quot;&quot;&quot;</span>
+<span class="s">        insert into CI_LINKS (CALLER_ID, CALLED_ID, LINK_TYPE, ERROR_ID) values (1,1,1,0);</span>
+<span class="s">        &quot;&quot;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>So no need to prefix tables with nothing.</p>
+</div>
+</div>
+<div class="section" id="interactive-scripting">
+<h2>Interactive scripting<a class="headerlink" href="#interactive-scripting" title="Permalink to this headline">¶</a></h2>
+<p>The API can also be used outside plugins, in a script or in an interactive manner.</p>
+<p>Basically one has to &#8216;connect&#8217; to a knowledge base and then can retrieve applications, etc..</p>
+<dl class="class">
+<dt id="cast.application.KnowledgeBase">
+<em class="property">class </em><tt class="descclassname">cast.application.</tt><tt class="descname">KnowledgeBase</tt><big>(</big><em>name</em>, <em>engine=None</em><big>)</big><a class="headerlink" href="#cast.application.KnowledgeBase" title="Permalink to this definition">¶</a></dt>
+<dd><p>A connection to a knowledge base.</p>
+<dl class="method">
+<dt id="cast.application.KnowledgeBase.get_applications">
+<tt class="descname">get_applications</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.KnowledgeBase.get_applications" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the list of application of the knowledge base.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list of <a class="reference internal" href="#cast.application.Application" title="cast.application.Application"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.Application</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.KnowledgeBase.get_application">
+<tt class="descname">get_application</tt><big>(</big><em>name</em><big>)</big><a class="headerlink" href="#cast.application.KnowledgeBase.get_application" title="Permalink to this definition">¶</a></dt>
+<dd><p>Access to an application by name.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> (<em>str</em>) &#8211; the name of the application</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#cast.application.Application" title="cast.application.Application"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.Application</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.KnowledgeBase.get_caip_version">
+<tt class="descname">get_caip_version</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.KnowledgeBase.get_caip_version" title="Permalink to this definition">¶</a></dt>
+<dd><p>Access to CAIP version of the knowledge base</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.KnowledgeBase.update_cast_system_views">
+<tt class="descname">update_cast_system_views</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.KnowledgeBase.update_cast_system_views" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates the Cast System Views.</p>
+</dd></dl>
+
+</dd></dl>
+
+<p>Example of a script:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">cast.application</span> <span class="kn">import</span> <span class="n">KnowledgeBase</span><span class="p">,</span> <span class="n">LinkType</span>
+
+<span class="n">kb</span> <span class="o">=</span> <span class="n">KnowledgeBase</span><span class="p">(</span><span class="s">&#39;b800_8525_local&#39;</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">kb</span><span class="o">.</span><span class="n">get_applications</span><span class="p">())</span>
+
+<span class="n">application</span> <span class="o">=</span> <span class="n">kb</span><span class="o">.</span><span class="n">get_application</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;Cpp&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">link</span> <span class="ow">in</span> <span class="n">application</span><span class="o">.</span><span class="n">links</span><span class="p">()</span><span class="o">.</span><span class="n">has_type</span><span class="p">([</span><span class="n">LinkType</span><span class="o">.</span><span class="n">call</span><span class="p">,</span> <span class="n">LinkType</span><span class="o">.</span><span class="n">accessExec</span><span class="p">])</span><span class="o">.</span><span class="n">has_callee</span><span class="p">(</span><span class="n">application</span><span class="o">.</span><span class="n">objects</span><span class="p">()</span><span class="o">.</span><span class="n">is_virtual</span><span class="p">()):</span>
+
+    <span class="k">print</span><span class="p">(</span><span class="n">link</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Default connection is a css localhost:2280. But any other connection can be passed to the constructor of <a class="reference internal" href="#cast.application.KnowledgeBase" title="cast.application.KnowledgeBase"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.KnowledgeBase</span></tt></a></p>
+<dl class="function">
+<dt id="cast.application.create_postgres_engine">
+<tt class="descclassname">cast.application.</tt><tt class="descname">create_postgres_engine</tt><big>(</big><em>user='operator'</em>, <em>password='CastAIP'</em>, <em>host='localhost'</em>, <em>port=2280</em><big>)</big><a class="headerlink" href="#cast.application.create_postgres_engine" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="cast.application.create_oracle_engine">
+<tt class="descclassname">cast.application.</tt><tt class="descname">create_oracle_engine</tt><big>(</big><em>user</em>, <em>password</em>, <em>host</em>, <em>port</em>, <em>sid</em>, <em>service</em><big>)</big><a class="headerlink" href="#cast.application.create_oracle_engine" title="Permalink to this definition">¶</a></dt>
+<dd><p>sid or service name</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="cast.application.create_sqlserver_engine">
+<tt class="descclassname">cast.application.</tt><tt class="descname">create_sqlserver_engine</tt><big>(</big><em>user</em>, <em>password</em>, <em>server</em>, <em>schema</em>, <em>port</em>, <em>instance</em>, <em>trusted=False</em><big>)</big><a class="headerlink" href="#cast.application.create_sqlserver_engine" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">cast.application</span> <span class="kn">import</span> <span class="n">KnowledgeBase</span><span class="p">,</span> <span class="n">LinkType</span><span class="p">,</span> <span class="n">create_oracle_engine</span>
+
+<span class="n">engine</span> <span class="o">=</span> <span class="n">create_oracle_engine</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="s">&quot;EXTKB734&quot;</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s">&quot;EXTKB734&quot;</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="s">&quot;JNK2O11&quot;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">1521</span><span class="p">,</span> <span class="n">sid</span><span class="o">=</span><span class="s">&quot;JNK2O11&quot;</span><span class="p">,</span> <span class="n">service</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+
+<span class="n">kb</span> <span class="o">=</span> <span class="n">KnowledgeBase</span><span class="p">(</span><span class="s">&#39;extkb734&#39;</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="n">engine</span><span class="p">)</span>
+
+<span class="o">...</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="data_exchange.html" class="btn btn-neutral float-right" title="Exchanging data between analysis level and application level" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="analyser_level.html" class="btn btn-neutral" title="Running during analysis of an existing analyser" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014, CAST.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Python Module Index &mdash; CAST Extension SDK 1.0 documentation</title>
+  <title>Deploying plugins &mdash; CAST Extension SDK 1.0 documentation</title>
   
 
   
@@ -31,9 +31,8 @@
 
   
     <link rel="top" title="CAST Extension SDK 1.0 documentation" href="index.html"/>
- 
-
-
+        <link rel="next" title="Creating a plugin" href="manual.html"/>
+        <link rel="prev" title="Tutorial : My first plugin" href="my_first_plugin.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -83,11 +82,15 @@
           
             
             
-                <ul>
+                <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="my_first_plugin.html">Tutorial : My first plugin</a></li>
-<li class="toctree-l1"><a class="reference internal" href="deployment.html">Deploying plugins</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Deploying plugins</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#how-to-deploy-a-plugin-into-caip-version-8-0-0">How to deploy a plugin into CAIP version &gt;= 8.0.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">How to deploy a plugin into CAIP version &lt;= 8.0.0</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="manual.html">Creating a plugin</a></li>
 <li class="toctree-l1"><a class="reference internal" href="analyser_level.html">Running during analysis of an existing analyser</a></li>
 <li class="toctree-l1"><a class="reference internal" href="application_level.html">Running code after analyzers</a></li>
@@ -127,9 +130,11 @@
   <ul class="wy-breadcrumbs">
     <li><a href="index.html">Docs</a> &raquo;</li>
       
-    <li></li>
+    <li>Deploying plugins</li>
     <li class="wy-breadcrumbs-aside">
       
+        
+          <a href="_sources/deployment.txt" rel="nofollow"> View page source</a>
         
       
     </li>
@@ -139,69 +144,53 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-
-   <h1>Python Module Index</h1>
-
-   <div class="modindex-jumpbox">
-   <a href="#cap-c"><strong>c</strong></a>
-   </div>
-
-   <table class="indextable modindextable" cellspacing="0" cellpadding="2">
-     <tr class="pcap"><td></td><td>&nbsp;</td><td></td></tr>
-     <tr class="cap" id="cap-c"><td></td><td>
-       <strong>c</strong></td><td></td></tr>
-     <tr>
-       <td><img src="_static/minus.png" class="toggler"
-              id="toggle-1" style="display: none" alt="-" /></td>
-       <td>
-       <tt class="xref">cast</tt></td><td>
-       <em></em></td></tr>
-     <tr class="cg-1">
-       <td></td>
-       <td>&nbsp;&nbsp;&nbsp;
-       <a href="analysers_specif.html#module-cast.analysers.abap"><tt class="xref">cast.analysers.abap</tt></a></td><td>
-       <em></em></td></tr>
-     <tr class="cg-1">
-       <td></td>
-       <td>&nbsp;&nbsp;&nbsp;
-       <a href="analysers_specif.html#module-cast.analysers.dotnet"><tt class="xref">cast.analysers.dotnet</tt></a></td><td>
-       <em></em></td></tr>
-     <tr class="cg-1">
-       <td></td>
-       <td>&nbsp;&nbsp;&nbsp;
-       <a href="code_reference.html#module-cast.analysers.external_link"><tt class="xref">cast.analysers.external_link</tt></a></td><td>
-       <em></em></td></tr>
-     <tr class="cg-1">
-       <td></td>
-       <td>&nbsp;&nbsp;&nbsp;
-       <a href="code_reference.html#module-cast.analysers.filter"><tt class="xref">cast.analysers.filter</tt></a></td><td>
-       <em></em></td></tr>
-     <tr class="cg-1">
-       <td></td>
-       <td>&nbsp;&nbsp;&nbsp;
-       <a href="analysers_specif.html#module-cast.analysers.jee"><tt class="xref">cast.analysers.jee</tt></a></td><td>
-       <em></em></td></tr>
-     <tr class="cg-1">
-       <td></td>
-       <td>&nbsp;&nbsp;&nbsp;
-       <a href="code_reference.html#module-cast.analysers.log"><tt class="xref">cast.analysers.log</tt></a></td><td>
-       <em></em></td></tr>
-     <tr class="cg-1">
-       <td></td>
-       <td>&nbsp;&nbsp;&nbsp;
-       <a href="code_reference.html#module-cast.analysers.test"><tt class="xref">cast.analysers.test</tt></a></td><td>
-       <em></em></td></tr>
-     <tr class="cg-1">
-       <td></td>
-       <td>&nbsp;&nbsp;&nbsp;
-       <a href="analysers_specif.html#module-cast.analysers.ua"><tt class="xref">cast.analysers.ua</tt></a></td><td>
-       <em></em></td></tr>
-   </table>
+  <div class="section" id="deploying-plugins">
+<h1>Deploying plugins<a class="headerlink" href="#deploying-plugins" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="how-to-deploy-a-plugin-into-caip-version-8-0-0">
+<h2>How to deploy a plugin into CAIP version &gt;= 8.0.0<a class="headerlink" href="#how-to-deploy-a-plugin-into-caip-version-8-0-0" title="Permalink to this headline">¶</a></h2>
+<p>Copy the plugin folder into : <tt class="docutils literal"><span class="pre">%ALLUSERSPROFILE%/CAST/CAST/Extensions</span></tt></p>
+<p>You may also redefine the variable <tt class="docutils literal"><span class="pre">CAST_PLUGINS_ROOT_PATH</span></tt> in <tt class="docutils literal"><span class="pre">CastGlobalSettings.ini</span></tt> for replacing <tt class="docutils literal"><span class="pre">%ALLUSERSPROFILE%/CAST/CAST/Extensions</span></tt> by a custom location.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">During the development phase, the best way to go is to have the ecplise project pointing to the deployed plugin.</p>
+</div>
+<div class="figure align-center">
+<img alt="_images/deploy800.png" src="_images/deploy800.png" />
+<p class="caption">Result of a correct deploy.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Deploying the tests folder is &#8216;optional&#8217;.</p>
+</div>
+<p>Then activate the plugin for a combined install though servman &#8216;Manage Extensions&#8217;.</p>
+<p>Run CAIP as usual, you should see the log messages during anlysis.</p>
+</div>
+<div class="section" id="id1">
+<h2>How to deploy a plugin into CAIP version &lt;= 8.0.0<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>Before 8.0.0, the deploy/servman phase is different.</p>
+<p>Copy the plugin folder into : <tt class="docutils literal"><span class="pre">&lt;flat</span> <span class="pre">path&gt;/CustomPlugins</span></tt>; create the folder if needed.</p>
+<p>After deploying some plugin this should give something like :</p>
+<div class="figure align-center">
+<img alt="_images/deploy.png" src="_images/deploy.png" />
+<p class="caption">Result of a correct deploy.</p>
+</div>
+<p>Then, if your plugin contains Metamodel or InstallScript components go to servman and perform &#8216;Component Reinstall&#8217;.</p>
+</div>
+</div>
 
 
            </div>
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="manual.html" class="btn btn-neutral float-right" title="Creating a plugin" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="my_first_plugin.html" class="btn btn-neutral" title="Tutorial : My first plugin" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

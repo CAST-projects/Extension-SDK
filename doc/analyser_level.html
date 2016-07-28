@@ -1,0 +1,585 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Running during analysis of an existing analyser &mdash; CAST Extension SDK 1.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="CAST Extension SDK 1.0 documentation" href="index.html"/>
+        <link rel="next" title="Running code after analyzers" href="application_level.html"/>
+        <link rel="prev" title="Creating a plugin" href="manual.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> CAST Extension SDK
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="my_first_plugin.html">Tutorial : My first plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="deployment.html">Deploying plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="manual.html">Creating a plugin</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Running during analysis of an existing analyser</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#implementing-analyser-level-extensions">Implementing analyser level extensions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#accessing-analysis-options">Accessing analysis options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#listening-to-analysis-results">Listening to analysis results</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#three-types-of-analysis-objects">Three types of analysis objects</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#producing-analysis-results">Producing analysis results</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#creating-objects">Creating objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#creating-links">Creating links</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#adding-properties-on-objects">Adding properties on objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#creating-violations">Creating violations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#logging">Logging</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#sending-custom-events-to-other-plugins">Sending custom events to other plugins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#unicode-support">Unicode support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#python-modularity">Python modularity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#defining-custom-metamodel">Defining custom Metamodel</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#defining-custom-types">Defining custom types</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#handling-errors">Handling errors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ide">IDE</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#testing">Testing</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#anatomy-of-unit-test">Anatomy of unit test</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#asserting-expected-results">Asserting expected results</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#location-for-tests">Location for tests</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#debugging">Debugging</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="application_level.html">Running code after analyzers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data_exchange.html">Exchanging data between analysis level and application level</a></li>
+<li class="toctree-l1"><a class="reference internal" href="analysers_specif.html">Analysers specific events</a></li>
+<li class="toctree-l1"><a class="reference internal" href="debugging.html">Debugging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="code_reference.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="version_compatibility.html">Features and Bugs per CAIP versions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tips_and_tricks.html">Tips and tricks</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">CAST Extension SDK</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Running during analysis of an existing analyser</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="_sources/analyser_level.txt" rel="nofollow"> View page source</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="running-during-analysis-of-an-existing-analyser">
+<h1>Running during analysis of an existing analyser<a class="headerlink" href="#running-during-analysis-of-an-existing-analyser" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="implementing-analyser-level-extensions">
+<h2>Implementing analyser level extensions<a class="headerlink" href="#implementing-analyser-level-extensions" title="Permalink to this headline">¶</a></h2>
+<p>An analyser level extension is a subclass of one of :</p>
+<ul class="simple">
+<li><a class="reference internal" href="analysers_specif.html#cast.analysers.jee.Extension" title="cast.analysers.jee.Extension"><tt class="xref py py-class docutils literal"><span class="pre">cast.analysers.jee.Extension</span></tt></a></li>
+<li><a class="reference internal" href="analysers_specif.html#cast.analysers.dotnet.Extension" title="cast.analysers.dotnet.Extension"><tt class="xref py py-class docutils literal"><span class="pre">cast.analysers.dotnet.Extension</span></tt></a></li>
+<li><a class="reference internal" href="analysers_specif.html#cast.analysers.abap.Extension" title="cast.analysers.abap.Extension"><tt class="xref py py-class docutils literal"><span class="pre">cast.analysers.abap.Extension</span></tt></a></li>
+<li><a class="reference internal" href="analysers_specif.html#cast.analysers.ua.Extension" title="cast.analysers.ua.Extension"><tt class="xref py py-class docutils literal"><span class="pre">cast.analysers.ua.Extension</span></tt></a></li>
+</ul>
+<p>Any number of extension can be registered in a plugin.:</p>
+<div class="highlight-python"><div class="highlight"><pre>def MyExtension(cast.analysers.jee.Extension):
+    pass
+</pre></div>
+</div>
+<p>CAIP creates a python object of that class.
+The class is meant to override the methods of its base class (called extension points). Those methods will be called during analysis following a predictible sequence.</p>
+<p>Each technology has its own sequence diagram.</p>
+<p>The order of the declared methods in <a class="reference internal" href="analysers_specif.html#cast.analysers.jee.Extension" title="cast.analysers.jee.Extension"><tt class="xref py py-class docutils literal"><span class="pre">cast.analysers.jee.Extension</span></tt></a> or <a class="reference internal" href="analysers_specif.html#cast.analysers.dotnet.Extension" title="cast.analysers.dotnet.Extension"><tt class="xref py py-class docutils literal"><span class="pre">cast.analysers.dotnet.Extension</span></tt></a> gives the order in which they will be called.</p>
+</div>
+<div class="section" id="accessing-analysis-options">
+<h2>Accessing analysis options<a class="headerlink" href="#accessing-analysis-options" title="Permalink to this headline">¶</a></h2>
+<p>The start_analysis extension point have a <a class="reference internal" href="code_reference.html#cast.analysers.ExecutionUnit" title="cast.analysers.ExecutionUnit"><tt class="xref py py-class docutils literal"><span class="pre">cast.analysers.ExecutionUnit</span></tt></a> parameter.</p>
+<p>This gives a plugin the opportunity to perform discovering operations on analysed source projects (csproj, vcproj, pom.xml, etc..) or on analysed files.:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">MyExtension</span><span class="p">(</span><span class="n">cast</span><span class="o">.</span><span class="n">analysers</span><span class="o">.</span><span class="n">dotnet</span><span class="o">.</span><span class="n">Extension</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">start_analysis</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">options</span><span class="p">):</span>
+
+        <span class="c"># retreive the pathes of the analysed csproj</span>
+        <span class="n">projects</span> <span class="o">=</span> <span class="n">options</span><span class="o">.</span><span class="n">get_source_projects</span><span class="p">()</span>
+
+        <span class="c"># we can scan those projects file to retreive some dependencies</span>
+        <span class="o">...</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="listening-to-analysis-results">
+<h2>Listening to analysis results<a class="headerlink" href="#listening-to-analysis-results" title="Permalink to this headline">¶</a></h2>
+<p>Each extension point provides a context through the form of an analysis object. It is generally the visited element : a file, a type, etc...</p>
+<p>For example <a class="reference internal" href="analysers_specif.html#cast.analysers.jee.Extension.start_type" title="cast.analysers.jee.Extension.start_type"><tt class="xref py py-func docutils literal"><span class="pre">cast.analysers.jee.Extension.start_type()</span></tt></a> has the visited type as a context. See documentation for the type of the contextual parameters.:</p>
+<div class="highlight-python"><div class="highlight"><pre>def MyExtension(cast.analysers.jee.Extension):
+
+    def start_type(self, type):
+
+        # inspect type object to see if it inherits from class com.yourcompany.Root
+        for parent in type.get_inherited_types():
+
+            if parent.get_fullname() == &#39;com.yourcompany.Root&#39;:
+
+                # perform specific action
+                # ...
+</pre></div>
+</div>
+<div class="section" id="three-types-of-analysis-objects">
+<h3>Three types of analysis objects<a class="headerlink" href="#three-types-of-analysis-objects" title="Permalink to this headline">¶</a></h3>
+<p>Analysis objects produced by the underlying analyser inherit from <a class="reference internal" href="code_reference.html#cast.analysers.Object" title="cast.analysers.Object"><tt class="xref py py-class docutils literal"><span class="pre">cast.analysers.Object</span></tt></a>.</p>
+<p>As an additional input, an analysis may have external objects. These generally are database objects comming from a previous database analysis. These objects inherit from <a class="reference internal" href="code_reference.html#cast.analysers.ExternalObject" title="cast.analysers.ExternalObject"><tt class="xref py py-class docutils literal"><span class="pre">cast.analysers.ExternalObject</span></tt></a>.</p>
+<p>The third type of objects are the one produced by a plugin, these objects inherit from <a class="reference internal" href="code_reference.html#cast.analysers.CustomObject" title="cast.analysers.CustomObject"><tt class="xref py py-class docutils literal"><span class="pre">cast.analysers.CustomObject</span></tt></a>.</p>
+<p>These three types of objects are separated.</p>
+</div>
+</div>
+<div class="section" id="producing-analysis-results">
+<h2>Producing analysis results<a class="headerlink" href="#producing-analysis-results" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="creating-objects">
+<h3>Creating objects<a class="headerlink" href="#creating-objects" title="Permalink to this headline">¶</a></h3>
+<p>Class <a class="reference internal" href="code_reference.html#cast.analysers.CustomObject" title="cast.analysers.CustomObject"><tt class="xref py py-class docutils literal"><span class="pre">cast.analysers.CustomObject</span></tt></a> allows to create additional objects :</p>
+<ul class="simple">
+<li>create a python object of that class</li>
+<li>set the name</li>
+<li>set the parent</li>
+<li>set the type : the name of a metamodel type.</li>
+<li>finally call <a class="reference internal" href="code_reference.html#cast.analysers.CustomObject.save" title="cast.analysers.CustomObject.save"><tt class="xref py py-func docutils literal"><span class="pre">cast.analysers.CustomObject.save()</span></tt></a></li>
+</ul>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nb">object</span> <span class="o">=</span> <span class="n">cast</span><span class="o">.</span><span class="n">analysers</span><span class="o">.</span><span class="n">CustomObject</span><span class="p">()</span>
+<span class="nb">object</span><span class="o">.</span><span class="n">set_name</span><span class="p">(</span><span class="s">&#39;AJavaClass&#39;</span><span class="p">)</span>
+<span class="nb">object</span><span class="o">.</span><span class="n">set_type</span><span class="p">(</span><span class="s">&#39;JV_CLASS&#39;</span><span class="p">)</span>
+<span class="nb">object</span><span class="o">.</span><span class="n">set_parent</span><span class="p">(</span><span class="nb">file</span><span class="p">)</span>
+<span class="nb">object</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The parent can be a object of class <a class="reference internal" href="code_reference.html#cast.analysers.Object" title="cast.analysers.Object"><tt class="xref py py-class docutils literal"><span class="pre">cast.analysers.Object</span></tt></a> or <a class="reference internal" href="code_reference.html#cast.analysers.CustomObject" title="cast.analysers.CustomObject"><tt class="xref py py-class docutils literal"><span class="pre">cast.analysers.CustomObject</span></tt></a>. In that latter case the parent object must have been previously saved.</p>
+<p>full_name and guid are automatically calculated but can also be user set.</p>
+<p>Once saved the name, type and parrent cannot be changed.</p>
+<p>If an object is not saved it will not be visible in the analysis service.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Those objects cannot be seen from host analyser. Even if you create Java classes during a Java analysis those classes will not interfere with the classical java analysis.</p>
+</div>
+</div>
+<div class="section" id="creating-links">
+<h3>Creating links<a class="headerlink" href="#creating-links" title="Permalink to this headline">¶</a></h3>
+<p>Function <a class="reference internal" href="code_reference.html#cast.analysers.create_link" title="cast.analysers.create_link"><tt class="xref py py-func docutils literal"><span class="pre">cast.analysers.create_link()</span></tt></a> allows to create links betwwen objects.</p>
+<p>Links can be created between analysis objects, custom objects and to external objects.</p>
+</div>
+<div class="section" id="adding-properties-on-objects">
+<h3>Adding properties on objects<a class="headerlink" href="#adding-properties-on-objects" title="Permalink to this headline">¶</a></h3>
+<p>Object can be decorated by additionnal integer or textual properties through the use of : <a class="reference internal" href="code_reference.html#cast.analysers.Object.save_property" title="cast.analysers.Object.save_property"><tt class="xref py py-func docutils literal"><span class="pre">cast.analysers.Object.save_property()</span></tt></a>.</p>
+<p>The property names can be found in the metamodel. A property name is <em>&lt;name of the category&gt;.&lt;name of the property&gt;</em> For example:</p>
+<div class="highlight-python"><div class="highlight"><pre>&lt;Category name=&quot;MyCategory&quot;&gt;
+  &lt;property name=&quot;myProperty&quot; type=&quot;integer&quot; rid=&quot;1&quot;&gt;
+    &lt;description&gt;My description&lt;/description&gt;
+    &lt;attribute name=&quot;ACCESS_APPVIEW&quot; intValue=&quot;1&quot;/&gt;
+    &lt;attribute name=&quot;ACCESS_CVS&quot; intValue=&quot;1&quot;/&gt;
+    &lt;attribute name=&quot;ACCESS_HTML&quot; intValue=&quot;1&quot;/&gt;
+    &lt;attribute name=&quot;INF_TYPE&quot; intValue=&quot;12&quot;/&gt;
+    &lt;attribute name=&quot;INF_SUB_TYPE&quot; intValue=&quot;7589090953&quot;/&gt;
+  &lt;/property&gt;
+&lt;/partialCategory&gt;
+</pre></div>
+</div>
+<p>This property name is : <em>MyCategory.myProperty</em>.</p>
+<p>Note that this property must have correct <tt class="docutils literal"><span class="pre">INF_TYPE</span></tt> and <tt class="docutils literal"><span class="pre">INF_SUB_TYPE</span></tt> and be present by inheritance on the types of objects you whant to decorate.</p>
+</div>
+<div class="section" id="creating-violations">
+<h3>Creating violations<a class="headerlink" href="#creating-violations" title="Permalink to this headline">¶</a></h3>
+<p>A violation is the occurence of a problem for a quality rule.</p>
+<p>Call <a class="reference internal" href="code_reference.html#cast.analysers.Object.save_violation" title="cast.analysers.Object.save_violation"><tt class="xref py py-func docutils literal"><span class="pre">cast.analysers.Object.save_violation()</span></tt></a> to add aviolation on an analysis object and <a class="reference internal" href="code_reference.html#cast.analysers.CustomObject.save_violation" title="cast.analysers.CustomObject.save_violation"><tt class="xref py py-func docutils literal"><span class="pre">cast.analysers.CustomObject.save_violation()</span></tt></a> t oadd violation on custom objects.</p>
+<p>You will need a metamodel property defined on that object type, it will identify the violation and count the number of problem that were detected on that object.</p>
+<p>The position indicate the source code location where the problem is detected.</p>
+<p>Additional positions may be provided in order to explain the violation.</p>
+<p>As an example, consider the rule : <em>Method override fails due to mismatch of const/volatile qualifiers</em>:</p>
+<ul class="simple">
+<li>the first bookmark is the failing method override</li>
+<li>the additional bookmark is the not overrided method</li>
+</ul>
+<p>Most of the time you will not need additional positions.</p>
+<p>Note that for a given rule any number of violations can be saved on the same object. The number of violations saved on a object should reflect the number of occurence of the problem encountered and thus the effort to correct each of them.</p>
+</div>
+<div class="section" id="logging">
+<h3>Logging<a class="headerlink" href="#logging" title="Permalink to this headline">¶</a></h3>
+<p>Use :</p>
+<ul class="simple">
+<li><a class="reference internal" href="code_reference.html#cast.analysers.log.info" title="cast.analysers.log.info"><tt class="xref py py-func docutils literal"><span class="pre">cast.analysers.log.info()</span></tt></a> for sending information messages to the log</li>
+<li><a class="reference internal" href="code_reference.html#cast.analysers.log.warning" title="cast.analysers.log.warning"><tt class="xref py py-func docutils literal"><span class="pre">cast.analysers.log.warning()</span></tt></a> for sending warning messages to the log</li>
+<li><a class="reference internal" href="code_reference.html#cast.analysers.log.debug" title="cast.analysers.log.debug"><tt class="xref py py-func docutils literal"><span class="pre">cast.analysers.log.debug()</span></tt></a> for debugging messages</li>
+</ul>
+<p>Note that you should not log message for fun.</p>
+<p>Logging information only serve for saying &#8216;I am still alive&#8217;.</p>
+<p>Logging warning should be used to indicate an issue in the analysis configuration. But in the case of plugins it should be very rare.</p>
+<p>Most of the time you will need debug log to help development of plugin.</p>
+</div>
+</div>
+<div class="section" id="sending-custom-events-to-other-plugins">
+<h2>Sending custom events to other plugins<a class="headerlink" href="#sending-custom-events-to-other-plugins" title="Permalink to this headline">¶</a></h2>
+<p>A plugin can broadcast a custom event to other plugins.</p>
+<p>On the broadcaster plugin side, for a plugin named <cite>my.company.plugin1</cite></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">MyExtension</span><span class="p">(</span><span class="n">dotnet</span><span class="o">.</span><span class="n">Extension</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">start_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_class</span><span class="p">):</span>
+        <span class="c"># will broadcast an event to other plugins</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">broadcast</span><span class="p">(</span><span class="s">&#39;custom_event&#39;</span><span class="p">,</span> <span class="n">_class</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>On the listening plugin side, <cite>my.company.plugin2</cite></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">MyExtension</span><span class="p">(</span><span class="n">dotnet</span><span class="o">.</span><span class="n">Extension</span><span class="p">):</span>
+
+    <span class="nd">@cast.Event</span><span class="p">(</span><span class="s">&#39;my.company.plugin1&#39;</span><span class="p">,</span> <span class="s">&#39;custom_event&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_class</span><span class="p">):</span>
+        <span class="c"># will be called by the broadcast above</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">broadcast</span><span class="p">(</span><span class="s">&#39;foo&#39;</span><span class="p">,</span> <span class="n">_class</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This technique introduces a kind of dependency between <cite>my.company.plugin2</cite> and <cite>my.company.plugin1</cite>. But if one of those plugin is not present, nothing happens.</p>
+</div>
+<div class="section" id="unicode-support">
+<h2>Unicode support<a class="headerlink" href="#unicode-support" title="Permalink to this headline">¶</a></h2>
+<p>All strings manipulated are utf-8 strings. In that we follow the rcommendation from <a class="reference external" href="http://www.utf8everywhere.org/">UTF-8 Everywhere</a>.</p>
+<p>User is responsible for coding in a way that respects this principle.</p>
+</div>
+<div class="section" id="python-modularity">
+<h2>Python modularity<a class="headerlink" href="#python-modularity" title="Permalink to this headline">¶</a></h2>
+<p>The plugin code can be organised in different python files.</p>
+<p>Plugin directory is de facto inside the python search path.</p>
+<p>This even allow to include third party python libraries that you can put in the plugin directory.</p>
+</div>
+<div class="section" id="defining-custom-metamodel">
+<h2>Defining custom Metamodel<a class="headerlink" href="#defining-custom-metamodel" title="Permalink to this headline">¶</a></h2>
+<p>A plugin folder may also contain metamodel files.</p>
+<p>Those files must be named : <tt class="docutils literal"><span class="pre">XXXMetaModel.xml</span></tt> and put under a subfolder <tt class="docutils literal"><span class="pre">Configuration\&lt;my</span> <span class="pre">language&gt;\xxxMetaModel.xml</span></tt>.</p>
+<div class="section" id="defining-custom-types">
+<h3>Defining custom types<a class="headerlink" href="#defining-custom-types" title="Permalink to this headline">¶</a></h3>
+<p>A custom metamodel will often contains new object types to be produced.</p>
+<p>One simple way to have a custom type visible in enlighten one can inherit from category CAST_PluginObject.</p>
+</div>
+</div>
+<div class="section" id="handling-errors">
+<h2>Handling errors<a class="headerlink" href="#handling-errors" title="Permalink to this headline">¶</a></h2>
+<p>Python overuses exception for handling errors.</p>
+<p>Provided API will raise exceptions when a constraint is not met.</p>
+<p>If an extension point method raise an exception it will be catched by the analyser, a warning message will be logged and analysis will continue.</p>
+<p>Thius you can safely choose not to hanlde exception at all except if wanted.</p>
+</div>
+<div class="section" id="ide">
+<h2>IDE<a class="headerlink" href="#ide" title="Permalink to this headline">¶</a></h2>
+<p>A complete itegrated development environment is provided based on <a class="reference external" href="http://eclipse.org/eclipse/">eclipse</a> and <a class="reference external" href="http://pydev.org">PyDev plugin</a>.</p>
+<p>See <a class="reference internal" href="install.html"><em>Installation</em></a> for installation and configuration of that IDE.</p>
+<p>It provides :</p>
+<ul>
+<li><p class="first">python source code editor with code completion and cross references</p>
+</li>
+<li><p class="first">a debugger</p>
+</li>
+<li><dl class="first docutils">
+<dt>tools for running analysis outside of Management Studio <span class="classifier-delimiter">:</span> <span class="classifier"><strong>no need for any installed Management Base nor Analysis service</strong></span></dt>
+<dd><ul class="first last simple">
+<li>plugins can be tested and develop in a more rapid way</li>
+<li>plugin developper can write unit tests</li>
+<li>sanity checks are performed, for example if the plugin is ill formed the run will fail</li>
+<li>custom metamodel is validated without need for analysis service</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<p>This IDE combined with unit testing is clearly a time saver. We can only strongly recommend that you use it.</p>
+<div class="section" id="testing">
+<h3>Testing<a class="headerlink" href="#testing" title="Permalink to this headline">¶</a></h3>
+<p>Follow my advice : <strong>test, test, test</strong>.</p>
+<p>Developping analysis tool is hard, time consuming and heavilly error prone.</p>
+<p>It is very hard to plan ahead all analysed code possibilities. A plugin working on some sample projects will probably fail on others.</p>
+<p>Writing unit tests will ensure that a plugin still runs on cases where you invested your effort.</p>
+<p>Without unit testing, correcting one <strong>new case</strong> could silently break <strong>cases working in previous version</strong>.</p>
+<div class="section" id="anatomy-of-unit-test">
+<h4>Anatomy of unit test<a class="headerlink" href="#anatomy-of-unit-test" title="Permalink to this headline">¶</a></h4>
+<p>Use <a class="reference external" href="https://docs.python.org/3/library/unittest.html">unittest</a> python module.</p>
+<p>Basic usage is simple :</p>
+<ul class="simple">
+<li>a class inheriting from <a class="reference external" href="https://docs.python.org/3/library/unittest.html#unittest.TestCase">unittest.TestCase</a></li>
+<li>with one method per test</li>
+</ul>
+<p>Those test methods will have the same structure :</p>
+<ul class="simple">
+<li>create and configure an analysis with options</li>
+<li>run the analysis : the currently tested plugin will be launched</li>
+<li>finally assert some expected facts about created objects, created links and properties</li>
+</ul>
+<p>Sample:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">unittest</span>
+<span class="kn">import</span> <span class="nn">cast.analysers.test</span>
+<span class="kn">import</span> <span class="nn">cast.analysers.filter</span>
+
+<span class="k">class</span> <span class="nc">Test</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">test_check_inheritance_link</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># create a DotNet analysis</span>
+        <span class="n">analysis</span> <span class="o">=</span> <span class="n">cast</span><span class="o">.</span><span class="n">analysers</span><span class="o">.</span><span class="n">test</span><span class="o">.</span><span class="n">DotNetTestAnalysis</span><span class="p">()</span>
+
+        <span class="c"># DotNet need a selection of a csproj or sln</span>
+        <span class="n">analysis</span><span class="o">.</span><span class="n">add_selection</span><span class="p">(</span><span class="s">&#39;AProject/AProject.csproj&#39;</span><span class="p">)</span>
+
+        <span class="c"># activate log</span>
+        <span class="n">analysis</span><span class="o">.</span><span class="n">set_verbose</span><span class="p">()</span>
+
+        <span class="c"># run analysis</span>
+        <span class="n">analysis</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+
+        <span class="c"># perform some checks</span>
+        <span class="n">my_class</span> <span class="o">=</span> <span class="n">analysis</span><span class="o">.</span><span class="n">get_object_by_name</span><span class="p">(</span><span class="s">&#39;AClass&#39;</span><span class="p">,</span><span class="n">cast</span><span class="o">.</span><span class="n">analysers</span><span class="o">.</span><span class="n">filter</span><span class="o">.</span><span class="n">classes</span><span class="p">)</span>
+        <span class="n">object_class</span> <span class="o">=</span> <span class="n">analysis</span><span class="o">.</span><span class="n">get_object_by_fullname</span><span class="p">(</span><span class="s">&#39;System.Object&#39;</span><span class="p">,</span> <span class="n">cast</span><span class="o">.</span><span class="n">analysers</span><span class="o">.</span><span class="n">filter</span><span class="o">.</span><span class="n">classes</span><span class="p">)</span>
+        <span class="n">link</span> <span class="o">=</span> <span class="n">analysis</span><span class="o">.</span><span class="n">get_link_by_caller_callee</span><span class="p">(</span><span class="s">&#39;link&#39;</span><span class="p">,</span> <span class="n">my_class</span><span class="p">,</span> <span class="n">object_class</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">link</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="asserting-expected-results">
+<h4>Asserting expected results<a class="headerlink" href="#asserting-expected-results" title="Permalink to this headline">¶</a></h4>
+<p>Once the analysis ran, results can be checked.</p>
+<p>Analysis Service is emulated and query functions are provided :</p>
+<ul class="simple">
+<li><a class="reference internal" href="code_reference.html#cast.analysers.test.TestAnalysis.get_object_by_name" title="cast.analysers.test.TestAnalysis.get_object_by_name"><tt class="xref py py-func docutils literal"><span class="pre">cast.analysers.test.TestAnalysis.get_object_by_name()</span></tt></a> will retreive an object by name and object kind</li>
+<li><a class="reference internal" href="code_reference.html#cast.analysers.test.TestAnalysis.get_link_by_caller_callee" title="cast.analysers.test.TestAnalysis.get_link_by_caller_callee"><tt class="xref py py-func docutils literal"><span class="pre">cast.analysers.test.TestAnalysis.get_link_by_caller_callee()</span></tt></a> will retreive a link between two previously retreived objects</li>
+</ul>
+<p>Other functions exists for more complex queries.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>Query functions that returns one single object will always fail if several objects meet the filtering criterium. Otherwise tests tend to be purelly random.</p>
+<p>As an example : one want to assert existence of a link between two objects : this can be assert as following :
+self.assertTrue(analysis.get_link_by_caller_callee(&#8216;link&#8217;, caller, callee))</p>
+<p>but if several links are created betweeen those two objects, test will fail with an exception.</p>
+<p class="last">In order to circonvein that limit either
+- do more specialised tests, for example by specifying a more precise link type
+- or use get_links_by_caller_callee and be less precise. Beware though, you may expose to some deceipts.</p>
+</div>
+<p>Some classical usefull object kinds are provided in <a class="reference internal" href="code_reference.html#module-cast.analysers.filter" title="cast.analysers.filter"><tt class="xref py py-mod docutils literal"><span class="pre">cast.analysers.filter</span></tt></a>. But any string naming a valid metamodel category or type is allowed.</p>
+<p>The general idea is to assert that :</p>
+<ul class="simple">
+<li>some object exists</li>
+<li>some link exists</li>
+</ul>
+<p>Which will exactly define the plugin behaviour.</p>
+<p>Analysed source code sample can be directly put under the directory/package of tests. They can also be created as temporary files and selected for analysis.</p>
+<p>You can provide input to external link module by using <a class="reference internal" href="code_reference.html#cast.analysers.test.TestAnalysis.add_database_table" title="cast.analysers.test.TestAnalysis.add_database_table"><tt class="xref py py-func docutils literal"><span class="pre">cast.analysers.test.TestAnalysis.add_database_table()</span></tt></a>. This method returns the table object that you can use
+latter on to check presence of links to that table.</p>
+<p>Sample, asserting links to database tables:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">unittest</span>
+<span class="kn">import</span> <span class="nn">cast.analysers.test</span>
+<span class="kn">import</span> <span class="nn">cast.analysers.filter</span>
+
+<span class="k">class</span> <span class="nc">Test</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">test_integration</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="n">analysis</span> <span class="o">=</span> <span class="n">cast</span><span class="o">.</span><span class="n">analysers</span><span class="o">.</span><span class="n">test</span><span class="o">.</span><span class="n">DotNetTestAnalysis</span><span class="p">()</span>
+        <span class="n">analysis</span><span class="o">.</span><span class="n">add_selection</span><span class="p">(</span><span class="s">&#39;ContosoUniversity\DotNet\ContosoUniversity\ContosoUniversity.csproj&#39;</span><span class="p">)</span>
+        <span class="c">#course is the table</span>
+        <span class="n">course</span> <span class="o">=</span> <span class="n">analysis</span><span class="o">.</span><span class="n">add_database_table</span><span class="p">(</span><span class="s">&#39;Course&#39;</span><span class="p">,</span><span class="s">&#39;TSQL&#39;</span><span class="p">)</span>
+
+        <span class="n">analysis</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+
+        <span class="n">class_course</span> <span class="o">=</span> <span class="n">analysis</span><span class="o">.</span><span class="n">get_object_by_name</span><span class="p">(</span><span class="s">&#39;Course&#39;</span><span class="p">,</span> <span class="n">cast</span><span class="o">.</span><span class="n">analysers</span><span class="o">.</span><span class="n">filter</span><span class="o">.</span><span class="n">classes</span><span class="p">)</span>
+        <span class="c"># we have alink between class &#39;Course&#39; and table &#39;Course&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">analysis</span><span class="o">.</span><span class="n">get_link_by_caller_callee</span><span class="p">(</span><span class="s">&#39;useSelectLink&#39;</span><span class="p">,</span> <span class="n">class_course</span><span class="p">,</span> <span class="n">course</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="location-for-tests">
+<h4>Location for tests<a class="headerlink" href="#location-for-tests" title="Permalink to this headline">¶</a></h4>
+<p>In order to correctly run and automatically detect the plugin tests must reside in a python sub package of the plugin.</p>
+</div>
+</div>
+<div class="section" id="debugging">
+<h3>Debugging<a class="headerlink" href="#debugging" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li>Start the remote pydev debugger : <a class="reference external" href="http://pydev.org/manual_adv_remote_debugger.html">http://pydev.org/manual_adv_remote_debugger.html</a></li>
+<li>Put your breakpoints</li>
+<li>Go to your unit tests file and press <tt class="docutils literal"><span class="pre">F11</span></tt> or debug it as python unit-test</li>
+</ol>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Selecting other locations than the unit test code will not work.</p>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="application_level.html" class="btn btn-neutral float-right" title="Running code after analyzers" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="manual.html" class="btn btn-neutral" title="Creating a plugin" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014, CAST.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,60 +1,151 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>Overview &mdash; CAST-SDK 1.0 documentation</title>
-    
-    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    './',
-        VERSION:     '1.0',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="CAST-SDK 1.0 documentation" href="index.html" />
-    <link rel="next" title="Installation" href="install.html" />
-    <link rel="prev" title="CAST-SDK’s documentation" href="index.html" /> 
-  </head>
-  <body>
-    <div class="related">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
-             accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
-          <a href="install.html" title="Installation"
-             accesskey="N">next</a> |</li>
-        <li class="right" >
-          <a href="index.html" title="CAST-SDK’s documentation"
-             accesskey="P">previous</a> |</li>
-        <li><a href="index.html">CAST-SDK 1.0 documentation</a> &raquo;</li> 
-      </ul>
-    </div>  
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Overview &mdash; CAST Extension SDK 1.0 documentation</title>
+  
 
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          <div class="body">
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="CAST Extension SDK 1.0 documentation" href="index.html"/>
+        <link rel="next" title="Installation" href="install.html"/>
+        <link rel="prev" title="CAST Extension SDK’s documentation" href="index.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> CAST Extension SDK
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="">Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#what-is-a-plugin">What is a Plugin ?</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="my_first_plugin.html">Tutorial : My first plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="deployment.html">Deploying plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="manual.html">Creating a plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="analyser_level.html">Running during analysis of an existing analyser</a></li>
+<li class="toctree-l1"><a class="reference internal" href="application_level.html">Running code after analyzers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data_exchange.html">Exchanging data between analysis level and application level</a></li>
+<li class="toctree-l1"><a class="reference internal" href="analysers_specif.html">Analysers specific events</a></li>
+<li class="toctree-l1"><a class="reference internal" href="debugging.html">Debugging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="code_reference.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="version_compatibility.html">Features and Bugs per CAIP versions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tips_and_tricks.html">Tips and tricks</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">CAST Extension SDK</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Overview</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="_sources/overview.txt" rel="nofollow"> View page source</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
             
   <div class="section" id="overview">
 <h1>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h1>
-<p>CAST-SDK allow to develop plugins that are launched during the analysis process. It is a set of tools made to help producing more analysis data.</p>
+<p>CAST Extension SDK allow to develop plugins that are launched during the analysis process. It is a set of tools made to help producing more analysis data (objects, links, properties).</p>
 <p>Some notable features :</p>
 <ul class="simple">
 <li>execute any executable during an analysis job, for example third party analyzers</li>
@@ -63,7 +154,7 @@
 <li>parse any type of files</li>
 <li>do whatever one can program</li>
 </ul>
-<p>It is based on</p>
+<p>The SDK is based on</p>
 <ul class="simple">
 <li><a class="reference external" href="http://www.python.org/doc/">Python 3.4</a> as scripting language</li>
 <li>eclipse as IDE</li>
@@ -77,108 +168,98 @@
 <h2>What is a Plugin ?<a class="headerlink" href="#what-is-a-plugin" title="Permalink to this headline">¶</a></h2>
 <p>A plugin is a folder that can contain :</p>
 <ul class="simple">
-<li>python code that will be executed during the analysis</li>
-<li>additional metamodel to represent new types of objects, new properties</li>
+<li>some python code that will be executed during the analysis</li>
+<li>additional metamodel files to represent new types of objects, new properties</li>
 <li>quality rule definitions that will be added to the quality rule model</li>
 </ul>
-<p>Once deployed it will be activated during the analysis and its code will be called at some predefined extension points.</p>
+<p>Once deployed and activated its code will be called at some predefined <strong>extension points</strong>.</p>
 <p>The general idea behind those extension points is that plugins are called back at some key points of the analysis, and they are given the chance to do something at those points.</p>
 <p>Plugins&#8217; extensions are called :</p>
 <ul class="simple">
-<li>at the very beginning</li>
-<li>for each class, member in a descending tree walk</li>
+<li>at the very beginning of a J2EE, DotNet, UA job</li>
+<li>for each class, member in a recursive tree walk</li>
 <li>for each analyzed file</li>
 <li>...</li>
+<li>at the end of the application after all analysers jobs have run</li>
 </ul>
 <div class="figure align-center">
 <img alt="_images/extension_points_sequence.png" src="_images/extension_points_sequence.png" />
 <p class="caption">Extension point sequence example.</p>
 </div>
-<p>Those extention points may differ between technologies/analyzers but the mere principle will remain the same.</p>
-<p>Those extension points generally have a context parameter. For example when starting the analysis of a file, the extension poitn receive the <a class="reference internal" href="code_reference.html#cast.analysers.File" title="cast.analysers.File"><tt class="xref py py-class docutils literal"><span class="pre">cast.analysers.File</span></tt></a> object.</p>
-<div class="section" id="plugin-activation">
-<h3>Plugin activation<a class="headerlink" href="#plugin-activation" title="Permalink to this headline">¶</a></h3>
-<p>Correct plugins that reside in the plugin root folder are automatically activated for any analysis.</p>
-<p>No need for configuration. The general idea is that plugin have the opportunity to detect if their presence is required. It can typically be done by scanning analysis options.</p>
-</div>
-<div class="section" id="anatomy-of-a-plugin">
-<h3>Anatomy of a plugin<a class="headerlink" href="#anatomy-of-a-plugin" title="Permalink to this headline">¶</a></h3>
-<p>The main entry point for a plugin is a Python class that inherits from <tt class="docutils literal"><span class="pre">cast.analysers.Plugin</span></tt>.</p>
-<p>Analyzer scans each plugin directory and search for a python file (<tt class="docutils literal"><span class="pre">*.py</span></tt>) containing such a class.</p>
-<p>When found, the constructor of that plugin class is called.</p>
-<p>The plugin folder can also contain metamodel files.</p>
-<p>Those files must be named : <tt class="docutils literal"><span class="pre">XXXMetaModel.xml</span></tt> and put under a subfolder <tt class="docutils literal"><span class="pre">configuration\&lt;my</span> <span class="pre">language&gt;\xxxMetaModel.xml</span></tt>.</p>
-</div>
+<p>Those extension points may differ between technologies/analyzers but the mere principle will remain the same.</p>
+<p>Those extension points generally have a context parameter. For example when starting the analysis of a file, the extension point receives the <a class="reference internal" href="code_reference.html#cast.analysers.File" title="cast.analysers.File"><tt class="xref py py-class docutils literal"><span class="pre">cast.analysers.File</span></tt></a> object
+that represent the file according to CAIP, and giving access to path.</p>
+<p>Python code that run during analysis job allow to access local information and create new objects structures.</p>
+<p>Code that run at the end of application allow to link all together, and to perform application level calculations.</p>
 </div>
 </div>
 
 
+           </div>
           </div>
-        </div>
-      </div>
-      <div class="sphinxsidebar">
-        <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">Overview</a><ul>
-<li><a class="reference internal" href="#what-is-a-plugin">What is a Plugin ?</a><ul>
-<li><a class="reference internal" href="#plugin-activation">Plugin activation</a></li>
-<li><a class="reference internal" href="#anatomy-of-a-plugin">Anatomy of a plugin</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="install.html" class="btn btn-neutral float-right" title="Installation" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral" title="CAST Extension SDK’s documentation" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="index.html"
-                        title="previous chapter">CAST-SDK&#8217;s documentation</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="install.html"
-                        title="next chapter">Installation</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="_sources/overview.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
-  <h3>Quick search</h3>
-    <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
-    </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014, CAST.
+
     </p>
-</div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
         </div>
       </div>
-      <div class="clearer"></div>
-    </div>
-    <div class="related">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
-             >index</a></li>
-        <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
-          <a href="install.html" title="Installation"
-             >next</a> |</li>
-        <li class="right" >
-          <a href="index.html" title="CAST-SDK’s documentation"
-             >previous</a> |</li>
-        <li><a href="index.html">CAST-SDK 1.0 documentation</a> &raquo;</li> 
-      </ul>
-    </div>
-    <div class="footer">
-        &copy; Copyright 2014, CAST.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
-    </div>
-  </body>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
 </html>
