@@ -22,18 +22,19 @@ Choose ``3.0`` for ``Grammar Version`` and the interpreter you declared before.
 Create the plugin
 =================  
 
-In that project create a ``python module`` named ``main.py``.
+In that project create a ``python module`` named ``main``.
 
 Create your plugin class in ``main.py``::
 
-    import cast.analysers
+    import cast.analysers.dotnet
+    import cast.analysers.log
 
-    class MyPlugin(cast.analysers.Plugin):
+    class MyExtension(cast.analysers.dotnet.Extension):
 
-        def __init__(self):
-            cast.analysers.Plugin.__init__(self)
+        def start_analysis(self,options):
+            cast.analysers.log.debug('Hello World!!')
 
-This will automatically register a plugin called ``My first plugin``.
+This will automatically register a .Net extension and create a plugin.
 
 Create your first test
 ----------------------
@@ -66,8 +67,9 @@ The test should then run and print the CAIP analysis log to console.
 Among the other analysis messages you should see:: 
 
     ...
-    Registering plugin My first plugin.
+    Registering plugin my.company.first_plugin.
     ...
+	[my.company.first_plugin] Hello World!!
 
 It means that it works.
 
@@ -78,39 +80,7 @@ It means that it works.
     
     The idea is that developper can tune it's plugin code rapidly and build a full non regression test suite.
 
-Implement extensions points
----------------------------
-
-For now the plugin does nothing at all. 
-
-In order to perfom analysis actions it should implementati some extension points. 
-
-For example we can override :func:`cast.analysers.dotnet.Extension.start_analysis` that is called once at the very beginning of the analysis.
-
-In file ``main.py`` add the following code::
-
-    import cast.analysers.dotnet
-    import cast.analysers.log
-
-    class MyExtension(cast.analysers.dotnet.Extension):
-
-        def start_analysis(self,options):
-            cast.analysers.log.debug('Hello World!!')
-
-This class must be registered in the plugin construcor, so change 
-the class ``MyPlugin`` in order to call :func:`cast.analysers.Plugin.register_extension` from the constructor, passing an object of class ``MyExtension``:: 
-
-    class MyPlugin(cast.analysers.Plugin):
-
-        def __init__(self):
-            cast.analysers.Plugin.__init__(self)
-            self.register_extension(MyExtension())
-
-Run the test, you should see::
-
-    [my.company.first_plugin] Hello World!!
-    
-Now you can override other extension points, see :ref:`Extensions-Reference`.
+Now you can override other events.
 
 Perform some checks on analysis results
 ---------------------------------------
@@ -141,22 +111,3 @@ In that sample we check for the presence of two classes and of a link between th
 
 In debugging mode, the whole result is accessible through ``analysis.result``.
 
-Deploy the plugin into CAIP
-===========================
-
-Copy your project folder into : ``<CASTInstall Directory>\CustomPlugins``
-
-You may also redefine the variable ``CAST_PLUGINS_ROOT_PATH`` in ``CastGlobalSettings.ini`` for choosing a custom location.
-
-
-This should give : 
-
-.. figure::  deploy.png
-   :align:   center
-   
-   Result of a correct deploy.
-
-Run CAIP as usual, you should see the log messages.
-
-.. note::
-    Deploying the tests folder is 'optional'.

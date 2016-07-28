@@ -2,15 +2,6 @@
 Tips and tricks
 ===============
 
-Using python templates
-----------------------
-
-We provide python file templates :download:`templates for pydev <templates.xml>`.
-
-Go to ``Window > Preferences > PyDev > Editor > Templates`` and import them.
-
-Then when you whant to create a plugin you can choose between those pre-coded files.
-
 Respect the suggested structure
 -------------------------------
 
@@ -42,11 +33,10 @@ It is possible to stay inside the development environment and still having depen
     ...
 
 
-
 Some notable usefull python libraries
 -------------------------------------
 
 The provided python distribution contains a lot of usefull libraries :
 
-* `tempfile <https://docs.python.org/3.4/library/tempfile.html>`_ for managing temporary files
 * `lxml <http://lxml.de/>`_ for reading/writing xml files
+* `sqlparse <https://sqlparse.readthedocs.org/en/latest/>`_ for non validating sql parsing

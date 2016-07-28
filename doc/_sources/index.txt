@@ -1,36 +1,63 @@
-.. CAST-SDK documentation master file, created by
+.. CAST Extension SDK documentation master file, created by
    sphinx-quickstart on Fri Apr 11 10:14:52 2014.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-CAST-SDK's documentation
-************************
+CAST Extension SDK's documentation
+**********************************
 
-CAST-SDK is a tool to write plugins for CAIP. 
+CAST Extension SDK is a tool to write extensions for CAIP. 
+
+First steps
+===========
 
 :doc:`overview`  
-    New to developping plugins with CAST-SDK? 
+    New to developping plugins with CAST Extension SDK? 
 
 :doc:`install` 
-    Instructions on how to install the development environment.
-
-:doc:`manual` 
-    Instructions on how to develop plugins.
+    Instructions on how to install the **Development environment**.
 
 :doc:`my_first_plugin` 
     Instructions on how to create a first plugin.
 
-:doc:`debugging` 
-    Instructions on how to debug plugins from development environment.
+:doc:`deployment` 
+    Once plugins are developped they can be deployed in CAIP.
 
-:doc:`samples` 
-    Various code sample showing API in action.
+
+References
+==========
+
+Main reference 
+
+:doc:`manual` 
+    Plugin structure.
+
+:doc:`analyser_level` 
+    Use callbacks  
+
+:doc:`application_level` 
+    Run on the knowledge base to produce global information.
+
+:doc:`data_exchange` 
+    Exchanging data between analyser level and application level.
+
+
+More details
+	
+:doc:`analysers_specif` 
+	Analyser level specific callbacks and analysis options access.
+
+:doc:`debugging` 
+	Instructions on how to debug plugins from development environment.
 
 :doc:`code_reference` 
-    API for accessing objects, on existing extension points and on testing API.
+	API for accessing objects, on existing extension points and on testing API.
+
+:doc:`version_compatibility` 
+    Features/bugs versus CAIP versions.
 
 :doc:`tips_and_tricks` 
-    Various tips.
+	Various tips.
 
 
 Indices and tables
@@ -46,12 +73,14 @@ Indices and tables
 
    overview
    install
-   manual
    my_first_plugin
+   deployment
+   manual
+   analyser_level
+   application_level
+   data_exchange
+   analysers_specif
    debugging
-   samples
-   tips_and_tricks
    code_reference
-   faq
-
-
+   version_compatibility
+   tips_and_tricks

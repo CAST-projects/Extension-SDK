@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Installation &mdash; CAST Extension SDK 1.0 documentation</title>
+  <title>Features and Bugs per CAIP versions &mdash; CAST Extension SDK 1.0 documentation</title>
   
 
   
@@ -31,8 +31,8 @@
 
   
     <link rel="top" title="CAST Extension SDK 1.0 documentation" href="index.html"/>
-        <link rel="next" title="Tutorial : My first plugin" href="my_first_plugin.html"/>
-        <link rel="prev" title="Overview" href="overview.html"/> 
+        <link rel="next" title="Tips and tricks" href="tips_and_tricks.html"/>
+        <link rel="prev" title="API Reference" href="code_reference.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -84,11 +84,7 @@
             
                 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="">Installation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#installing-eclipse-pydev">Installing eclipse + pydev</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#configuration-of-eclipse">Configuration of eclipse</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="my_first_plugin.html">Tutorial : My first plugin</a></li>
 <li class="toctree-l1"><a class="reference internal" href="deployment.html">Deploying plugins</a></li>
 <li class="toctree-l1"><a class="reference internal" href="manual.html">Creating a plugin</a></li>
@@ -98,7 +94,7 @@
 <li class="toctree-l1"><a class="reference internal" href="analysers_specif.html">Analysers specific events</a></li>
 <li class="toctree-l1"><a class="reference internal" href="debugging.html">Debugging</a></li>
 <li class="toctree-l1"><a class="reference internal" href="code_reference.html">API Reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="version_compatibility.html">Features and Bugs per CAIP versions</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Features and Bugs per CAIP versions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tips_and_tricks.html">Tips and tricks</a></li>
 </ul>
 
@@ -130,11 +126,11 @@
   <ul class="wy-breadcrumbs">
     <li><a href="index.html">Docs</a> &raquo;</li>
       
-    <li>Installation</li>
+    <li>Features and Bugs per CAIP versions</li>
     <li class="wy-breadcrumbs-aside">
       
         
-          <a href="_sources/install.txt" rel="nofollow"> View page source</a>
+          <a href="_sources/version_compatibility.txt" rel="nofollow"> View page source</a>
         
       
     </li>
@@ -144,54 +140,173 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="installation">
-<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
-<div class="toctree-wrapper compound">
-<ul class="simple">
-</ul>
+  <div class="section" id="features-and-bugs-per-caip-versions">
+<h1>Features and Bugs per CAIP versions<a class="headerlink" href="#features-and-bugs-per-caip-versions" title="Permalink to this headline">¶</a></h1>
+<p>The analyser level API is hardly linked to the CAIP version.</p>
+<p>Some features, and bugs where added and corrected in specific CAIP version.</p>
+<p>Thoses informations are crucial to</p>
+<div class="highlight-python"><div class="highlight"><pre>* determine what is the minimal CAIP version an extension may work on
+* develop for several CAIP versions at a time
+</pre></div>
 </div>
-<p>This section explains how to install and configure the IDE for CAST Extension SDK.</p>
-<p>This IDE is based on <a class="reference external" href="http://eclipse.org/eclipse/">eclipse</a>.</p>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">The python interpretor is directly bundled in the CAIP install directory so <strong>you must not install python</strong>.</p>
-</div>
-<div class="section" id="installing-eclipse-pydev">
-<h2>Installing eclipse + pydev<a class="headerlink" href="#installing-eclipse-pydev" title="Permalink to this headline">¶</a></h2>
-<ol class="arabic simple">
-<li><a class="reference external" href="https://eclipse.org/downloads/">Install eclipse</a></li>
-<li>Install <a class="reference external" href="http://pydev.org/manual_101_install.html">PyDev plugin</a>. Read carefully the installtion manual, you may need a recent java jre.</li>
-<li>Run eclipe and check that you can see the Pydev eclipse plugin</li>
-</ol>
-<p>Some other eclipse components may prove usefull :</p>
-<ul class="simple">
-<li>Eclipse XML Editors and Tools for metamodel edition</li>
-</ul>
-</div>
-<div class="section" id="configuration-of-eclipse">
-<h2>Configuration of eclipse<a class="headerlink" href="#configuration-of-eclipse" title="Permalink to this headline">¶</a></h2>
-<p>The PyDev eclipse plugin need to be configured in order to point to the python environment provided by CAIP.</p>
-<p>Open your eclipse and go to <tt class="docutils literal"><span class="pre">Window</span> <span class="pre">&gt;</span> <span class="pre">Preferences</span> <span class="pre">&gt;</span> <span class="pre">PyDev</span> <span class="pre">&gt;</span> <span class="pre">Interpreters</span> <span class="pre">&gt;</span> <span class="pre">Python</span> <span class="pre">Interpreter</span></tt> and create a new interpreter.</p>
-<p>Name it according to your CAIP version (eg 8.0.0) and select the path to the python provided in the CAIP install dir <tt class="docutils literal"><span class="pre">&lt;CAIP</span> <span class="pre">install</span> <span class="pre">dir&gt;\ThirdParty\Python34\python.exe</span></tt>.</p>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Note that you will be able to add as many interpreters you want so that you can test your extension against several CAIP versions.</p>
-</div>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">Pydev has 3 <em>interperter</em> configurations. The one we are using is <strong>Python Interpreter</strong>.</p>
-</div>
-<p>You should get something like that:</p>
-<div class="figure align-center">
-<img alt="_images/config_interpreter.png" src="_images/config_interpreter.png" />
-<p class="caption">Select the interpreter from the CAIP install directory.</p>
-</div>
-<p>You are now ready to create your first plugin.</p>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">You can choose another name for the interpreter when importing sample project will require to change interpreter configuration in order to work.</p>
-</div>
-</div>
+<p>Some issues or features may have a workaround that still allows (with some effort) to broaden the applicable CAIP version range.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="9%" />
+<col width="49%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="5%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>Technology</td>
+<td>Feature</td>
+<td>7.3.4</td>
+<td>7.3.6</td>
+<td>7.3.7</td>
+<td>7.3.8</td>
+<td>8.1.0</td>
+</tr>
+<tr class="row-even"><td>All</td>
+<td>cast.analysers.Link.save_property</td>
+<td>NO</td>
+<td>NO</td>
+<td>NO</td>
+<td>NO</td>
+<td>YES</td>
+</tr>
+<tr class="row-odd"><td>All</td>
+<td>cast.analysers.Object.get_typename</td>
+<td>NO</td>
+<td>NO</td>
+<td>NO</td>
+<td>NO</td>
+<td>YES</td>
+</tr>
+<tr class="row-even"><td>All</td>
+<td>cast.analysers.Object.save_property (accepts keyprop property)</td>
+<td>NO</td>
+<td>NO</td>
+<td>NO</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr class="row-odd"><td>All</td>
+<td>cast.analysers.Object.save_property (accepts multiple values)</td>
+<td>NO</td>
+<td>NO</td>
+<td>NO</td>
+<td>NO</td>
+<td>YES</td>
+</tr>
+<tr class="row-even"><td>All</td>
+<td>cast.analysers.external_link.analyse_embedded</td>
+<td>workaround</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr class="row-odd"><td>DotNet</td>
+<td>Start/end type event is not raised for (C#) interfaces</td>
+<td>NO</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr class="row-even"><td>DotNet</td>
+<td>cast.analysers.dotnet.Extension.start_project</td>
+<td>NO</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr class="row-odd"><td>DotNet</td>
+<td>get_project on a type coming from a DLL return an empty object</td>
+<td>NO</td>
+<td>NO</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr class="row-even"><td>DotNet</td>
+<td>object created by a donet extension is not part of modules</td>
+<td>workaround</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr class="row-odd"><td>JEE</td>
+<td>cast.analysers.jee.Extension.end_properties_file</td>
+<td>NO</td>
+<td>NO</td>
+<td>NO</td>
+<td>NO</td>
+<td>YES</td>
+</tr>
+<tr class="row-even"><td>JEE</td>
+<td>cast.analysers.jee.Extension.end_properties_files</td>
+<td>NO</td>
+<td>NO</td>
+<td>NO</td>
+<td>NO</td>
+<td>YES</td>
+</tr>
+<tr class="row-odd"><td>JEE</td>
+<td>cast.analysers.jee.Extension.start_properties_file</td>
+<td>NO</td>
+<td>NO</td>
+<td>NO</td>
+<td>NO</td>
+<td>YES</td>
+</tr>
+<tr class="row-even"><td>JEE</td>
+<td>cast.analysers.jee.Extension.start_properties_files</td>
+<td>NO</td>
+<td>NO</td>
+<td>NO</td>
+<td>NO</td>
+<td>YES</td>
+</tr>
+<tr class="row-odd"><td>UA</td>
+<td>Cannot save object under UA project</td>
+<td>workaround</td>
+<td>workaround</td>
+<td>workaround</td>
+<td>workaround</td>
+<td>YES</td>
+</tr>
+<tr class="row-even"><td>UA</td>
+<td>cast.analysers.ua.Extension.end_object</td>
+<td>NO</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr class="row-odd"><td>UA</td>
+<td>cast.analysers.ua.Extension.start_object</td>
+<td>NO</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr class="row-even"><td>UA</td>
+<td>object created by an UA extension is not part of modules</td>
+<td>workaround</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+</tbody>
+</table>
 </div>
 
 
@@ -201,10 +316,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="my_first_plugin.html" class="btn btn-neutral float-right" title="Tutorial : My first plugin" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="tips_and_tricks.html" class="btn btn-neutral float-right" title="Tips and tricks" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="overview.html" class="btn btn-neutral" title="Overview" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="code_reference.html" class="btn btn-neutral" title="API Reference" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
