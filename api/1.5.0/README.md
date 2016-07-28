@@ -7,3 +7,11 @@
 2. put the following code line as first line in your application level python code
 
 `import application_1_5_0 # @UnusedImport`
+
+
+## What's new
+
+* API to access links
+* new API to access objects
+
+See full doc ...
