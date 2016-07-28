@@ -1,0 +1,42 @@
+
+Tips and tricks
+===============
+
+Respect the suggested structure
+-------------------------------
+
+Put your test in a subfolder just under your plugin python file. Otherwise, running will not work.
+
+Auto completion in eclipse
+--------------------------
+
+`PyDev plugin for eclipse <http://pydev.org/index.html>`_ may needs some help in finding the correct type of a variable. For example in your extension point overrides::
+
+    def start_member(self,member):
+        """
+        @type member: cast.analysers.Member
+        """
+        cast.analysers.log.debug('  Starting member ' + str(member))
+
+Use ``@type`` annotations in comments to help the editor finding the correct type. 
+Those annotations are already set in the provided templates.
+
+Tests with the external links
+-----------------------------
+
+It is possible to stay inside the development environment and still having dependencies to server analysis. Use :func:`cast.analysers.test.TestAnalysis.add_database_table` to register a table::
+
+    analysis = cast.analysers.test.DotNetTestAnalysis()
+    ...
+    analysis.add_database_table('Course','TSQL')
+    analysis.add_database_table('CourseInstructor','TSQL')
+    ...
+
+
+Some notable usefull python libraries
+-------------------------------------
+
+The provided python distribution contains a lot of usefull libraries :
+
+* `lxml <http://lxml.de/>`_ for reading/writing xml files
+* `sqlparse <https://sqlparse.readthedocs.org/en/latest/>`_ for non validating sql parsing

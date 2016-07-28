@@ -1,0 +1,61 @@
+Overview
+*********
+
+CAST Extension SDK allow to develop plugins that are launched during the analysis process. It is a set of tools made to help producing more analysis data (objects, links, properties).
+
+Some notable features :
+
+* execute any executable during an analysis job, for example third party analyzers
+* inject objects, links, property or rule violations into the analysis service
+* handle new frameworks
+* parse any type of files 
+* do whatever one can program
+
+The SDK is based on 
+
+* `Python 3.4 <http://www.python.org/doc/>`_ as scripting language 
+* eclipse as IDE
+
+The IDE features :
+
+* unit test for the writen plugins
+* debuggability of the plugins
+
+
+What is a Plugin ?
+==================
+
+A plugin is a folder that can contain :
+
+* some python code that will be executed during the analysis
+* additional metamodel files to represent new types of objects, new properties
+* quality rule definitions that will be added to the quality rule model
+
+Once deployed and activated its code will be called at some predefined **extension points**.
+
+The general idea behind those extension points is that plugins are called back at some key points of the analysis, and they are given the chance to do something at those points.
+
+Plugins' extensions are called :
+
+* at the very beginning of a J2EE, DotNet, UA job
+* for each class, member in a recursive tree walk
+* for each analyzed file
+* ...
+* at the end of the application after all analysers jobs have run
+
+.. figure::  extension_points_sequence.png
+   :align:   center
+
+   Extension point sequence example.
+
+Those extension points may differ between technologies/analyzers but the mere principle will remain the same.
+
+Those extension points generally have a context parameter. For example when starting the analysis of a file, the extension point receives the :class:`cast.analysers.File` object 
+that represent the file according to CAIP, and giving access to path.  
+
+Python code that run during analysis job allow to access local information and create new objects structures. 
+
+Code that run at the end of application allow to link all together, and to perform application level calculations.
+
+
+

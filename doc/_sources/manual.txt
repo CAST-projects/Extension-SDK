@@ -1,0 +1,126 @@
+Creating a plugin
+*****************
+
+.. toctree::
+   :maxdepth: 4
+
+A plugin is a folder :
+
+* that is located in ``CAST_PLUGINS_ROOT_PATH`` whose default value is 
+  * ``<CAIP Installation Directory>\CustomPlugins`` for versions < 8.0.0
+  * %ALLUSERSPROFILE%/CAST/CAST/Extensions for versions >= 8.0.0
+* that may contains python files that declare a class inheriting from :class:`cast.Extension`
+
+Those plugins are meant to be self sufficient. They can contain : 
+
+* metamodel files, 
+* installation scripts, 
+* assessment models fragments, 
+* any thing that will make them a coherent whole.
+
+Plugins are identified by the name of their folder.
+
+There exist 2 ways of running python code :
+
+* running during analysis of a particular analyser
+* running at the end of analysis on the application
+
+Those 2 ways can be used together in the same plugin.
+
+Plugin naming convention
+========================
+
+The folder name of a plugin is its identity so it should be unique.
+We follow the same conventions as `Java <http://docs.oracle.com/javase/tutorial/java/package/namingpkgs.html>`_ does.
+
+For example, CAST R&D may use such ids:: 
+
+  com.castsoftware.sqlscript
+  com.castsoftware.angularjs
+
+Plugin versionning
+==================
+
+To describe version and plugin add a *plugin.nuspec* file to the plugin folder with following content ::
+
+  <?xml version="1.0" encoding="utf-8"?>
+  <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+      <metadata>
+          <id>my.company.plugin</id>
+          <version>1.0.3</version>
+          <title>Title of your extension</title>
+          <description>This is the description of the extension</description>
+      </metadata>
+  </package>  
+
+Version should follow `Semantic Versioning <http://semver.org/>`_ conventions.
+
+We use `nuspec <http://docs.nuget.org/docs/reference/nuspec-reference>`_ convention and file for packaging.
+
+Plugin content organisation
+===========================
+
+Plugin folder will have the following organisation::
+
+  my.company.plugin
+  ├───bin
+  │   └───<something>.exe
+  ├───Configuration
+  │   └───Languages
+  │       └───<a name>
+  │            ├───res
+  │            │   └───<xxx>.ico
+  │            ├───<xxxCastMetrics>.xml
+  │            ├───<xxxMetaModel>.xml
+  │            └───<xxxLanguagePattern>.xml
+  ├───InstallScripts
+  │   ├───CastStorageService
+  │   │   ├───local.sql
+  │   │   └───local.pck
+  │   ├───Common
+  │   ├───Oracle
+  │   └───SqlServer
+  ├───jars
+  │   ├───<xxx>.jar
+  ├───tests
+  │   ├───__init__.py
+  │   └───<test_xxx>.py
+  ├───<a_library>
+  │   └───__init__.py
+  ├───plugin.nuspec
+  └───<file>.py
+
+Most of those are **optional**. Use them when needed only. 
+
+* plugin.nuspec 
+  
+  contains the `nuspec <http://docs.nuget.org/docs/reference/nuspec-reference>`_ description of the plugin (version, description, ...)
+  
+* <file>.py 
+
+  a file with that contains python extension code. 
+
+* Configuration 
+
+  contains the metamodel if you need a metamodel fragment
+
+* InstallScripts 
+  
+  contains the pck, xml and sql files needed or servman if you need to add custom quality rules
+  
+* bin 
+
+  contains the external binaries needed
+  
+* tests is a python Package that contains automatic tests
+
+* <a_library> 
+
+  a third party python library included direclty in the plugin to be used. You can include any third party library in that way. 
+
+Metamodel conventions
+=====================
+
+Metamodel included in plugins should respect the `ID assignment scheme <http://doc.castsoftware.com/display/DOC80/Managing+ID+ranges+for+custom+extensions>`_.
+
+

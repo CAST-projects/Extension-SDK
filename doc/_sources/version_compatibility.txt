@@ -1,0 +1,51 @@
+Features and Bugs per CAIP versions
+***********************************
+
+The analyser level API is hardly linked to the CAIP version. 
+
+Some features, and bugs where added and corrected in specific CAIP version.
+
+Thoses informations are crucial to ::
+
+* determine what is the minimal CAIP version an extension may work on
+* develop for several CAIP versions at a time
+
+Some issues or features may have a workaround that still allows (with some effort) to broaden the applicable CAIP version range.
+
++------------+----------------------------------------------------------------+------------+------------+------------+------------+-------+
+| Technology | Feature                                                        | 7.3.4      | 7.3.6      | 7.3.7      | 7.3.8      | 8.1.0 |
++------------+----------------------------------------------------------------+------------+------------+------------+------------+-------+
+| All        | cast.analysers.Link.save_property                              | NO         | NO         | NO         | NO         | YES   |
++------------+----------------------------------------------------------------+------------+------------+------------+------------+-------+
+| All        | cast.analysers.Object.get_typename                             | NO         | NO         | NO         | NO         | YES   |
++------------+----------------------------------------------------------------+------------+------------+------------+------------+-------+
+| All        | cast.analysers.Object.save_property (accepts keyprop property) | NO         | NO         | NO         | YES        | YES   |
++------------+----------------------------------------------------------------+------------+------------+------------+------------+-------+
+| All        | cast.analysers.Object.save_property (accepts multiple values)  | NO         | NO         | NO         | NO         | YES   |
++------------+----------------------------------------------------------------+------------+------------+------------+------------+-------+
+| All        | cast.analysers.external_link.analyse_embedded                  | workaround | YES        | YES        | YES        | YES   |
++------------+----------------------------------------------------------------+------------+------------+------------+------------+-------+
+| DotNet     | Start/end type event is not raised for (C#) interfaces         | NO         | YES        | YES        | YES        | YES   |
++------------+----------------------------------------------------------------+------------+------------+------------+------------+-------+
+| DotNet     | cast.analysers.dotnet.Extension.start_project                  | NO         | YES        | YES        | YES        | YES   |
++------------+----------------------------------------------------------------+------------+------------+------------+------------+-------+
+| DotNet     | get_project on a type coming from a DLL return an empty object | NO         | NO         | YES        | YES        | YES   |
++------------+----------------------------------------------------------------+------------+------------+------------+------------+-------+
+| DotNet     | object created by a donet extension is not part of modules     | workaround | YES        | YES        | YES        | YES   |
++------------+----------------------------------------------------------------+------------+------------+------------+------------+-------+
+| JEE        | cast.analysers.jee.Extension.end_properties_file               | NO         | NO         | NO         | NO         | YES   |
++------------+----------------------------------------------------------------+------------+------------+------------+------------+-------+
+| JEE        | cast.analysers.jee.Extension.end_properties_files              | NO         | NO         | NO         | NO         | YES   |
++------------+----------------------------------------------------------------+------------+------------+------------+------------+-------+
+| JEE        | cast.analysers.jee.Extension.start_properties_file             | NO         | NO         | NO         | NO         | YES   |
++------------+----------------------------------------------------------------+------------+------------+------------+------------+-------+
+| JEE        | cast.analysers.jee.Extension.start_properties_files            | NO         | NO         | NO         | NO         | YES   |
++------------+----------------------------------------------------------------+------------+------------+------------+------------+-------+
+| UA         | Cannot save object under UA project                            | workaround | workaround | workaround | workaround | YES   |
++------------+----------------------------------------------------------------+------------+------------+------------+------------+-------+
+| UA         | cast.analysers.ua.Extension.end_object                         | NO         | YES        | YES        | YES        | YES   |
++------------+----------------------------------------------------------------+------------+------------+------------+------------+-------+
+| UA         | cast.analysers.ua.Extension.start_object                       | NO         | YES        | YES        | YES        | YES   |
++------------+----------------------------------------------------------------+------------+------------+------------+------------+-------+
+| UA         | object created by an UA extension is not part of modules       | workaround | YES        | YES        | YES        | YES   |
++------------+----------------------------------------------------------------+------------+------------+------------+------------+-------+

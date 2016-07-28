@@ -1,0 +1,131 @@
+API Reference
+*************
+     
+Object API Reference
+====================
+
+Here are the classes and methods that you can call from your python plugin.
+
+
+Plugin API
+----------
+
+.. autoclass:: cast.Plugin
+   :members: 
+
+.. autoclass:: cast.Extension
+   :members: 
+
+Analysis options API
+--------------------
+
+.. autoclass:: cast.analysers.ExecutionUnit
+   :members: 
+
+.. autoclass:: cast.analysers.AnalysisUnit
+   :members: 
+
+Objects API
+-----------
+
+Objects produced by the analyzer :
+
+.. autoclass:: cast.analysers.Object
+   :members: 
+
+Objects gathered from other analysis due to dependency configuration :
+
+.. autoclass:: cast.analysers.ExternalObject
+   :members: 
+
+.. autoclass:: cast.analysers.Bookmark
+   :members: 
+
+File
+++++
+
+.. autoclass:: cast.analysers.File
+   :members: 
+
+Classes and methods
++++++++++++++++++++
+
+.. autoclass:: cast.analysers.Type
+   :members: 
+
+.. autoclass:: cast.analysers.Member
+   :members: 
+
+.. autoclass:: cast.analysers.Method
+   :members: 
+
+Programming type representation
++++++++++++++++++++++++++++++++
+
+.. autoclass:: cast.analysers.TypeBase
+   :members: 
+
+.. autoclass:: cast.analysers.GenericType
+   :members: 
+
+.. autoclass:: cast.analysers.GenericTypeInstantiation
+   :members: 
+
+.. autoclass:: cast.analysers.PrimitiveType
+   :members: 
+
+.. autoclass:: cast.analysers.Array
+   :members: 
+
+.. autoclass:: cast.analysers.Pointer
+   :members: 
+
+.. autoclass:: cast.analysers.Reference
+   :members: 
+
+Link and object creation
+------------------------
+
+.. autoclass:: cast.analysers.CustomObject
+   :members: 
+
+.. autofunction:: cast.analysers.create_link
+
+.. autoclass:: cast.analysers.Link
+   :members: 
+
+Log API
+-------
+   
+.. automodule:: cast.analysers.log
+   :members: 
+
+External link API
+-----------------
+
+.. automodule:: cast.analysers.external_link
+   :members: 
+
+Platform utility functions
+--------------------------
+
+.. autofunction:: cast.analysers.get_temporary_directory
+
+.. autofunction:: cast.analysers.get_intermediate_path
+
+.. autofunction:: cast.analysers.get_cast_version
+
+   
+Filtering
+---------
+
+.. automodule:: cast.analysers.filter
+   :members: 
+
+Tests API Reference
+===================
+   
+.. automodule:: cast.analysers.test
+   :members: 
+
+
