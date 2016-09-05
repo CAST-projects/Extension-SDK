@@ -11,6 +11,6 @@
 
 ## What's new
 
-* bug correction o reading some cobol files
+* bug correction on reading some cobol files
 
 See full doc ...
