@@ -4,7 +4,7 @@ Sample usage of parametrisation
 Description
 -----------
 
-See also documentation http://cast-projects.github.io/Extension-SDK/doc/analysers_specif.html#jee-analyser-specificities
+See also documentation http://cast-projects.github.io/Extension-SDK/doc/analysers_specif.html#cast.analysers.JEEExecutionUnit.add_parameterization
 
 
 Demo
