@@ -112,11 +112,14 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#a-reference-finder">A reference finder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#reading-files">Reading files</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#logging">Logging</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#using-legacy-tools">Using legacy tools</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#running-tools-after-analysis">Running &#8216;tools after analysis&#8217;</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#access-to-infrastructure-and-management">Access to infrastructure and management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#management-schema">Management schema</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#interactive-scripting">Interactive scripting</a></li>
 </ul>
 </li>
@@ -174,8 +177,9 @@
 <h1>Running code after analyzers<a class="headerlink" href="#running-code-after-analyzers" title="Permalink to this headline">¶</a></h1>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">This is documentation for cast.application version 1.5.0.
-This API can be upgraded separately from AIP.</p>
+<p class="last">This is documentation for cast.application version 1.5.4.
+This API can be upgraded separately from AIP.
+See <a class="reference external" href="https://github.com/CAST-projects/Extension-SDK/tree/master/api/1.5.4">api 1.5.4</a></p>
 </div>
 <p>After all analysis job have ran some code can be launched on the resulting knowledge base.</p>
 <p>During this step, you :</p>
@@ -188,7 +192,24 @@ This API can be upgraded separately from AIP.</p>
 </ul>
 <div class="section" id="implementing-an-application-level-extension">
 <h2>Implementing An application level extension<a class="headerlink" href="#implementing-an-application-level-extension" title="Permalink to this headline">¶</a></h2>
-<p>A plugin can be called at the end of analysis by implementing a subclass of</p>
+<p>A plugin can be called at the end of analysis by implementing a subclass of <a class="reference internal" href="#cast.application.ApplicationLevelExtension" title="cast.application.ApplicationLevelExtension"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.ApplicationLevelExtension</span></tt></a> and overriding <a class="reference internal" href="#cast.application.ApplicationLevelExtension.end_application" title="cast.application.ApplicationLevelExtension.end_application"><tt class="xref py py-meth docutils literal"><span class="pre">cast.application.ApplicationLevelExtension.end_application()</span></tt></a></p>
+<p>For example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">cast.application</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="k">class</span> <span class="nc">ExtensionApplication</span><span class="p">(</span><span class="n">cast</span><span class="o">.</span><span class="n">application</span><span class="o">.</span><span class="n">ApplicationLevelExtension</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">end_application</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">application</span><span class="p">):</span>
+
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;running code at the end of an application&quot;</span><span class="p">)</span>
+
+        <span class="c"># use application object to access the knowledge base</span>
+        <span class="c"># ...</span>
+</pre></div>
+</div>
+<p>It is better to separate code from application level extension from the analyser level extension. They use separate python API and separate process
+launching.</p>
+<p>A plugin can contain any number of ApplicationLevelExtension, they all will be called back.</p>
 <dl class="class">
 <dt id="cast.application.ApplicationLevelExtension">
 <em class="property">class </em><tt class="descclassname">cast.application.</tt><tt class="descname">ApplicationLevelExtension</tt><a class="headerlink" href="#cast.application.ApplicationLevelExtension" title="Permalink to this definition">¶</a></dt>
@@ -205,7 +226,12 @@ This API can be upgraded separately from AIP.</p>
 <dt id="cast.application.ApplicationLevelExtension.end_application">
 <tt class="descname">end_application</tt><big>(</big><em>application</em><big>)</big><a class="headerlink" href="#cast.application.ApplicationLevelExtension.end_application" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called at the end of application&#8217;s analysis.</p>
-<p>&#64;type application: cast.application.Application</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
@@ -225,23 +251,6 @@ The file is open in read mode.</p>
 
 </dd></dl>
 
-<p>For example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">cast.application</span>
-<span class="kn">import</span> <span class="nn">logging</span>
-
-<span class="k">class</span> <span class="nc">ExtensionApplication</span><span class="p">(</span><span class="n">cast</span><span class="o">.</span><span class="n">application</span><span class="o">.</span><span class="n">ApplicationLevelExtension</span><span class="p">):</span>
-
-    <span class="k">def</span> <span class="nf">end_application</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">application</span><span class="p">):</span>
-
-        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;running code at the end of an application&quot;</span><span class="p">)</span>
-
-        <span class="n">application</span><span class="o">.</span><span class="n">sql_tool</span><span class="p">(</span><span class="s">&quot;/* put your sql code here*/&quot;</span><span class="p">)</span>
-        <span class="n">application</span><span class="o">.</span><span class="n">update_cast_knowledge_base</span><span class="p">(</span><span class="s">&quot;/* put your sql code here*/&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>It is better to separate code from application level extension from the analyser level extension. They use separate python API and separate process
-launching.</p>
-<p>A plugin can contain any number of ApplicationLevelExtension, they all will be called back.</p>
 <p>Those call backs have the application as context :</p>
 <dl class="class">
 <dt id="cast.application.Application">
@@ -291,7 +300,7 @@ launching.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>or int or Property prop</strong> (<em>str</em>) &#8211; the property fullname, or property id or property to get</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>or int prop</strong> (<em>str</em>) &#8211; the property fullname, or property id to get</td>
 </tr>
 </tbody>
 </table>
@@ -436,6 +445,9 @@ already are accessible as direct child through get_projects.</p>
 <dt id="cast.application.Application.objects">
 <tt class="descclassname">Application.</tt><tt class="descname">objects</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.Application.objects" title="Permalink to this definition">¶</a></dt>
 <dd><p>All internal objects of the application as an iterable.</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.5.0.</span></p>
+</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -450,7 +462,7 @@ already are accessible as direct child through get_projects.</p>
 This query can be refined using <a class="reference external" href="https://en.wikipedia.org/wiki/Method_chaining">method chaining</a>.</p>
 <dl class="class">
 <dt id="cast.application.ObjectQuery">
-<em class="property">class </em><tt class="descclassname">cast.application.</tt><tt class="descname">ObjectQuery</tt><big>(</big><em>application=None</em>, <em>object_query=None</em><big>)</big><a class="headerlink" href="#cast.application.ObjectQuery" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">cast.application.</tt><tt class="descname">ObjectQuery</tt><big>(</big><em>application=None</em><big>)</big><a class="headerlink" href="#cast.application.ObjectQuery" title="Permalink to this definition">¶</a></dt>
 <dd><p>A query on objects.</p>
 <p>Follow the method chaining pattern.</p>
 <dl class="method">
@@ -471,6 +483,42 @@ This query can be refined using <a class="reference external" href="https://en.w
 </tr>
 </tbody>
 </table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.ObjectQuery.load_property">
+<tt class="descname">load_property</tt><big>(</big><em>propety_or_properties</em><big>)</big><a class="headerlink" href="#cast.application.ObjectQuery.load_property" title="Permalink to this definition">¶</a></dt>
+<dd><p>Ask for loading of one or some properties.</p>
+<p>Note that loading one or several properties takes longer to perform the query.</p>
+<p>Has no effect when query is used as sub query of a LinkQuery.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>properties</strong> &#8211; str or int of list of those.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#cast.application.LinkQuery" title="cast.application.LinkQuery"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.LinkQuery</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.ObjectQuery.is_internal">
+<tt class="descname">is_internal</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.ObjectQuery.is_internal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filter internal objects.</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.5.4.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.ObjectQuery.is_external">
+<tt class="descname">is_external</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.ObjectQuery.is_external" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filter internal objects.</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.5.4.</span></p>
+</div>
 </dd></dl>
 
 <dl class="method">
@@ -769,24 +817,6 @@ But not programs.</p>
 </table>
 </dd></dl>
 
-<dl class="method">
-<dt id="cast.application.ObjectQuery.load_property">
-<tt class="descname">load_property</tt><big>(</big><em>properties</em><big>)</big><a class="headerlink" href="#cast.application.ObjectQuery.load_property" title="Permalink to this definition">¶</a></dt>
-<dd><p>Ask for loading of one or some properties.</p>
-<p>Note that loading one or several properties takes longer to perform the query.</p>
-<p>Has no effect when query is used in a LinkQuery.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>properties</strong> &#8211; str or int of list of those.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#cast.application.ObjectQuery" title="cast.application.ObjectQuery"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.ObjectQuery</span></tt></a></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
 </dd></dl>
 
 <p>Examples:</p>
@@ -982,6 +1012,12 @@ Very useful for link&#8217;s positions.</p>
 </tr>
 </tbody>
 </table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.File.load_objects">
+<tt class="descname">load_objects</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.File.load_objects" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load the objects contained in the file.</p>
 </dd></dl>
 
 </dd></dl>
@@ -1223,6 +1259,20 @@ Very useful for link&#8217;s positions.</p>
 <p>If the bookmark spans on several lines, this method returns an empty string.</p>
 </dd></dl>
 
+<dl class="method">
+<dt id="cast.application.EnlightenLink.get_property">
+<tt class="descname">get_property</tt><big>(</big><em>prop</em><big>)</big><a class="headerlink" href="#cast.application.EnlightenLink.get_property" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a link property.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>or int prop</strong> (<em>str</em>) &#8211; the property fullname, or property id to get</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </dd></dl>
 
 <div class="section" id="accessing-existing-links">
@@ -1232,6 +1282,9 @@ Very useful for link&#8217;s positions.</p>
 <dt id="cast.application.Application.links">
 <tt class="descclassname">Application.</tt><tt class="descname">links</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.Application.links" title="Permalink to this definition">¶</a></dt>
 <dd><p>All the links of the application as an iterable.</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.5.0.</span></p>
+</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1246,7 +1299,7 @@ Very useful for link&#8217;s positions.</p>
 This query can then be refined using the method chaining pattern API.</p>
 <dl class="class">
 <dt id="cast.application.LinkQuery">
-<em class="property">class </em><tt class="descclassname">cast.application.</tt><tt class="descname">LinkQuery</tt><big>(</big><em>application=None</em>, <em>link_query=None</em><big>)</big><a class="headerlink" href="#cast.application.LinkQuery" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">cast.application.</tt><tt class="descname">LinkQuery</tt><big>(</big><em>application=None</em><big>)</big><a class="headerlink" href="#cast.application.LinkQuery" title="Permalink to this definition">¶</a></dt>
 <dd><p>A query on links.</p>
 <p>Follows the Method chaining pattern.</p>
 <dl class="method">
@@ -1305,7 +1358,7 @@ This query can then be refined using the method chaining pattern API.</p>
 <li>.has_type(LinkType.call)                 : call links</li>
 <li>.has_type([LinkType.use, LinkType.call]) : use or call links</li>
 </ul>
-<p>:see <tt class="xref py py-class docutils literal"><span class="pre">cast.application.LinkType</span></tt> for known link types</p>
+<p>:see <a class="reference internal" href="#cast.application.LinkType" title="cast.application.LinkType"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.LinkType</span></tt></a> for known link types</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1330,6 +1383,42 @@ This query can then be refined using the method chaining pattern API.</p>
 </tr>
 </tbody>
 </table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.LinkQuery.load_property">
+<tt class="descname">load_property</tt><big>(</big><em>propety_or_properties</em><big>)</big><a class="headerlink" href="#cast.application.LinkQuery.load_property" title="Permalink to this definition">¶</a></dt>
+<dd><p>Ask for loading of one or some properties.</p>
+<p>Note that loading one or several properties takes longer to perform the query.</p>
+<p>Has no effect when query is used in a ObjectQuery.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>properties</strong> &#8211; str or int of list of those.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#cast.application.LinkQuery" title="cast.application.LinkQuery"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.LinkQuery</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="cast.application.LinkType">
+<em class="property">class </em><tt class="descclassname">cast.application.</tt><tt class="descname">LinkType</tt><a class="headerlink" href="#cast.application.LinkType" title="Permalink to this definition">¶</a></dt>
+<dd><p>The list of link types</p>
+<dl class="staticmethod">
+<dt id="cast.application.LinkType.decode_type_names">
+<em class="property">static </em><tt class="descname">decode_type_names</tt><big>(</big><em>acctyplo</em>, <em>acctyphi</em><big>)</big><a class="headerlink" href="#cast.application.LinkType.decode_type_names" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of link type names corresponding to (acctyplo, acctyphi)</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="cast.application.LinkType.decode_types">
+<em class="property">static </em><tt class="descname">decode_types</tt><big>(</big><em>acctyplo</em>, <em>acctyphi</em><big>)</big><a class="headerlink" href="#cast.application.LinkType.decode_types" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of elementary link types corresponding to (acctyplo, acctyphi)</p>
 </dd></dl>
 
 </dd></dl>
@@ -1452,7 +1541,7 @@ This query can then be refined using the method chaining pattern API.</p>
 
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">This time, no need to declare ownership.</p>
+<p class="last">No need to declare property ownership for saving property on newly created links.</p>
 </div>
 <p>Example:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">link</span> <span class="o">=</span> <span class="n">create_link</span><span class="p">(</span><span class="s">&#39;callLink&#39;</span><span class="p">,</span> <span class="n">o1</span><span class="p">,</span> <span class="n">o2</span><span class="p">)</span>
@@ -1564,6 +1653,24 @@ The &#8216;reaction&#8217; to those patterns found is totally open to developer.
 </dd></dl>
 
 </div>
+<div class="section" id="reading-files">
+<h2>Reading files<a class="headerlink" href="#reading-files" title="Permalink to this headline">¶</a></h2>
+<p>This function will open a file while autodetecting encoding.</p>
+<dl class="function">
+<dt id="cast.application.open_source_file">
+<tt class="descclassname">cast.application.</tt><tt class="descname">open_source_file</tt><big>(</big><em>path</em><big>)</big><a class="headerlink" href="#cast.application.open_source_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Equivalent of python open(path) that autotdetects encoding.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">file</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
 <div class="section" id="logging">
 <h2>Logging<a class="headerlink" href="#logging" title="Permalink to this headline">¶</a></h2>
 <p>Use the standard python <a class="reference external" href="https://docs.python.org/3/library/logging.html">logging</a> module:</p>
@@ -1605,6 +1712,375 @@ They can be directly used from inside the plugin by using :</p>
 <p>So no need to prefix tables with nothing.</p>
 </div>
 </div>
+<div class="section" id="access-to-infrastructure-and-management">
+<h2>Access to infrastructure and management<a class="headerlink" href="#access-to-infrastructure-and-management" title="Permalink to this headline">¶</a></h2>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">This only works on &#8216;combined install&#8217; situation; i.e., the local schema must be named xxx_local and the management xxx_mngt both on the same server.</p>
+</div>
+<dl class="method">
+<dt id="cast.application.Application.get_application_configuration">
+<tt class="descclassname">Application.</tt><tt class="descname">get_application_configuration</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.Application.get_application_configuration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Access to managment base application.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><a class="reference internal" href="#cast.application.managment.Application" title="cast.application.managment.Application"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.managment.Application</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>WARNING <span class="classifier-delimiter">:</span> <span class="classifier"></span></dt>
+<dd>this version only works for combined install on the same server.
+Future version of CAIP will leverage this limitation.</dd>
+</dl>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.5.4.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.Application.get_managment_base">
+<tt class="descclassname">Application.</tt><tt class="descname">get_managment_base</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.Application.get_managment_base" title="Permalink to this definition">¶</a></dt>
+<dd><p>Access to managment base.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><a class="reference internal" href="#cast.application.managment.ManagmentBase" title="cast.application.managment.ManagmentBase"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.managment.ManagmentBase</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>WARNING <span class="classifier-delimiter">:</span> <span class="classifier"></span></dt>
+<dd>this version only works for combined install on the same server.
+Future version of CAIP will leverage this limitation.</dd>
+</dl>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.5.4.</span></p>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="management-schema">
+<h2>Management schema<a class="headerlink" href="#management-schema" title="Permalink to this headline">¶</a></h2>
+<p>Management schema contains the analysis definitions and options.</p>
+<dl class="class">
+<dt id="cast.application.managment.ManagmentBase">
+<em class="property">class </em><tt class="descclassname">cast.application.managment.</tt><tt class="descname">ManagmentBase</tt><big>(</big><em>name</em>, <em>engine=None</em><big>)</big><a class="headerlink" href="#cast.application.managment.ManagmentBase" title="Permalink to this definition">¶</a></dt>
+<dd><p>A connection to a management base</p>
+<dl class="method">
+<dt id="cast.application.managment.ManagmentBase.get_applications">
+<tt class="descname">get_applications</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.managment.ManagmentBase.get_applications" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the applications defined in the base.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list of <a class="reference internal" href="#cast.application.managment.Application" title="cast.application.managment.Application"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.managment.Application</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.managment.ManagmentBase.get_application">
+<tt class="descname">get_application</tt><big>(</big><em>name</em><big>)</big><a class="headerlink" href="#cast.application.managment.ManagmentBase.get_application" title="Permalink to this definition">¶</a></dt>
+<dd><p>Access to an application by name.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> (<em>str</em>) &#8211; the name of the application</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#cast.application.managment.Application" title="cast.application.managment.Application"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.managment.Application</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.managment.ManagmentBase.get_delivery_path">
+<tt class="descname">get_delivery_path</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.managment.ManagmentBase.get_delivery_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Access to delivery path.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.managment.ManagmentBase.get_deploy_path">
+<tt class="descname">get_deploy_path</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.managment.ManagmentBase.get_deploy_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Access to deploy path.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.managment.ManagmentBase.execute_query">
+<tt class="descname">execute_query</tt><big>(</big><em>query</em><big>)</big><a class="headerlink" href="#cast.application.managment.ManagmentBase.execute_query" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute a query on the schema and return a cursor.</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.5.4.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.managment.ManagmentBase.get_caip_version">
+<tt class="descname">get_caip_version</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.managment.ManagmentBase.get_caip_version" title="Permalink to this definition">¶</a></dt>
+<dd><p>Access to CAIP version of the schema.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">distutils.version.StrictVersion</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.managment.ManagmentBase.get_extensions">
+<tt class="descname">get_extensions</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.managment.ManagmentBase.get_extensions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Access to extensions installed on the schema.</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.5.4.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.managment.ManagmentBase.get_install_events">
+<tt class="descname">get_install_events</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.managment.ManagmentBase.get_install_events" title="Permalink to this definition">¶</a></dt>
+<dd><p>Access to install events of the schema.</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.5.4.</span></p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="cast.application.managment.Application">
+<em class="property">class </em><tt class="descclassname">cast.application.managment.</tt><tt class="descname">Application</tt><big>(</big><em>mb</em>, <em>identifier</em>, <em>name</em>, <em>deploy_path</em>, <em>uuid</em>, <em>kb_id</em>, <em>local_mngt_id</em>, <em>mail</em><big>)</big><a class="headerlink" href="#cast.application.managment.Application" title="Permalink to this definition">¶</a></dt>
+<dd><p>The definition of an application in CMS</p>
+<dl class="method">
+<dt id="cast.application.managment.Application.get_packages">
+<tt class="descname">get_packages</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.managment.Application.get_packages" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the source packages of the application.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list of <a class="reference internal" href="#cast.application.managment.Package" title="cast.application.managment.Package"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.managment.Package</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.managment.Application.get_analysis_units">
+<tt class="descname">get_analysis_units</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.managment.Application.get_analysis_units" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the analysis units of the application.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list of <a class="reference internal" href="#cast.application.managment.AnalysisUnit" title="cast.application.managment.AnalysisUnit"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.managment.AnalysisUnit</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.managment.Application.get_modules">
+<tt class="descname">get_modules</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.managment.Application.get_modules" title="Permalink to this definition">¶</a></dt>
+<dd><p>Access to modules definitions</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list of <a class="reference internal" href="#cast.application.managment.Module" title="cast.application.managment.Module"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.managment.Module</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.managment.Application.get_module">
+<tt class="descname">get_module</tt><big>(</big><em>name</em><big>)</big><a class="headerlink" href="#cast.application.managment.Application.get_module" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a module definition</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#cast.application.managment.Module" title="cast.application.managment.Module"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.managment.Module</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.managment.Application.get_snapshots">
+<tt class="descname">get_snapshots</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.managment.Application.get_snapshots" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the snapshots of the application.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list of <tt class="xref py py-class docutils literal"><span class="pre">cast.application.managment.Snapshot</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.managment.Application.get_analysis_service">
+<tt class="descname">get_analysis_service</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.managment.Application.get_analysis_service" title="Permalink to this definition">¶</a></dt>
+<dd><p>Access to analysis service of the application</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.KnoweldgeBase</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.managment.Application.get_dashboard_services">
+<tt class="descname">get_dashboard_services</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.managment.Application.get_dashboard_services" title="Permalink to this definition">¶</a></dt>
+<dd><p>Access to analysis service of the application</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list of <tt class="xref py py-class docutils literal"><span class="pre">cast.application.central.CentralBase</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.managment.Application.get_email_to_send_reports">
+<tt class="descname">get_email_to_send_reports</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.managment.Application.get_email_to_send_reports" title="Permalink to this definition">¶</a></dt>
+<dd><p>If configured, returns the email to send reports to.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="cast.application.managment.Package">
+<em class="property">class </em><tt class="descclassname">cast.application.managment.</tt><tt class="descname">Package</tt><big>(</big><em>identifier</em>, <em>name</em>, <em>path</em>, <em>_type</em><big>)</big><a class="headerlink" href="#cast.application.managment.Package" title="Permalink to this definition">¶</a></dt>
+<dd><p>A source code package.</p>
+<dl class="method">
+<dt id="cast.application.managment.Package.get_path">
+<tt class="descname">get_path</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.managment.Package.get_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deployment path of the package</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.managment.Package.get_type">
+<tt class="descname">get_type</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.managment.Package.get_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Package type.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">&#8216;bo&#8217;, &#8216;dbudb&#8217;, &#8216;dbzosextract&#8217;, &#8216;file&#8217;, &#8216;formsextract&#8217;, 
+&#8216;mfextract&#8217;, &#8216;oracleextract&#8217;, &#8216;sapextract&#8217;, &#8216;sqlserverextract&#8217;,
+&#8216;sybaseextract&#8217;, &#8216;uiextract&#8217;</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="cast.application.managment.AnalysisUnit">
+<em class="property">class </em><tt class="descclassname">cast.application.managment.</tt><tt class="descname">AnalysisUnit</tt><big>(</big><em>mb</em>, <em>identifier</em>, <em>name</em>, <em>technology</em>, <em>application</em>, <em>log</em>, <em>last_execution_date</em><big>)</big><a class="headerlink" href="#cast.application.managment.AnalysisUnit" title="Permalink to this definition">¶</a></dt>
+<dd><p>The definition of an analysis unit.</p>
+<dl class="method">
+<dt id="cast.application.managment.AnalysisUnit.get_technology">
+<tt class="descname">get_technology</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.managment.AnalysisUnit.get_technology" title="Permalink to this definition">¶</a></dt>
+<dd><p>Access to technology of the AU.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">&#8216;asp&#8217;, &#8216;bo&#8217;, &#8216;cobol&#8217;, &#8216;cpp&#8217;, &#8216;forms&#8217;, &#8216;j2ee&#8217;, &#8216;net&#8217;, &#8216;ora&#8217;, 
+&#8216;pb&#8217;, &#8216;sap&#8217;, &#8216;sqlsrv&#8217;, &#8216;syb&#8217;, &#8216;ua&#8217;, &#8216;udb&#8217;, &#8216;ui&#8217;, &#8216;vb&#8217;, &#8216;zos&#8217;</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.managment.AnalysisUnit.get_log">
+<tt class="descname">get_log</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.managment.AnalysisUnit.get_log" title="Permalink to this definition">¶</a></dt>
+<dd><p>Last analysis log path.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.managment.AnalysisUnit.get_last_execution_date">
+<tt class="descname">get_last_execution_date</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.managment.AnalysisUnit.get_last_execution_date" title="Permalink to this definition">¶</a></dt>
+<dd><p>Last execution date.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.managment.AnalysisUnit.projects">
+<tt class="descname">projects</tt><big>(</big><em>kb</em><big>)</big><a class="headerlink" href="#cast.application.managment.AnalysisUnit.projects" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a KnowledgeBase, gives the associated projects</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.managment.AnalysisUnit.heads">
+<tt class="descname">heads</tt><big>(</big><em>kb</em><big>)</big><a class="headerlink" href="#cast.application.managment.AnalysisUnit.heads" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a KnowledgeBase, gives the associated head.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.managment.AnalysisUnit.full">
+<tt class="descname">full</tt><big>(</big><em>kb</em><big>)</big><a class="headerlink" href="#cast.application.managment.AnalysisUnit.full" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a KnowledgeBase, gives the associated full content</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.managment.AnalysisUnit.jobs">
+<tt class="descname">jobs</tt><big>(</big><em>kb</em><big>)</big><a class="headerlink" href="#cast.application.managment.AnalysisUnit.jobs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a KnowledgeBase, gives the job associated with analysis unit.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="cast.application.managment.Module">
+<em class="property">class </em><tt class="descclassname">cast.application.managment.</tt><tt class="descname">Module</tt><big>(</big><em>mb</em>, <em>identifier</em>, <em>name</em>, <em>uuid</em>, <em>application</em><big>)</big><a class="headerlink" href="#cast.application.managment.Module" title="Permalink to this definition">¶</a></dt>
+<dd><p>The definition of a module</p>
+</dd></dl>
+
+</div>
 <div class="section" id="interactive-scripting">
 <h2>Interactive scripting<a class="headerlink" href="#interactive-scripting" title="Permalink to this headline">¶</a></h2>
 <p>The API can also be used outside plugins, in a script or in an interactive manner.</p>
@@ -1644,15 +2120,72 @@ They can be directly used from inside the plugin by using :</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="cast.application.KnowledgeBase.get_caip_version">
-<tt class="descname">get_caip_version</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.KnowledgeBase.get_caip_version" title="Permalink to this definition">¶</a></dt>
-<dd><p>Access to CAIP version of the knowledge base</p>
+<dt id="cast.application.KnowledgeBase.get_jobs">
+<tt class="descname">get_jobs</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.KnowledgeBase.get_jobs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Access to jobs of the knowledge base.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.KnowledgeBase.get_events">
+<tt class="descname">get_events</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.KnowledgeBase.get_events" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the events of this KnowledgeBase.</p>
+<ul class="simple">
+<li>AMT Saving</li>
+<li>Metrics Calculation (after the analysis)</li>
+<li>Update Cast Knowledge Base</li>
+<li>Installation, upgrade events</li>
+<li>...</li>
+</ul>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.5.4.</span></p>
+</div>
 </dd></dl>
 
 <dl class="method">
 <dt id="cast.application.KnowledgeBase.update_cast_system_views">
 <tt class="descname">update_cast_system_views</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.KnowledgeBase.update_cast_system_views" title="Permalink to this definition">¶</a></dt>
 <dd><p>Updates the Cast System Views.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.KnowledgeBase.execute_query">
+<tt class="descname">execute_query</tt><big>(</big><em>query</em><big>)</big><a class="headerlink" href="#cast.application.KnowledgeBase.execute_query" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute a query on the schema and return a cursor.</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.5.4.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.KnowledgeBase.get_caip_version">
+<tt class="descname">get_caip_version</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.KnowledgeBase.get_caip_version" title="Permalink to this definition">¶</a></dt>
+<dd><p>Access to CAIP version of the schema.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">distutils.version.StrictVersion</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.KnowledgeBase.get_extensions">
+<tt class="descname">get_extensions</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.KnowledgeBase.get_extensions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Access to extensions installed on the schema.</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.5.4.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.KnowledgeBase.get_install_events">
+<tt class="descname">get_install_events</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.KnowledgeBase.get_install_events" title="Permalink to this definition">¶</a></dt>
+<dd><p>Access to install events of the schema.</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.5.4.</span></p>
+</div>
 </dd></dl>
 
 </dd></dl>

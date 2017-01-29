@@ -2,8 +2,9 @@ Running code after analyzers
 ============================
 
 .. note::
-    This is documentation for cast.application version 1.5.0.
+    This is documentation for cast.application version 1.5.4.
     This API can be upgraded separately from AIP. 
+    See `api 1.5.4 <https://github.com/CAST-projects/Extension-SDK/tree/master/api/1.5.3>`_ 
 
 
 After all analysis job have ran some code can be launched on the resulting knowledge base. 
@@ -17,15 +18,10 @@ During this step, you :
 * have access to source code
 
 
-
 Implementing An application level extension
 -------------------------------------------
 
-A plugin can be called at the end of analysis by implementing a subclass of 
-
-.. autoclass:: cast.application.ApplicationLevelExtension
-   :members: 
-
+A plugin can be called at the end of analysis by implementing a subclass of :class:`cast.application.ApplicationLevelExtension` and overriding :meth:`cast.application.ApplicationLevelExtension.end_application` 
 
 For example::
 
@@ -38,15 +34,18 @@ For example::
         
             logging.debug("running code at the end of an application")
             
-            application.sql_tool("/* put your sql code here*/")
-            application.update_cast_knowledge_base("/* put your sql code here*/")
-
+            # use application object to access the knowledge base
+            # ...
 
 
 It is better to separate code from application level extension from the analyser level extension. They use separate python API and separate process 
 launching.
 
 A plugin can contain any number of ApplicationLevelExtension, they all will be called back.
+
+.. autoclass:: cast.application.ApplicationLevelExtension
+   :members: 
+
 
 Those call backs have the application as context :
 
@@ -234,6 +233,7 @@ Iterating on a :class:`cast.application.LinkQuery` will gives object of type :
    .. automethod:: cast.application.EnlightenLink.get_type_names
    .. automethod:: cast.application.EnlightenLink.get_positions
    .. automethod:: cast.application.EnlightenLink.get_code
+   .. automethod:: cast.application.EnlightenLink.get_property
 
 
 Accessing existing links
@@ -251,6 +251,8 @@ This query can then be refined using the method chaining pattern API.
 .. autoclass:: cast.application.LinkQuery
    :members: 
 
+.. autoclass:: cast.application.LinkType
+   :members: 
 
 Examples::
 
@@ -330,7 +332,7 @@ Created links can receive properties :
 
 .. note::
 
-    This time, no need to declare ownership.
+    No need to declare property ownership for saving property on newly created links. 
 
 Example::
 
@@ -406,6 +408,13 @@ The 'reaction' to those patterns found is totally open to developer.
 
    `bookmark` :class:`cast.application.Bookmark` of the reference found
 
+Reading files
+-------------
+
+This function will open a file while autodetecting encoding. 
+
+.. autofunction:: cast.application.open_source_file
+
 
 Logging
 -------
@@ -453,6 +462,40 @@ Note that it is strongly recommended to use ansi sql code here. The SQL code wil
 
 So no need to prefix tables with nothing.
 
+Access to infrastructure and management
+---------------------------------------
+
+.. warning::
+    
+    This only works on 'combined install' situation; i.e., the local schema must be named xxx_local and the management xxx_mngt both on the same server. 
+
+.. automethod:: cast.application.Application.get_application_configuration
+
+.. automethod:: cast.application.Application.get_managment_base
+
+
+Management schema
+-----------------
+
+Management schema contains the analysis definitions and options.
+
+
+.. autoclass:: cast.application.managment.ManagmentBase
+   :members:
+   :inherited-members:
+
+.. autoclass:: cast.application.managment.Application
+   :members: 
+
+.. autoclass:: cast.application.managment.Package
+   :members: 
+
+.. autoclass:: cast.application.managment.AnalysisUnit
+   :members: 
+
+.. autoclass:: cast.application.managment.Module
+   :members: 
+
 
 Interactive scripting
 ---------------------
@@ -463,7 +506,7 @@ Basically one has to 'connect' to a knowledge base and then can retrieve applica
 
 .. autoclass:: cast.application.KnowledgeBase
    :members: 
-   
+   :inherited-members:
 
 Example of a script::
 
