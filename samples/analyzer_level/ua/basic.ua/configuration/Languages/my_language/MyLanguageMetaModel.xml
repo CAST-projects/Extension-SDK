@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!-- 
+Reserve your id range at : ...
+
+-->
+<metaModel file_level="client" file_no="100">
+    
+    <!-- This part is mandatory for defining a new UA language -->
+
+    <category name="MyLanguageAPM_Module" rid="0">
+        <description>MyLanguage</description>
+        <inheritedCategory name="APM Client Modules" />
+    </category>
+
+    <category name="MyLanguageAPM_Artifacts" rid="1">
+        <description>MyLanguage Artifacts</description>
+        <!-- 
+        inherit from APM Client Language Artifacts for a non SGBD language
+        inherit from ... for a SGBD language
+        -->
+        <inheritedCategory name="APM Client Language Artifacts" />
+    </category>
+
+    <type name="MyLanguageSUBSET" rid="2">
+        <description>MyLanguage Subset</description>
+        <inheritedCategory name="PROJECT_SUBSET" />
+        <inheritedCategory name="MyLanguage" />
+        <inheritedCategory name="MyLanguageAPM_Module" />
+    </type>
+
+    <type name="MyLanguageEnlighten" rid="3">
+        <description>MyLanguage</description>
+        <tree parent="EnlightenUniversalObjects" category="EnlightenTree" />
+    </type>
+
+    <!-- MyLanguage project -->
+    <type name="MyLanguageProject" rid="4">
+        <description>MyLanguage Project</description>
+        <inheritedCategory name="UAProject" />
+        <inheritedCategory name="MyLanguage" />
+        <inheritedCategory name="MyLanguageAPM_Module" />
+    </type>
+
+    <!--   
+    Here you configure : 
+    - the language name as it appears in CASTMS : through the <description> tag
+    - the file extensions considered by this analyser 
+    -->
+    <category name="MyLanguage" rid="5">
+        <description>MyLanguage</description>
+        <attribute name="extensions" stringValue="*.ext1;*.ext2" />
+        <inheritedCategory name="UniversalLanguage" />
+        <inheritedCategory name="CsvLanguage" />
+    </category>
+    
+    <!-- 
+    Add your categories and types below... 
+    -->
+    
+    <type name="MyLanguage_Object1" rid="6">
+        <description>An Object</description>
+        <inheritedCategory name="UAObject" />
+        <inheritedCategory name="METRICABLE" />
+        <inheritedCategory name="MyLanguage" />
+    </type>    
+
+</metaModel>
