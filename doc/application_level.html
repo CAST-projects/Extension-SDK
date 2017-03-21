@@ -177,9 +177,9 @@
 <h1>Running code after analyzers<a class="headerlink" href="#running-code-after-analyzers" title="Permalink to this headline">¶</a></h1>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">This is documentation for cast.application version 1.5.4.
+<p class="last">This is documentation for cast.application version 1.5.5.
 This API can be upgraded separately from AIP.
-See <a class="reference external" href="https://github.com/CAST-projects/Extension-SDK/tree/master/api/1.5.4">api 1.5.4</a></p>
+See <a class="reference external" href="https://github.com/CAST-projects/Extension-SDK/tree/master/api/1.5.5">api 1.5.5</a></p>
 </div>
 <p>After all analysis job have ran some code can be launched on the resulting knowledge base.</p>
 <p>During this step, you :</p>
@@ -1025,15 +1025,20 @@ Very useful for link&#8217;s positions.</p>
 <p>Files, with their path loaded can be retrieved using :</p>
 <dl class="method">
 <dt id="cast.application.Application.get_files">
-<tt class="descclassname">Application.</tt><tt class="descname">get_files</tt><big>(</big><em>languages=[]</em><big>)</big><a class="headerlink" href="#cast.application.Application.get_files" title="Permalink to this definition">¶</a></dt>
+<tt class="descclassname">Application.</tt><tt class="descname">get_files</tt><big>(</big><em>languages=[]</em>, <em>external=False</em><big>)</big><a class="headerlink" href="#cast.application.Application.get_files" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get all the files of the application.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>of str languages</strong> (<em>list</em>) &#8211; possible categories for the searched files.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>languages</strong> &#8211; list of str possible categories for the searched files.</li>
+<li><strong>external</strong> &#8211; when True takes also files marked as external</li>
+</ul>
+</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">iterable of <a class="reference internal" href="#cast.application.File" title="cast.application.File"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.File</span></tt></a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">iterable of <a class="reference internal" href="#cast.application.File" title="cast.application.File"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.File</span></tt></a></p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -1993,6 +1998,12 @@ Future version of CAIP will leverage this limitation.</dd>
 <dt id="cast.application.managment.Package">
 <em class="property">class </em><tt class="descclassname">cast.application.managment.</tt><tt class="descname">Package</tt><big>(</big><em>identifier</em>, <em>name</em>, <em>path</em>, <em>_type</em><big>)</big><a class="headerlink" href="#cast.application.managment.Package" title="Permalink to this definition">¶</a></dt>
 <dd><p>A source code package.</p>
+<dl class="method">
+<dt id="cast.application.managment.Package.get_name">
+<tt class="descname">get_name</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.managment.Package.get_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Name of the package</p>
+</dd></dl>
+
 <dl class="method">
 <dt id="cast.application.managment.Package.get_path">
 <tt class="descname">get_path</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.managment.Package.get_path" title="Permalink to this definition">¶</a></dt>
