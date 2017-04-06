@@ -177,9 +177,9 @@
 <h1>Running code after analyzers<a class="headerlink" href="#running-code-after-analyzers" title="Permalink to this headline">¶</a></h1>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">This is documentation for cast.application version 1.5.5.
+<p class="last">This is documentation for cast.application version 1.5.6.
 This API can be upgraded separately from AIP.
-See <a class="reference external" href="https://github.com/CAST-projects/Extension-SDK/tree/master/api/1.5.5">api 1.5.5</a></p>
+See <a class="reference external" href="https://github.com/CAST-projects/Extension-SDK/tree/master/api/1.5.6">api 1.5.6</a></p>
 </div>
 <p>After all analysis job have ran some code can be launched on the resulting knowledge base.</p>
 <p>During this step, you :</p>
@@ -856,6 +856,8 @@ But not programs.</p>
 </table>
 <p>The current plugin must have declared the property has his own.  
 :see <a class="reference internal" href="#cast.application.Application.declare_property_ownership" title="cast.application.Application.declare_property_ownership"><tt class="xref py py-meth docutils literal"><span class="pre">cast.application.Application.declare_property_ownership()</span></tt></a></p>
+<p>Saving several times the same property on the same object will trigger an exception.
+Both saving a given property on an object and saving a violation for that property will trigger an exception.</p>
 </dd></dl>
 
 </div></blockquote>
@@ -880,8 +882,12 @@ understanding the violation</li>
 </tr>
 </tbody>
 </table>
-<p>The property &#8216;prop&#8217; is automatically valorised with the number of violations for the object. So do not use save_property for this property.</p>
-<p>The current plugin must have declared the prop has his own.  
+<p>The property &#8216;prop&#8217; is automatically valorised with the number of violations for the object.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">The property &#8216;prop&#8217; is automatically valorised with the number of violations for the object. So do not use save_property for this property as it will trigger and exception.</p>
+</div>
+<p>The current plugin must have declared the prop has his own.
 :see <a class="reference internal" href="#cast.application.Application.declare_property_ownership" title="cast.application.Application.declare_property_ownership"><tt class="xref py py-meth docutils literal"><span class="pre">cast.application.Application.declare_property_ownership()</span></tt></a></p>
 </dd></dl>
 
@@ -2030,7 +2036,7 @@ Future version of CAIP will leverage this limitation.</dd>
 
 <dl class="class">
 <dt id="cast.application.managment.AnalysisUnit">
-<em class="property">class </em><tt class="descclassname">cast.application.managment.</tt><tt class="descname">AnalysisUnit</tt><big>(</big><em>mb</em>, <em>identifier</em>, <em>name</em>, <em>technology</em>, <em>application</em>, <em>log</em>, <em>last_execution_date</em><big>)</big><a class="headerlink" href="#cast.application.managment.AnalysisUnit" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">cast.application.managment.</tt><tt class="descname">AnalysisUnit</tt><big>(</big><em>mb</em>, <em>identifier</em>, <em>name</em>, <em>technology</em>, <em>application</em>, <em>log</em>, <em>last_execution_date</em>, <em>uuid</em><big>)</big><a class="headerlink" href="#cast.application.managment.AnalysisUnit" title="Permalink to this definition">¶</a></dt>
 <dd><p>The definition of an analysis unit.</p>
 <dl class="method">
 <dt id="cast.application.managment.AnalysisUnit.get_technology">
@@ -2081,6 +2087,7 @@ Future version of CAIP will leverage this limitation.</dd>
 <dt id="cast.application.managment.AnalysisUnit.jobs">
 <tt class="descname">jobs</tt><big>(</big><em>kb</em><big>)</big><a class="headerlink" href="#cast.application.managment.AnalysisUnit.jobs" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given a KnowledgeBase, gives the job associated with analysis unit.</p>
+<p>Probably bugged...</p>
 </dd></dl>
 
 </dd></dl>
