@@ -2,9 +2,9 @@ Running code after analyzers
 ============================
 
 .. note::
-    This is documentation for cast.application version 1.5.6.
+    This is documentation for cast.application version 1.5.7.
     This API can be upgraded separately from AIP. 
-    See `api 1.5.6 <https://github.com/CAST-projects/Extension-SDK/tree/master/api/1.5.6>`_ 
+    See `api 1.5.7 <https://github.com/CAST-projects/Extension-SDK/tree/master/api/1.5.7>`_ 
 
 
 After all analysis job have ran some code can be launched on the resulting knowledge base. 
@@ -56,6 +56,50 @@ Those call backs have the application as context :
 Objects
 -------
 
+
+Accessing objects
+*****************
+
+Examples::
+
+    # iterate on all objects of the application
+    for o in application.objects():
+        logging.debug(o.get_name())
+        # do something with the object
+    
+    # iterate on all java objects of the application
+    for o in application.objects().has_type('Java'):
+        logging.debug(o.get_name())
+        # do something with the object
+    
+    # iterate on all public java objects of the application
+    for o in application.objects().has_type('Java').is_public():
+        logging.debug(o.get_name())
+        # do something with the object
+        ...
+
+    # iterate on all public java class of the application and load their body comment
+    for o in application.objects().has_type('Java').is_internal().is_class().is_public().load_property('comment.sourceCodeComment'):
+        # do something with the object
+        # the property is available because we have loaded it
+        logging.debug(o.get_property('comment.sourceCodeComment'))
+        
+        
+        
+Objects can be accessed using the following method on :class:`cast.application.Application` :
+
+.. versionadded:: 1.5.0
+
+.. automethod:: cast.application.Application.objects
+
+This will be the preferred way for querying objects. It returns a  :class:`cast.application.ObjectQuery` that represent a query on objects.
+This query can be refined using `method chaining  <https://en.wikipedia.org/wiki/Method_chaining>`_.
+
+.. autoclass:: cast.application.ObjectQuery
+   :members: 
+
+
+
 Objects from the applications will all be of class : 
 
 .. autoclass:: cast.application.Object
@@ -86,41 +130,6 @@ We provide a high level classification of Objects :
    .. automethod:: cast.application.Object.is_form
    .. automethod:: cast.application.Object.is_web_service_operation
    .. automethod:: cast.application.Object.is_dbms
-
-
-Accessing objects
-*****************
-
-
-Objects can be accessed using one of the following methods on :class:`cast.application.Application` :
-
-.. automethod:: cast.application.Application.get_objects
-
-.. automethod:: cast.application.Application.search_objects
-
-.. versionadded:: 1.5.0
-
-.. automethod:: cast.application.Application.objects
-
-This will be the preferred way for querying objects. It returns a  :class:`cast.application.ObjectQuery` that represent a query on objects.
-This query can be refined using `method chaining  <https://en.wikipedia.org/wiki/Method_chaining>`_.
-
-.. autoclass:: cast.application.ObjectQuery
-   :members: 
-
-Examples::
-
-    # iterate all objects of the application
-    for o in application.objects():
-        ...
-    
-    # iterate all java objects of the application
-    for o in application.objects().has_type('Java'):
-        ...
-    
-    # iterate all public java objects of the application
-    for o in application.objects().has_type('Java').is_public():
-        ...
 
 
    
