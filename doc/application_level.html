@@ -84,6 +84,7 @@
             
                 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="overview.html#choosing-between-analysis-level-and-application-level">Choosing between analysis level and application level</a></li>
 <li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="my_first_plugin.html">Tutorial : My first plugin</a></li>
 <li class="toctree-l1"><a class="reference internal" href="deployment.html">Deploying plugins</a></li>
@@ -93,6 +94,11 @@
 <li class="toctree-l2"><a class="reference internal" href="#implementing-an-application-level-extension">Implementing An application level extension</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#objects">Objects</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#accessing-objects">Accessing objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#special-note-on-performances">Special note on performances</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#query-inside-loop">Query inside loop</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#do-not-use-application-search-objects-name-variable">Do not use application.search_objects(name=variable)</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="#decorating-objects">Decorating objects</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#bookmark">Bookmark</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#specific-object-types">Specific object types</a><ul>
@@ -177,9 +183,9 @@
 <h1>Running code after analyzers<a class="headerlink" href="#running-code-after-analyzers" title="Permalink to this headline">¶</a></h1>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">This is documentation for cast.application version 1.5.7.
+<p class="last">This is documentation for cast.application version 1.5.9.
 This API can be upgraded separately from AIP.
-See <a class="reference external" href="https://github.com/CAST-projects/Extension-SDK/tree/master/api/1.5.7">api 1.5.7</a></p>
+See <a class="reference external" href="https://github.com/CAST-projects/Extension-SDK/tree/master/api/1.5.9">api 1.5.9</a></p>
 </div>
 <p>After all analysis job have ran some code can be launched on the resulting knowledge base.</p>
 <p>During this step, you :</p>
@@ -190,6 +196,18 @@ See <a class="reference external" href="https://github.com/CAST-projects/Extensi
 <li>has access to all objects and links created by any analyzer</li>
 <li>have access to source code</li>
 </ul>
+<p>See <a class="reference internal" href="overview.html#choosing-level"><em>Choosing between analysis level and application level</em></a> for choosing between the two levels</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p>This API is an <a class="reference external" href="https://en.wikipedia.org/wiki/Object-relational_mapping">ORM</a>.</p>
+<p>So most of calls will perform a SQL query on the knowledge base.
+Thus <strong>classical bad practices</strong> still occurs here :</p>
+<ul class="simple">
+<li>queries inside loops will destroy performances on large volume</li>
+<li>...</li>
+</ul>
+<p class="last">See <a class="reference internal" href="#performance-notes"><em>Special note on performances</em></a></p>
+</div>
 <div class="section" id="implementing-an-application-level-extension">
 <h2>Implementing An application level extension<a class="headerlink" href="#implementing-an-application-level-extension" title="Permalink to this headline">¶</a></h2>
 <p>A plugin can be called at the end of analysis by implementing a subclass of <a class="reference internal" href="#cast.application.ApplicationLevelExtension" title="cast.application.ApplicationLevelExtension"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.ApplicationLevelExtension</span></tt></a> and overriding <a class="reference internal" href="#cast.application.ApplicationLevelExtension.end_application" title="cast.application.ApplicationLevelExtension.end_application"><tt class="xref py py-meth docutils literal"><span class="pre">cast.application.ApplicationLevelExtension.end_application()</span></tt></a></p>
@@ -232,21 +250,6 @@ launching.</p>
 <tbody valign="top">
 </tbody>
 </table>
-</dd></dl>
-
-<dl class="method">
-<dt id="cast.application.ApplicationLevelExtension.get_intermediate_files">
-<tt class="descname">get_intermediate_files</tt><big>(</big><em>name</em><big>)</big><a class="headerlink" href="#cast.application.ApplicationLevelExtension.get_intermediate_files" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return all the intermediate files of given name.
-The files are open in read mode.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="cast.application.ApplicationLevelExtension.get_intermediate_file">
-<tt class="descname">get_intermediate_file</tt><big>(</big><em>name</em><big>)</big><a class="headerlink" href="#cast.application.ApplicationLevelExtension.get_intermediate_file" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return an intermediate file by name.
-The file is open in read mode.</p>
-<p>Raises an exception when the file does not exist.</p>
 </dd></dl>
 
 </dd></dl>
@@ -336,6 +339,29 @@ This query can be refined using <a class="reference external" href="https://en.w
 </dd></dl>
 
 <dl class="method">
+<dt id="cast.application.ObjectQuery.not_has_type">
+<tt class="descname">not_has_type</tt><big>(</big><em>_types_or_categories</em><big>)</big><a class="headerlink" href="#cast.application.ObjectQuery.not_has_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filter and return a query that takes only objects that do not have certain types or categories</p>
+<blockquote>
+<div><p>.not_has_type([&#8216;Java&#8217;, &#8216;C++&#8217;]) : all types except those inheriting from Java or C++</p>
+<p>.not_has_type(&#8216;Java&#8217;).not_has_type(&#8216;Method&#8217;) all types not inheriting from Java and not inheriting from Method</p>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>_types_or_categories</strong> &#8211; category name, id or list of those. If a list is provided, it will act as a logical or.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#cast.application.ObjectQuery" title="cast.application.ObjectQuery"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.ObjectQuery</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.5.9.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
 <dt id="cast.application.ObjectQuery.load_property">
 <tt class="descname">load_property</tt><big>(</big><em>propety_or_properties</em><big>)</big><a class="headerlink" href="#cast.application.ObjectQuery.load_property" title="Permalink to this definition">¶</a></dt>
 <dd><p>Ask for loading of one or some properties.</p>
@@ -369,6 +395,9 @@ This query can be refined using <a class="reference external" href="https://en.w
 </tr>
 </tbody>
 </table>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.5.7.</span></p>
+</div>
 </dd></dl>
 
 <dl class="method">
@@ -660,7 +689,7 @@ But not programs.</p>
 <dl class="method">
 <dt id="cast.application.ObjectQuery.is_web_service_operation">
 <tt class="descname">is_web_service_operation</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.ObjectQuery.is_web_service_operation" title="Permalink to this definition">¶</a></dt>
-<dd><p>Objects that are web service operations (get, post, ...).</p>
+<dd><p>Objects that are web service handler server side REST (get, post, ...) or SOAP.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -669,6 +698,23 @@ But not programs.</p>
 </tr>
 </tbody>
 </table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.ObjectQuery.is_web_service_call">
+<tt class="descname">is_web_service_call</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.ObjectQuery.is_web_service_call" title="Permalink to this definition">¶</a></dt>
+<dd><p>Objects that are web service call (client side).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#cast.application.ObjectQuery" title="cast.application.ObjectQuery"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.ObjectQuery</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.5.9.</span></p>
+</div>
 </dd></dl>
 
 <dl class="method">
@@ -683,6 +729,104 @@ But not programs.</p>
 </tr>
 </tbody>
 </table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.ObjectQuery.in_set">
+<tt class="descname">in_set</tt><big>(</big><em>set_name_or_id_or_list</em><big>)</big><a class="headerlink" href="#cast.application.ObjectQuery.in_set" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filter objects that are part of a given set.</p>
+<blockquote>
+<div><p>.in_set([&#8216;set1&#8217;, &#8216;set2&#8217;]) : all objects in set or set2</p>
+<p>.in_set(&#8216;set1&#8217;).in_set(&#8216;set2&#8217;) all objects in set and set2</p>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>set_name_or_id_or_list</strong> &#8211; set name, id or list of those. If a list is provided, it will act as a logical or.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#cast.application.ObjectQuery" title="cast.application.ObjectQuery"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.ObjectQuery</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.5.9.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.ObjectQuery.not_in_set">
+<tt class="descname">not_in_set</tt><big>(</big><em>set_name_or_id_or_list</em><big>)</big><a class="headerlink" href="#cast.application.ObjectQuery.not_in_set" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filter objects that are not_part of a given set.</p>
+<blockquote>
+<div><p>.not_in_set([&#8216;set1&#8217;, &#8216;set2&#8217;]) : all objects not in set or set2</p>
+<p>.not_in_set(&#8216;set1&#8217;).not_in_set(&#8216;set2&#8217;) all objects not in set and not set2</p>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>set_name_or_id_or_list</strong> &#8211; set name, id or list of those. If a list is provided, it will act as a logical or.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#cast.application.ObjectQuery" title="cast.application.ObjectQuery"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.ObjectQuery</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.5.9.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.ObjectQuery.not_in">
+<tt class="descname">not_in</tt><big>(</big><em>object_query</em><big>)</big><a class="headerlink" href="#cast.application.ObjectQuery.not_in" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filter objects that are not_part of a given query.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>object_query</strong> &#8211; <cite>cast.application.ObjectQuery</cite></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#cast.application.ObjectQuery" title="cast.application.ObjectQuery"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.ObjectQuery</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.5.9.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.ObjectQuery.in_projects">
+<tt class="descname">in_projects</tt><big>(</big><em>projects</em><big>)</big><a class="headerlink" href="#cast.application.ObjectQuery.in_projects" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filter objects that are part of a given set.</p>
+<blockquote>
+<div><p>.in_projects([p1, p2]) : all objects in p1 or p2</p>
+<p>.in_projects([p1]).in_projects([p2]) all objects in p1 and p2</p>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>projects</strong> &#8211; list of <cite>cast.application.Project</cite>.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#cast.application.ObjectQuery" title="cast.application.ObjectQuery"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.ObjectQuery</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.5.9.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.ObjectQuery.count">
+<tt class="descname">count</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.ObjectQuery.count" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the number of objects in this query.</p>
+<p>Execute a count(*) ...</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.5.9.</span></p>
+</div>
 </dd></dl>
 
 </dd></dl>
@@ -823,6 +967,38 @@ But not programs.</p>
 </dd></dl>
 
 </div></blockquote>
+</div>
+<div class="section" id="special-note-on-performances">
+<span id="performance-notes"></span><h3>Special note on performances<a class="headerlink" href="#special-note-on-performances" title="Permalink to this headline">¶</a></h3>
+<p>Here is a non complete list of bad practices found in code :</p>
+<div class="section" id="query-inside-loop">
+<h4>Query inside loop<a class="headerlink" href="#query-inside-loop" title="Permalink to this headline">¶</a></h4>
+<p>Sample of bad practice:</p>
+<div class="highlight-python"><div class="highlight"><pre>for something in application.objects()...:
+
+        for otherthing in application.objects()...:
+
+                # ...
+</pre></div>
+</div>
+<p>This will do a query inside a loop which is killer in term of performance.</p>
+<p>You probably should rewrite in the following form:</p>
+<div class="highlight-python"><div class="highlight"><pre>my_collection = {}
+
+for something in application.objects()...:
+
+        my_collection[...] = something
+
+for otherthing in application.objects()...:
+
+        # ... use my_collection in a correct way...
+</pre></div>
+</div>
+</div>
+<div class="section" id="do-not-use-application-search-objects-name-variable">
+<h4>Do not use application.search_objects(name=variable)<a class="headerlink" href="#do-not-use-application-search-objects-name-variable" title="Permalink to this headline">¶</a></h4>
+<p>Getting one object per name, whose name is variable will generate one query for each search and will be under-perfomant.</p>
+</div>
 </div>
 <div class="section" id="decorating-objects">
 <h3>Decorating objects<a class="headerlink" href="#decorating-objects" title="Permalink to this headline">¶</a></h3>
@@ -1064,6 +1240,16 @@ Very useful for link&#8217;s positions.</p>
 </tr>
 </tbody>
 </table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.Project.objects">
+<tt class="descname">objects</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.Project.objects" title="Permalink to this definition">¶</a></dt>
+<dd><p>return a query for all the objects of this project.
+:rtype: <a class="reference internal" href="#cast.application.ObjectQuery" title="cast.application.ObjectQuery"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.ObjectQuery</span></tt></a></p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.5.9.</span></p>
+</div>
 </dd></dl>
 
 </dd></dl>
@@ -1340,8 +1526,8 @@ This query can then be refined using the method chaining pattern API.</p>
 <dl class="method">
 <dt id="cast.application.LinkQuery.is_not_sure">
 <tt class="descname">is_not_sure</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.LinkQuery.is_not_sure" title="Permalink to this definition">¶</a></dt>
-<dd><p>Filter only no sure links.</p>
-<p>Links that are eligible to dynamic link manager.</p>
+<dd><p>Filter only not sure links.
+i.e., links that are eligible to dynamic link manager.</p>
 <p>Those links are considered as &#8216;not sure&#8217; because they are created from weak strategies.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1351,6 +1537,74 @@ This query can then be refined using the method chaining pattern API.</p>
 </tr>
 </tbody>
 </table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.LinkQuery.is_to_be_reviewed">
+<tt class="descname">is_to_be_reviewed</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.LinkQuery.is_to_be_reviewed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filter only not sure links that need to be reviewed.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#cast.application.LinkQuery" title="cast.application.LinkQuery"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.LinkQuery</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.5.9.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.LinkQuery.is_ignored">
+<tt class="descname">is_ignored</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.LinkQuery.is_ignored" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filter only not sure links that are ignored.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#cast.application.LinkQuery" title="cast.application.LinkQuery"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.LinkQuery</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.5.9.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.LinkQuery.is_not_ignored">
+<tt class="descname">is_not_ignored</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.LinkQuery.is_not_ignored" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filter only not sure links that are not ignored.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#cast.application.LinkQuery" title="cast.application.LinkQuery"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.LinkQuery</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.5.9.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.LinkQuery.is_validated">
+<tt class="descname">is_validated</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.LinkQuery.is_validated" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filter only not sure links that are validated.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#cast.application.LinkQuery" title="cast.application.LinkQuery"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.LinkQuery</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.5.9.</span></p>
+</div>
 </dd></dl>
 
 <dl class="method">
@@ -1404,6 +1658,16 @@ This query can then be refined using the method chaining pattern API.</p>
 </tr>
 </tbody>
 </table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.LinkQuery.count">
+<tt class="descname">count</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.LinkQuery.count" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the number of links in this query.</p>
+<p>Execute a count(*) ...</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.5.9.</span></p>
+</div>
 </dd></dl>
 
 </dd></dl>
@@ -1517,6 +1781,7 @@ This query can then be refined using the method chaining pattern API.</p>
 <dt id="cast.application.create_link">
 <tt class="descclassname">cast.application.</tt><tt class="descname">create_link</tt><big>(</big><em>link_type</em>, <em>caller</em>, <em>callee</em>, <em>bookmark=None</em><big>)</big><a class="headerlink" href="#cast.application.create_link" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates a link between two objects.</p>
+<p>Only accessible in one specific event : end_application; will warn and skip.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />

@@ -2,9 +2,9 @@ Running code after analyzers
 ============================
 
 .. note::
-    This is documentation for cast.application version 1.5.7.
+    This is documentation for cast.application version 1.5.9.
     This API can be upgraded separately from AIP. 
-    See `api 1.5.7 <https://github.com/CAST-projects/Extension-SDK/tree/master/api/1.5.7>`_ 
+    See `api 1.5.9 <https://github.com/CAST-projects/Extension-SDK/tree/master/api/1.5.9>`_ 
 
 
 After all analysis job have ran some code can be launched on the resulting knowledge base. 
@@ -16,6 +16,20 @@ During this step, you :
 * can create new violations on objects
 * has access to all objects and links created by any analyzer
 * have access to source code
+
+See :ref:`choosing-level` for choosing between the two levels  
+
+
+.. warning::
+	This API is an `ORM <https://en.wikipedia.org/wiki/Object-relational_mapping>`_. 
+	
+	So most of calls will perform a SQL query on the knowledge base. 
+	Thus **classical bad practices** still occurs here : 
+	
+	* queries inside loops will destroy performances on large volume
+	* ...
+	
+	See :ref:`performance-notes`
 
 
 Implementing An application level extension
@@ -44,7 +58,8 @@ launching.
 A plugin can contain any number of ApplicationLevelExtension, they all will be called back.
 
 .. autoclass:: cast.application.ApplicationLevelExtension
-   :members: 
+
+   .. automethod:: cast.application.ApplicationLevelExtension.end_application
 
 
 Those call backs have the application as context :
@@ -131,6 +146,45 @@ We provide a high level classification of Objects :
    .. automethod:: cast.application.Object.is_web_service_operation
    .. automethod:: cast.application.Object.is_dbms
 
+
+.. _performance-notes:
+
+Special note on performances
+****************************
+
+Here is a non complete list of bad practices found in code :
+
+Query inside loop
+#################
+
+Sample of bad practice::
+
+
+	for something in application.objects()...:
+		
+		for otherthing in application.objects()...:
+			
+			# ...
+
+This will do a query inside a loop which is killer in term of performance.
+
+You probably should rewrite in the following form::
+
+	my_collection = {}
+	
+	for something in application.objects()...:
+		
+		my_collection[...] = something
+			
+	for otherthing in application.objects()...:
+			
+		# ... use my_collection in a correct way...
+		
+
+Do not use application.search_objects(name=variable)
+####################################################
+
+Getting one object per name, whose name is variable will generate one query for each search and will be under-perfomant.
 
    
 Decorating objects

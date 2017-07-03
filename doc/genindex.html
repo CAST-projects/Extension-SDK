@@ -83,6 +83,7 @@
             
                 <ul>
 <li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="overview.html#choosing-between-analysis-level-and-application-level">Choosing between analysis level and application level</a></li>
 <li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="my_first_plugin.html">Tutorial : My first plugin</a></li>
 <li class="toctree-l1"><a class="reference internal" href="deployment.html">Deploying plugins</a></li>
@@ -154,6 +155,7 @@
  | <a href="#K"><strong>K</strong></a>
  | <a href="#L"><strong>L</strong></a>
  | <a href="#M"><strong>M</strong></a>
+ | <a href="#N"><strong>N</strong></a>
  | <a href="#O"><strong>O</strong></a>
  | <a href="#P"><strong>P</strong></a>
  | <a href="#R"><strong>R</strong></a>
@@ -319,6 +321,16 @@
   <dt><a href="application_level.html#cast.application.Bookmark.contains_position">contains_position() (cast.application.Bookmark method)</a>
   </dt>
 
+      
+  <dt><a href="application_level.html#cast.application.LinkQuery.count">count() (cast.application.LinkQuery method)</a>
+  </dt>
+
+      <dd><dl>
+        
+  <dt><a href="application_level.html#cast.application.ObjectQuery.count">(cast.application.ObjectQuery method)</a>
+  </dt>
+
+      </dl></dd>
       
   <dt><a href="code_reference.html#cast.analysers.create_link">create_link() (in module cast.analysers)</a>
   </dt>
@@ -838,14 +850,6 @@
   </dt>
 
       
-  <dt><a href="application_level.html#cast.application.ApplicationLevelExtension.get_intermediate_file">get_intermediate_file() (cast.application.ApplicationLevelExtension method)</a>
-  </dt>
-
-      
-  <dt><a href="application_level.html#cast.application.ApplicationLevelExtension.get_intermediate_files">get_intermediate_files() (cast.application.ApplicationLevelExtension method)</a>
-  </dt>
-
-      
   <dt><a href="code_reference.html#cast.analysers.get_intermediate_path">get_intermediate_path() (in module cast.analysers)</a>
   </dt>
 
@@ -861,12 +865,12 @@
   <dt><a href="code_reference.html#cast.analysers.test.TestAnalysis.get_link_by_caller">get_link_by_caller() (cast.analysers.test.TestAnalysis method)</a>
   </dt>
 
-  </dl></td>
-  <td style="width: 33%" valign="top"><dl>
       
   <dt><a href="code_reference.html#cast.analysers.test.TestAnalysis.get_link_by_caller_callee">get_link_by_caller_callee() (cast.analysers.test.TestAnalysis method)</a>
   </dt>
 
+  </dl></td>
+  <td style="width: 33%" valign="top"><dl>
       
   <dt><a href="code_reference.html#cast.analysers.test.TestAnalysis.get_links_by_caller">get_links_by_caller() (cast.analysers.test.TestAnalysis method)</a>
   </dt>
@@ -1168,6 +1172,14 @@
   </dt>
 
       
+  <dt><a href="application_level.html#cast.application.ObjectQuery.in_projects">in_projects() (cast.application.ObjectQuery method)</a>
+  </dt>
+
+      
+  <dt><a href="application_level.html#cast.application.ObjectQuery.in_set">in_set() (cast.application.ObjectQuery method)</a>
+  </dt>
+
+      
   <dt><a href="code_reference.html#cast.analysers.log.info">info() (in module cast.analysers.log)</a>
   </dt>
 
@@ -1243,8 +1255,6 @@
   </dt>
 
       </dl></dd>
-  </dl></td>
-  <td style="width: 33%" valign="top"><dl>
       
   <dt><a href="application_level.html#cast.application.Object.is_form">is_form() (cast.application.Object method)</a>
   </dt>
@@ -1255,6 +1265,12 @@
   </dt>
 
       </dl></dd>
+      
+  <dt><a href="application_level.html#cast.application.LinkQuery.is_ignored">is_ignored() (cast.application.LinkQuery method)</a>
+  </dt>
+
+  </dl></td>
+  <td style="width: 33%" valign="top"><dl>
       
   <dt><a href="application_level.html#cast.application.Object.is_index">is_index() (cast.application.Object method)</a>
   </dt>
@@ -1267,6 +1283,10 @@
       </dl></dd>
       
   <dt><a href="application_level.html#cast.application.ObjectQuery.is_internal">is_internal() (cast.application.ObjectQuery method)</a>
+  </dt>
+
+      
+  <dt><a href="application_level.html#cast.application.LinkQuery.is_not_ignored">is_not_ignored() (cast.application.LinkQuery method)</a>
   </dt>
 
       
@@ -1320,6 +1340,14 @@
 
       </dl></dd>
       
+  <dt><a href="application_level.html#cast.application.LinkQuery.is_to_be_reviewed">is_to_be_reviewed() (cast.application.LinkQuery method)</a>
+  </dt>
+
+      
+  <dt><a href="application_level.html#cast.application.LinkQuery.is_validated">is_validated() (cast.application.LinkQuery method)</a>
+  </dt>
+
+      
   <dt><a href="application_level.html#cast.application.Object.is_variable">is_variable() (cast.application.Object method)</a>
   </dt>
 
@@ -1331,6 +1359,10 @@
       </dl></dd>
       
   <dt><a href="application_level.html#cast.application.ObjectQuery.is_virtual">is_virtual() (cast.application.ObjectQuery method)</a>
+  </dt>
+
+      
+  <dt><a href="application_level.html#cast.application.ObjectQuery.is_web_service_call">is_web_service_call() (cast.application.ObjectQuery method)</a>
   </dt>
 
       
@@ -1460,6 +1492,26 @@
   </dl></td>
 </tr></table>
 
+<h2 id="N">N</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="application_level.html#cast.application.ObjectQuery.not_has_type">not_has_type() (cast.application.ObjectQuery method)</a>
+  </dt>
+
+      
+  <dt><a href="application_level.html#cast.application.ObjectQuery.not_in">not_in() (cast.application.ObjectQuery method)</a>
+  </dt>
+
+  </dl></td>
+  <td style="width: 33%" valign="top"><dl>
+      
+  <dt><a href="application_level.html#cast.application.ObjectQuery.not_in_set">not_in_set() (cast.application.ObjectQuery method)</a>
+  </dt>
+
+  </dl></td>
+</tr></table>
+
 <h2 id="O">O</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%" valign="top"><dl>
@@ -1483,6 +1535,12 @@
   <dt><a href="application_level.html#cast.application.Application.objects">objects() (cast.application.Application method)</a>
   </dt>
 
+      <dd><dl>
+        
+  <dt><a href="application_level.html#cast.application.Project.objects">(cast.application.Project method)</a>
+  </dt>
+
+      </dl></dd>
       
   <dt><a href="application_level.html#cast.application.open_source_file">open_source_file() (in module cast.application)</a>
   </dt>
