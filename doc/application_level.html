@@ -124,6 +124,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#running-tools-after-analysis">Running &#8216;tools after analysis&#8217;</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#various">Various</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#access-to-infrastructure-and-management">Access to infrastructure and management</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#management-schema">Management schema</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#interactive-scripting">Interactive scripting</a></li>
@@ -183,9 +184,9 @@
 <h1>Running code after analyzers<a class="headerlink" href="#running-code-after-analyzers" title="Permalink to this headline">¶</a></h1>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">This is documentation for cast.application version 1.5.9.
+<p class="last">This is documentation for cast.application version 1.5.11.
 This API can be upgraded separately from AIP.
-See <a class="reference external" href="https://github.com/CAST-projects/Extension-SDK/tree/master/api/1.5.9">api 1.5.9</a></p>
+See <a class="reference external" href="https://github.com/CAST-projects/Extension-SDK/tree/master/api/1.5.11">api 1.5.11</a></p>
 </div>
 <p>After all analysis job have ran some code can be launched on the resulting knowledge base.</p>
 <p>During this step, you :</p>
@@ -1980,6 +1981,27 @@ They can be directly used from inside the plugin by using :</p>
 <p>So no need to prefix tables with nothing.</p>
 </div>
 </div>
+<div class="section" id="various">
+<h2>Various<a class="headerlink" href="#various" title="Permalink to this headline">¶</a></h2>
+<dl class="method">
+<dt id="cast.application.Application.get_analyzer_technologies">
+<tt class="descclassname">Application.</tt><tt class="descname">get_analyzer_technologies</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.Application.get_analyzer_technologies" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the technologies present in this application.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">multimap language &#8211;&gt; projects for each language found</td>
+</tr>
+</tbody>
+</table>
+<p>language is of type ast.application.internal.metamodel.Category</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.5.9.</span></p>
+</div>
+</dd></dl>
+
+</div>
 <div class="section" id="access-to-infrastructure-and-management">
 <h2>Access to infrastructure and management<a class="headerlink" href="#access-to-infrastructure-and-management" title="Permalink to this headline">¶</a></h2>
 <div class="admonition warning">
@@ -2147,122 +2169,10 @@ Future version of CAIP will leverage this limitation.</p>
 
 </dd></dl>
 
-<dl class="class">
+<dl class="attribute">
 <dt id="cast.application.managment.Application">
-<em class="property">class </em><tt class="descclassname">cast.application.managment.</tt><tt class="descname">Application</tt><big>(</big><em>mb</em>, <em>identifier</em>, <em>name</em>, <em>deploy_path</em>, <em>uuid</em>, <em>kb_id</em>, <em>local_mngt_id</em>, <em>mail</em><big>)</big><a class="headerlink" href="#cast.application.managment.Application" title="Permalink to this definition">¶</a></dt>
-<dd><p>The definition of an application in CMS</p>
-<dl class="method">
-<dt id="cast.application.managment.Application.get_packages">
-<tt class="descname">get_packages</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.managment.Application.get_packages" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the source packages of the application.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list of <a class="reference internal" href="#cast.application.managment.Package" title="cast.application.managment.Package"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.managment.Package</span></tt></a></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="cast.application.managment.Application.get_analysis_units">
-<tt class="descname">get_analysis_units</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.managment.Application.get_analysis_units" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the analysis units of the application.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list of <a class="reference internal" href="#cast.application.managment.AnalysisUnit" title="cast.application.managment.AnalysisUnit"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.managment.AnalysisUnit</span></tt></a></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="cast.application.managment.Application.get_modules">
-<tt class="descname">get_modules</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.managment.Application.get_modules" title="Permalink to this definition">¶</a></dt>
-<dd><p>Access to modules definitions</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list of <a class="reference internal" href="#cast.application.managment.Module" title="cast.application.managment.Module"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.managment.Module</span></tt></a></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="cast.application.managment.Application.get_module">
-<tt class="descname">get_module</tt><big>(</big><em>name</em><big>)</big><a class="headerlink" href="#cast.application.managment.Application.get_module" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get a module definition</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#cast.application.managment.Module" title="cast.application.managment.Module"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.managment.Module</span></tt></a></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="cast.application.managment.Application.get_snapshots">
-<tt class="descname">get_snapshots</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.managment.Application.get_snapshots" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the snapshots of the application.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list of <tt class="xref py py-class docutils literal"><span class="pre">cast.application.managment.Snapshot</span></tt></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="cast.application.managment.Application.get_analysis_service">
-<tt class="descname">get_analysis_service</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.managment.Application.get_analysis_service" title="Permalink to this definition">¶</a></dt>
-<dd><p>Access to analysis service of the application</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.KnoweldgeBase</span></tt></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="cast.application.managment.Application.get_dashboard_services">
-<tt class="descname">get_dashboard_services</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.managment.Application.get_dashboard_services" title="Permalink to this definition">¶</a></dt>
-<dd><p>Access to analysis service of the application</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list of <tt class="xref py py-class docutils literal"><span class="pre">cast.application.central.CentralBase</span></tt></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="cast.application.managment.Application.get_email_to_send_reports">
-<tt class="descname">get_email_to_send_reports</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.managment.Application.get_email_to_send_reports" title="Permalink to this definition">¶</a></dt>
-<dd><p>If configured, returns the email to send reports to.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">str</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
+<tt class="descclassname">cast.application.managment.</tt><tt class="descname">Application</tt><a class="headerlink" href="#cast.application.managment.Application" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <tt class="xref py py-class docutils literal"><span class="pre">ManagmentApplication</span></tt></p>
 </dd></dl>
 
 <dl class="class">

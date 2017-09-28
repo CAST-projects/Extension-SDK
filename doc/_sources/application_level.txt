@@ -2,9 +2,9 @@ Running code after analyzers
 ============================
 
 .. note::
-    This is documentation for cast.application version 1.5.9.
+    This is documentation for cast.application version 1.5.11.
     This API can be upgraded separately from AIP. 
-    See `api 1.5.9 <https://github.com/CAST-projects/Extension-SDK/tree/master/api/1.5.9>`_ 
+    See `api 1.5.11 <https://github.com/CAST-projects/Extension-SDK/tree/master/api/1.5.11>`_ 
 
 
 After all analysis job have ran some code can be launched on the resulting knowledge base. 
@@ -524,6 +524,15 @@ Note that it is strongly recommended to use ansi sql code here. The SQL code wil
             """)
 
 So no need to prefix tables with nothing.
+
+Various
+-------
+
+.. automethod:: cast.application.Application.get_analyzer_technologies
+
+.. automethod:: cast.application.Application.get_kb
+
+
 
 Access to infrastructure and management
 ---------------------------------------
