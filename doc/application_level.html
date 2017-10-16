@@ -120,6 +120,13 @@
 <li class="toctree-l2"><a class="reference internal" href="#a-reference-finder">A reference finder</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#reading-files">Reading files</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#logging">Logging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#testing">Testing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#setting-up-the-initial-state">Setting up the initial state</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#running-the-code-to-be-tested">Running the code to be tested</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#asserting-the-results">Asserting the results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#what-cannot-be-tested-this-way">What cannot be tested this way</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#using-legacy-tools">Using legacy tools</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#running-tools-after-analysis">Running &#8216;tools after analysis&#8217;</a></li>
 </ul>
@@ -184,9 +191,9 @@
 <h1>Running code after analyzers<a class="headerlink" href="#running-code-after-analyzers" title="Permalink to this headline">¶</a></h1>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">This is documentation for cast.application version 1.5.11.
+<p class="last">This is documentation for cast.application version 1.5.13.
 This API can be upgraded separately from AIP.
-See <a class="reference external" href="https://github.com/CAST-projects/Extension-SDK/tree/master/api/1.5.11">api 1.5.11</a></p>
+See <a class="reference external" href="https://github.com/CAST-projects/Extension-SDK/tree/master/api/1.5.13">api 1.5.13</a></p>
 </div>
 <p>After all analysis job have ran some code can be launched on the resulting knowledge base.</p>
 <p>During this step, you :</p>
@@ -211,7 +218,7 @@ Thus <strong>classical bad practices</strong> still occurs here :</p>
 </div>
 <div class="section" id="implementing-an-application-level-extension">
 <h2>Implementing An application level extension<a class="headerlink" href="#implementing-an-application-level-extension" title="Permalink to this headline">¶</a></h2>
-<p>A plugin can be called at the end of analysis by implementing a subclass of <a class="reference internal" href="#cast.application.ApplicationLevelExtension" title="cast.application.ApplicationLevelExtension"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.ApplicationLevelExtension</span></tt></a> and overriding <a class="reference internal" href="#cast.application.ApplicationLevelExtension.end_application" title="cast.application.ApplicationLevelExtension.end_application"><tt class="xref py py-meth docutils literal"><span class="pre">cast.application.ApplicationLevelExtension.end_application()</span></tt></a></p>
+<p>A plugin can be called at the end of analysis by implementing a subclass of <a class="reference internal" href="#cast.application.ApplicationLevelExtension" title="cast.application.ApplicationLevelExtension"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.ApplicationLevelExtension</span></tt></a> and overriding <a class="reference internal" href="#cast.application.ApplicationLevelExtension.end_application" title="cast.application.ApplicationLevelExtension.end_application"><tt class="xref py py-func docutils literal"><span class="pre">cast.application.ApplicationLevelExtension.end_application()</span></tt></a></p>
 <p>For example:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">cast.application</span>
 <span class="kn">import</span> <span class="nn">logging</span>
@@ -817,6 +824,26 @@ But not programs.</p>
 </table>
 <div class="versionadded">
 <p><span class="versionmodified">New in version 1.5.9.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.ObjectQuery.in_query">
+<tt class="descname">in_query</tt><big>(</big><em>sqlalchemyquery</em><big>)</big><a class="headerlink" href="#cast.application.ObjectQuery.in_query" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filter objects that are part of a given query.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sqlalchemyquery</strong> &#8211; sqlalchemy.Query 
+a query that selects idkey</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#cast.application.ObjectQuery" title="cast.application.ObjectQuery"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.ObjectQuery</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.5.13.</span></p>
 </div>
 </dd></dl>
 
@@ -1953,6 +1980,225 @@ The &#8216;reaction&#8217; to those patterns found is totally open to developer.
 </pre></div>
 </div>
 </div>
+<div class="section" id="testing">
+<h2>Testing<a class="headerlink" href="#testing" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">New in 1.5.13</p>
+</div>
+<p>Unit tests can be written the following way.</p>
+<ul class="simple">
+<li>we create a fake knowledge base</li>
+<li>we fill it with some data (objects, links etc...)</li>
+<li>then we run our code to be tested</li>
+<li>and finally we assert something on the result</li>
+</ul>
+<p>For example, let&#8217;s say that you have a main.py containing a ApplicationLevelExtension and we want to test its end_application method:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">cast_upgrade_1_5_13</span>
+<span class="kn">import</span> <span class="nn">unittest</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">cast.application.test</span> <span class="kn">import</span> <span class="n">TestKnowledgeBase</span> <span class="c"># @UnresolvedImport</span>
+<span class="kn">import</span> <span class="nn">main</span>
+
+
+<span class="k">class</span> <span class="nc">Test</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">test_run_extension</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="c"># 1. setup the initial state of the knowledge base</span>
+        <span class="n">test</span> <span class="o">=</span> <span class="n">TestKnowledgeBase</span><span class="p">()</span>
+
+        <span class="n">project</span> <span class="o">=</span> <span class="n">test</span><span class="o">.</span><span class="n">add_project</span><span class="p">(</span><span class="s">&#39;p1&#39;</span><span class="p">,</span> <span class="s">&#39;JV_PROJECT&#39;</span><span class="p">)</span>
+        <span class="n">project</span><span class="o">.</span><span class="n">add_object</span><span class="p">(</span><span class="s">&#39;o1&#39;</span><span class="p">,</span> <span class="s">&#39;o1&#39;</span><span class="p">,</span> <span class="s">&#39;JV_CLASS&#39;</span><span class="p">)</span>
+
+        <span class="c"># 2. create an object of the app level extension</span>
+        <span class="n">extension</span> <span class="o">=</span> <span class="n">main</span><span class="o">.</span><span class="n">ExtensionApplication</span><span class="p">()</span>
+
+        <span class="c"># 3. run one method on the knowledge base</span>
+        <span class="n">application</span> <span class="o">=</span> <span class="n">test</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">extension</span><span class="o">.</span><span class="n">end_application</span><span class="p">,</span> <span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+
+        <span class="c"># 4. assert something is done on the application</span>
+        <span class="o">...</span>
+</pre></div>
+</div>
+<div class="section" id="setting-up-the-initial-state">
+<h3>Setting up the initial state<a class="headerlink" href="#setting-up-the-initial-state" title="Permalink to this headline">¶</a></h3>
+<p>The main entry point is to create a <a class="reference internal" href="#cast.application.test.TestKnowledgeBase" title="cast.application.test.TestKnowledgeBase"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.test.TestKnowledgeBase</span></tt></a> instance</p>
+<blockquote>
+<div><dl class="class">
+<dt id="cast.application.test.TestKnowledgeBase">
+<em class="property">class </em><tt class="descclassname">cast.application.test.</tt><tt class="descname">TestKnowledgeBase</tt><a class="headerlink" href="#cast.application.test.TestKnowledgeBase" title="Permalink to this definition">¶</a></dt>
+<dd><p>A fake knowledge base meant for testing.</p>
+<p>An application is already created inside.</p>
+</dd></dl>
+
+</div></blockquote>
+<p>Then to create one or more projects, which are result container for a given technology.</p>
+<blockquote>
+<div><dl class="method">
+<dt id="cast.application.test.TestKnowledgeBase.add_project">
+<tt class="descclassname">TestKnowledgeBase.</tt><tt class="descname">add_project</tt><big>(</big><em>name</em>, <em>_type</em><big>)</big><a class="headerlink" href="#cast.application.test.TestKnowledgeBase.add_project" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a result project to the application.
+This is the result of an analysis. &#8216;Almost&#8217; an analysis unit result.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>_type</strong> &#8211; int or str the metamodel type of the project</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+<p>Then CAST objects can be created using :</p>
+<dl class="method">
+<dt id="cast.application.test.TestObject.add_object">
+<tt class="descclassname">TestObject.</tt><tt class="descname">add_object</tt><big>(</big><em>name</em>, <em>fullname</em>, <em>_type</em>, <em>internal=True</em>, <em>keyprop=0</em><big>)</big><a class="headerlink" href="#cast.application.test.TestObject.add_object" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a child object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>_type</strong> &#8211; metamodel type int or str</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-class docutils literal"><span class="pre">TestObject</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.test.TestObject.add_file">
+<tt class="descclassname">TestObject.</tt><tt class="descname">add_file</tt><big>(</big><em>name</em>, <em>fullname</em>, <em>_type</em>, <em>content</em>, <em>internal=True</em><big>)</big><a class="headerlink" href="#cast.application.test.TestObject.add_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create child file object with content.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>content</strong> &#8211; str the content of the file</td>
+</tr>
+</tbody>
+</table>
+<p>A temporary file is generated with given content.</p>
+</dd></dl>
+
+<p>Links can be created using :</p>
+<dl class="method">
+<dt id="cast.application.test.TestProject.add_link">
+<tt class="descclassname">TestProject.</tt><tt class="descname">add_link</tt><big>(</big><em>_type</em>, <em>caller</em>, <em>callee</em><big>)</big><a class="headerlink" href="#cast.application.test.TestProject.add_link" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new link.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>_type</strong> &#8211; cast.application.LinkType</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-class docutils literal"><span class="pre">TestLink</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<p>Properties can be added on object and link using :</p>
+<dl class="method">
+<dt id="cast.application.test.TestObject.add_property">
+<tt class="descclassname">TestObject.</tt><tt class="descname">add_property</tt><big>(</big><em>prop_name_or_id</em>, <em>value</em><big>)</big><a class="headerlink" href="#cast.application.test.TestObject.add_property" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a property on an object.</p>
+<p>prop_name_or_id is the id of the metamodel property or its fullname, e.g., &#8216;comment.commentBeforeObject&#8217;
+property must have INF_TYPE/INF_SUB_TYPE</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>prop_name_or_id</strong> &#8211; int or string</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.test.TestLink.add_property">
+<tt class="descclassname">TestLink.</tt><tt class="descname">add_property</tt><big>(</big><em>prop_name_or_id</em>, <em>value</em><big>)</big><a class="headerlink" href="#cast.application.test.TestLink.add_property" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a property on a link.</p>
+<p>prop_name_or_id is the id of the metamodel property or its fullname, e.g., &#8216;comment.commentBeforeObject&#8217;
+property must have INF_TYPE/INF_SUB_TYPE</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>prop_name_or_id</strong> &#8211; int or string</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="running-the-code-to-be-tested">
+<h3>Running the code to be tested<a class="headerlink" href="#running-the-code-to-be-tested" title="Permalink to this headline">¶</a></h3>
+<p>Use the following method:</p>
+<dl class="method">
+<dt id="cast.application.test.TestKnowledgeBase.run">
+<tt class="descclassname">TestKnowledgeBase.</tt><tt class="descname">run</tt><big>(</big><em>method</em>, <em>log_level=None</em><big>)</big><a class="headerlink" href="#cast.application.test.TestKnowledgeBase.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run a function, or method having the application as parameter.</p>
+</dd></dl>
+
+<p>It accepts either :</p>
+<ul class="simple">
+<li>a simple function with an application as parameter</li>
+<li>or an instance method with an application as parameter</li>
+</ul>
+<p>Example:</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>def simple_method(application):</dt>
+<dd>&#8220;&#8221;&#8221;
+:param application: <a class="reference internal" href="#cast.application.Application" title="cast.application.Application"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.Application</span></tt></a>
+&#8220;&#8221;&#8220;</dd>
+</dl>
+</div></blockquote>
+</div>
+<div class="section" id="asserting-the-results">
+<h3>Asserting the results<a class="headerlink" href="#asserting-the-results" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference internal" href="#cast.application.test.TestKnowledgeBase.run" title="cast.application.test.TestKnowledgeBase.run"><tt class="xref py py-meth docutils literal"><span class="pre">cast.application.test.TestKnowledgeBase.run()</span></tt></a> returns an object of type <a class="reference internal" href="#cast.application.Application" title="cast.application.Application"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.Application</span></tt></a> so classical
+queries can be done to retreive results.</p>
+<p>For example, a basic test of web linker</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">test_01</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+    <span class="n">test</span> <span class="o">=</span> <span class="n">TestKnowledgeBase</span><span class="p">()</span>
+
+    <span class="c"># a project</span>
+    <span class="n">project</span> <span class="o">=</span> <span class="n">test</span><span class="o">.</span><span class="n">add_project</span><span class="p">(</span><span class="s">&#39;toto&#39;</span><span class="p">,</span> <span class="s">&#39;JV_PROJECT&#39;</span><span class="p">)</span>
+
+    <span class="c"># server part</span>
+    <span class="n">web_service</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">add_object</span><span class="p">(</span><span class="s">&#39;path2/path3/&#39;</span><span class="p">,</span> <span class="s">&#39;path2/path3/&#39;</span><span class="p">,</span> <span class="s">&#39;CAST_JAXRS_GetOperation&#39;</span><span class="p">)</span>
+
+    <span class="c"># client part</span>
+    <span class="n">call_to_webservice</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">add_object</span><span class="p">(</span><span class="s">&#39;caller&#39;</span><span class="p">,</span> <span class="s">&#39;call&#39;</span><span class="p">,</span> <span class="s">&#39;CAST_JQuery_GetResourceService&#39;</span><span class="p">)</span>
+    <span class="n">call_to_webservice</span><span class="o">.</span><span class="n">add_property</span><span class="p">(</span><span class="s">&#39;CAST_ResourceService.uri&#39;</span><span class="p">,</span> <span class="s">&#39;/path1/path2/path3/&#39;</span><span class="p">)</span>
+
+    <span class="n">extension</span> <span class="o">=</span> <span class="n">ExtensionApplication</span><span class="p">()</span>
+
+    <span class="n">application</span> <span class="o">=</span> <span class="n">test</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">extension</span><span class="o">.</span><span class="n">end_application</span><span class="p">)</span>
+
+    <span class="n">caller</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">application</span><span class="o">.</span><span class="n">search_objects</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;caller&#39;</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">callee</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">application</span><span class="o">.</span><span class="n">search_objects</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;path2/path3/&#39;</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="n">links</span> <span class="o">=</span> <span class="n">application</span><span class="o">.</span><span class="n">links</span><span class="p">()</span><span class="o">.</span><span class="n">has_caller</span><span class="p">([</span><span class="n">caller</span><span class="p">])</span><span class="o">.</span><span class="n">has_callee</span><span class="p">([</span><span class="n">callee</span><span class="p">])</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">links</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="what-cannot-be-tested-this-way">
+<h3>What cannot be tested this way<a class="headerlink" href="#what-cannot-be-tested-this-way" title="Permalink to this headline">¶</a></h3>
+<p>The following elements cannot be tested this way :</p>
+<ul class="simple">
+<li><tt class="xref py py-func docutils literal"><span class="pre">cast.application.Application.sql_tool()</span></tt></li>
+<li><tt class="xref py py-func docutils literal"><span class="pre">cast.application.Application.update_cast_knowledge_base()</span></tt></li>
+</ul>
+</div>
+</div>
 <div class="section" id="using-legacy-tools">
 <h2>Using legacy tools<a class="headerlink" href="#using-legacy-tools" title="Permalink to this headline">¶</a></h2>
 <p>For the sake of continuity we have kept some of the tools after analysis one can find in CAST-MS.</p>
@@ -1995,10 +2241,25 @@ They can be directly used from inside the plugin by using :</p>
 </tr>
 </tbody>
 </table>
+<p>&#64;todo : in case of UA we also need principal projects of ua</p>
 <p>language is of type ast.application.internal.metamodel.Category</p>
 <div class="versionadded">
 <p><span class="versionmodified">New in version 1.5.9.</span></p>
 </div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.Application.get_knowledge_base">
+<tt class="descclassname">Application.</tt><tt class="descname">get_knowledge_base</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.Application.get_knowledge_base" title="Permalink to this definition">¶</a></dt>
+<dd><p>Access to the knowledge base</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#cast.application.KnowledgeBase" title="cast.application.KnowledgeBase"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.KnowledgeBase</span></tt></a></td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </div>

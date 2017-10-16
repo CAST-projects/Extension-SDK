@@ -2,9 +2,9 @@ Running code after analyzers
 ============================
 
 .. note::
-    This is documentation for cast.application version 1.5.11.
+    This is documentation for cast.application version 1.5.13.
     This API can be upgraded separately from AIP. 
-    See `api 1.5.11 <https://github.com/CAST-projects/Extension-SDK/tree/master/api/1.5.11>`_ 
+    See `api 1.5.13 <https://github.com/CAST-projects/Extension-SDK/tree/master/api/1.5.13>`_ 
 
 
 After all analysis job have ran some code can be launched on the resulting knowledge base. 
@@ -35,7 +35,7 @@ See :ref:`choosing-level` for choosing between the two levels
 Implementing An application level extension
 -------------------------------------------
 
-A plugin can be called at the end of analysis by implementing a subclass of :class:`cast.application.ApplicationLevelExtension` and overriding :meth:`cast.application.ApplicationLevelExtension.end_application` 
+A plugin can be called at the end of analysis by implementing a subclass of :class:`cast.application.ApplicationLevelExtension` and overriding :func:`cast.application.ApplicationLevelExtension.end_application` 
 
 For example::
 
@@ -495,6 +495,139 @@ Use the standard python `logging <https://docs.python.org/3/library/logging.html
 
 
 
+Testing
+-------
+
+.. note::
+	New in 1.5.13
+
+Unit tests can be written the following way. 
+
+* we create a fake knowledge base 
+* we fill it with some data (objects, links etc...) 
+* then we run our code to be tested 
+* and finally we assert something on the result
+
+For example, let's say that you have a main.py containing a ApplicationLevelExtension and we want to test its end_application method::
+	
+	import cast_upgrade_1_5_13
+	import unittest
+	import logging
+	from cast.application.test import TestKnowledgeBase # @UnresolvedImport
+	import main 
+	
+	
+	class Test(unittest.TestCase):
+	
+	    def test_run_extension(self):
+	        
+	        # 1. setup the initial state of the knowledge base
+	        test = TestKnowledgeBase()
+	        
+	        project = test.add_project('p1', 'JV_PROJECT')
+	        project.add_object('o1', 'o1', 'JV_CLASS')
+	        
+	        # 2. create an object of the app level extension
+	        extension = main.ExtensionApplication()
+	        
+	        # 3. run one method on the knowledge base
+	        application = test.run(extension.end_application, logging.DEBUG)
+	
+	        # 4. assert something is done on the application
+	        ...
+	        
+	       
+
+Setting up the initial state
+****************************
+
+The main entry point is to create a :class:`cast.application.test.TestKnowledgeBase` instance
+
+  .. autoclass:: cast.application.test.TestKnowledgeBase
+
+Then to create one or more projects, which are result container for a given technology.
+
+  .. automethod:: cast.application.test.TestKnowledgeBase.add_project
+
+Then CAST objects can be created using :
+
+.. automethod:: cast.application.test.TestObject.add_object
+.. automethod:: cast.application.test.TestObject.add_file
+
+Links can be created using :
+
+.. automethod:: cast.application.test.TestProject.add_link
+
+Properties can be added on object and link using :
+
+.. automethod:: cast.application.test.TestObject.add_property
+.. automethod:: cast.application.test.TestLink.add_property
+
+
+
+Running the code to be tested
+*****************************
+
+Use the following method:
+
+.. automethod:: cast.application.test.TestKnowledgeBase.run
+
+It accepts either :
+
+* a simple function with an application as parameter
+* or an instance method with an application as parameter
+
+Example:
+
+	def simple_method(application):
+		"""
+		:param application: :class:`cast.application.Application`
+		"""
+
+Asserting the results
+*********************
+
+:meth:`cast.application.test.TestKnowledgeBase.run` returns an object of type :class:`cast.application.Application` so classical 
+queries can be done to retreive results.
+
+For example, a basic test of web linker ::
+
+    def test_01(self):
+        
+        test = TestKnowledgeBase()
+        
+        # a project
+        project = test.add_project('toto', 'JV_PROJECT')
+        
+        # server part
+        web_service = project.add_object('path2/path3/', 'path2/path3/', 'CAST_JAXRS_GetOperation')
+        
+        # client part
+        call_to_webservice = project.add_object('caller', 'call', 'CAST_JQuery_GetResourceService')
+        call_to_webservice.add_property('CAST_ResourceService.uri', '/path1/path2/path3/')
+        
+        extension = ExtensionApplication()
+        
+        application = test.run(extension.end_application)
+        
+        caller = list(application.search_objects(name='caller'))[0]
+        callee = list(application.search_objects(name='path2/path3/'))[0]
+        
+        links = application.links().has_caller([caller]).has_callee([callee])
+        
+        self.assertEqual(1, len(list(links)))
+
+
+What cannot be tested this way
+******************************
+
+The following elements cannot be tested this way :
+
+* :func:`cast.application.Application.sql_tool`
+* :func:`cast.application.Application.update_cast_knowledge_base`
+
+
+
 Using legacy tools
 ------------------
 
@@ -530,7 +663,7 @@ Various
 
 .. automethod:: cast.application.Application.get_analyzer_technologies
 
-.. automethod:: cast.application.Application.get_kb
+.. automethod:: cast.application.Application.get_knowledge_base
 
 
 
