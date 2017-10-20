@@ -1,0 +1,405 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Writing quality rules &mdash; CAST Extension SDK 1.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="CAST Extension SDK 1.0 documentation" href="index.html"/>
+        <link rel="next" title="API Reference" href="code_reference.html"/>
+        <link rel="prev" title="Debugging" href="debugging.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> CAST Extension SDK
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="overview.html#choosing-between-analysis-level-and-application-level">Choosing between analysis level and application level</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="my_first_plugin.html">Tutorial : My first plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="deployment.html">Deploying plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="manual.html">Creating a plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="analyser_level.html">Running during analysis of an existing analyser</a></li>
+<li class="toctree-l1"><a class="reference internal" href="application_level.html">Running code after analyzers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data_exchange.html">Exchanging data between analysis level and application level</a></li>
+<li class="toctree-l1"><a class="reference internal" href="analysers_specif.html">Analysers specific events</a></li>
+<li class="toctree-l1"><a class="reference internal" href="debugging.html">Debugging</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Writing quality rules</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#anatomy-of-a-quality-rule">Anatomy of a quality rule</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#declaring-new-properties">Declaring new properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#different-ways-of-producing-properties">Different ways of producing properties</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#packaging">Packaging</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#adding-the-rule-manually">Adding the rule manually</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="code_reference.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="version_compatibility.html">Features and Bugs per CAIP versions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tips_and_tricks.html">Tips and tricks</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">CAST Extension SDK</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Writing quality rules</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="_sources/writing_quality_rule.txt" rel="nofollow"> View page source</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="writing-quality-rules">
+<h1>Writing quality rules<a class="headerlink" href="#writing-quality-rules" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="anatomy-of-a-quality-rule">
+<h2>Anatomy of a quality rule<a class="headerlink" href="#anatomy-of-a-quality-rule" title="Permalink to this headline">¶</a></h2>
+<p>A quality rule is made of different informations, descriptions and an implementation.</p>
+<p>For the implementation, two stored procedures are required:</p>
+<ul class="simple">
+<li>A detail procedure to identify violations</li>
+<li>A total procedure to compute the size of the test population</li>
+</ul>
+<p>The detail procedure will insert lines into DSS_METRIC_SCOPES representing the fact that an object violates a rule.</p>
+<p>Sample for the search of undocumented programs</p>
+<div class="highlight-python"><div class="highlight"><pre>CREATE OR REPLACE FUNCTION DIAG_SCOPE_COBDOC004 (
+        I_SNAPSHOT_ID INT,              -- the metric snapshot id
+        I_METRIC_PARENT_ID INT, -- the metric parent id
+        I_METRIC_ID INT,                        -- the metric id
+        I_METRIC_CHILD_ID INT
+)
+returns INT
+as
+$body$
+declare
+           ERRORCODE    INT:=0;
+Begin
+
+--&lt;&lt;NAME&gt;&gt;DIAG_SCOPE_COBDOC004&lt;&lt;/NAME&gt;&gt;
+--&lt;&lt;COMMENT&gt;&gt; Template name   = UNDOCUMENTED. &lt;&lt;/COMMENT&gt;&gt;
+--&lt;&lt;COMMENT&gt;&gt; Diagnostic name = Avoid undocumented Programs. &lt;&lt;/COMMENT&gt;&gt;
+--&lt;&lt;COMMENT&gt;&gt; Definition      = Avoid undocumented Programs. &lt;&lt;/COMMENT&gt;&gt;
+--&lt;&lt;COMMENT&gt;&gt; Action          = Lists all Programs that have neither heading comments nor inline comments. &lt;&lt;/COMMENT&gt;&gt;
+--&lt;&lt;COMMENT&gt;&gt; Value           = 1. &lt;&lt;/COMMENT&gt;&gt;
+
+  insert into DSS_METRIC_SCOPES
+        (OBJECT_ID, METRIC_PARENT_ID, METRIC_ID, OBJECT_PARENT_ID, SNAPSHOT_ID, METRIC_NUM_VALUE, METRIC_OBJECT_ID, COMPUTE_VALUE)
+  select T1.OBJECT_ID, I_METRIC_ID, I_METRIC_CHILD_ID, SC.MODULE_ID, I_SNAPSHOT_ID, 1, 0, 0
+    from CTT_OBJECT_APPLICATIONS T1, DSSAPP_MODULES SC , ObjInf OI
+        where SC.TECHNO_TYPE                                    = -4   -- Technologic Cobol object
+          and T1.APPLICATION_ID                 = SC.MODULE_ID
+      and T1.OBJECT_TYPE                                = 545 -- &#39;Cobol Program&#39;
+          and T1.PROPERTIES = 0 -- Application&#39;s Object
+          and not exists ( select 1
+                             from DSS_OBJECT_EXCEPTIONS E
+                                    where E.METRIC_ID   = I_METRIC_ID
+                                          and E.OBJECT_ID       = T1.OBJECT_ID
+                              )
+      and exists ( select 1
+                          from ObjInf T2
+                                     where T2.IdObj = T1.OBJECT_ID
+                       and T2.InfTyp = 114 and T2.InfSubTyp = 1 -- Number of heading comment lines
+                                           and T2.InfVal = 0
+                           )
+          and exists ( select 1
+                          from ObjInf T3
+                                     where T3.IdObj = T1.OBJECT_ID
+                       and T3.InfTyp = 2 and T3.InfSubTyp = 0 -- Number of inner comment lines
+                                           and T3.InfVal = 0
+                           )
+
+and T1.OBJECT_ID = OI.IdObj and OI.InfTyp    = 1 and OI.InfSubTyp = 0 and OI.InfVal &gt; 0 -- has Code line
+
+
+        ;
+Return ERRORCODE;
+End;
+$body$
+language &#39;plpgsql&#39;
+/
+</pre></div>
+</div>
+<p>A total procedure insert lines into DSS_METRIC_RESULTS that represent the count of scanned objects.</p>
+<p>For example the detail procedure for the undocumented programs</p>
+<div class="highlight-python"><div class="highlight"><pre>CREATE OR REPLACE FUNCTION DIAG_COBOL_ANA_PROGRAM_TOTAL (
+        I_SNAPSHOT_ID          INT,             -- the metric snapshot id
+        I_METRIC_PARENT_ID     INT,     -- the metric parent id
+        I_METRIC_ID            INT,                     -- the metric id
+        I_METRIC_VALUE_INDEX   INT
+)
+returns int
+as
+$body$
+declare
+        ERRORCODE       int;
+Begin
+    ERRORCODE  := 0;
+--&lt;&lt;NAME&gt;&gt;DIAG_COBOL_ANA_PROGRAM_TOTAL&lt;&lt;/NAME&gt;&gt;*/
+--&lt;&lt;COMMENT&gt;&gt; Template name   = TOTAL. &lt;&lt;/COMMENT&gt;&gt;
+--&lt;&lt;COMMENT&gt;&gt; Definition      = Count of program programs. &lt;&lt;/COMMENT&gt;&gt;
+
+    Insert Into DSS_METRIC_RESULTS
+                (METRIC_NUM_VALUE, METRIC_OBJECT_ID, OBJECT_ID, METRIC_ID, METRIC_VALUE_INDEX, SNAPSHOT_ID)
+    select
+                Count(T1.OBJECT_ID), 0, SC.OBJECT_PARENT_ID, I_METRIC_ID, I_METRIC_VALUE_INDEX, I_SNAPSHOT_ID
+    from
+        CTT_OBJECT_APPLICATIONS T1, DSSAPP_MODULES MO, DSS_METRIC_SCOPES SC
+    where
+            SC.SNAPSHOT_ID              = I_SNAPSHOT_ID
+            and SC.METRIC_PARENT_ID     = I_METRIC_PARENT_ID
+            and SC.METRIC_ID            = I_METRIC_ID
+                and SC.COMPUTE_VALUE            = 0
+                and MO.TECHNO_TYPE                      = -4   -- Technologic Cobol object
+                and MO.MODULE_ID                        = SC.OBJECT_ID
+                and T1.APPLICATION_ID           = SC.OBJECT_ID
+                and T1.OBJECT_TYPE                      =     545 -- &#39;Cobol Program&#39;
+                and T1.PROPERTIES = 0 -- Application&#39;s Object
+
+                and Not Exists
+                (
+                        select 1
+                        from
+                                DSS_OBJECT_EXCEPTIONS E
+                        where
+                                E.METRIC_ID             = I_METRIC_ID
+                                and E.OBJECT_ID = T1.OBJECT_ID
+                )
+    Group By SC.OBJECT_PARENT_ID, SC.OBJECT_ID
+        ;
+Return ERRORCODE;
+End;
+$body$
+language &#39;plpgsql&#39;
+/
+</pre></div>
+</div>
+<p>Those procedures uses the object model stored in the knowledge base. This uses objects and properties.</p>
+<p>One can use existing properties, and also use new properties (that the should be produced)</p>
+<div class="section" id="declaring-new-properties">
+<h3>Declaring new properties<a class="headerlink" href="#declaring-new-properties" title="Permalink to this headline">¶</a></h3>
+<p>In order to produce new properties, a metamodel fragment file must be added.</p>
+<p>See <a class="reference external" href="http://doc.castsoftware.com/display/DOC80/xxxMetaModel.xml+file">http://doc.castsoftware.com/display/DOC80/xxxMetaModel.xml+file</a></p>
+<p>For example, adding 2 new properties to existing object types (here Cobol)</p>
+<div class="highlight-python"><div class="highlight"><pre>&lt;metaModel  file_level=&quot;client&quot; file_no=&quot;0&quot;&gt;
+    &lt;partial_category name=&quot;CAST_MetricAssistant_WithMetrics_Cobol&quot;&gt;
+        &lt;inheritedCategory name=&quot;My_CustomMetrics&quot;/&gt;
+    &lt;/partial_category&gt;
+
+    &lt;category name=&quot;My_CustomMetrics&quot; id=&quot;2668000&quot;&gt;
+        &lt;description&gt;Custom category for additional properties on COBOL analysis&lt;/description&gt;
+        &lt;!-- Curious useless ((TBD)) attribute declaration &lt;attribute name=&quot;MetricName&quot; stringValue=&quot;numberOfEmptySelectEndSelect&quot;/&gt; --&gt;
+        &lt;property name=&quot;numberOfExtendedTableSubscripts&quot; type=&quot;integer&quot; id=&quot;2668001&quot;&gt;
+            &lt;description&gt;Number of extended table subscripts&lt;/description&gt;
+            &lt;attribute name=&quot;INF_TYPE&quot; intValue=&quot;9&quot;/&gt;
+            &lt;attribute name=&quot;INF_SUB_TYPE&quot; intValue=&quot;2668001&quot;/&gt;
+            &lt;attribute name=&quot;ACCESS_APPVIEW&quot; intValue=&quot;1&quot;/&gt;
+            &lt;attribute name=&quot;ACCESS_CVS&quot; intValue=&quot;1&quot;/&gt;
+            &lt;attribute name=&quot;ACCESS_HTML&quot; intValue=&quot;1&quot;/&gt;
+      &lt;/property&gt;
+      &lt;property name=&quot;numberOfExtendedTableSubscriptsLocation&quot; type=&quot;string&quot; id=&quot;2668002&quot;&gt;
+            &lt;description&gt;Location for Number of extended table subscripts&lt;/description&gt;
+            &lt;attribute name=&quot;INF_TYPE&quot; intValue=&quot;9&quot;/&gt;
+            &lt;attribute name=&quot;INF_SUB_TYPE&quot; intValue=&quot;2668002&quot;/&gt;
+            &lt;attribute name=&quot;ACCESS_APPVIEW&quot; intValue=&quot;1&quot;/&gt;
+            &lt;attribute name=&quot;ACCESS_CVS&quot; intValue=&quot;1&quot;/&gt;
+            &lt;attribute name=&quot;ACCESS_HTML&quot; intValue=&quot;1&quot;/&gt;
+      &lt;/property&gt;
+      &lt;!-- Properties for deprecated programs &quot;/&gt; --&gt;
+    &lt;/category&gt;
+
+&lt;/metaModel&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="different-ways-of-producing-properties">
+<h3>Different ways of producing properties<a class="headerlink" href="#different-ways-of-producing-properties" title="Permalink to this headline">¶</a></h3>
+<p>The values of the properties may be produced using various ways :</p>
+<ul class="simple">
+<li>through SDK using either <a class="reference internal" href="code_reference.html#cast.analysers.Object.save_property" title="cast.analysers.Object.save_property"><tt class="xref py py-meth docutils literal"><span class="pre">cast.analysers.Object.save_property()</span></tt></a> or <a class="reference internal" href="application_level.html#cast.application.Object.save_property" title="cast.application.Object.save_property"><tt class="xref py py-meth docutils literal"><span class="pre">cast.application.Object.save_property()</span></tt></a></li>
+<li>using Metric Assistant : <a class="reference external" href="http://doc.castsoftware.com/display/DOC80/Using+the+XXXCastMetrics.xml+file">http://doc.castsoftware.com/display/DOC80/Using+the+XXXCastMetrics.xml+file</a>
+by adding a xxxCastMEtrics.xml file in your extension</li>
+</ul>
+</div>
+</div>
+<div class="section" id="packaging">
+<h2>Packaging<a class="headerlink" href="#packaging" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="adding-the-rule-manually">
+<h3>Adding the rule manually<a class="headerlink" href="#adding-the-rule-manually" title="Permalink to this headline">¶</a></h3>
+<p>This is a good start for testing</p>
+<p><a class="reference external" href="http://doc.castsoftware.com/display/DOC82/CMS+-+Create+a+new+Quality+Rule">http://doc.castsoftware.com/display/DOC82/CMS+-+Create+a+new+Quality+Rule</a></p>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="code_reference.html" class="btn btn-neutral float-right" title="API Reference" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="debugging.html" class="btn btn-neutral" title="Debugging" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014, CAST.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

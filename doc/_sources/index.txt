@@ -50,6 +50,9 @@ More details
 :doc:`debugging` 
 	Instructions on how to debug plugins from development environment.
 
+:doc:`writing_quality_rule` 
+	Writting quality rules.
+    
 :doc:`code_reference` 
 	API for accessing objects, on existing extension points and on testing API.
 
@@ -81,6 +84,7 @@ Indices and tables
    data_exchange
    analysers_specif
    debugging
+   writing_quality_rule
    code_reference
    version_compatibility
    tips_and_tricks
