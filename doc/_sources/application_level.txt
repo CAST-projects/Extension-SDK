@@ -2,9 +2,9 @@ Running code after analyzers
 ============================
 
 .. note::
-    This is documentation for cast.application version 1.5.13.
+    This is documentation for cast.application version 1.5.20.
     This API can be upgraded separately from AIP. 
-    See `api 1.5.13 <https://github.com/CAST-projects/Extension-SDK/tree/master/api/1.5.13>`_ 
+    See `api 1.5.20 <https://github.com/CAST-projects/Extension-SDK/tree/master/api/1.5.20>`_ 
 
 
 After all analysis job have ran some code can be launched on the resulting knowledge base. 
@@ -689,8 +689,49 @@ Management schema contains the analysis definitions and options.
    :members:
    :inherited-members:
 
-.. autoclass:: cast.application.managment.Application
-   :members: 
+.. class:: cast.application.managment.Application
+
+   The definition of an application in CMS.
+   
+   .. method:: get_packages()
+
+	    Get the source packages of the application.
+	    :rtype: list of :class:`cast.application.managment.Package`
+   
+	.. method:: get_analysis_units()
+	
+	    Get the analysis units of the application.
+	    :rtype: list of :class:`cast.application.managment.AnalysisUnit`
+	
+	.. method:: get_modules()
+	
+	    Access to modules definitions
+	    :rtype: list of :class:`cast.application.managment.Module`
+	
+	.. method:: get_module(name)
+	
+	    Get a module definition
+	    :rtype: :class:`cast.application.managment.Module`
+	
+	.. method:: get_snapshots()
+	
+	    Get the snapshots of the application.
+	    :rtype: list of :class:`cast.application.managment.Snapshot`
+	
+	.. method:: get_analysis_service()
+	
+	    Access to analysis service of the application
+	    :rtype: :class:`cast.application.KnowledgeBase`
+	
+	.. method:: get_dashboard_services()
+	
+	    Access to analysis service of the application
+	    :rtype: list of :class:`cast.application.central.CentralBase`
+	
+	.. method:: get_email_to_send_reports()
+	
+	    If configured, returns the email to send reports to.
+	    :rtype: str
 
 .. autoclass:: cast.application.managment.Package
    :members: 
