@@ -1,10 +1,11 @@
 API Reference
 *************
-     
-Object API Reference
-====================
 
-Here are the classes and methods that you can call from your python plugin.
+Here are the classes and methods that you can call from your python plugins.
+
+
+Plugin infrastructure
+=====================
 
 
 Plugin API
@@ -15,6 +16,12 @@ Plugin API
 
 .. autoclass:: cast.Extension
    :members: 
+
+
+Analyzer level
+==============
+
+cast.analyzers package, to be used at analysis level only.
 
 Analysis options API
 --------------------
@@ -122,10 +129,105 @@ Filtering
 .. automodule:: cast.analysers.filter
    :members: 
 
-Tests API Reference
-===================
+Analysis level tests
+--------------------
    
 .. automodule:: cast.analysers.test
    :members: 
+
+Application level
+=================
+
+cast.applicatin package, to be used at application level only.
+
+
+Knowledge base API
+------------------
+
+.. autoclass:: cast.application.Application
+   :members: 
+
+Object query API
+----------------
+
+To write queries on objects.
+
+.. autoclass:: cast.application.ObjectQuery
+   :members: 
+
+
+Objects API
+-----------
+
+Objects present in the knowledge base
+
+.. autoclass:: cast.application.Object
+   :members: 
+
+File
+++++
+
+.. autoclass:: cast.application.File
+   :members: 
+
+Project
++++++++
+
+Those represent result projects (vcproj, jar, dll, .project, pom.xml, ...).
+
+.. autoclass:: cast.application.Project
+   :members: 
+
+Database
+++++++++
+
+Objects representing analysed databases are represented by the following class :
+
+
+.. autoclass:: cast.application.Database
+   :members: 
+
+
+They be retrieved using :
+
+.. automethod:: cast.application.Application.get_databases
+
+
+Schema
+++++++
+
+.. autoclass:: cast.application.DatabaseOwner
+   :members: 
+
+Bookmark
+++++++++
+
+.. autoclass:: cast.application.Bookmark
+   :members: 
+
+Links
++++++
+
+.. autoclass:: cast.application.EnlightenLink
+   :members: 
+
+.. autoclass:: cast.application.LinkQuery
+   :members: 
+
+.. autoclass:: cast.application.LinkType
+   :members: 
+
+Creating links
+++++++++++++++
+
+.. autofunction:: cast.application.create_link
+
+
+Reference Finder
+++++++++++++++++
+
+.. autoclass:: cast.application.ReferenceFinder
+   :members: 
+
 
 

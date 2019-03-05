@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Running during analysis of an existing analyser &mdash; CAST Extension SDK 1.5.20 documentation</title>
+  <title>Running during analysis of an existing analyser &mdash; CAST Extension SDK 1.5.27 documentation</title>
   
 
   
@@ -30,7 +30,7 @@
   
 
   
-    <link rel="top" title="CAST Extension SDK 1.5.20 documentation" href="index.html"/>
+    <link rel="top" title="CAST Extension SDK 1.5.27 documentation" href="index.html"/>
         <link rel="next" title="Running code after analyzers" href="application_level.html"/>
         <link rel="prev" title="Creating a plugin" href="manual.html"/> 
 
@@ -61,7 +61,7 @@
             
             
               <div class="version">
-                1.5.20
+                1.5.27
               </div>
             
           
@@ -84,7 +84,6 @@
             
                 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="overview.html#choosing-between-analysis-level-and-application-level">Choosing between analysis level and application level</a></li>
 <li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="my_first_plugin.html">Tutorial : My first plugin</a></li>
 <li class="toctree-l1"><a class="reference internal" href="deployment.html">Deploying plugins</a></li>
@@ -294,7 +293,7 @@ The class is meant to override the methods of its base class (called extension p
 <div class="section" id="creating-violations">
 <h3>Creating violations<a class="headerlink" href="#creating-violations" title="Permalink to this headline">¶</a></h3>
 <p>A violation is the occurence of a problem for a quality rule.</p>
-<p>Call <a class="reference internal" href="code_reference.html#cast.analysers.Object.save_violation" title="cast.analysers.Object.save_violation"><tt class="xref py py-func docutils literal"><span class="pre">cast.analysers.Object.save_violation()</span></tt></a> to add aviolation on an analysis object and <a class="reference internal" href="code_reference.html#cast.analysers.CustomObject.save_violation" title="cast.analysers.CustomObject.save_violation"><tt class="xref py py-func docutils literal"><span class="pre">cast.analysers.CustomObject.save_violation()</span></tt></a> t oadd violation on custom objects.</p>
+<p>Call <a class="reference internal" href="code_reference.html#cast.analysers.Object.save_violation" title="cast.analysers.Object.save_violation"><tt class="xref py py-func docutils literal"><span class="pre">cast.analysers.Object.save_violation()</span></tt></a> to add a violation on an analysis object and <a class="reference internal" href="code_reference.html#cast.analysers.CustomObject.save_violation" title="cast.analysers.CustomObject.save_violation"><tt class="xref py py-func docutils literal"><span class="pre">cast.analysers.CustomObject.save_violation()</span></tt></a> t oadd violation on custom objects.</p>
 <p>You will need a metamodel property defined on that object type, it will identify the violation and count the number of problem that were detected on that object.</p>
 <p>The position indicate the source code location where the problem is detected.</p>
 <p>Additional positions may be provided in order to explain the violation.</p>
@@ -557,7 +556,7 @@ latter on to check presence of links to that table.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'1.5.20',
+            VERSION:'1.5.27',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

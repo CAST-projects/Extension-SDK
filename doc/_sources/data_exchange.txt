@@ -19,18 +19,27 @@ During analysis by calling :func:`cast.analysers.AnalysisLevelExtension.get_inte
             f.write('hello world')
 
 
-At the end of application by calling :func:`cast.application.ApplicationLevelExtension.get_intermediate_file`, that will act as a contatenation of all intermediate files of the given name::
+At the end of application by calling :func:`cast.application.ApplicationLevelExtension.get_intermediate_file`, 
+
+.. automethod:: cast.application.ApplicationLevelExtension.get_intermediate_file
+
+that will act as an open 'fake file' corresponding to the contatenation 
+of all intermediate files of the given name::
 
 
     class ExtensionApplication(cast.application.ApplicationLevelExtension):
     
         def end_application(self, application):
         
-            f = self.get_intermediate_file("file.txt")
-            # should print hello world! to log
-            logging.info(f.read())
+            for line in self.get_intermediate_file("file.txt"):
+                # should print hello world! to log
+                logging.info(line)
 
-Or by calling :func:`cast.application.ApplicationLevelExtension.get_intermediate_files`, that will return each intermediate file one by one::
+Or by calling :func:`cast.application.ApplicationLevelExtension.get_intermediate_files`, 
+
+.. automethod:: cast.application.ApplicationLevelExtension.get_intermediate_files
+
+that will return each intermediate opened file one by one::
 
     class ExtensionApplication(cast.application.ApplicationLevelExtension):
     

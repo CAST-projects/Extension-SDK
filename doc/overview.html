@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Overview &mdash; CAST Extension SDK 1.5.20 documentation</title>
+  <title>Overview &mdash; CAST Extension SDK 1.5.27 documentation</title>
   
 
   
@@ -30,7 +30,7 @@
   
 
   
-    <link rel="top" title="CAST Extension SDK 1.5.20 documentation" href="index.html"/>
+    <link rel="top" title="CAST Extension SDK 1.5.27 documentation" href="index.html"/>
         <link rel="next" title="Installation" href="install.html"/>
         <link rel="prev" title="CAST Extension SDK’s documentation" href="index.html"/> 
 
@@ -61,7 +61,7 @@
             
             
               <div class="version">
-                1.5.20
+                1.5.27
               </div>
             
           
@@ -85,9 +85,9 @@
                 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="">Overview</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#what-is-a-plugin">What is a Plugin ?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#choosing-between-analysis-level-and-application-level">Choosing between analysis level and application level</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="#choosing-between-analysis-level-and-application-level">Choosing between analysis level and application level</a></li>
 <li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="my_first_plugin.html">Tutorial : My first plugin</a></li>
 <li class="toctree-l1"><a class="reference internal" href="deployment.html">Deploying plugins</a></li>
@@ -158,7 +158,7 @@
 </ul>
 <p>The SDK is based on</p>
 <ul class="simple">
-<li><a class="reference external" href="http://www.python.org/doc/">Python 3.4</a> as scripting language</li>
+<li><a class="reference external" href="http://www.python.org/doc/">Python 3.4</a> as scripting language (provided inside the CAIP install)</li>
 <li>eclipse as IDE</li>
 </ul>
 <p>The IDE features :</p>
@@ -178,11 +178,16 @@
 <p>The general idea behind those extension points is that plugins are called back at some key points of the analysis, and they are given the chance to do something at those points.</p>
 <p>Plugins&#8217; extensions are called :</p>
 <ul class="simple">
-<li>at the very beginning of a J2EE, DotNet, UA job</li>
+<li>at the very start of analysis (for CAIP version above 8.3.0)</li>
+<li>for each J2EE, DotNet, UA execution unit :<ul>
+<li>at the very beginning of the analysis</li>
 <li>for each class, member in a recursive tree walk</li>
 <li>for each analyzed file</li>
 <li>...</li>
+</ul>
+</li>
 <li>at the end of the application after all analysers jobs have run</li>
+<li>at the end of the snapshot (for CAIP version above 8.3.0)</li>
 </ul>
 <div class="figure align-center">
 <img alt="_images/extension_points_sequence.png" src="_images/extension_points_sequence.png" />
@@ -192,9 +197,8 @@
 <p>Those extension points generally have a context parameter. For example when starting the analysis of a file, the extension point receives the <a class="reference internal" href="code_reference.html#cast.analysers.File" title="cast.analysers.File"><tt class="xref py py-class docutils literal"><span class="pre">cast.analysers.File</span></tt></a> object
 that represent the file according to CAIP, and giving access to path.</p>
 </div>
-</div>
 <div class="section" id="choosing-between-analysis-level-and-application-level">
-<span id="choosing-level"></span><h1>Choosing between analysis level and application level<a class="headerlink" href="#choosing-between-analysis-level-and-application-level" title="Permalink to this headline">¶</a></h1>
+<span id="choosing-level"></span><h2>Choosing between analysis level and application level<a class="headerlink" href="#choosing-between-analysis-level-and-application-level" title="Permalink to this headline">¶</a></h2>
 <p>You can combine inside the same plugin those two levels, and it will be generally the case.</p>
 <p>Here are the element for choosing when to use each mechanism:</p>
 <ul class="simple">
@@ -210,10 +214,12 @@ that represent the file according to CAIP, and giving access to path.</p>
 </ul>
 </li>
 <li>decorate objects that you <em>cannot decorate at analyzer level</em></li>
+<li>generate analysis results reports</li>
 </ul>
 </li>
 </ul>
 <p>When you have the choice between the two levels, you probably need to prefer analyzer level for performances consideration.</p>
+</div>
 </div>
 
 
@@ -257,7 +263,7 @@ that represent the file according to CAIP, and giving access to path.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'1.5.20',
+            VERSION:'1.5.27',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

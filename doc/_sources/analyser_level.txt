@@ -139,7 +139,7 @@ Creating violations
 
 A violation is the occurence of a problem for a quality rule. 
 
-Call :func:`cast.analysers.Object.save_violation` to add aviolation on an analysis object and :func:`cast.analysers.CustomObject.save_violation` t oadd violation on custom objects.
+Call :func:`cast.analysers.Object.save_violation` to add a violation on an analysis object and :func:`cast.analysers.CustomObject.save_violation` t oadd violation on custom objects.
 
 You will need a metamodel property defined on that object type, it will identify the violation and count the number of problem that were detected on that object.
 

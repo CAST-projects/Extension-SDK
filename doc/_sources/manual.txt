@@ -6,9 +6,11 @@ Creating a plugin
 
 A plugin is a folder :
 
-* that is located in ``CAST_PLUGINS_ROOT_PATH`` whose default value is 
+* that is located in ``CAST_PLUGINS_ROOT_PATH`` whose default value is :
+
   * ``<CAIP Installation Directory>\CustomPlugins`` for versions < 8.0.0
   * %ALLUSERSPROFILE%/CAST/CAST/Extensions for versions >= 8.0.0
+
 * that may contains python files that declare a class inheriting from :class:`cast.Extension`
 
 Those plugins are meant to be self sufficient. They can contain : 

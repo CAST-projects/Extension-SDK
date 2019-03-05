@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Creating a plugin &mdash; CAST Extension SDK 1.5.20 documentation</title>
+  <title>Creating a plugin &mdash; CAST Extension SDK 1.5.27 documentation</title>
   
 
   
@@ -30,7 +30,7 @@
   
 
   
-    <link rel="top" title="CAST Extension SDK 1.5.20 documentation" href="index.html"/>
+    <link rel="top" title="CAST Extension SDK 1.5.27 documentation" href="index.html"/>
         <link rel="next" title="Running during analysis of an existing analyser" href="analyser_level.html"/>
         <link rel="prev" title="Deploying plugins" href="deployment.html"/> 
 
@@ -61,7 +61,7 @@
             
             
               <div class="version">
-                1.5.20
+                1.5.27
               </div>
             
           
@@ -84,7 +84,6 @@
             
                 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="overview.html#choosing-between-analysis-level-and-application-level">Choosing between analysis level and application level</a></li>
 <li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="my_first_plugin.html">Tutorial : My first plugin</a></li>
 <li class="toctree-l1"><a class="reference internal" href="deployment.html">Deploying plugins</a></li>
@@ -156,9 +155,11 @@
 </div>
 <p>A plugin is a folder :</p>
 <ul class="simple">
-<li>that is located in <tt class="docutils literal"><span class="pre">CAST_PLUGINS_ROOT_PATH</span></tt> whose default value is
-* <tt class="docutils literal"><span class="pre">&lt;CAIP</span> <span class="pre">Installation</span> <span class="pre">Directory&gt;\CustomPlugins</span></tt> for versions &lt; 8.0.0
-* %ALLUSERSPROFILE%/CAST/CAST/Extensions for versions &gt;= 8.0.0</li>
+<li>that is located in <tt class="docutils literal"><span class="pre">CAST_PLUGINS_ROOT_PATH</span></tt> whose default value is :<ul>
+<li><tt class="docutils literal"><span class="pre">&lt;CAIP</span> <span class="pre">Installation</span> <span class="pre">Directory&gt;\CustomPlugins</span></tt> for versions &lt; 8.0.0</li>
+<li>%ALLUSERSPROFILE%/CAST/CAST/Extensions for versions &gt;= 8.0.0</li>
+</ul>
+</li>
 <li>that may contains python files that declare a class inheriting from <a class="reference internal" href="code_reference.html#cast.Extension" title="cast.Extension"><tt class="xref py py-class docutils literal"><span class="pre">cast.Extension</span></tt></a></li>
 </ul>
 <p>Those plugins are meant to be self sufficient. They can contain :</p>
@@ -305,7 +306,7 @@ We follow the same conventions as <a class="reference external" href="http://doc
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'1.5.20',
+            VERSION:'1.5.27',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true
