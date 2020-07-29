@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='utf-8'?>
+<root>
+    <metric id="61009" type="technical-criterion" originalName="Complexity - Algorithmic and Control Structure Complexity" active="N/A" detached="N/A" ignored="false"/>
+    <metric id="61026" type="technical-criterion" originalName="Complexity - Technical Complexity" active="N/A" detached="N/A" ignored="false"/>
+    <metric id="65105" type="quality-distribution" originalName="Size Distribution" active="N/A" detached="N/A" ignored="false"/>
+    <metric id="65350" type="quality-distribution" originalName="Coupling Distribution" active="N/A" detached="N/A" ignored="false"/>
+    <metric id="65501" type="quality-distribution" originalName="Cyclomatic Complexity Distribution" active="N/A" detached="N/A" ignored="false"/>
+    <metric id="66010" type="quality-distribution" originalName="Reuse by Call Distribution"          active="N/A" detached="N/A" ignored="false"/>
+    <metric id="66015" type="quality-distribution" originalName="Class Complexity Distribution (WMC)" active="N/A" detached="N/A" ignored="false"/>
+    <metric id="66020" type="quality-distribution" originalName="Class Fan-Out Distribution"          active="N/A" detached="N/A" ignored="false"/>
+    <metric id="66021" type="quality-distribution" originalName="Class Fan-In Distribution"           active="N/A" detached="N/A" ignored="false"/>
+    <metric id='61003' type="technical-criterion" originalName='Programming Practices - OO Inheritance and Polymorphism' active="N/A" detached="N/A" ignored="false"/>
+    <metric id="61004" type="technical-criterion" originalName="Architecture - OS and Platform Independence"             active="N/A" detached="N/A" ignored="false"/>
+    <metric id="61006" type="technical-criterion" originalName="Documentation - Style Conformity"                        active="N/A" detached="N/A" ignored="false"/>
+    <metric id="61014" type="technical-criterion" originalName="Programming Practices - Error and Exception Handling"    active="N/A" detached="N/A" ignored="false"/>
+    <metric id="61017" type="technical-criterion" originalName="Documentation - Naming Convention Conformity"            active="N/A" detached="N/A" ignored="false"/>
+	<metric id="61019" type="technical-criterion" originalName="Efficiency - SQL and Data Handling Performance"          active="N/A" detached="N/A" ignored="false"/>
+    <metric id="61020" type="technical-criterion" originalName="Programming Practices - Modularity and OO Encapsulation Conformity"     active="N/A" detached="N/A" ignored="false"/>
+    <metric id="61024" type="technical-criterion" originalName="Programming Practices - Structuredness"                                 active="N/A" detached="N/A" ignored="false"/>
+    <metric id="66062" type="technical-criterion" originalName="Secure Coding - Input Validation"                                       active="N/A" detached="N/A" ignored="false"/>
+    <metric id='66063' type="technical-criterion" originalName="Secure Coding - API Abuse"                                              active="N/A" detached="N/A" ignored="false"/>
+    <metric id="66064" type="technical-criterion" originalName="Secure Coding - Weak Security Features"                                 active="N/A" detached="N/A" ignored="false"/>
+    <metric id="66066" type="technical-criterion" originalName="Secure Coding - Encapsulation"                                          active="N/A" detached="N/A" ignored="false"/>
+    <metric id="66068" type="technical-criterion" originalName="Efficiency - Expensive Calls in Loops"                                  active="N/A" detached="N/A" ignored="false"/>
+    <metric id="66069" type="technical-criterion" originalName="Programming Practices - Unexpected Behavior"                            active="N/A" detached="N/A" ignored="false"/>
+</root>

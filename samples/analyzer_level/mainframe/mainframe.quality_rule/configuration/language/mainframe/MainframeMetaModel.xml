@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<metaModel file_level="client" file_no="1">
+    <!-- 
+    Ids are between 2001000 and 2001999
+    -->
+    <!-- 
+    CAST_MetricAssistant_WithMetrics_Cobol is the CAIP category used for quality rules on programs
+    -->
+    <partialCategory name="CAST_MetricAssistant_WithMetrics_Cobol">
+        <inheritedCategory name="MyCompany_COBOL_Rules"/>
+    </partialCategory>
+
+    <!-- choose a name that will not clash -->
+    <category name="MyCompany_COBOL_Rules" rid="0">
+        <description></description>
+        <!-- add new properties here, one for each quality rule -->
+        
+        
+        
+        
+    </category>
+
+</metaModel>
