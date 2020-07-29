@@ -23,4 +23,10 @@
     <metric id="66066" type="technical-criterion" originalName="Secure Coding - Encapsulation"                                          active="N/A" detached="N/A" ignored="false"/>
     <metric id="66068" type="technical-criterion" originalName="Efficiency - Expensive Calls in Loops"                                  active="N/A" detached="N/A" ignored="false"/>
     <metric id="66069" type="technical-criterion" originalName="Programming Practices - Unexpected Behavior"                            active="N/A" detached="N/A" ignored="false"/>
+    
+    <!-- 
+    Ids are between 2001000 and 2001999
+    -->
+    <metric id='2001000' type='quality-rule' originalName='Avoid redefining paragraph' active='true' detached='false' ignored='false' />
+    
 </root>

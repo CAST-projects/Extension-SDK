@@ -1,3 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <root>
+  <metric id="2001000" type="quality-rule" originalName="Avoid redefining paragraph" section="description">
+    <english>This rule verifies that there is no ambiguity on paragraph names.</english>
+  </metric>
+  <metric id="2001000" type="quality-rule" originalName="Avoid redefining paragraph" section="name">
+    <english>Avoid redefining paragraph</english>
+  </metric>
+  <metric id="2001000" type="quality-rule" originalName="Avoid redefining paragraph" section="rationale">
+    <english>Some paragraph cannot be reached by GO TO or PERFORM.</english>
+  </metric>
+  <metric id="2001000" type="quality-rule" originalName="Avoid redefining paragraph" section="reference">
+    <english>http://www.google.com</english>
+  </metric>
+  <metric id="2001000" type="quality-rule" originalName="Avoid redefining paragraph" section="remediation">
+    <english>Rename.</english>
+  </metric>
+  <metric id="2001000" type="quality-rule" originalName="Avoid redefining paragraph" section="remediationSample">
+    <english>PROCEDURE DIVISION.
+SECTION S1.
+P1.
+  EXIT.
+P2.
+  EXIT.</english>
+  </metric>
+  <metric id="2001000" type="quality-rule" originalName="Avoid redefining paragraph" section="output">
+    <english>Associated to each violation, the following information is provided:
+- The number of violation occurences
+- Bookmarks for violation occurences found in the source code</english>
+  </metric>
+  <metric id="2001000" type="quality-rule" originalName="Avoid redefining paragraph" section="sample">
+    <english>PROCEDURE DIVISION.
+SECTION S1.
+P1.
+  EXIT.
+P1.
+  EXIT.
+</english>
+  </metric>
+  <metric id="2001000" type="quality-rule" originalName="Avoid redefining paragraph" section="total">
+    <english>Number of Cobol programs</english>
+  </metric>
+
 </root>

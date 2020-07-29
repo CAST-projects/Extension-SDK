@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
         <id>mainframe.quality_rule</id>
-        <version>1.0.0-alpha1</version>
+        <version>1.0.0-alpha2</version>
         <title>Additional mainframe quality rules</title>
         <authors>XXX</authors>
         <owners>XXX</owners>
@@ -11,7 +11,7 @@
         <licenseUrl>https://help.castsoftware.com/hc/en-us/articles/212612648-AIP-Extension-License</licenseUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>Additional mainframe quality rules.</description>
-        <releaseNotes></releaseNotes>
+        <releaseNotes>Added one rule.</releaseNotes>
         <tags>Mainframe</tags>
         <dependencies>
           <dependency id="CAIP" version="8.3.26" />

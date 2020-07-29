@@ -1,3 +1,4 @@
 <?xml version='1.0' encoding='utf-8'?>
 <root>
+    <metric id='2001000' type='quality-rule' originalName='Avoid redefining paragraph' xxl='N/A' unify='N/A' executionLocation='local-central' scopeID='100' scopeLabel='NO LABEL' propertyID='2001000' associatedValueResultType='integer' failedChecksOperator1='count-distinct' failedChecksProcedure='DSS_DIAG_SCOPE_GENERIC_NUM' totalChecksProcedure='DSS_DIAG_TOTAL_GENERIC' consolidationLocalProcedure='DSS_FILTER_SCOPE' consolidationCentralProcedure='N/A' />
 </root>

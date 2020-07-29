@@ -1,3 +1,4 @@
 <?xml version='1.0' encoding='utf-8'?>
 <root>
+    <metric id='66069' type='technical-criterion' originalName='Programming Practices - Unexpected Behavior'             contributorId='2001000' contributorType='quality-rule' contributorOriginalName='2001000'                              critical='false' weight='5' />
 </root>

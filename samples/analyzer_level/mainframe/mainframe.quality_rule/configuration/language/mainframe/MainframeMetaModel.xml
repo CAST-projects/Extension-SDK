@@ -15,6 +15,14 @@
         <description></description>
         <!-- add new properties here, one for each quality rule -->
         
+        <property name="paragraphRedefinition" type="integer" merge="sum" rid="0">
+            <description>Redefinition of paragraph</description>
+            <attribute name="ACCESS_APPVIEW" intValue="1"/>
+            <attribute name="ACCESS_CVS" intValue="1"/>
+            <attribute name="ACCESS_HTML" intValue="1"/>
+            <attribute name="INF_TYPE" intValue="2001000"/>
+            <attribute name="INF_SUB_TYPE" intValue="0"/>
+        </property>
         
         
         
