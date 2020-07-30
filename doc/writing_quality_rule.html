@@ -92,15 +92,41 @@
 <li class="toctree-l1"><a class="reference internal" href="application_level.html">Running code after analyzers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="data_exchange.html">Exchanging data between analysis level and application level</a></li>
 <li class="toctree-l1"><a class="reference internal" href="analysers_specif.html">Analysers specific events</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mainframe.html">Mainframe Analyser specificities</a></li>
 <li class="toctree-l1"><a class="reference internal" href="debugging.html">Debugging</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="">Writing quality rules</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#anatomy-of-a-quality-rule">Anatomy of a quality rule</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#declaring-new-properties">Declaring new properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tutorial-for-cobol">Tutorial for COBOL</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#stater-kit">Stater kit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#initialization">Initialization</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#plugin-id">Plugin id</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pck-name">Pck name</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#metamodel-ids">Metamodel ids</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#a-custom-category">A custom category</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#adding-a-new-quality-rule">Adding a new quality rule</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#adding-a-property">Adding a property</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#implementation-in-python">Implementation in Python</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#adding-the-rule-in-the-master-files">Adding the rule in the master files</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#metricsdirectory-xml">MetricsDirectory.xml</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#implqualityrules-xml">IMPLQualityRules.xml</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#specthresholds-xml">SPECThresholds.xml</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#speccontributors-xml">SPECContributors.xml</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#impltechnologies-xml">IMPLTechnologies.xml</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#specdocumentation-xml">SPECDocumentation.xml</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#compiling-the-master-files">Compiling the master files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#done">Done</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#some-other-ways-of-writing-quality-rules">Some other ways of writing quality rules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#old-way-of-writing-quality-rules">Old way of writing quality rules</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#different-ways-of-producing-properties">Different ways of producing properties</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#packaging">Packaging</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#adding-the-rule-manually">Adding the rule manually</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#adding-the-rule-manually-to-cms">Adding the rule manually to CMS</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#enhancing-dataflow-quality-rules">Enhancing dataflow quality rules</a><ul>
@@ -158,9 +184,182 @@
             
   <div class="section" id="writing-quality-rules">
 <h1>Writing quality rules<a class="headerlink" href="#writing-quality-rules" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="anatomy-of-a-quality-rule">
-<h2>Anatomy of a quality rule<a class="headerlink" href="#anatomy-of-a-quality-rule" title="Permalink to this headline">¶</a></h2>
-<p>A quality rule is made of different information, descriptions and an implementation.</p>
+<div class="section" id="tutorial-for-cobol">
+<h2>Tutorial for COBOL<a class="headerlink" href="#tutorial-for-cobol" title="Permalink to this headline">¶</a></h2>
+<p>This tutorial applies to <strong>COBOL</strong> but can be translated to other technologies.</p>
+<div class="section" id="stater-kit">
+<h3>Stater kit<a class="headerlink" href="#stater-kit" title="Permalink to this headline">¶</a></h3>
+<p>A sample project is available here :
+<a class="reference external" href="https://github.com/CAST-projects/Extension-SDK/tree/master/samples/analyzer_level/mainframe/mainframe.quality_rule">https://github.com/CAST-projects/Extension-SDK/tree/master/samples/analyzer_level/mainframe/mainframe.quality_rule</a></p>
+<p>Have a look at git history.
+<a class="reference external" href="https://github.com/CAST-projects/Extension-SDK/commits/master/samples/analyzer_level/mainframe/mainframe.quality_rule">https://github.com/CAST-projects/Extension-SDK/commits/master/samples/analyzer_level/mainframe/mainframe.quality_rule</a></p>
+</div>
+<div class="section" id="initialization">
+<h3>Initialization<a class="headerlink" href="#initialization" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="plugin-id">
+<h4>Plugin id<a class="headerlink" href="#plugin-id" title="Permalink to this headline">¶</a></h4>
+<p>First you need to choose :</p>
+<ul class="simple">
+<li>a unique plugin id</li>
+</ul>
+<p>This plugin id will be used in plugin.nuspec file.</p>
+<p>In this tutorial we have chosen <strong>mainframe.quality_rule</strong>.</p>
+<p>See <a class="reference internal" href="deployment.html"><em>Deploying plugins</em></a></p>
+</div>
+<div class="section" id="pck-name">
+<h4>Pck name<a class="headerlink" href="#pck-name" title="Permalink to this headline">¶</a></h4>
+<p>Then you also need to have a unique name for the pck.
+We recommend that this name contain the the plugin id.</p>
+<p>In this tutorial we have chosen <strong>mainframe.sample.qr_metric_tree</strong>.</p>
+<p>This name is then used in the compile.bat:</p>
+<div class="highlight-python"><div class="highlight"><pre>MasterFiles\MetricsCompiler.bat -encodeUA -inputdir MasterFiles -outputdir . -pck mainframe.quality_rule_metric_tree
+</pre></div>
+</div>
+</div>
+<div class="section" id="metamodel-ids">
+<h4>Metamodel ids<a class="headerlink" href="#metamodel-ids" title="Permalink to this headline">¶</a></h4>
+<p>Then you need to choose a metamodel file_id.</p>
+<p>See <a class="reference external" href="https://doc.castsoftware.com/display/DOC83/xxxMetaModel.xml+file#xxxMetaModel.xmlfile-IDassignmentscheme">https://doc.castsoftware.com/display/DOC83/xxxMetaModel.xml+file#xxxMetaModel.xmlfile-IDassignmentscheme</a></p>
+<p>The absolute ids are 2,000,000 + 1,000 * file_no + rid</p>
+<p>Here, as it is custom quality rule the level is <strong>&#8220;client&#8221;</strong> and we have chosen file_id <strong>&#8220;1&#8221;</strong>.</p>
+<p>So the absolute ids are between 2,001,000 and 2,001,999.</p>
+<p>We will use this id range both for metamodel and for quality rule ids.</p>
+</div>
+<div class="section" id="a-custom-category">
+<h4>A custom category<a class="headerlink" href="#a-custom-category" title="Permalink to this headline">¶</a></h4>
+<p>Then we need to choose a name for our custom category. This name should be globally unique and do not clash with other category names.</p>
+<p>Here we choose : <strong>MyCompany_COBOL_Rules</strong>.</p>
+<p>This category is added to the COBOL programs, see  <a class="reference internal" href="mainframe.html#mainframe-categories"><em>Categories and types for quality rules</em></a>.</p>
+<p>Doing a mistake and having the same category name in 2 different extensions will prevent those extensions to be installed on the same CAIP instance.</p>
+</div>
+</div>
+<div class="section" id="adding-a-new-quality-rule">
+<h3>Adding a new quality rule<a class="headerlink" href="#adding-a-new-quality-rule" title="Permalink to this headline">¶</a></h3>
+<p>For adding a new quality rule we need to add:</p>
+<ul class="simple">
+<li>a metamodel property on the mainframe object type (on which the rule applies)</li>
+<li>an implementation in extension SDK</li>
+<li>a declaration in the master files</li>
+</ul>
+</div>
+<div class="section" id="adding-a-property">
+<h3>Adding a property<a class="headerlink" href="#adding-a-property" title="Permalink to this headline">¶</a></h3>
+<p>We add a property in our custom category, for that we need:</p>
+<ul class="simple">
+<li>a name (that should be unique inside the category)</li>
+<li>a rid (that should be unique inside the metamodel file)</li>
+<li>an INF_SUB_TYPE (that should be unique inside the metamodel file)</li>
+</ul>
+<p>By convention we set the lower range value for the INF_TYPE.</p>
+<p>This gives</p>
+<div class="highlight-python"><div class="highlight"><pre>&lt;category name=&quot;MyCompany_COBOL_Rules&quot; rid=&quot;0&quot;&gt;
+    &lt;description&gt;&lt;/description&gt;
+    &lt;!-- add new properties here, one for each quality rule --&gt;
+
+    &lt;property name=&quot;paragraphRedefinition&quot; type=&quot;integer&quot; merge=&quot;sum&quot; rid=&quot;0&quot;&gt;
+        &lt;description&gt;Redefinition of paragraph&lt;/description&gt;
+        &lt;attribute name=&quot;ACCESS_APPVIEW&quot; intValue=&quot;1&quot;/&gt;
+        &lt;attribute name=&quot;ACCESS_CVS&quot; intValue=&quot;1&quot;/&gt;
+        &lt;attribute name=&quot;ACCESS_HTML&quot; intValue=&quot;1&quot;/&gt;
+        &lt;attribute name=&quot;INF_TYPE&quot; intValue=&quot;2001000&quot;/&gt;
+        &lt;attribute name=&quot;INF_SUB_TYPE&quot; intValue=&quot;0&quot;/&gt;
+    &lt;/property&gt;
+
+&lt;/category&gt;
+</pre></div>
+</div>
+<p>Apply the formula to determine the absolute id value (2,000,000 + 1,000 * file_no + rid) : here the property id is 2001000.</p>
+<p>Keep that value in mind.</p>
+</div>
+<div class="section" id="implementation-in-python">
+<h3>Implementation in Python<a class="headerlink" href="#implementation-in-python" title="Permalink to this headline">¶</a></h3>
+<p>We will use <a class="reference internal" href="code_reference.html#cast.analysers.Object.save_violation" title="cast.analysers.Object.save_violation"><tt class="xref py py-meth docutils literal"><span class="pre">cast.analysers.Object.save_violation()</span></tt></a> to register a violation on some object at a given position in the code.</p>
+<p>The property name will be : &#8220;MyCompany_COBOL_Rules.paragraphRedefinition&#8221;</p>
+<p>See &#64;todo</p>
+</div>
+<div class="section" id="adding-the-rule-in-the-master-files">
+<h3>Adding the rule in the master files<a class="headerlink" href="#adding-the-rule-in-the-master-files" title="Permalink to this headline">¶</a></h3>
+<p>Master files are the xml files located in MasterFiles subfolder.</p>
+<p>Each one need to be updated to add a new quality rule.</p>
+<p>First We need a unique rule id.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Rule id must be <strong>even</strong>.</p>
+</div>
+<p>We start by choosing <strong>2001000</strong>, next one will be 2001002, etc...</p>
+<div class="section" id="metricsdirectory-xml">
+<h4>MetricsDirectory.xml<a class="headerlink" href="#metricsdirectory-xml" title="Permalink to this headline">¶</a></h4>
+<p>This one contains the list of quality rules.</p>
+<p>It also contains some existing &#8216;technical-criterion&#8217; to which rules should be added.</p>
+<p>Here we provide some classical &#8216;technical-criterion&#8217;, but some other exists.</p>
+<p>Here is what change</p>
+<div class="highlight-python"><div class="highlight"><pre>&lt;metric id=&#39;2001000&#39; type=&#39;quality-rule&#39; originalName=&#39;Avoid redefining paragraph&#39; active=&#39;true&#39; detached=&#39;false&#39; ignored=&#39;false&#39; /&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="implqualityrules-xml">
+<h4>IMPLQualityRules.xml<a class="headerlink" href="#implqualityrules-xml" title="Permalink to this headline">¶</a></h4>
+<p>This explains how the rule is calculated.</p>
+<p>Here we are in a property/scope mode.</p>
+<p>Here we need to choose a scope : this represent the set of objects checked by the rule.</p>
+<p>Here we are checking every COBOL program, so we choose scope id 100. See see  <a class="reference internal" href="mainframe.html#mainframe-scopes"><em>Quality rule scopes</em></a>.</p>
+<p>We have</p>
+<ul class="simple">
+<li>our rule id : 2001000</li>
+<li>our property id : 2001000</li>
+<li>our scope id : 100</li>
+</ul>
+<div class="highlight-python"><div class="highlight"><pre>&lt;metric id=&#39;2001000&#39; type=&#39;quality-rule&#39; originalName=&#39;Avoid redefining paragraph&#39; xxl=&#39;N/A&#39; unify=&#39;N/A&#39; executionLocation=&#39;local-central&#39; scopeID=&#39;100&#39; scopeLabel=&#39;NO LABEL&#39; propertyID=&#39;2001000&#39; associatedValueResultType=&#39;integer&#39; failedChecksOperator1=&#39;count-distinct&#39; failedChecksProcedure=&#39;DSS_DIAG_SCOPE_GENERIC_NUM&#39; totalChecksProcedure=&#39;DSS_DIAG_TOTAL_GENERIC&#39; consolidationLocalProcedure=&#39;DSS_FILTER_SCOPE&#39; consolidationCentralProcedure=&#39;N/A&#39; /&gt;
+</pre></div>
+</div>
+<p>See &#8220;Computing Settings tab&#8221; in <a class="reference external" href="https://doc.castsoftware.com/display/DOC83/CMS+-+Create+a+new+Quality+Rule">https://doc.castsoftware.com/display/DOC83/CMS+-+Create+a+new+Quality+Rule</a>.</p>
+</div>
+<div class="section" id="specthresholds-xml">
+<h4>SPECThresholds.xml<a class="headerlink" href="#specthresholds-xml" title="Permalink to this headline">¶</a></h4>
+<p>This describe how we get a grade from a compliance ratio.</p>
+<div class="highlight-python"><div class="highlight"><pre>&lt;metric id=&quot;2001000&quot; type=&quot;quality-rule&quot; originalName=&quot;Avoid redefining paragraph&quot; thresholdToGet1=&#39;50.0&#39; thresholdToGet2=&#39;90.0&#39; thresholdToGet3=&#39;95.0&#39; thresholdToGet4=&#39;99.0&#39; /&gt;
+</pre></div>
+</div>
+<p>See &#8220;Grade Thresholds tab&#8221; in <a class="reference external" href="https://doc.castsoftware.com/display/DOC83/CMS+-+Create+a+new+Quality+Rule">https://doc.castsoftware.com/display/DOC83/CMS+-+Create+a+new+Quality+Rule</a>.</p>
+</div>
+<div class="section" id="speccontributors-xml">
+<h4>SPECContributors.xml<a class="headerlink" href="#speccontributors-xml" title="Permalink to this headline">¶</a></h4>
+<p>This describe to which &#8216;technical-criterion&#8217; the rule will contribute.</p>
+<div class="highlight-python"><div class="highlight"><pre>&lt;metric id=&#39;66069&#39; type=&#39;technical-criterion&#39; originalName=&#39;Programming Practices - Unexpected Behavior&#39; contributorId=&#39;2001000&#39; contributorType=&#39;quality-rule&#39; contributorOriginalName=&#39;2001000&#39; critical=&#39;false&#39; weight=&#39;5&#39; /&gt;
+</pre></div>
+</div>
+<p>See &#8220;Grade Impacts tab&#8221; in <a class="reference external" href="https://doc.castsoftware.com/display/DOC83/CMS+-+Create+a+new+Quality+Rule">https://doc.castsoftware.com/display/DOC83/CMS+-+Create+a+new+Quality+Rule</a>.</p>
+</div>
+<div class="section" id="impltechnologies-xml">
+<h4>IMPLTechnologies.xml<a class="headerlink" href="#impltechnologies-xml" title="Permalink to this headline">¶</a></h4>
+<p>Rules are associated to one or several technologies.</p>
+<p>In this sample the technology is Cobol, so -4</p>
+<div class="highlight-python"><div class="highlight"><pre>&lt;metric id=&#39;2001000&#39; type=&#39;quality-rule&#39; originalName=&#39;Avoid redefining paragraph&#39; filter=&#39;-4&#39; filterLabel=&#39;Cobol&#39; /&gt;
+</pre></div>
+</div>
+<p>See &#8220;Computing Settings tab&#8221; in <a class="reference external" href="https://doc.castsoftware.com/display/DOC83/CMS+-+Create+a+new+Quality+Rule">https://doc.castsoftware.com/display/DOC83/CMS+-+Create+a+new+Quality+Rule</a>.</p>
+</div>
+<div class="section" id="specdocumentation-xml">
+<h4>SPECDocumentation.xml<a class="headerlink" href="#specdocumentation-xml" title="Permalink to this headline">¶</a></h4>
+<p>This contains the various fields of documentation.</p>
+<p>See <a class="reference external" href="https://doc.castsoftware.com/display/DOC83/CMS+-+Create+a+new+Quality+Rule">https://doc.castsoftware.com/display/DOC83/CMS+-+Create+a+new+Quality+Rule</a></p>
+</div>
+</div>
+<div class="section" id="compiling-the-master-files">
+<h3>Compiling the master files<a class="headerlink" href="#compiling-the-master-files" title="Permalink to this headline">¶</a></h3>
+<p>Once edited, you can compile the master files by running compile.bat <em>in a console</em> ran the folder of the extension.</p>
+<p>It will generate a folder named InstallScripts</p>
+</div>
+<div class="section" id="done">
+<h3>Done<a class="headerlink" href="#done" title="Permalink to this headline">¶</a></h3>
+<p>That&#8217;s it. Now you can test.</p>
+</div>
+</div>
+<div class="section" id="some-other-ways-of-writing-quality-rules">
+<h2>Some other ways of writing quality rules<a class="headerlink" href="#some-other-ways-of-writing-quality-rules" title="Permalink to this headline">¶</a></h2>
+<p>Those applies for some other ways of writing quality rules, some are deprecated.</p>
+<div class="section" id="old-way-of-writing-quality-rules">
+<h3>Old way of writing quality rules<a class="headerlink" href="#old-way-of-writing-quality-rules" title="Permalink to this headline">¶</a></h3>
 <p>For the implementation, two stored procedures are required:</p>
 <ul class="simple">
 <li>A detail procedure to identify violations</li>
@@ -281,47 +480,12 @@ language &#39;plpgsql&#39;
 </div>
 <p>Those procedures uses the object model stored in the knowledge base. This uses objects and properties.</p>
 <p>One can use existing properties, and also use new properties (that the should be produced)</p>
-<div class="section" id="declaring-new-properties">
-<h3>Declaring new properties<a class="headerlink" href="#declaring-new-properties" title="Permalink to this headline">¶</a></h3>
-<p>In order to produce new properties, a metamodel fragment file must be added.</p>
-<p>See <a class="reference external" href="http://doc.castsoftware.com/display/DOC80/xxxMetaModel.xml+file">http://doc.castsoftware.com/display/DOC80/xxxMetaModel.xml+file</a></p>
-<p>For example, adding 2 new properties to existing object types (here Cobol)</p>
-<div class="highlight-python"><div class="highlight"><pre>&lt;metaModel  file_level=&quot;client&quot; file_no=&quot;0&quot;&gt;
-    &lt;partial_category name=&quot;CAST_MetricAssistant_WithMetrics_Cobol&quot;&gt;
-        &lt;inheritedCategory name=&quot;My_CustomMetrics&quot;/&gt;
-    &lt;/partial_category&gt;
-
-    &lt;category name=&quot;My_CustomMetrics&quot; id=&quot;2668000&quot;&gt;
-        &lt;description&gt;Custom category for additional properties on COBOL analysis&lt;/description&gt;
-        &lt;!-- Curious useless ((TBD)) attribute declaration &lt;attribute name=&quot;MetricName&quot; stringValue=&quot;numberOfEmptySelectEndSelect&quot;/&gt; --&gt;
-        &lt;property name=&quot;numberOfExtendedTableSubscripts&quot; type=&quot;integer&quot; id=&quot;2668001&quot;&gt;
-            &lt;description&gt;Number of extended table subscripts&lt;/description&gt;
-            &lt;attribute name=&quot;INF_TYPE&quot; intValue=&quot;9&quot;/&gt;
-            &lt;attribute name=&quot;INF_SUB_TYPE&quot; intValue=&quot;2668001&quot;/&gt;
-            &lt;attribute name=&quot;ACCESS_APPVIEW&quot; intValue=&quot;1&quot;/&gt;
-            &lt;attribute name=&quot;ACCESS_CVS&quot; intValue=&quot;1&quot;/&gt;
-            &lt;attribute name=&quot;ACCESS_HTML&quot; intValue=&quot;1&quot;/&gt;
-      &lt;/property&gt;
-      &lt;property name=&quot;numberOfExtendedTableSubscriptsLocation&quot; type=&quot;string&quot; id=&quot;2668002&quot;&gt;
-            &lt;description&gt;Location for Number of extended table subscripts&lt;/description&gt;
-            &lt;attribute name=&quot;INF_TYPE&quot; intValue=&quot;9&quot;/&gt;
-            &lt;attribute name=&quot;INF_SUB_TYPE&quot; intValue=&quot;2668002&quot;/&gt;
-            &lt;attribute name=&quot;ACCESS_APPVIEW&quot; intValue=&quot;1&quot;/&gt;
-            &lt;attribute name=&quot;ACCESS_CVS&quot; intValue=&quot;1&quot;/&gt;
-            &lt;attribute name=&quot;ACCESS_HTML&quot; intValue=&quot;1&quot;/&gt;
-      &lt;/property&gt;
-      &lt;!-- Properties for deprecated programs &quot;/&gt; --&gt;
-    &lt;/category&gt;
-
-&lt;/metaModel&gt;
-</pre></div>
-</div>
 </div>
 <div class="section" id="different-ways-of-producing-properties">
 <h3>Different ways of producing properties<a class="headerlink" href="#different-ways-of-producing-properties" title="Permalink to this headline">¶</a></h3>
 <p>The values of the properties may be produced using various ways :</p>
 <ul class="simple">
-<li>through SDK using either <a class="reference internal" href="code_reference.html#cast.analysers.Object.save_property" title="cast.analysers.Object.save_property"><tt class="xref py py-meth docutils literal"><span class="pre">cast.analysers.Object.save_property()</span></tt></a> or <a class="reference internal" href="code_reference.html#cast.application.Object.save_property" title="cast.application.Object.save_property"><tt class="xref py py-meth docutils literal"><span class="pre">cast.application.Object.save_property()</span></tt></a></li>
+<li>through SDK using either <a class="reference internal" href="code_reference.html#cast.analysers.Object.save_violation" title="cast.analysers.Object.save_violation"><tt class="xref py py-meth docutils literal"><span class="pre">cast.analysers.Object.save_violation()</span></tt></a> or <a class="reference internal" href="code_reference.html#cast.application.Object.save_property" title="cast.application.Object.save_property"><tt class="xref py py-meth docutils literal"><span class="pre">cast.application.Object.save_property()</span></tt></a></li>
 <li>using Metric Assistant : <a class="reference external" href="http://doc.castsoftware.com/display/DOC80/Using+the+XXXCastMetrics.xml+file">http://doc.castsoftware.com/display/DOC80/Using+the+XXXCastMetrics.xml+file</a>
 by adding a xxxCastMEtrics.xml file in your extension</li>
 </ul>
@@ -329,10 +493,10 @@ by adding a xxxCastMEtrics.xml file in your extension</li>
 </div>
 <div class="section" id="packaging">
 <h2>Packaging<a class="headerlink" href="#packaging" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="adding-the-rule-manually">
-<h3>Adding the rule manually<a class="headerlink" href="#adding-the-rule-manually" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="adding-the-rule-manually-to-cms">
+<h3>Adding the rule manually to CMS<a class="headerlink" href="#adding-the-rule-manually-to-cms" title="Permalink to this headline">¶</a></h3>
 <p>This is a good start for testing</p>
-<p><a class="reference external" href="http://doc.castsoftware.com/display/DOC82/CMS+-+Create+a+new+Quality+Rule">http://doc.castsoftware.com/display/DOC82/CMS+-+Create+a+new+Quality+Rule</a></p>
+<p><a class="reference external" href="https://doc.castsoftware.com/display/DOC83/CMS+-+Create+a+new+Quality+Rule">https://doc.castsoftware.com/display/DOC83/CMS+-+Create+a+new+Quality+Rule</a></p>
 </div>
 </div>
 <div class="section" id="enhancing-dataflow-quality-rules">

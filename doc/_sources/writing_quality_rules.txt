@@ -1,0 +1,11 @@
+Writing an extension that inject new quality rules
+**************************************************
+
+Starter kit
+
+
+Metamodel
+
+
+Master Files
+

@@ -31,7 +31,7 @@
 
   
     <link rel="top" title="CAST Extension SDK 1.5.27 documentation" href="index.html"/>
-        <link rel="next" title="Debugging" href="debugging.html"/>
+        <link rel="next" title="Mainframe Analyser specificities" href="mainframe.html"/>
         <link rel="prev" title="Exchanging data between analysis level and application level" href="data_exchange.html"/> 
 
   
@@ -115,6 +115,7 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="mainframe.html">Mainframe Analyser specificities</a></li>
 <li class="toctree-l1"><a class="reference internal" href="debugging.html">Debugging</a></li>
 <li class="toctree-l1"><a class="reference internal" href="writing_quality_rule.html">Writing quality rules</a></li>
 <li class="toctree-l1"><a class="reference internal" href="code_reference.html">API Reference</a></li>
@@ -314,36 +315,6 @@
 </tbody>
 </table>
 <p>&#64;type _object: cast.analysers.Object</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="cast.analysers.abap.Extension.start_frame">
-<tt class="descname">start_frame</tt><big>(</big><em>file</em><big>)</big><a class="headerlink" href="#cast.analysers.abap.Extension.start_frame" title="Permalink to this definition">¶</a></dt>
-<dd><p>Called at the beginning of the analysis of a frame</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>file</strong> (<a class="reference internal" href="code_reference.html#cast.analysers.File" title="cast.analysers.File"><em>cast.analysers.File</em></a>) &#8211; the frame</td>
-</tr>
-</tbody>
-</table>
-<p>&#64;type file: cast.analysers.File</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="cast.analysers.abap.Extension.end_frame">
-<tt class="descname">end_frame</tt><big>(</big><em>file</em><big>)</big><a class="headerlink" href="#cast.analysers.abap.Extension.end_frame" title="Permalink to this definition">¶</a></dt>
-<dd><p>Called at the end of the analysis of a frame</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>file</strong> (<a class="reference internal" href="code_reference.html#cast.analysers.File" title="cast.analysers.File"><em>cast.analysers.File</em></a>) &#8211; the frame</td>
-</tr>
-</tbody>
-</table>
-<p>&#64;type file: cast.analysers.File</p>
 </dd></dl>
 
 <dl class="method">
@@ -587,6 +558,21 @@
 </dd></dl>
 
 <dl class="method">
+<dt id="cast.analysers.abap.Extension.start_transaction">
+<tt class="descname">start_transaction</tt><big>(</big><em>o</em><big>)</big><a class="headerlink" href="#cast.analysers.abap.Extension.start_transaction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called at the beginning of the analysis of a transaction</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>transaction</strong> (<a class="reference internal" href="code_reference.html#cast.analysers.Object" title="cast.analysers.Object"><em>cast.analysers.Object</em></a>) &#8211; the transaction</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type transaction: cast.analysers.Object</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="cast.analysers.abap.Extension.start_webdynpro_file">
 <tt class="descname">start_webdynpro_file</tt><big>(</big><em>file</em><big>)</big><a class="headerlink" href="#cast.analysers.abap.Extension.start_webdynpro_file" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called at the beginning of the analysis of a webdynpro file</p>
@@ -614,6 +600,36 @@
 </tbody>
 </table>
 <p>&#64;type file: cast.analysers.File</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.abap.Extension.start_webdynpro_method">
+<tt class="descname">start_webdynpro_method</tt><big>(</big><em>member</em><big>)</big><a class="headerlink" href="#cast.analysers.abap.Extension.start_webdynpro_method" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called at the beginning of the analysis of a webdynpro method</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>member</strong> (<a class="reference internal" href="code_reference.html#cast.analysers.Member" title="cast.analysers.Member"><em>cast.analysers.Member</em></a>) &#8211; the webdynpro method</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type member: cast.analysers.Member</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.abap.Extension.end_webdynpro_method">
+<tt class="descname">end_webdynpro_method</tt><big>(</big><em>member</em><big>)</big><a class="headerlink" href="#cast.analysers.abap.Extension.end_webdynpro_method" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called at the end of the analysis of a webdynpro method</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>member</strong> (<a class="reference internal" href="code_reference.html#cast.analysers.Member" title="cast.analysers.Member"><em>cast.analysers.Member</em></a>) &#8211; the webdynpro method</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type member: cast.analysers.Member</p>
 </dd></dl>
 
 <dl class="method">
@@ -647,14 +663,374 @@
 </dd></dl>
 
 <dl class="method">
-<dt id="cast.analysers.abap.Extension.start_program_description_update">
-<tt class="descname">start_program_description_update</tt><big>(</big><em>file</em><big>)</big><a class="headerlink" href="#cast.analysers.abap.Extension.start_program_description_update" title="Permalink to this definition">¶</a></dt>
-<dd><p>Called at the start of a programs description update</p>
+<dt id="cast.analysers.abap.Extension.start_package">
+<tt class="descname">start_package</tt><big>(</big><em>o</em><big>)</big><a class="headerlink" href="#cast.analysers.abap.Extension.start_package" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called at the beginning of a package entering</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>file</strong> (<a class="reference internal" href="code_reference.html#cast.analysers.File" title="cast.analysers.File"><em>cast.analysers.File</em></a>) &#8211; the programs description update</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>file</strong> (<a class="reference internal" href="code_reference.html#cast.analysers.Object" title="cast.analysers.Object"><em>cast.analysers.Object</em></a>) &#8211; the package</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type file: cast.analysers.Object</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.abap.Extension.create_package">
+<tt class="descname">create_package</tt><big>(</big><em>o</em><big>)</big><a class="headerlink" href="#cast.analysers.abap.Extension.create_package" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called at a package creation</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>file</strong> (<a class="reference internal" href="code_reference.html#cast.analysers.Object" title="cast.analysers.Object"><em>cast.analysers.Object</em></a>) &#8211; the package</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type file: cast.analysers.Object</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.abap.Extension.start_form">
+<tt class="descname">start_form</tt><big>(</big><em>form</em><big>)</big><a class="headerlink" href="#cast.analysers.abap.Extension.start_form" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called at the beginning of the analysis of a form</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>form</strong> (<a class="reference internal" href="code_reference.html#cast.analysers.Member" title="cast.analysers.Member"><em>cast.analysers.Member</em></a>) &#8211; the form</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type form: cast.analysers.Member</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.abap.Extension.end_form">
+<tt class="descname">end_form</tt><big>(</big><em>form</em><big>)</big><a class="headerlink" href="#cast.analysers.abap.Extension.end_form" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called at the end of the analysis of a form</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>form</strong> (<a class="reference internal" href="code_reference.html#cast.analysers.Member" title="cast.analysers.Member"><em>cast.analysers.Member</em></a>) &#8211; the form</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type form: cast.analysers.Member</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.abap.Extension.start_function">
+<tt class="descname">start_function</tt><big>(</big><em>_function</em><big>)</big><a class="headerlink" href="#cast.analysers.abap.Extension.start_function" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called at the beginning of the analysis of a function</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>_function</strong> (<a class="reference internal" href="code_reference.html#cast.analysers.Member" title="cast.analysers.Member"><em>cast.analysers.Member</em></a>) &#8211; the function</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type form: cast.analysers.Member</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.abap.Extension.end_function">
+<tt class="descname">end_function</tt><big>(</big><em>_function</em><big>)</big><a class="headerlink" href="#cast.analysers.abap.Extension.end_function" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called at the end of the analysis of a function</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>_function</strong> (<a class="reference internal" href="code_reference.html#cast.analysers.Member" title="cast.analysers.Member"><em>cast.analysers.Member</em></a>) &#8211; the function</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type _function: cast.analysers.Member</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.abap.Extension.start_module">
+<tt class="descname">start_module</tt><big>(</big><em>module</em><big>)</big><a class="headerlink" href="#cast.analysers.abap.Extension.start_module" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called at the beginning of the analysis of a module</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>module</strong> (<a class="reference internal" href="code_reference.html#cast.analysers.Member" title="cast.analysers.Member"><em>cast.analysers.Member</em></a>) &#8211; the module</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type module: cast.analysers.Member</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.abap.Extension.end_module">
+<tt class="descname">end_module</tt><big>(</big><em>module</em><big>)</big><a class="headerlink" href="#cast.analysers.abap.Extension.end_module" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called at the end of the analysis of a module</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>module</strong> (<a class="reference internal" href="code_reference.html#cast.analysers.Member" title="cast.analysers.Member"><em>cast.analysers.Member</em></a>) &#8211; the module</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type module: cast.analysers.Member</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.abap.Extension.start_event_block">
+<tt class="descname">start_event_block</tt><big>(</big><em>block</em><big>)</big><a class="headerlink" href="#cast.analysers.abap.Extension.start_event_block" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called at the beginning of the analysis of a block</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>block</strong> (<a class="reference internal" href="code_reference.html#cast.analysers.Member" title="cast.analysers.Member"><em>cast.analysers.Member</em></a>) &#8211; the event block</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type block: cast.analysers.Member</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.abap.Extension.end_event_block">
+<tt class="descname">end_event_block</tt><big>(</big><em>block</em><big>)</big><a class="headerlink" href="#cast.analysers.abap.Extension.end_event_block" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called at the end of the analysis of a event block</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>block</strong> (<a class="reference internal" href="code_reference.html#cast.analysers.Member" title="cast.analysers.Member"><em>cast.analysers.Member</em></a>) &#8211; the block</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type block: cast.analysers.Member</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.abap.Extension.start_type">
+<tt class="descname">start_type</tt><big>(</big><em>_type</em><big>)</big><a class="headerlink" href="#cast.analysers.abap.Extension.start_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called at the beginning of the analysis of a class/interface</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>_type</strong> (<a class="reference internal" href="code_reference.html#cast.analysers.Type" title="cast.analysers.Type"><em>cast.analysers.Type</em></a>) &#8211; the class</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type _type: cast.analysers.Type</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.abap.Extension.end_type">
+<tt class="descname">end_type</tt><big>(</big><em>_type</em><big>)</big><a class="headerlink" href="#cast.analysers.abap.Extension.end_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called at the end of the analysis of a class/interface</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>_type</strong> (<a class="reference internal" href="code_reference.html#cast.analysers.Type" title="cast.analysers.Type"><em>cast.analysers.Type</em></a>) &#8211; the class</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type _type: cast.analysers.Type</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.abap.Extension.start_class_definition">
+<tt class="descname">start_class_definition</tt><big>(</big><em>_type</em><big>)</big><a class="headerlink" href="#cast.analysers.abap.Extension.start_class_definition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called at the beginning of the analysis of a class definition</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>_type</strong> (<a class="reference internal" href="code_reference.html#cast.analysers.Type" title="cast.analysers.Type"><em>cast.analysers.Type</em></a>) &#8211; the class</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type _type: cast.analysers.Type</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.abap.Extension.end_class_definition">
+<tt class="descname">end_class_definition</tt><big>(</big><em>_type</em><big>)</big><a class="headerlink" href="#cast.analysers.abap.Extension.end_class_definition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called at the end of the analysis of a class definition</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>_type</strong> (<a class="reference internal" href="code_reference.html#cast.analysers.Type" title="cast.analysers.Type"><em>cast.analysers.Type</em></a>) &#8211; the class</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type _type: cast.analysers.Type</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.abap.Extension.start_member">
+<tt class="descname">start_member</tt><big>(</big><em>member</em><big>)</big><a class="headerlink" href="#cast.analysers.abap.Extension.start_member" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called at the beginning of the analysis of a class member</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>member</strong> (<a class="reference internal" href="code_reference.html#cast.analysers.Member" title="cast.analysers.Member"><em>cast.analysers.Member</em></a>) &#8211; the class member</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type member: cast.analysers.Member</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.abap.Extension.end_member">
+<tt class="descname">end_member</tt><big>(</big><em>member</em><big>)</big><a class="headerlink" href="#cast.analysers.abap.Extension.end_member" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called at the end of the analysis of a class member</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>member</strong> (<a class="reference internal" href="code_reference.html#cast.analysers.Member" title="cast.analysers.Member"><em>cast.analysers.Member</em></a>) &#8211; the class member</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type member: cast.analysers.Member</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.abap.Extension.start_database_procedure">
+<tt class="descname">start_database_procedure</tt><big>(</big><em>member</em><big>)</big><a class="headerlink" href="#cast.analysers.abap.Extension.start_database_procedure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called at the beginning of the analysis of a database procedure method</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>member</strong> (<a class="reference internal" href="code_reference.html#cast.analysers.Member" title="cast.analysers.Member"><em>cast.analysers.Member</em></a>) &#8211; the class procedure method</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type member: cast.analysers.Member</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.abap.Extension.start_database_function">
+<tt class="descname">start_database_function</tt><big>(</big><em>member</em><big>)</big><a class="headerlink" href="#cast.analysers.abap.Extension.start_database_function" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called at the beginning of the analysis of a database function method</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>member</strong> (<a class="reference internal" href="code_reference.html#cast.analysers.Member" title="cast.analysers.Member"><em>cast.analysers.Member</em></a>) &#8211; the class function method</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type member: cast.analysers.Member</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.abap.Extension.start_method_definition">
+<tt class="descname">start_method_definition</tt><big>(</big><em>member</em><big>)</big><a class="headerlink" href="#cast.analysers.abap.Extension.start_method_definition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called at the beginning of the analysis of a class method definition</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>member</strong> (<a class="reference internal" href="code_reference.html#cast.analysers.Member" title="cast.analysers.Member"><em>cast.analysers.Member</em></a>) &#8211; the class method definition</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type member: cast.analysers.Member</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.abap.Extension.start_constructor_definition">
+<tt class="descname">start_constructor_definition</tt><big>(</big><em>member</em><big>)</big><a class="headerlink" href="#cast.analysers.abap.Extension.start_constructor_definition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called at the beginning of the analysis of a class constructor definition</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>member</strong> (<a class="reference internal" href="code_reference.html#cast.analysers.Member" title="cast.analysers.Member"><em>cast.analysers.Member</em></a>) &#8211; the class constructor definition</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type member: cast.analysers.Member</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.abap.Extension.start_sap_unresolved_folder">
+<tt class="descname">start_sap_unresolved_folder</tt><big>(</big><em>o</em><big>)</big><a class="headerlink" href="#cast.analysers.abap.Extension.start_sap_unresolved_folder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called at the creation of the sap unresolved folder</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>o</strong> (<a class="reference internal" href="code_reference.html#cast.analysers.Object" title="cast.analysers.Object"><em>cast.analysers.Object</em></a>) &#8211; the sap unresolved folder</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type o: cast.analysers.Object</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.abap.Extension.start_abap_unresolved_folder">
+<tt class="descname">start_abap_unresolved_folder</tt><big>(</big><em>o</em><big>)</big><a class="headerlink" href="#cast.analysers.abap.Extension.start_abap_unresolved_folder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called at the creation of the abap unresolved folder</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>o</strong> (<a class="reference internal" href="code_reference.html#cast.analysers.Object" title="cast.analysers.Object"><em>cast.analysers.Object</em></a>) &#8211; the abap unresolved folder</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type o: cast.analysers.Object</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.abap.Extension.start_file_level_code">
+<tt class="descname">start_file_level_code</tt><big>(</big><em>o</em><big>)</big><a class="headerlink" href="#cast.analysers.abap.Extension.start_file_level_code" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called at the beginning of the file level code</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>o</strong> (<a class="reference internal" href="code_reference.html#cast.analysers.Object" title="cast.analysers.Object"><em>cast.analysers.Object</em></a>) &#8211; the file level code</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type o: cast.analysers.Object</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.abap.Extension.end_file_level_code">
+<tt class="descname">end_file_level_code</tt><big>(</big><em>o</em><big>)</big><a class="headerlink" href="#cast.analysers.abap.Extension.end_file_level_code" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called at the end of the file level code</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>o</strong> (<a class="reference internal" href="code_reference.html#cast.analysers.Object" title="cast.analysers.Object"><em>cast.analysers.Object</em></a>) &#8211; the file level code</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type o: cast.analysers.Object</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.abap.Extension.start_sap_views_file">
+<tt class="descname">start_sap_views_file</tt><big>(</big><em>file</em><big>)</big><a class="headerlink" href="#cast.analysers.abap.Extension.start_sap_views_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called at the beginning of the analysis of a sap views file</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>file</strong> (<a class="reference internal" href="code_reference.html#cast.analysers.File" title="cast.analysers.File"><em>cast.analysers.File</em></a>) &#8211; the sap views file</td>
 </tr>
 </tbody>
 </table>
@@ -662,14 +1038,14 @@
 </dd></dl>
 
 <dl class="method">
-<dt id="cast.analysers.abap.Extension.end_program_description_update">
-<tt class="descname">end_program_description_update</tt><big>(</big><em>file</em><big>)</big><a class="headerlink" href="#cast.analysers.abap.Extension.end_program_description_update" title="Permalink to this definition">¶</a></dt>
-<dd><p>Called at the end of a programs description update</p>
+<dt id="cast.analysers.abap.Extension.end_sap_views_file">
+<tt class="descname">end_sap_views_file</tt><big>(</big><em>file</em><big>)</big><a class="headerlink" href="#cast.analysers.abap.Extension.end_sap_views_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called at the end of the analysis of a sap views file</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>file</strong> (<a class="reference internal" href="code_reference.html#cast.analysers.File" title="cast.analysers.File"><em>cast.analysers.File</em></a>) &#8211; the programs description update</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>file</strong> (<a class="reference internal" href="code_reference.html#cast.analysers.File" title="cast.analysers.File"><em>cast.analysers.File</em></a>) &#8211; the sap views file</td>
 </tr>
 </tbody>
 </table>
@@ -677,63 +1053,165 @@
 </dd></dl>
 
 <dl class="method">
-<dt id="cast.analysers.abap.Extension.start_function_description_update">
-<tt class="descname">start_function_description_update</tt><big>(</big><em>_object</em><big>)</big><a class="headerlink" href="#cast.analysers.abap.Extension.start_function_description_update" title="Permalink to this definition">¶</a></dt>
-<dd><p>Called at the start of a function description update</p>
+<dt id="cast.analysers.abap.Extension.start_sap_tables_file">
+<tt class="descname">start_sap_tables_file</tt><big>(</big><em>file</em><big>)</big><a class="headerlink" href="#cast.analysers.abap.Extension.start_sap_tables_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called at the beginning of the analysis of a sap tables file</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>_object</strong> (<a class="reference internal" href="code_reference.html#cast.analysers.Object" title="cast.analysers.Object"><em>cast.analysers.Object</em></a>) &#8211; the function description update</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>file</strong> (<a class="reference internal" href="code_reference.html#cast.analysers.File" title="cast.analysers.File"><em>cast.analysers.File</em></a>) &#8211; the sap tables file</td>
 </tr>
 </tbody>
 </table>
-<p>&#64;type file: cast.analysers.Object</p>
+<p>&#64;type file: cast.analysers.File</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="cast.analysers.abap.Extension.end_function_description_update">
-<tt class="descname">end_function_description_update</tt><big>(</big><em>_object</em><big>)</big><a class="headerlink" href="#cast.analysers.abap.Extension.end_function_description_update" title="Permalink to this definition">¶</a></dt>
-<dd><p>Called at the end of a function description update</p>
+<dt id="cast.analysers.abap.Extension.end_sap_tables_file">
+<tt class="descname">end_sap_tables_file</tt><big>(</big><em>file</em><big>)</big><a class="headerlink" href="#cast.analysers.abap.Extension.end_sap_tables_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called at the end of the analysis of a sap tables file</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>_object</strong> (<a class="reference internal" href="code_reference.html#cast.analysers.Object" title="cast.analysers.Object"><em>cast.analysers.Object</em></a>) &#8211; the function description update</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>file</strong> (<a class="reference internal" href="code_reference.html#cast.analysers.File" title="cast.analysers.File"><em>cast.analysers.File</em></a>) &#8211; the sap tables file</td>
 </tr>
 </tbody>
 </table>
-<p>&#64;type file: cast.analysers.Object</p>
+<p>&#64;type file: cast.analysers.File</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="cast.analysers.abap.Extension.start_class_or_interface_description_update">
-<tt class="descname">start_class_or_interface_description_update</tt><big>(</big><em>_object</em><big>)</big><a class="headerlink" href="#cast.analysers.abap.Extension.start_class_or_interface_description_update" title="Permalink to this definition">¶</a></dt>
-<dd><p>Called at the start of a class description update</p>
+<dt id="cast.analysers.abap.Extension.start_sap_view">
+<tt class="descname">start_sap_view</tt><big>(</big><em>o</em><big>)</big><a class="headerlink" href="#cast.analysers.abap.Extension.start_sap_view" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called at the creation of the sap view</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>_object</strong> (<a class="reference internal" href="code_reference.html#cast.analysers.Object" title="cast.analysers.Object"><em>cast.analysers.Object</em></a>) &#8211; the class description update</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>o</strong> (<a class="reference internal" href="code_reference.html#cast.analysers.Object" title="cast.analysers.Object"><em>cast.analysers.Object</em></a>) &#8211; the sap view</td>
 </tr>
 </tbody>
 </table>
-<p>&#64;type file: cast.analysers.Object</p>
+<p>&#64;type o: cast.analysers.Object</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="cast.analysers.abap.Extension.end_class_or_interface_description_update">
-<tt class="descname">end_class_or_interface_description_update</tt><big>(</big><em>_object</em><big>)</big><a class="headerlink" href="#cast.analysers.abap.Extension.end_class_or_interface_description_update" title="Permalink to this definition">¶</a></dt>
-<dd><p>Called at the end of a class description update</p>
+<dt id="cast.analysers.abap.Extension.start_sap_table">
+<tt class="descname">start_sap_table</tt><big>(</big><em>o</em><big>)</big><a class="headerlink" href="#cast.analysers.abap.Extension.start_sap_table" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called at the creation of the sap table</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>_object</strong> (<a class="reference internal" href="code_reference.html#cast.analysers.Object" title="cast.analysers.Object"><em>cast.analysers.Object</em></a>) &#8211; the class description update</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>o</strong> (<a class="reference internal" href="code_reference.html#cast.analysers.Object" title="cast.analysers.Object"><em>cast.analysers.Object</em></a>) &#8211; the sap table</td>
 </tr>
 </tbody>
 </table>
-<p>&#64;type file: cast.analysers.Object</p>
+<p>&#64;type o: cast.analysers.Object</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.abap.Extension.start_sap_unresolved_table">
+<tt class="descname">start_sap_unresolved_table</tt><big>(</big><em>o</em><big>)</big><a class="headerlink" href="#cast.analysers.abap.Extension.start_sap_unresolved_table" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called at the creation of the sap unresolved table</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>o</strong> (<a class="reference internal" href="code_reference.html#cast.analysers.Object" title="cast.analysers.Object"><em>cast.analysers.Object</em></a>) &#8211; the sap unresolved table</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type o: cast.analysers.Object</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.abap.Extension.complete_table_or_view">
+<tt class="descname">complete_table_or_view</tt><big>(</big><em>o</em><big>)</big><a class="headerlink" href="#cast.analysers.abap.Extension.complete_table_or_view" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called at the completion of the sap table</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>o</strong> (<a class="reference internal" href="code_reference.html#cast.analysers.Object" title="cast.analysers.Object"><em>cast.analysers.Object</em></a>) &#8211; the sap table</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type o: cast.analysers.Object</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.abap.Extension.end_light_parsing">
+<tt class="descname">end_light_parsing</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.abap.Extension.end_light_parsing" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called at the completion of the light parsing</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.abap.Extension.end_full_parsing">
+<tt class="descname">end_full_parsing</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.abap.Extension.end_full_parsing" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called at the completion of the full parsing</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.abap.Extension.end_bapis_analysis">
+<tt class="descname">end_bapis_analysis</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.abap.Extension.end_bapis_analysis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called at the completion of the bapi analysis</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.abap.Extension.end_sap_tables_analysis">
+<tt class="descname">end_sap_tables_analysis</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.abap.Extension.end_sap_tables_analysis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called at the completion of the sap tables analysis</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.abap.Extension.end_webdynpros_analysis">
+<tt class="descname">end_webdynpros_analysis</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.abap.Extension.end_webdynpros_analysis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called at the completion of the web dynpros analysis</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.abap.Extension.start_abap_project">
+<tt class="descname">start_abap_project</tt><big>(</big><em>o</em><big>)</big><a class="headerlink" href="#cast.analysers.abap.Extension.start_abap_project" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called at the creation of the abap project</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>o</strong> (<a class="reference internal" href="code_reference.html#cast.analysers.Object" title="cast.analysers.Object"><em>cast.analysers.Object</em></a>) &#8211; the abap project</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type o: cast.analysers.Object</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.abap.Extension.start_sap_project">
+<tt class="descname">start_sap_project</tt><big>(</big><em>o</em><big>)</big><a class="headerlink" href="#cast.analysers.abap.Extension.start_sap_project" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called at the creation of the sap project</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>o</strong> (<a class="reference internal" href="code_reference.html#cast.analysers.Object" title="cast.analysers.Object"><em>cast.analysers.Object</em></a>) &#8211; the sap project</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type o: cast.analysers.Object</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.abap.Extension.start_sap_tables_analysis">
+<tt class="descname">start_sap_tables_analysis</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.abap.Extension.start_sap_tables_analysis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called at the beginning of sap tables analysis</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.abap.Extension.end_transactions_analysis">
+<tt class="descname">end_transactions_analysis</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.abap.Extension.end_transactions_analysis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called at the end of sap transactions analysis</p>
 </dd></dl>
 
 </dd></dl>
@@ -1651,7 +2129,7 @@ end_analysis()
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="debugging.html" class="btn btn-neutral float-right" title="Debugging" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="mainframe.html" class="btn btn-neutral float-right" title="Mainframe Analyser specificities" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="data_exchange.html" class="btn btn-neutral" title="Exchanging data between analysis level and application level" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>

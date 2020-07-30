@@ -1,0 +1,418 @@
+Writing quality rules
+*********************
+
+Tutorial for COBOL
+==================
+
+This tutorial applies to **COBOL** but can be translated to other technologies.
+
+
+Stater kit
+----------
+
+A sample project is available here : 
+https://github.com/CAST-projects/Extension-SDK/tree/master/samples/analyzer_level/mainframe/mainframe.quality_rule
+
+Have a look at git history.
+https://github.com/CAST-projects/Extension-SDK/commits/master/samples/analyzer_level/mainframe/mainframe.quality_rule
+
+Initialization
+--------------
+
+
+Plugin id
++++++++++
+
+First you need to choose :
+
+* a unique plugin id
+
+This plugin id will be used in plugin.nuspec file.
+
+In this tutorial we have chosen **mainframe.quality_rule**.
+
+See :doc:`deployment`
+
+
+Pck name
+++++++++
+
+Then you also need to have a unique name for the pck. 
+We recommend that this name contain the the plugin id.
+
+In this tutorial we have chosen **mainframe.sample.qr_metric_tree**.
+
+This name is then used in the compile.bat::
+
+    MasterFiles\MetricsCompiler.bat -encodeUA -inputdir MasterFiles -outputdir . -pck mainframe.quality_rule_metric_tree
+
+Metamodel ids
++++++++++++++
+
+Then you need to choose a metamodel file_id.
+
+See https://doc.castsoftware.com/display/DOC83/xxxMetaModel.xml+file#xxxMetaModel.xmlfile-IDassignmentscheme
+
+The absolute ids are 2,000,000 + 1,000 * file_no + rid
+
+Here, as it is custom quality rule the level is **"client"** and we have chosen file_id **"1"**.
+
+So the absolute ids are between 2,001,000 and 2,001,999.
+
+We will use this id range both for metamodel and for quality rule ids.
+
+
+A custom category
++++++++++++++++++
+
+Then we need to choose a name for our custom category. This name should be globally unique and do not clash with other category names. 
+
+Here we choose : **MyCompany_COBOL_Rules**.
+
+
+This category is added to the COBOL programs, see  :ref:`mainframe_categories`.
+
+Doing a mistake and having the same category name in 2 different extensions will prevent those extensions to be installed on the same CAIP instance.
+
+
+Adding a new quality rule
+-------------------------
+
+For adding a new quality rule we need to add:
+
+* a metamodel property on the mainframe object type (on which the rule applies)
+* an implementation in extension SDK
+* a declaration in the master files
+
+
+Adding a property
+-----------------
+
+We add a property in our custom category, for that we need: 
+
+* a name (that should be unique inside the category)
+* a rid (that should be unique inside the metamodel file)
+* an INF_SUB_TYPE (that should be unique inside the metamodel file)
+
+By convention we set the lower range value for the INF_TYPE.
+
+This gives ::
+
+    <category name="MyCompany_COBOL_Rules" rid="0">
+        <description></description>
+        <!-- add new properties here, one for each quality rule -->
+        
+        <property name="paragraphRedefinition" type="integer" merge="sum" rid="0">
+            <description>Redefinition of paragraph</description>
+            <attribute name="ACCESS_APPVIEW" intValue="1"/>
+            <attribute name="ACCESS_CVS" intValue="1"/>
+            <attribute name="ACCESS_HTML" intValue="1"/>
+            <attribute name="INF_TYPE" intValue="2001000"/>
+            <attribute name="INF_SUB_TYPE" intValue="0"/>
+        </property>
+        
+    </category>
+
+
+Apply the formula to determine the absolute id value (2,000,000 + 1,000 * file_no + rid) : here the property id is 2001000.
+
+Keep that value in mind.
+
+
+Implementation in Python
+------------------------
+
+We will use :meth:`cast.analysers.Object.save_violation` to register a violation on some object at a given position in the code.
+
+The property name will be : "MyCompany_COBOL_Rules.paragraphRedefinition"
+
+See @todo
+
+
+Adding the rule in the master files
+-----------------------------------
+
+Master files are the xml files located in MasterFiles subfolder.
+
+Each one need to be updated to add a new quality rule.
+
+
+First We need a unique rule id.
+
+.. warning::
+    Rule id must be **even**.
+
+We start by choosing **2001000**, next one will be 2001002, etc...
+
+
+MetricsDirectory.xml
+++++++++++++++++++++
+
+This one contains the list of quality rules.
+
+It also contains some existing 'technical-criterion' to which rules should be added.
+
+Here we provide some classical 'technical-criterion', but some other exists.
+
+Here is what change ::
+
+    <metric id='2001000' type='quality-rule' originalName='Avoid redefining paragraph' active='true' detached='false' ignored='false' />
+
+
+
+IMPLQualityRules.xml
+++++++++++++++++++++
+
+This explains how the rule is calculated.
+
+Here we are in a property/scope mode.
+
+Here we need to choose a scope : this represent the set of objects checked by the rule. 
+
+Here we are checking every COBOL program, so we choose scope id 100. See see  :ref:`mainframe_scopes`.
+
+We have 
+
+* our rule id : 2001000
+* our property id : 2001000
+* our scope id : 100 
+
+::
+
+    <metric id='2001000' type='quality-rule' originalName='Avoid redefining paragraph' xxl='N/A' unify='N/A' executionLocation='local-central' scopeID='100' scopeLabel='NO LABEL' propertyID='2001000' associatedValueResultType='integer' failedChecksOperator1='count-distinct' failedChecksProcedure='DSS_DIAG_SCOPE_GENERIC_NUM' totalChecksProcedure='DSS_DIAG_TOTAL_GENERIC' consolidationLocalProcedure='DSS_FILTER_SCOPE' consolidationCentralProcedure='N/A' />
+
+
+See "Computing Settings tab" in https://doc.castsoftware.com/display/DOC83/CMS+-+Create+a+new+Quality+Rule.
+
+
+
+SPECThresholds.xml
+++++++++++++++++++
+
+This describe how we get a grade from a compliance ratio.
+
+::
+
+    <metric id="2001000" type="quality-rule" originalName="Avoid redefining paragraph" thresholdToGet1='50.0' thresholdToGet2='90.0' thresholdToGet3='95.0' thresholdToGet4='99.0' />
+
+See "Grade Thresholds tab" in https://doc.castsoftware.com/display/DOC83/CMS+-+Create+a+new+Quality+Rule.
+
+
+
+SPECContributors.xml
+++++++++++++++++++++
+
+This describe to which 'technical-criterion' the rule will contribute.
+
+::
+    
+    <metric id='66069' type='technical-criterion' originalName='Programming Practices - Unexpected Behavior' contributorId='2001000' contributorType='quality-rule' contributorOriginalName='2001000' critical='false' weight='5' />
+
+See "Grade Impacts tab" in https://doc.castsoftware.com/display/DOC83/CMS+-+Create+a+new+Quality+Rule.
+
+
+IMPLTechnologies.xml
+++++++++++++++++++++
+
+Rules are associated to one or several technologies.
+
+In this sample the technology is Cobol, so -4
+
+::
+
+    <metric id='2001000' type='quality-rule' originalName='Avoid redefining paragraph' filter='-4' filterLabel='Cobol' />
+
+See "Computing Settings tab" in https://doc.castsoftware.com/display/DOC83/CMS+-+Create+a+new+Quality+Rule.
+
+
+SPECDocumentation.xml
++++++++++++++++++++++
+
+This contains the various fields of documentation.
+
+See https://doc.castsoftware.com/display/DOC83/CMS+-+Create+a+new+Quality+Rule
+
+
+Compiling the master files
+--------------------------
+
+Once edited, you can compile the master files by running compile.bat *in a console* ran the folder of the extension.
+
+It will generate a folder named InstallScripts
+
+
+Done
+----
+
+That's it. Now you can test.
+ 
+
+
+Some other ways of writing quality rules
+========================================
+
+
+Those applies for some other ways of writing quality rules, some are deprecated. 
+
+
+Old way of writing quality rules
+--------------------------------
+
+For the implementation, two stored procedures are required:
+
+* A detail procedure to identify violations
+* A total procedure to compute the size of the test population
+
+The detail procedure will insert lines into DSS_METRIC_SCOPES representing the fact that an object violates a rule.
+
+Sample for the search of undocumented programs ::
+	
+	CREATE OR REPLACE FUNCTION DIAG_SCOPE_COBDOC004 (
+		I_SNAPSHOT_ID INT,		-- the metric snapshot id
+		I_METRIC_PARENT_ID INT,	-- the metric parent id
+		I_METRIC_ID INT,			-- the metric id
+		I_METRIC_CHILD_ID INT
+	)
+	returns INT
+	as
+	$body$
+	declare
+		   ERRORCODE	INT:=0;
+	Begin
+	     
+	--<<NAME>>DIAG_SCOPE_COBDOC004<</NAME>>
+	--<<COMMENT>> Template name   = UNDOCUMENTED. <</COMMENT>>
+	--<<COMMENT>> Diagnostic name = Avoid undocumented Programs. <</COMMENT>>
+	--<<COMMENT>> Definition      = Avoid undocumented Programs. <</COMMENT>>
+	--<<COMMENT>> Action          = Lists all Programs that have neither heading comments nor inline comments. <</COMMENT>>
+	--<<COMMENT>> Value           = 1. <</COMMENT>>
+		
+	  insert into DSS_METRIC_SCOPES 
+		(OBJECT_ID, METRIC_PARENT_ID, METRIC_ID, OBJECT_PARENT_ID, SNAPSHOT_ID, METRIC_NUM_VALUE, METRIC_OBJECT_ID, COMPUTE_VALUE)
+	  select T1.OBJECT_ID, I_METRIC_ID, I_METRIC_CHILD_ID, SC.MODULE_ID, I_SNAPSHOT_ID, 1, 0, 0
+	    from CTT_OBJECT_APPLICATIONS T1, DSSAPP_MODULES SC , ObjInf OI
+		where SC.TECHNO_TYPE					= -4   -- Technologic Cobol object
+		  and T1.APPLICATION_ID			= SC.MODULE_ID
+	      and T1.OBJECT_TYPE 				= 545 -- 'Cobol Program'
+		  and T1.PROPERTIES = 0 -- Application's Object
+		  and not exists ( select 1 
+		                     from DSS_OBJECT_EXCEPTIONS E
+				            where E.METRIC_ID	= I_METRIC_ID 
+					          and E.OBJECT_ID	= T1.OBJECT_ID 
+			              )
+	      and exists ( select 1 
+		                  from ObjInf T2
+					     where T2.IdObj = T1.OBJECT_ID
+	                       and T2.InfTyp = 114 and T2.InfSubTyp = 1 -- Number of heading comment lines
+						   and T2.InfVal = 0
+			           )
+		  and exists ( select 1
+		                  from ObjInf T3
+					     where T3.IdObj = T1.OBJECT_ID
+	                       and T3.InfTyp = 2 and T3.InfSubTyp = 0 -- Number of inner comment lines
+						   and T3.InfVal = 0
+			           )
+	     
+	and T1.OBJECT_ID = OI.IdObj and OI.InfTyp    = 1 and OI.InfSubTyp = 0 and OI.InfVal > 0 -- has Code line 
+	
+		  
+	 	;    
+	Return ERRORCODE;
+	End;
+	$body$
+	language 'plpgsql'
+	/
+
+
+A total procedure insert lines into DSS_METRIC_RESULTS that represent the count of scanned objects.
+
+For example the detail procedure for the undocumented programs ::
+
+	CREATE OR REPLACE FUNCTION DIAG_COBOL_ANA_PROGRAM_TOTAL (
+		I_SNAPSHOT_ID          INT,		-- the metric snapshot id
+		I_METRIC_PARENT_ID     INT,	-- the metric parent id
+		I_METRIC_ID            INT,			-- the metric id
+		I_METRIC_VALUE_INDEX   INT
+	)
+	returns int
+	as
+	$body$
+	declare
+		ERRORCODE	int;
+	Begin
+	    ERRORCODE  := 0;
+	--<<NAME>>DIAG_COBOL_ANA_PROGRAM_TOTAL<</NAME>>*/
+	--<<COMMENT>> Template name   = TOTAL. <</COMMENT>>
+	--<<COMMENT>> Definition      = Count of program programs. <</COMMENT>>
+	
+	    Insert Into DSS_METRIC_RESULTS
+			(METRIC_NUM_VALUE, METRIC_OBJECT_ID, OBJECT_ID, METRIC_ID, METRIC_VALUE_INDEX, SNAPSHOT_ID)
+	    select 
+			Count(T1.OBJECT_ID), 0, SC.OBJECT_PARENT_ID, I_METRIC_ID, I_METRIC_VALUE_INDEX, I_SNAPSHOT_ID 
+	    from 
+	    	CTT_OBJECT_APPLICATIONS T1, DSSAPP_MODULES MO, DSS_METRIC_SCOPES SC
+	    where                    
+		    SC.SNAPSHOT_ID             	= I_SNAPSHOT_ID
+		    and SC.METRIC_PARENT_ID    	= I_METRIC_PARENT_ID
+		    and SC.METRIC_ID           	= I_METRIC_ID
+	 		and SC.COMPUTE_VALUE		= 0
+			and MO.TECHNO_TYPE			= -4   -- Technologic Cobol object
+			and MO.MODULE_ID			= SC.OBJECT_ID
+	  		and T1.APPLICATION_ID      	= SC.OBJECT_ID
+			and T1.OBJECT_TYPE			=     545 -- 'Cobol Program'
+			and T1.PROPERTIES = 0 -- Application's Object
+			
+			and Not Exists 
+			(
+				select 1 
+				from 
+					DSS_OBJECT_EXCEPTIONS E
+				where 
+					E.METRIC_ID		= I_METRIC_ID 
+					and E.OBJECT_ID	= T1.OBJECT_ID 
+			)
+	    Group By SC.OBJECT_PARENT_ID, SC.OBJECT_ID
+		; 
+	Return ERRORCODE;
+	End;
+	$body$
+	language 'plpgsql'
+	/
+
+
+Those procedures uses the object model stored in the knowledge base. This uses objects and properties.
+
+One can use existing properties, and also use new properties (that the should be produced)
+
+
+
+Different ways of producing properties
+--------------------------------------
+
+The values of the properties may be produced using various ways :
+
+* through SDK using either :meth:`cast.analysers.Object.save_violation` or :meth:`cast.application.Object.save_property`
+* using Metric Assistant : http://doc.castsoftware.com/display/DOC80/Using+the+XXXCastMetrics.xml+file
+  by adding a xxxCastMEtrics.xml file in your extension
+
+
+Packaging
+=========
+
+
+Adding the rule manually to CMS
+-------------------------------
+
+This is a good start for testing 
+
+https://doc.castsoftware.com/display/DOC83/CMS+-+Create+a+new+Quality+Rule
+
+
+
+Enhancing dataflow quality rules
+================================
+
+Configuring dataflow
+--------------------
+
+For quality rules involving data flow, please see the data flow blackboxing documentation : http://doc.castsoftware.com/display/DOC82/User+Input+Security+-+configuring+blackbox+methods.

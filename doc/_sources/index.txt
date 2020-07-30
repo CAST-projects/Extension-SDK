@@ -47,6 +47,9 @@ More details
 :doc:`analysers_specif` 
 	Analyser level specific callbacks and analysis options access.
 
+:doc:`mainframe` 
+    Mainframe analyser level specifics.
+
 :doc:`debugging` 
 	Instructions on how to debug plugins from development environment.
 
@@ -83,6 +86,7 @@ Indices and tables
    application_level
    data_exchange
    analysers_specif
+   mainframe
    debugging
    writing_quality_rule
    code_reference

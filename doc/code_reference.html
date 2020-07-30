@@ -92,6 +92,7 @@
 <li class="toctree-l1"><a class="reference internal" href="application_level.html">Running code after analyzers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="data_exchange.html">Exchanging data between analysis level and application level</a></li>
 <li class="toctree-l1"><a class="reference internal" href="analysers_specif.html">Analysers specific events</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mainframe.html">Mainframe Analyser specificities</a></li>
 <li class="toctree-l1"><a class="reference internal" href="debugging.html">Debugging</a></li>
 <li class="toctree-l1"><a class="reference internal" href="writing_quality_rule.html">Writing quality rules</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="">API Reference</a><ul>
@@ -1453,6 +1454,72 @@ number of links</p>
 </div></blockquote>
 </dd></dl>
 
+<dl class="class">
+<dt id="cast.analysers.test.MainframeTestAnalysis">
+<em class="property">class </em><tt class="descclassname">cast.analysers.test.</tt><tt class="descname">MainframeTestAnalysis</tt><a class="headerlink" href="#cast.analysers.test.MainframeTestAnalysis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specialised case for Mainframe Analyser.</p>
+<p>Simplest way of use is :</p>
+<blockquote>
+<div><p>analysis = MainframeTestAnalysis()</p>
+<p>analysis.add_selection(&#8216;path to my php code&#8217;)</p>
+<p>analysis.run()</p>
+</div></blockquote>
+<dl class="method">
+<dt id="cast.analysers.test.MainframeTestAnalysis.set_cics_extensions">
+<tt class="descname">set_cics_extensions</tt><big>(</big><em>extensions</em><big>)</big><a class="headerlink" href="#cast.analysers.test.MainframeTestAnalysis.set_cics_extensions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Indicate the file extensions for CICS
+default values is &#8220;<em>.csd;</em>.bms&#8221;</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.test.MainframeTestAnalysis.set_cobol_extensions">
+<tt class="descname">set_cobol_extensions</tt><big>(</big><em>extensions</em><big>)</big><a class="headerlink" href="#cast.analysers.test.MainframeTestAnalysis.set_cobol_extensions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Indicate the file extensions for COBOL
+default values is &#8220;<em>.cob;</em>.cpy&#8221;</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.test.MainframeTestAnalysis.set_ims_extensions">
+<tt class="descname">set_ims_extensions</tt><big>(</big><em>extensions</em><big>)</big><a class="headerlink" href="#cast.analysers.test.MainframeTestAnalysis.set_ims_extensions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Indicate the file extensions for IMS
+default values is &#8220;<em>.psb;</em>.dbd&#8221;</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.test.MainframeTestAnalysis.set_jcl_extensions">
+<tt class="descname">set_jcl_extensions</tt><big>(</big><em>extensions</em><big>)</big><a class="headerlink" href="#cast.analysers.test.MainframeTestAnalysis.set_jcl_extensions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Indicate the file extensions for JCL
+default values is &#8220;<em>.jcl;</em>.prc&#8221;</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.test.MainframeTestAnalysis.set_keep_end_of_line">
+<tt class="descname">set_keep_end_of_line</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.test.MainframeTestAnalysis.set_keep_end_of_line" title="Permalink to this definition">¶</a></dt>
+<dd><p>By default, end of lines are truncated.
+Call this to keep end of line</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.test.MainframeTestAnalysis.set_mainframe_environment">
+<tt class="descname">set_mainframe_environment</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.test.MainframeTestAnalysis.set_mainframe_environment" title="Permalink to this definition">¶</a></dt>
+<dd><p>By default, we are not in mainframe environment (program names truncated to 8 chars)
+Call this to change to mainframe_environment.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.test.MainframeTestAnalysis.set_cobol_tabulation_length">
+<tt class="descname">set_cobol_tabulation_length</tt><big>(</big><em>length</em><big>)</big><a class="headerlink" href="#cast.analysers.test.MainframeTestAnalysis.set_cobol_tabulation_length" title="Permalink to this definition">¶</a></dt>
+<dd><p>Default is 4.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.test.MainframeTestAnalysis.set_starting_column">
+<tt class="descname">set_starting_column</tt><big>(</big><em>length</em><big>)</big><a class="headerlink" href="#cast.analysers.test.MainframeTestAnalysis.set_starting_column" title="Permalink to this definition">¶</a></dt>
+<dd><p>Default is 7.</p>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 </div>
 <div class="section" id="application-level">
@@ -2188,6 +2255,23 @@ But not programs.</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="cast.application.ObjectQuery.is_nosql_collection">
+<tt class="descname">is_nosql_collection</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.ObjectQuery.is_nosql_collection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Objects that are nosql collections (similar to table).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#cast.application.ObjectQuery" title="cast.application.ObjectQuery"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.ObjectQuery</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.6.7.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
 <dt id="cast.application.ObjectQuery.is_form">
 <tt class="descname">is_form</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.ObjectQuery.is_form" title="Permalink to this definition">¶</a></dt>
 <dd><p>Objects that are forms, controls and events.</p>
@@ -2535,6 +2619,15 @@ understanding the violation</li>
 <dt id="cast.application.Object.is_table">
 <tt class="descname">is_table</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.Object.is_table" title="Permalink to this definition">¶</a></dt>
 <dd><p>True when object is a database table or view.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.Object.is_nosql_collection">
+<tt class="descname">is_nosql_collection</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.Object.is_nosql_collection" title="Permalink to this definition">¶</a></dt>
+<dd><p>True when object is a nosql collection. Similar to a table.</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.6.7.</span></p>
+</div>
 </dd></dl>
 
 <dl class="method">

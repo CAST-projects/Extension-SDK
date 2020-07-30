@@ -1,0 +1,745 @@
+Mainframe Analyser specificities
+********************************
+
+.. note::
+    This documentation applies to CAIP >= 8.3.26 and com.castsoftware.mainframe >= 1.0.0-alpha1.
+
+
+.. toctree::
+   :maxdepth: 5
+
+
+Mainframe Extension
+===================
+
+
+.. autoclass:: cast.analysers.mainframe.Extension
+
+
+
+
+
+Events
+======
+
+Equivalence tree events
+-----------------------
+
+Extensions receive a tree though depth first traversal events start_<node> end_<node>.
+
+
+Compatibility over time
+^^^^^^^^^^^^^^^^^^^^^^^
+
+The AST is a partial one. What is guaranteed is 
+- the relative order of events
+- the number of occurrences of a node type under a given node    
+
+But we can add new nodes under a node.
+It means that in a future version we can add intermediate nodes or nodes with new kind.
+
+
+Accessing sub nodes
+^^^^^^^^^^^^^^^^^^^
+
+You can use :func:`cast.analyzers.mainframe.UnsavedObject.get_sub_nodes` that will resist future AST changes.
+
+Global events
+-------------
+
+.. autoclass:: cast.analysers.mainframe.Extension
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_analysis
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_analysis
+
+
+COBOL Program
+-------------
+
+.. autoclass:: cast.analysers.mainframe.Extension
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_program
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_program
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_division
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_division
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_section
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_section
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_paragraph
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_paragraph
+
+Data division
+^^^^^^^^^^^^^
+
+.. autoclass:: cast.analysers.mainframe.Extension
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_data
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_data
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_value
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_value
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_occurs_depending
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_occurs_depending
+
+
+Statements ACCEPT - EXIT
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. autoclass:: cast.analysers.mainframe.Extension
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_accept
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_accept
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_add
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_add
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_add_source
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_add_source
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_add_destination
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_add_destination
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_alter
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_alter
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_call
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_call
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_call_target
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_call_target
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_cancel
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_cancel
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_close
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_close
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_compute
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_compute
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_delete
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_delete
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_display
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_display
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_divide_by
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_divide_by
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_divide_into
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_divide_into
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_evaluate
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_evaluate
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_evaluate_expression
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_evaluate_expression
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_exec_cics
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_exec_cics
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_exec_dli
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_exec_dli
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_exec_sql
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_exec_sql
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_exit
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_exit
+
+Statements GOBACK - PERFORM
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. autoclass:: cast.analysers.mainframe.Extension
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_goback
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_goback
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_goto
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_goto
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_if
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_if
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_then
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_then
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_else
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_else
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_initialize
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_initialize
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_inspect
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_inspect
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_merge
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_merge
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_move
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_move
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_move_source
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_move_source
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_move_destination
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_move_destination
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_is_corresponding
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_is_corresponding
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_multiply
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_multiply
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_open
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_open
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_open_input
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_open_input
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_open_output
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_open_output
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_perform_procedure
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_perform_procedure
+
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_perform_inline
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_perform_inline
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_times
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_times
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_until
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_until
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_varying
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_varying
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_with_test_after
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_with_test_after
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_with_test_before
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_with_test_before
+
+
+Statements READ - WRITE
+^^^^^^^^^^^^^^^^^^^^^^^
+
+.. autoclass:: cast.analysers.mainframe.Extension
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_read
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_read
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_read_source
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_read_source
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_read_destination
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_read_destination
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_rewrite
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_rewrite
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_search
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_search
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_search_all
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_search_all
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_set
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_set
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_sort
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_sort
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_start
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_start
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_stop_run
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_stop_run
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_string
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_string
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_subtract
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_subtract
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_subtract_source
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_subtract_source
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_subtract_destination
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_subtract_destination
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_write
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_write
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_write_source
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_write_source
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_write_destination
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_write_destination
+
+
+Common sub nodes
+^^^^^^^^^^^^^^^^
+
+Those events/nodes can be found in several statements.
+
+.. autoclass:: cast.analysers.mainframe.Extension
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_when
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_when
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_when_expression
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_when_expression
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_using
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_using
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_giving
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_giving
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_from
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_from
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_through
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_through
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_filename
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_filename
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_output_procedure
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_output_procedure
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_input_procedure
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_input_procedure
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_at_end
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_at_end
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_not_at_end
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_not_at_end
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_at_end_of_page
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_at_end_of_page
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_not_at_end_of_page
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_not_at_end_of_page
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_invalid_key
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_invalid_key
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_not_invalid_key
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_not_invalid_key
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_on_exception
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_on_exception
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_not_on_exception
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_not_on_exception
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_on_overflow
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_on_overflow
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_not_on_overflow
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_not_on_overflow
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_on_size_error
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_on_size_error
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_not_on_size_error
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_not_on_size_error
+
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_procedure_name
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_procedure_name
+
+
+Expressions
+^^^^^^^^^^^
+
+.. autoclass:: cast.analysers.mainframe.Extension
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_string_literal
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_string_literal
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_integer_literal
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_integer_literal
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_boolean_literal
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_boolean_literal
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_identifier
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_identifier
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_arithmetic_expression
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_arithmetic_expression
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_relation_condition
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_relation_condition
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_logical_expression
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_logical_expression
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_other
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_other
+
+
+
+Specific objects
+================
+
+
+Some objects are saved in the knowledge base and some are not.
+
+.. autoclass:: cast.analysers.mainframe.SavedObject
+   :members: 
+
+For :
+
+* COBOL Program
+* COBOL Section
+* COBOL Paragraph
+
+
+.. autoclass:: cast.analysers.mainframe.UnsavedObject
+   :members: 
+
+
+Data
+----
+
+Data have a special API to access specific information such as PIC, OCCURS, ...
+
+Depending on the analysis options, data can be saved or not.
+
+.. autoclass:: cast.analysers.mainframe.SavedData
+   :members: 
+
+.. autoclass:: cast.analysers.mainframe.UnsavedData
+   :members: 
+
+
+AST Node types
+--------------
+
+The generic node
+
+.. autoclass:: cast.analysers.mainframe.Node
+   :show-inheritance:
+   :members: 
+
+
+Variable identifier represent usage of a data inside the code. Those identifiers are resolved 
+to the data declaration. When the data is unresolved, the resolution returns an empty list. In 
+normal case it return a list with the data resolvec, and when the data is ambiguous, it returns 
+all possible data.
+
+.. autoclass:: cast.analysers.mainframe.Identifier
+   :show-inheritance:
+   :members: 
+
+
+Procedure identifier represent a usage of a section or paragraph name in the code. Those are 
+resolved.
+
+.. autoclass:: cast.analysers.mainframe.ProcedureName
+   :show-inheritance:
+   :members: 
+
+
+Constants
+
+
+.. autoclass:: cast.analysers.mainframe.StringLiteral
+   :show-inheritance:
+   :members: 
+
+.. autoclass:: cast.analysers.mainframe.IntegerLiteral
+   :show-inheritance:
+   :members: 
+
+.. autoclass:: cast.analysers.mainframe.BooleanLiteral
+   :show-inheritance:
+   :members: 
+
+
+.. note::
+    Figurative constants come into those classes and the method get_name() will give the constant.
+    get_value() will give the interpreted value.
+
+
+Writing tests
+=============
+
+Use :
+
+.. autoclass:: cast.analysers.test.MainframeTestAnalysis
+   :show-inheritance:
+   :members: 
+   :noindex:    
+
+
+Sample of a test :: 
+
+
+    import unittest
+    from cast.analysers.test import MainframeTestAnalysis
+    
+    
+    
+    class Test(unittest.TestCase):
+        
+        def test_ok1(self):
+            
+            analysis = MainframeTestAnalysis()
+            analysis.add_dependency(r'C:\ProgramData\CAST\CAST\Extensions\com.castsoftware.mainframe.1.0.0-alpha1')
+            analysis.add_selection('binary_depending/pgmok1.cob')
+            analysis.run()
+            
+            program = analysis.get_object_by_name('PGM1', 'CAST_COBOL_SavedProgram')
+            self.assertTrue(program)
+            self.assertFalse(analysis.get_violations(program, 'CAST_COBOL_SavedProgram.useBinaryForDepending'))
+
+
+    if __name__ == '__main__':
+        unittest.main()
+
+
+.. note::
+    You need to add a dependency to the folder containing com.castsoftaware.mainframe, for example ::
+        
+        analysis.add_dependency(r'C:\ProgramData\CAST\CAST\Extensions\com.castsoftware.mainframe.1.0.0-alpha1')
+
+    For that you need to have downloaded the extension through CAST ExtensionDowloader:
+    see https://doc.castsoftware.com/display/EXTEND/CAST+Extension+Downloader
+
+
+.. _mainframe_categories:
+
+Categories and types for quality rules
+======================================
+
+For adding a quality rule on 
+ 
+* COBOL programs: Category `CAST_MetricAssistant_WithMetrics_Cobol`
+* COBOL Copybook: Type `CAST_COBOL_Copybook`
+
+
+
+.. _mainframe_scopes:
+
+Quality rule scopes
+===================
+
+Existing quality rule scopes are :
+
++-----+-----------------------------------------------+
+| 100 | COBOL programs                                |
++-----+-----------------------------------------------+
+| 110 | COBOL programs that contains EXEC CICS Macros |
++-----+-----------------------------------------------+
+| 120 | COBOL programs that contains EXEC SQL         |
++-----+-----------------------------------------------+
+| 140 | COBOL Copybooks                               |
++-----+-----------------------------------------------+
+
+Mainframe technologies
+======================
+
+Values for technology to be used in IMPLTechnologies.xml for filter value
+
++-------+----+
+| Cobol | -4 |
++-------+----+
