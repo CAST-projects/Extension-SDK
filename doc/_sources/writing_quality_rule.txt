@@ -7,8 +7,8 @@ Tutorial for COBOL
 This tutorial applies to **COBOL** but can be translated to other technologies.
 
 
-Stater kit
-----------
+Starter kit
+-----------
 
 A sample project is available here : 
 https://github.com/CAST-projects/Extension-SDK/tree/master/samples/analyzer_level/mainframe/mainframe.quality_rule
