@@ -2,4 +2,5 @@
 <root>
     <metric id='66069' type='technical-criterion' originalName='Programming Practices - Unexpected Behavior'             contributorId='2001000' contributorType='quality-rule' contributorOriginalName='2001000'                              critical='false' weight='5' />
     <metric id='66069' type='technical-criterion' originalName='Programming Practices - Unexpected Behavior'             contributorId='2001002' contributorType='quality-rule' contributorOriginalName='2001002'                              critical='false' weight='5' />
+    <metric id='66069' type='technical-criterion' originalName='Programming Practices - Unexpected Behavior'             contributorId='2001004' contributorType='quality-rule' contributorOriginalName='2001004'                              critical='false' weight='5' />
 </root>

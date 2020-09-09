@@ -30,5 +30,6 @@
     -->
     <metric id='2001000' type='quality-rule' originalName='Avoid redefining paragraph' active='true' detached='false' ignored='false' />
     <metric id='2001002' type='quality-rule' originalName='Avoid occurs dependending on non binary data' active='true' detached='false' ignored='false' />
+    <metric id='2001004' type='quality-rule' originalName='Section should be terminated by an empty paragraph' active='true' detached='false' ignored='false' />
     
 </root>

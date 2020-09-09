@@ -84,5 +84,42 @@ P1.
   </metric>
 
 
+  <metric id="2001004" type="quality-rule" originalName="Section should be terminated by an empty paragraph" section="description">
+    <english>This rule verifies that each section is terminated by an empty paragraph.</english>
+  </metric>
+  <metric id="2001004" type="quality-rule" originalName="Section should be terminated by an empty paragraph" section="name">
+    <english>Section should be terminated by an empty paragraph</english>
+  </metric>
+  <metric id="2001004" type="quality-rule" originalName="Section should be terminated by an empty paragraph" section="rationale">
+    <english>??</english>
+  </metric>
+  <metric id="2001000" type="quality-rule" originalName="Section should be terminated by an empty paragraph" section="reference">
+    <english>http://www.google.com</english>
+  </metric>
+  <metric id="2001004" type="quality-rule" originalName="Section should be terminated by an empty paragraph" section="remediation">
+    <english>??</english>
+  </metric>
+  <metric id="2001004" type="quality-rule" originalName="Section should be terminated by an empty paragraph" section="remediationSample">
+    <english>
+       S1 SECTION.
+         CALL TOTO.
+</english>
+  </metric>
+  <metric id="2001004" type="quality-rule" originalName="Section should be terminated by an empty paragraph" section="output">
+    <english>Associated to each violation, the following information is provided:
+- The number of violation occurences
+- Bookmarks for violation occurences found in the source code</english>
+  </metric>
+  <metric id="2001004" type="quality-rule" originalName="Section should be terminated by an empty paragraph" section="sample">
+    <english>
+       S1 SECTION.
+         CALL TOTO.
+       S1_END.
+         EXIT.
+</english>
+  </metric>
+  <metric id="2001004" type="quality-rule" originalName="Section should be terminated by an empty paragraph" section="total">
+    <english>Number of Cobol programs</english>
+  </metric>
 
 </root>

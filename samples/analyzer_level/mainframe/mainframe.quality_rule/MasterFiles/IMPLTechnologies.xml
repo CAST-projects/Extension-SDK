@@ -2,4 +2,5 @@
 <root>
     <metric id='2001000' type='quality-rule' originalName='Avoid redefining paragraph'                           filter='-4' filterLabel='Cobol' />
     <metric id='2001002' type='quality-rule' originalName='Avoid occurs dependending on non binary data'         filter='-4' filterLabel='Cobol' />
+    <metric id='2001004' type='quality-rule' originalName='Section should be terminated by an empty paragraph'         filter='-4' filterLabel='Cobol' />
 </root>
