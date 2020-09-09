@@ -26,7 +26,9 @@
     
     <!-- 
     Ids are between 2001000 and 2001999
+    Increment by 2
     -->
     <metric id='2001000' type='quality-rule' originalName='Avoid redefining paragraph' active='true' detached='false' ignored='false' />
+    <metric id='2001002' type='quality-rule' originalName='Avoid occurs dependending on non binary data' active='true' detached='false' ignored='false' />
     
 </root>

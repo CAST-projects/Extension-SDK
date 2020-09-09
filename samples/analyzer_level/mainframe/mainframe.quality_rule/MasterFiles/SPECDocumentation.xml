@@ -40,5 +40,49 @@ P1.
   <metric id="2001000" type="quality-rule" originalName="Avoid redefining paragraph" section="total">
     <english>Number of Cobol programs</english>
   </metric>
+  
+  
+
+  <metric id="2001002" type="quality-rule" originalName="Avoid occurs dependending on non binary data" section="description">
+    <english>This rule verifies that OCCURS DEPENDING uses binary data.</english>
+  </metric>
+  <metric id="2001002" type="quality-rule" originalName="Avoid occurs dependending on non binary data" section="name">
+    <english>Avoid occurs dependending on non binary data</english>
+  </metric>
+  <metric id="2001002" type="quality-rule" originalName="Avoid occurs dependending on non binary data" section="rationale">
+    <english>??</english>
+  </metric>
+  <metric id="2001000" type="quality-rule" originalName="Avoid occurs dependending on non binary data" section="reference">
+    <english>http://www.google.com</english>
+  </metric>
+  <metric id="2001002" type="quality-rule" originalName="Avoid occurs dependending on non binary data" section="remediation">
+    <english>??</english>
+  </metric>
+  <metric id="2001002" type="quality-rule" originalName="Avoid occurs dependending on non binary data" section="remediationSample">
+    <english>
+         05 TABLE_SIZE PIC 9(4).
+         05 MY_TABLE OCCURS 1 TO 10
+                        DEPENDING ON TABLE_SIZE
+                        PIC X(10).
+</english>
+  </metric>
+  <metric id="2001002" type="quality-rule" originalName="Avoid occurs dependending on non binary data" section="output">
+    <english>Associated to each violation, the following information is provided:
+- The number of violation occurences
+- Bookmarks for violation occurences found in the source code</english>
+  </metric>
+  <metric id="2001002" type="quality-rule" originalName="Avoid occurs dependending on non binary data" section="sample">
+    <english>
+         05 TABLE_SIZE PIC 9(4) BINARY.
+         05 MY_TABLE OCCURS 1 TO 10
+                        DEPENDING ON TABLE_SIZE
+                        PIC X(10).
+</english>
+  </metric>
+  <metric id="2001002" type="quality-rule" originalName="Avoid occurs dependending on non binary data" section="total">
+    <english>Number of Cobol programs</english>
+  </metric>
+
+
 
 </root>
