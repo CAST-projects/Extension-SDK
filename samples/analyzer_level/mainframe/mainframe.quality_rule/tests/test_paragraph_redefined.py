@@ -8,7 +8,7 @@ class Test(unittest.TestCase):
     def test_ok1(self):
         
         analysis = MainframeTestAnalysis()
-        analysis.add_dependency(r'C:\ProgramData\CAST\CAST\Extensions\com.castsoftware.mainframe.1.0.0-alpha01000151')
+        analysis.add_dependency(r'C:\ProgramData\CAST\CAST\Extensions\com.castsoftware.mainframe.1.0.0-alpha1')
         analysis.add_selection('paragraph_redefined/pgmok1.cob')
 #         analysis.set_verbose()
         analysis.run()
@@ -20,7 +20,7 @@ class Test(unittest.TestCase):
     def test_ok2(self):
         
         analysis = MainframeTestAnalysis()
-        analysis.add_dependency(r'C:\ProgramData\CAST\CAST\Extensions\com.castsoftware.mainframe.1.0.0-alpha01000151')
+        analysis.add_dependency(r'C:\ProgramData\CAST\CAST\Extensions\com.castsoftware.mainframe.1.0.0-alpha1')
         analysis.add_selection('paragraph_redefined/pgmok2.cob')
 #         analysis.set_verbose()
         analysis.run()
@@ -32,7 +32,7 @@ class Test(unittest.TestCase):
     def test_ko1(self):
         
         analysis = MainframeTestAnalysis()
-        analysis.add_dependency(r'C:\ProgramData\CAST\CAST\Extensions\com.castsoftware.mainframe.1.0.0-alpha01000151')
+        analysis.add_dependency(r'C:\ProgramData\CAST\CAST\Extensions\com.castsoftware.mainframe.1.0.0-alpha1')
         analysis.add_selection('paragraph_redefined/pgmko1.cob')
 #         analysis.set_verbose()
         analysis.run()
@@ -44,7 +44,7 @@ class Test(unittest.TestCase):
     def test_ko2(self):
         
         analysis = MainframeTestAnalysis()
-        analysis.add_dependency(r'C:\ProgramData\CAST\CAST\Extensions\com.castsoftware.mainframe.1.0.0-alpha01000151')
+        analysis.add_dependency(r'C:\ProgramData\CAST\CAST\Extensions\com.castsoftware.mainframe.1.0.0-alpha1')
         analysis.add_selection('paragraph_redefined/pgmko2.cob')
 #         analysis.set_verbose()
         analysis.run()
