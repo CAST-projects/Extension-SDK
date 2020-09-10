@@ -27,7 +27,19 @@ class Test(unittest.TestCase):
         
         program = analysis.get_object_by_name('PGM1', 'CAST_COBOL_SavedProgram')
         self.assertTrue(program)
-        self.assertTrue(analysis.get_violations(program, 'MyCompany_COBOL_Rules.useBinaryForDepending'))
+        
+        # list of violations for the program/rule 
+        violations = analysis.get_violations(program, 'MyCompany_COBOL_Rules.useBinaryForDepending')
+        self.assertEqual(1, len(violations))
+        
+        # the first violation
+        violation = violations[0]
+        
+#         print(violation.position)
+
+        # the data declaration containing the occurs depending on a non binary data 
+        # starts at line 6
+        self.assertEqual(6, violation.position.begin_line)
         
 
     
