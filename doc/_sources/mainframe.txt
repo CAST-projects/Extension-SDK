@@ -64,6 +64,10 @@ COBOL Program
     .. automethod:: cast.analysers.mainframe.Extension.end_program
 
 
+    .. automethod:: cast.analysers.mainframe.Extension.start_nested_program
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_nested_program
+
     .. automethod:: cast.analysers.mainframe.Extension.start_division
 
     .. automethod:: cast.analysers.mainframe.Extension.end_division
@@ -78,10 +82,70 @@ COBOL Program
 
     .. automethod:: cast.analysers.mainframe.Extension.end_paragraph
 
+
+Environment division
+^^^^^^^^^^^^^^^^^^^^
+
+.. autoclass:: cast.analysers.mainframe.Extension
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_with_debugging_mode
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_with_debugging_mode
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_select
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_select
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_assign_to
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_assign_to
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_file_status
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_file_status
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_external_file_name
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_external_file_name
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_organization_is_relative
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_organization_is_relative
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_organization_is_indexed
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_organization_is_indexed
+    
+    .. automethod:: cast.analysers.mainframe.Extension.start_organization_is_sequential
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_organization_is_sequential
+
+
 Data division
 ^^^^^^^^^^^^^
 
 .. autoclass:: cast.analysers.mainframe.Extension
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_file_description
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_file_description
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_sort_description
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_sort_description
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_block_contains
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_block_contains
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_records
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_records
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_characters
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_characters
 
     .. automethod:: cast.analysers.mainframe.Extension.start_data
 
@@ -96,6 +160,24 @@ Data division
     .. automethod:: cast.analysers.mainframe.Extension.start_occurs_depending
 
     .. automethod:: cast.analysers.mainframe.Extension.end_occurs_depending
+
+
+Procedure Division
+^^^^^^^^^^^^^^^^^^
+
+.. autoclass:: cast.analysers.mainframe.Extension
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_declaratives
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_declaratives
+    
+    .. automethod:: cast.analysers.mainframe.Extension.start_declaratives_section
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_declaratives_section
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_declaratives_paragraph
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_declaratives_paragraph
 
 
 Statements ACCEPT - EXIT
@@ -183,6 +265,35 @@ Statements ACCEPT - EXIT
     .. automethod:: cast.analysers.mainframe.Extension.end_evaluate_expression
 
 
+    .. automethod:: cast.analysers.mainframe.Extension.start_examine
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_examine_tayling
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_examine_tallying
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_examine_replacing
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_examine_replacing
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_examine_all
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_examine_all
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_examine_leading
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_examine_leading
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_examine_until_first
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_examine_until_first
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_examine_first
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_examine_first
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_examine
+
+
     .. automethod:: cast.analysers.mainframe.Extension.start_exec_cics
 
     .. automethod:: cast.analysers.mainframe.Extension.end_exec_cics
@@ -196,6 +307,19 @@ Statements ACCEPT - EXIT
     .. automethod:: cast.analysers.mainframe.Extension.start_exec_sql
 
     .. automethod:: cast.analysers.mainframe.Extension.end_exec_sql
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_exhibit
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_exhibit_named
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_exhibit_named
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_exhibit_changed
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_exhibit_changed
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_exhibit
 
 
     .. automethod:: cast.analysers.mainframe.Extension.start_exit
@@ -270,6 +394,20 @@ Statements GOBACK - PERFORM
     .. automethod:: cast.analysers.mainframe.Extension.start_multiply
 
     .. automethod:: cast.analysers.mainframe.Extension.end_multiply
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_note
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_note
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_on
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_every
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_every
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_on
 
 
     .. automethod:: cast.analysers.mainframe.Extension.start_open
@@ -396,6 +534,11 @@ Statements READ - WRITE
     .. automethod:: cast.analysers.mainframe.Extension.start_subtract_destination
 
     .. automethod:: cast.analysers.mainframe.Extension.end_subtract_destination
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_transform
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_transform
 
 
     .. automethod:: cast.analysers.mainframe.Extension.start_write

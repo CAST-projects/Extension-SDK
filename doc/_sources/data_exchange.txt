@@ -45,7 +45,7 @@ that will return each intermediate opened file one by one::
     
         def end_application(self, application):
         
-            for f in self.get_intermediate_files("file.txt")
+            for f in self.get_intermediate_files("file.txt"):
                 # should print hello world! to log
                 logging.info(f.read())
 
