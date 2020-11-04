@@ -2,7 +2,7 @@ Mainframe Analyser specificities
 ********************************
 
 .. note::
-    This documentation applies to CAIP >= 8.3.26 and com.castsoftware.mainframe >= 1.0.0-alpha1.
+    This documentation applies to CAIP >= 8.3.26 and com.castsoftware.mainframe >= 1.0.0-alpha2.
 
 
 .. toctree::
