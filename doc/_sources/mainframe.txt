@@ -698,6 +698,14 @@ Expressions
 
     .. automethod:: cast.analysers.mainframe.Extension.end_identifier
 
+    .. automethod:: cast.analysers.mainframe.Extension.start_array_access
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_array_access
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_position_length
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_position_length
+
 
     .. automethod:: cast.analysers.mainframe.Extension.start_arithmetic_expression
 

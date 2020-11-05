@@ -4137,6 +4137,82 @@ Can be present in
 </dd></dl>
 
 <dl class="method">
+<dt id="cast.analysers.mainframe.Extension.start_array_access">
+<tt class="descname">start_array_access</tt><big>(</big><em>expression</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_array_access" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>expression</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type expression:cast.analyzer.mainframe.Node</p>
+<p>A(I)
+First child is A and second child is I.</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.0-alpha2.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.end_array_access">
+<tt class="descname">end_array_access</tt><big>(</big><em>expression</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.end_array_access" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>expression</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type expression:cast.analyzer.mainframe.Node</p>
+<p>A(I)
+First child is A and second child is I.</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.0-alpha2.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.start_position_length">
+<tt class="descname">start_position_length</tt><big>(</big><em>expression</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_position_length" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>expression</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type expression:cast.analyzer.mainframe.Node</p>
+<p>A(I:3)</p>
+<p>First child is A, second child I and third child is 3.</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.0-alpha2.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.end_position_length">
+<tt class="descname">end_position_length</tt><big>(</big><em>expression</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.end_position_length" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>expression</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type expression:cast.analyzer.mainframe.Node</p>
+<p>A(I:3)</p>
+<p>First child is A, second child I and third child is 3.</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.0-alpha2.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
 <dt id="cast.analysers.mainframe.Extension.start_arithmetic_expression">
 <tt class="descname">start_arithmetic_expression</tt><big>(</big><em>expression</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_arithmetic_expression" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
