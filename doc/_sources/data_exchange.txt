@@ -13,7 +13,7 @@ During analysis by calling :func:`cast.analysers.AnalysisLevelExtension.get_inte
 
     def MyExtension(cast.analysers.jee.Extension):
         
-        def start_alaysis(self, options):
+        def start_analysis(self, options):
             
             f = self.get_intermediate_file("file.txt")
             f.write('hello world')

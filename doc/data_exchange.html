@@ -153,7 +153,7 @@ During end_analysis those files can be read in order to perform a global operati
 <p>During analysis by calling <tt class="xref py py-func docutils literal"><span class="pre">cast.analysers.AnalysisLevelExtension.get_intermediate_file()</span></tt>:</p>
 <div class="highlight-python"><div class="highlight"><pre>def MyExtension(cast.analysers.jee.Extension):
 
-    def start_alaysis(self, options):
+    def start_analysis(self, options):
 
         f = self.get_intermediate_file(&quot;file.txt&quot;)
         f.write(&#39;hello world&#39;)

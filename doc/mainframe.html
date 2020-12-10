@@ -107,7 +107,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#procedure-division">Procedure Division</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#statements-accept-exit">Statements ACCEPT - EXIT</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#statements-goback-perform">Statements GOBACK - PERFORM</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#statements-read-write">Statements READ - WRITE</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#statements-process-write">Statements PROCESS - WRITE</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#common-sub-nodes">Common sub nodes</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#expressions">Expressions</a></li>
 </ul>
@@ -178,7 +178,7 @@
 <h1>Mainframe Analyser specificities<a class="headerlink" href="#mainframe-analyser-specificities" title="Permalink to this headline">¶</a></h1>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">This documentation applies to CAIP &gt;= 8.3.26 and com.castsoftware.mainframe &gt;= 1.0.0-alpha2.</p>
+<p class="last">This documentation applies to CAIP &gt;= 8.3.26 and com.castsoftware.mainframe &gt;= 1.0.0-alpha3.</p>
 </div>
 <div class="toctree-wrapper compound">
 <ul class="simple">
@@ -926,6 +926,74 @@ BLOCK CONTAINS ZERO TO 10 CHARACTERS first child is integer_literal for ZERO, se
 <tt class="xref py py-class docutils literal"><span class="pre">cast.analyzers.mainframe.UnsavedData</span></tt></p>
 </dd></dl>
 
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.start_redefines">
+<tt class="descname">start_redefines</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_redefines" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called at the beginning of a REDEFINES ...</p>
+<p>node is either of type 
+<tt class="xref py py-class docutils literal"><span class="pre">cast.analyzers.mainframe.SavedData</span></tt> or
+<tt class="xref py py-class docutils literal"><span class="pre">cast.analyzers.mainframe.UnsavedData</span></tt></p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.0-alpha3.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.end_redefines">
+<tt class="descname">end_redefines</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.end_redefines" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called at the end of a REDEFINES ...</p>
+<p>node is either of type 
+<tt class="xref py py-class docutils literal"><span class="pre">cast.analyzers.mainframe.SavedData</span></tt> or
+<tt class="xref py py-class docutils literal"><span class="pre">cast.analyzers.mainframe.UnsavedData</span></tt></p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.0-alpha3.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.start_indexed_by">
+<tt class="descname">start_indexed_by</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_indexed_by" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called at the beginning of a INDEXED BY ...</p>
+<p>node is either of type 
+<tt class="xref py py-class docutils literal"><span class="pre">cast.analyzers.mainframe.SavedData</span></tt> or
+<tt class="xref py py-class docutils literal"><span class="pre">cast.analyzers.mainframe.UnsavedData</span></tt></p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.0-alpha3.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.end_indexed_by">
+<tt class="descname">end_indexed_by</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.end_indexed_by" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called at the end of a INDEXED BY ...</p>
+<p>node is either of type 
+<tt class="xref py py-class docutils literal"><span class="pre">cast.analyzers.mainframe.SavedData</span></tt> or
+<tt class="xref py py-class docutils literal"><span class="pre">cast.analyzers.mainframe.UnsavedData</span></tt></p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.0-alpha3.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.start_index">
+<tt class="descname">start_index</tt><big>(</big><em>index</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called on an index.
+index is of type <tt class="xref py py-class docutils literal"><span class="pre">cast.analyzers.mainframe.Index</span></tt></p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.0-alpha3.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.end_index">
+<tt class="descname">end_index</tt><big>(</big><em>index</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.end_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called on an index.
+index is of type <tt class="xref py py-class docutils literal"><span class="pre">cast.analyzers.mainframe.Index</span></tt></p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.0-alpha3.</span></p>
+</div>
+</dd></dl>
+
 </dd></dl>
 
 </div>
@@ -1344,6 +1412,52 @@ BLOCK CONTAINS ZERO TO 10 CHARACTERS first child is integer_literal for ZERO, se
 </tbody>
 </table>
 <p>&#64;type compute:Node</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.start_copy">
+<tt class="descname">start_copy</tt><big>(</big><em>close</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_copy" title="Permalink to this definition">¶</a></dt>
+<dd><p>COPY statement.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">This node is available only when the copybook has not been found, 
+otherwise the code is expansed.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>close</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type close:Node</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.0-alpha3.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.end_copy">
+<tt class="descname">end_copy</tt><big>(</big><em>close</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.end_copy" title="Permalink to this definition">¶</a></dt>
+<dd><p>COPY statement.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">This node is available only when the copybook has not been found, 
+otherwise the code is expansed.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>close</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type close:Node</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.0-alpha3.</span></p>
+</div>
 </dd></dl>
 
 <dl class="method">
@@ -2793,12 +2907,48 @@ Children: identifiers</p>
 </dd></dl>
 
 </div>
-<div class="section" id="statements-read-write">
-<h4>Statements READ - WRITE<a class="headerlink" href="#statements-read-write" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="statements-process-write">
+<h4>Statements PROCESS - WRITE<a class="headerlink" href="#statements-process-write" title="Permalink to this headline">¶</a></h4>
 <dl class="class">
 <dt>
 <em class="property">class </em><tt class="descclassname">cast.analysers.mainframe.</tt><tt class="descname">Extension</tt></dt>
 <dd><p>Extension points for Mainframe analyzer.</p>
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.start_process">
+<tt class="descname">start_process</tt><big>(</big><em>close</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_process" title="Permalink to this definition">¶</a></dt>
+<dd><p>PROCESS/CBL statement.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>close</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type close:Node</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.0-alpha3.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.end_process">
+<tt class="descname">end_process</tt><big>(</big><em>close</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.end_process" title="Permalink to this definition">¶</a></dt>
+<dd><p>PROCESS/CBL statement.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>close</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type close:Node</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.0-alpha3.</span></p>
+</div>
+</dd></dl>
+
 <dl class="method">
 <dt id="cast.analysers.mainframe.Extension.start_read">
 <tt class="descname">start_read</tt><big>(</big><em>_read</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_read" title="Permalink to this definition">¶</a></dt>
@@ -2887,6 +3037,78 @@ Children: identifiers</p>
 </tbody>
 </table>
 <p>&#64;type _read:Node</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.start_ready_trace">
+<tt class="descname">start_ready_trace</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_ready_trace" title="Permalink to this definition">¶</a></dt>
+<dd><p>READY TRACE statement</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type node:Node</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.0-alpha3.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.end_ready_trace">
+<tt class="descname">end_ready_trace</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.end_ready_trace" title="Permalink to this definition">¶</a></dt>
+<dd><p>READY TRACE statement</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type node:Node</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.0-alpha3.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.start_reset_trace">
+<tt class="descname">start_reset_trace</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_reset_trace" title="Permalink to this definition">¶</a></dt>
+<dd><p>RESET TRACE statement</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type node:Node</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.0-alpha3.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.end_reset_trace">
+<tt class="descname">end_reset_trace</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.end_reset_trace" title="Permalink to this definition">¶</a></dt>
+<dd><p>RESET TRACE statement</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type node:Node</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.0-alpha3.</span></p>
+</div>
 </dd></dl>
 
 <dl class="method">
@@ -3443,6 +3665,114 @@ Children: identifiers</p>
 </tbody>
 </table>
 <p>&#64;type node:Node</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.start_by_reference">
+<tt class="descname">start_by_reference</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_by_reference" title="Permalink to this definition">¶</a></dt>
+<dd><p>BY REFERENCE ... clause.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type node:Node</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.0-alpha3.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.end_by_reference">
+<tt class="descname">end_by_reference</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.end_by_reference" title="Permalink to this definition">¶</a></dt>
+<dd><p>BY REFERENCE ... clause.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type node:Node</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.0-alpha3.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.start_by_value">
+<tt class="descname">start_by_value</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_by_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>BY VALUE ... clause.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type node:Node</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.0-alpha3.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.end_by_value">
+<tt class="descname">end_by_value</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.end_by_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>BY VALUE ... clause.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type node:Node</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.0-alpha3.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.start_by_content">
+<tt class="descname">start_by_content</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_by_content" title="Permalink to this definition">¶</a></dt>
+<dd><p>BY CONTENT ... clause.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type node:Node</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.0-alpha3.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.end_by_content">
+<tt class="descname">end_by_content</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.end_by_content" title="Permalink to this definition">¶</a></dt>
+<dd><p>BY CONTENT ... clause.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type node:Node</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.0-alpha3.</span></p>
+</div>
 </dd></dl>
 
 <dl class="method">
@@ -4329,6 +4659,78 @@ First child is A and second child is I.</p>
 <p>&#64;type other:cast.analyzer.mainframe.Node</p>
 </dd></dl>
 
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.start_address_of">
+<tt class="descname">start_address_of</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_address_of" title="Permalink to this definition">¶</a></dt>
+<dd><p>ADDRESS OF ... clause.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type node:Node</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.0-alpha3.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.end_address_of">
+<tt class="descname">end_address_of</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.end_address_of" title="Permalink to this definition">¶</a></dt>
+<dd><p>ADDRESS OF ... clause.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type node:Node</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.0-alpha3.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.start_length_of">
+<tt class="descname">start_length_of</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_length_of" title="Permalink to this definition">¶</a></dt>
+<dd><p>LENGTH OF ... clause.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type node:Node</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.0-alpha3.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.end_length_of">
+<tt class="descname">end_length_of</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.end_length_of" title="Permalink to this definition">¶</a></dt>
+<dd><p>LENGTH OF ... clause.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type node:Node</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.0-alpha3.</span></p>
+</div>
+</dd></dl>
+
 </dd></dl>
 
 </div>
@@ -4512,6 +4914,28 @@ Stops recursion on :
 <em class="property">class </em><tt class="descclassname">cast.analysers.mainframe.</tt><tt class="descname">SavedData</tt><a class="headerlink" href="#cast.analysers.mainframe.SavedData" title="Permalink to this definition">¶</a></dt>
 <dd><p>A COBOL data element that is saved.</p>
 <dl class="method">
+<dt id="cast.analysers.mainframe.SavedData.get_level">
+<tt class="descname">get_level</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.SavedData.get_level" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the level of the data.
+For example</p>
+<div class="highlight-python"><div class="highlight"><pre>01 VAR PIC X(10).
+--&gt;  1
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.0-alpha3.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
 <dt id="cast.analysers.mainframe.SavedData.get_picture">
 <tt class="descname">get_picture</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.SavedData.get_picture" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the PICTURE value of the data.
@@ -4680,6 +5104,28 @@ For example</p>
 <em class="property">class </em><tt class="descclassname">cast.analysers.mainframe.</tt><tt class="descname">UnsavedData</tt><a class="headerlink" href="#cast.analysers.mainframe.UnsavedData" title="Permalink to this definition">¶</a></dt>
 <dd><p>A COBOL data element that is not saved.</p>
 <dl class="method">
+<dt id="cast.analysers.mainframe.UnsavedData.get_level">
+<tt class="descname">get_level</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.UnsavedData.get_level" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the level of the data.
+For example</p>
+<div class="highlight-python"><div class="highlight"><pre>01 VAR PIC X(10).
+--&gt;  1
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.0-alpha3.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
 <dt id="cast.analysers.mainframe.UnsavedData.get_picture">
 <tt class="descname">get_picture</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.UnsavedData.get_picture" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the PICTURE value of the data.
@@ -4842,6 +5288,16 @@ For example</p>
 
 </dd></dl>
 
+<p>Index have their own type</p>
+<dl class="class">
+<dt id="cast.analysers.mainframe.Index">
+<em class="property">class </em><tt class="descclassname">cast.analysers.mainframe.</tt><tt class="descname">Index</tt><a class="headerlink" href="#cast.analysers.mainframe.Index" title="Permalink to this definition">¶</a></dt>
+<dd><p>A COBOL Index.</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.0-alpha3.</span></p>
+</div>
+</dd></dl>
+
 </div>
 <div class="section" id="ast-node-types">
 <h3>AST Node types<a class="headerlink" href="#ast-node-types" title="Permalink to this headline">¶</a></h3>
@@ -4879,7 +5335,7 @@ all possible data.</p>
 <dl class="method">
 <dt id="cast.analysers.mainframe.Identifier.get_resolved_datas">
 <tt class="descname">get_resolved_datas</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Identifier.get_resolved_datas" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the list of data it points to, generally only one data.
+<dd><p>Returns the list of data it points to, generally only one data or index.
 For example</p>
 <div class="highlight-python"><div class="highlight"><pre>01 VAR PIC X.           &lt;-- the data
 ...
