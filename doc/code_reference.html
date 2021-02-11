@@ -1267,14 +1267,14 @@ Path relative to python unit test file are accepted.</p>
 
 <dl class="method">
 <dt id="cast.analysers.test.TestAnalysis.add_database_table">
-<tt class="descname">add_database_table</tt><big>(</big><em>table_name</em>, <em>technology</em><big>)</big><a class="headerlink" href="#cast.analysers.test.TestAnalysis.add_database_table" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">add_database_table</tt><big>(</big><em>name</em>, <em>technology</em><big>)</big><a class="headerlink" href="#cast.analysers.test.TestAnalysis.add_database_table" title="Permalink to this definition">¶</a></dt>
 <dd><p>Register a database table as an dependency.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>table_name</strong> (<em>str</em>) &#8211; table name to be added.</li>
+<li><strong>name</strong> (<em>str</em>) &#8211; table name to be added.</li>
 <li><strong>technology</strong> (<em>str</em>) &#8211; technology name of the table.
 Possible values are : &#8216;Oracle&#8217;, &#8216;TSQL&#8217;.</li>
 </ul>
@@ -1285,6 +1285,81 @@ Possible values are : &#8216;Oracle&#8217;, &#8216;TSQL&#8217;.</li>
 </tr>
 </tbody>
 </table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.test.TestAnalysis.add_database_view">
+<tt class="descname">add_database_view</tt><big>(</big><em>name</em>, <em>technology</em><big>)</big><a class="headerlink" href="#cast.analysers.test.TestAnalysis.add_database_view" title="Permalink to this definition">¶</a></dt>
+<dd><p>Register a database view as an dependency.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>name</strong> (<em>str</em>) &#8211; view name to be added.</li>
+<li><strong>technology</strong> (<em>str</em>) &#8211; technology name of the view.
+Possible values are : &#8216;Oracle&#8217;, &#8216;TSQL&#8217;.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">the view object</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 8.3.32.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.test.TestAnalysis.add_database_procedure">
+<tt class="descname">add_database_procedure</tt><big>(</big><em>name</em>, <em>technology</em><big>)</big><a class="headerlink" href="#cast.analysers.test.TestAnalysis.add_database_procedure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Register a database procedure as an dependency.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>name</strong> (<em>str</em>) &#8211; procedure name to be added.</li>
+<li><strong>technology</strong> (<em>str</em>) &#8211; technology name of the procedure.
+Possible values are : &#8216;Oracle&#8217;, &#8216;TSQL&#8217;.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">the procedure object</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 8.3.32.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.test.TestAnalysis.add_database_function">
+<tt class="descname">add_database_function</tt><big>(</big><em>name</em>, <em>technology</em><big>)</big><a class="headerlink" href="#cast.analysers.test.TestAnalysis.add_database_function" title="Permalink to this definition">¶</a></dt>
+<dd><p>Register a database function as an dependency.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>name</strong> (<em>str</em>) &#8211; function name to be added.</li>
+<li><strong>technology</strong> (<em>str</em>) &#8211; technology name of the function.
+Possible values are : &#8216;Oracle&#8217;, &#8216;TSQL&#8217;.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">the function object</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 8.3.32.</span></p>
+</div>
 </dd></dl>
 
 <dl class="method">

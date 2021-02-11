@@ -2,7 +2,7 @@ Mainframe Analyser specificities
 ********************************
 
 .. note::
-    This documentation applies to CAIP >= 8.3.26 and com.castsoftware.mainframe >= 1.0.0-alpha3.
+    This documentation applies to CAIP >= 8.3.26 and com.castsoftware.mainframe >= 1.0.1-funcrel.
 
 
 .. toctree::
@@ -62,6 +62,10 @@ COBOL Program
     .. automethod:: cast.analysers.mainframe.Extension.start_program
 
     .. automethod:: cast.analysers.mainframe.Extension.end_program
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_program_id
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_program_id
 
 
     .. automethod:: cast.analysers.mainframe.Extension.start_nested_program
@@ -274,6 +278,10 @@ Statements ACCEPT - EXIT
 
     .. automethod:: cast.analysers.mainframe.Extension.end_divide_into
 
+    .. automethod:: cast.analysers.mainframe.Extension.start_remainder
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_remainder
+
 
     .. automethod:: cast.analysers.mainframe.Extension.start_evaluate
 
@@ -481,8 +489,8 @@ Statements GOBACK - PERFORM
     .. automethod:: cast.analysers.mainframe.Extension.end_with_test_before
 
 
-Statements PROCESS - WRITE
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+Statements PROCESS - XML PARSE
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. autoclass:: cast.analysers.mainframe.Extension
 
@@ -536,6 +544,13 @@ Statements PROCESS - WRITE
 
     .. automethod:: cast.analysers.mainframe.Extension.end_set
 
+    .. automethod:: cast.analysers.mainframe.Extension.start_up_by
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_up_by
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_down_by
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_down_by
 
     .. automethod:: cast.analysers.mainframe.Extension.start_sort
 
@@ -577,6 +592,11 @@ Statements PROCESS - WRITE
     .. automethod:: cast.analysers.mainframe.Extension.end_transform
 
 
+    .. automethod:: cast.analysers.mainframe.Extension.start_unstring
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_unstring
+
+
     .. automethod:: cast.analysers.mainframe.Extension.start_write
 
     .. automethod:: cast.analysers.mainframe.Extension.end_write
@@ -591,6 +611,16 @@ Statements PROCESS - WRITE
 
     .. automethod:: cast.analysers.mainframe.Extension.end_write_destination
 
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_xml_generate
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_xml_generate
+    
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_xml_parse
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_xml_parse
+    
 
 Common sub nodes
 ^^^^^^^^^^^^^^^^
