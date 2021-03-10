@@ -1609,6 +1609,27 @@ Remove the necessity to add create and select an environment profile.</p>
 </tr>
 </tbody>
 </table>
+<p>For a file:</p>
+<div class="highlight-python"><div class="highlight"><pre>&lt;struts&gt;
+    ...
+&lt;/struts&gt;
+</pre></div>
+</div>
+<p>use:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">options</span><span class="o">.</span><span class="n">handle_xml_with_xpath</span><span class="p">(</span><span class="s">&#39;/struts&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>For a file:</p>
+<div class="highlight-python"><div class="highlight"><pre>&lt;ui:UiBinder&gt;
+    ...
+&lt;/ui:UiBinder&gt;
+</pre></div>
+</div>
+<p>use:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># this skips xml namespace</span>
+<span class="n">options</span><span class="o">.</span><span class="n">handle_xml_with_xpath</span><span class="p">(</span><span class="s">&quot;/*[local-name()=&#39;UiBinder&#39;]&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="method">
@@ -1651,12 +1672,16 @@ It can be either a jar file or a folder of jars.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>signature</strong> (<em>str</em>) &#8211; method signature for wich no link should be created.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>signature</strong> (<em>str</em>) &#8211; method signature for which no link should be created.</td>
 </tr>
 </tbody>
 </table>
 <p>All parameters will be parametrized.</p>
-<p>Sample : java.lang.Error.Error(java.lang.String)</p>
+<p>Sample:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">start_analysis</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">options</span><span class="p">):</span>
+    <span class="n">options</span><span class="o">.</span><span class="n">add_no_link_parameterization</span><span class="p">(</span><span class="s">&#39;java.lang.Error.Error(java.lang.String)&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="method">
@@ -1669,7 +1694,7 @@ actual parameter dynamic values.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>signature</strong> (<em>str</em>) &#8211; method signature for wich calls are parameterized.</li>
+<li><strong>signature</strong> (<em>str</em>) &#8211; method signature for which calls are parameterized.</li>
 <li><strong>of int parameters</strong> (<em>list</em>) &#8211; a list of integer indicating parameter number to be parameterized</li>
 <li><strong>callback</strong> (<em>function</em>) &#8211; a callable object to be called back.</li>
 </ul>
@@ -1677,23 +1702,25 @@ actual parameter dynamic values.</p>
 </tr>
 </tbody>
 </table>
+<p>signature is the CAST signature <em>exactly as</em> it can be found in enlighten.</p>
 <p>callback must be a callable with 4 arguments. It will be called with
 a dictionnary parameter_number -&gt; list parameter&#8217;s possible values
 the object that perform the method call
 the line of the call
 the column of the call</p>
-<p>Sample :</p>
-<dl class="docutils">
-<dt>def start_analysis(self, options):</dt>
-<dd># all calls to root.A.g(java.lang.String) will trigger
-# self.my_callback
-options.add_parameterization(&#8216;root.A.g(java.lang.String)&#8217;, [1], self.my_callback)</dd>
-<dt>def my_callback(self, values, caller, line, column):</dt>
-<dd>#  values is of the form {1:[..., ..., ...]}
-#  caller is the object calling the method
-#  line, column is the position of the call
-cast.analysers.log.info(str(values))</dd>
-</dl>
+<p>Sample:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">start_analysis</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">options</span><span class="p">):</span>
+    <span class="c"># all calls to root.A.g(java.lang.String) will trigger</span>
+    <span class="c"># self.my_callback</span>
+    <span class="n">options</span><span class="o">.</span><span class="n">add_parameterization</span><span class="p">(</span><span class="s">&#39;root.A.g(java.lang.String)&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">my_callback</span><span class="p">)</span>
+    
+<span class="k">def</span> <span class="nf">my_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">caller</span><span class="p">,</span> <span class="n">line</span><span class="p">,</span> <span class="n">column</span><span class="p">):</span>
+    <span class="c">#  values is of the form {1:[..., ..., ...]}</span>
+    <span class="c">#  caller is the object calling the method</span>
+    <span class="c">#  line, column is the position of the call</span>
+    <span class="n">cast</span><span class="o">.</span><span class="n">analysers</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">values</span><span class="p">))</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="method">

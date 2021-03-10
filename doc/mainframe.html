@@ -178,7 +178,7 @@
 <h1>Mainframe Analyser specificities<a class="headerlink" href="#mainframe-analyser-specificities" title="Permalink to this headline">¶</a></h1>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">This documentation applies to CAIP &gt;= 8.3.26 and com.castsoftware.mainframe &gt;= 1.0.1-funcrel.</p>
+<p class="last">This documentation applies to CAIP &gt;= 8.3.26 and com.castsoftware.mainframe &gt;= 1.0.3-funcrel.</p>
 </div>
 <div class="toctree-wrapper compound">
 <ul class="simple">
@@ -1446,6 +1446,42 @@ index is of type <tt class="xref py py-class docutils literal"><span class="pre"
 </tbody>
 </table>
 <p>&#64;type compute:Node</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.start_rounded">
+<tt class="descname">start_rounded</tt><big>(</big><em>rounded</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_rounded" title="Permalink to this definition">¶</a></dt>
+<dd><p>ROUNDED in COMPUTE statement.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>rounded</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type rounded:Node</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.3-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.end_rounded">
+<tt class="descname">end_rounded</tt><big>(</big><em>rounded</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.end_rounded" title="Permalink to this definition">¶</a></dt>
+<dd><p>ROUNDED in COMPUTE statement.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>rounded</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type rounded:Node</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.3-funcrel.</span></p>
+</div>
 </dd></dl>
 
 <dl class="method">
@@ -5007,6 +5043,15 @@ First child is A and second child is I.</p>
 </div>
 </dd></dl>
 
+<dl class="method">
+<dt id="cast.analysers.mainframe.SavedObject.is_debug">
+<tt class="descname">is_debug</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.SavedObject.is_debug" title="Permalink to this definition">¶</a></dt>
+<dd><p>True if statement starts on a debug line.</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.3-funcrel.</span></p>
+</div>
+</dd></dl>
+
 </dd></dl>
 
 <p>For :</p>
@@ -5184,6 +5229,15 @@ Stops recursion on :
 <dd><p>Access to parent.</p>
 <div class="versionadded">
 <p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.0-alpha2.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.UnsavedObject.is_debug">
+<tt class="descname">is_debug</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.UnsavedObject.is_debug" title="Permalink to this definition">¶</a></dt>
+<dd><p>True if statement starts on a debug line.</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.3-funcrel.</span></p>
 </div>
 </dd></dl>
 

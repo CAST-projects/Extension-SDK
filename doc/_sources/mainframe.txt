@@ -2,7 +2,7 @@ Mainframe Analyser specificities
 ********************************
 
 .. note::
-    This documentation applies to CAIP >= 8.3.26 and com.castsoftware.mainframe >= 1.0.1-funcrel.
+    This documentation applies to CAIP >= 8.3.26 and com.castsoftware.mainframe >= 1.0.3-funcrel.
 
 
 .. toctree::
@@ -252,6 +252,10 @@ Statements ACCEPT - EXIT
     .. automethod:: cast.analysers.mainframe.Extension.start_compute
 
     .. automethod:: cast.analysers.mainframe.Extension.end_compute
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_rounded
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_rounded
 
 
     .. automethod:: cast.analysers.mainframe.Extension.start_copy
