@@ -1,0 +1,2504 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>HTML5/Javascript Analyser specificities &mdash; CAST Extension SDK 1.6.6 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="CAST Extension SDK 1.6.6 documentation" href="index.html"/>
+        <link rel="next" title="Debugging" href="debugging.html"/>
+        <link rel="prev" title="Mainframe Analyser specificities" href="mainframe.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> CAST Extension SDK
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.6.6
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="my_first_plugin.html">Tutorial : My first plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="deployment.html">Deploying plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="manual.html">Creating a plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="analyser_level.html">Running during analysis of an existing analyser</a></li>
+<li class="toctree-l1"><a class="reference internal" href="application_level.html">Running code after analyzers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data_exchange.html">Exchanging data between analysis level and application level</a></li>
+<li class="toctree-l1"><a class="reference internal" href="analysers_specif.html">Analysers specific events</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mainframe.html">Mainframe Analyser specificities</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">HTML5/Javascript Analyser specificities</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#howto">HowTo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#javascript-ast-nodes-types">Javascript ast nodes types</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#statements">Statements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#expressions">Expressions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#writing-tests">Writing tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#categories-and-types-for-quality-rules">Categories and types for quality rules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#quality-rule-scopes">Quality rule scopes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#html5-technologies">HTML5 technologies</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="debugging.html">Debugging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="writing_quality_rule.html">Writing quality rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="code_reference.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="version_compatibility.html">Features and Bugs per CAIP versions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tips_and_tricks.html">Tips and tricks</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">CAST Extension SDK</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>HTML5/Javascript Analyser specificities</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="_sources/html5.txt" rel="nofollow"> View page source</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="html5-javascript-analyser-specificities">
+<h1>HTML5/Javascript Analyser specificities<a class="headerlink" href="#html5-javascript-analyser-specificities" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This documentation applies to CAIP &gt;= 8.3.x and com.castsoftware.html5 &gt;= 2.1.1-funcrel.</p>
+</div>
+<div class="toctree-wrapper compound">
+<ul class="simple">
+</ul>
+</div>
+<div class="section" id="howto">
+<h2>HowTo<a class="headerlink" href="#howto" title="Permalink to this headline">¶</a></h2>
+<p>Create your own UA extension, then react to the &#8220;add_quality_rules&#8221; event received from HTML5/Javascript extension.
+With this event, you can send any interpreters of your choice, which will be used by HTML5/Javascript.
+These interpreters will have &#8220;start_XXX&#8221; and/or &#8220;end_XXX&#8221; methods where XXX is the ast node type you are interested in.
+They must have also a &#8220;finish&#8221; method.</p>
+<p>Sample of UA extension code</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">cast.analysers.ua</span>
+<span class="kn">from</span> <span class="nn">cast</span> <span class="kn">import</span> <span class="n">Event</span>
+<span class="kn">from</span> <span class="nn">cast.analysers</span> <span class="kn">import</span> <span class="n">log</span>
+
+<span class="kn">from</span> <span class="nn">interpreter</span> <span class="kn">import</span> <span class="n">Interpreter</span>
+
+<span class="k">class</span> <span class="nc">Html5Diag</span><span class="p">(</span><span class="n">cast</span><span class="o">.</span><span class="n">analysers</span><span class="o">.</span><span class="n">ua</span><span class="o">.</span><span class="n">Extension</span><span class="p">):</span>
+
+    <span class="nd">@Event</span><span class="p">(</span><span class="s">&#39;com.castsoftware.html5&#39;</span><span class="p">,</span> <span class="s">&#39;add_quality_rules&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">add_quality_rules</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">externalQualityRules</span><span class="p">):</span>
+
+        <span class="n">interpreter</span> <span class="o">=</span> <span class="n">Interpreter</span><span class="p">()</span>
+        <span class="n">externalQualityRules</span><span class="o">.</span><span class="n">add_interpreter</span><span class="p">(</span><span class="n">interpreter</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_plugin</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>Sample of interpreter code</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Interpreter</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">start_JsContent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ast</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">end_JsContent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ast</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">finish</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+</pre></div>
+</div>
+<p>A complete sample can be found here : <a class="reference internal" href="writing_quality_rule.html#starter-kit"><em>Starter kits</em></a>.</p>
+</div>
+<div class="section" id="javascript-ast-nodes-types">
+<h2>Javascript ast nodes types<a class="headerlink" href="#javascript-ast-nodes-types" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="javascript_parser.symbols.AstToken">
+<em class="property">class </em><tt class="descclassname">javascript_parser.symbols.</tt><tt class="descname">AstToken</tt><big>(</big><em>token</em>, <em>parent</em>, <em>name=None</em><big>)</big><a class="headerlink" href="#javascript_parser.symbols.AstToken" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base class of all ast nodes</p>
+<dl class="method">
+<dt id="javascript_parser.symbols.AstToken.get_children">
+<tt class="descname">get_children</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.AstToken.get_children" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">ast node children</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list[javascript_parser.symbols.AstToken]</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.AstToken.get_name">
+<tt class="descname">get_name</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.AstToken.get_name" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">ast node name.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.AstToken.get_kb_object">
+<tt class="descname">get_kb_object</tt><big>(</big><em>recursiveInParents=False</em><big>)</big><a class="headerlink" href="#javascript_parser.symbols.AstToken.get_kb_object" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>recursiveInParents</strong> (<em>Boolean</em>) &#8211; True is kb object must be search in parents</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">CAST database object corresponding to the ast node</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">cast.analysers.CustomObject</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.AstToken.get_first_kb_parent">
+<tt class="descname">get_first_kb_parent</tt><big>(</big><em>skipJsFunctionCallFunctions=False</em><big>)</big><a class="headerlink" href="#javascript_parser.symbols.AstToken.get_first_kb_parent" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the first ast node which will be saved in KB.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">javascript_parser.symbols.AstToken</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.AstToken.get_begin_line">
+<tt class="descname">get_begin_line</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.AstToken.get_begin_line" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the ast node first line.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.AstToken.get_begin_column">
+<tt class="descname">get_begin_column</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.AstToken.get_begin_column" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the ast node first column.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.AstToken.get_end_line">
+<tt class="descname">get_end_line</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.AstToken.get_end_line" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the ast node last line.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.AstToken.get_end_column">
+<tt class="descname">get_end_column</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.AstToken.get_end_column" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the ast node last column.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.AstToken.get_resolutions">
+<tt class="descname">get_resolutions</tt><big>(</big><em>recurse=False</em>, <em>level=0</em><big>)</big><a class="headerlink" href="#javascript_parser.symbols.AstToken.get_resolutions" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>recurse</strong> (<em>Boolean</em>) &#8211; True is the resolution must recurse until the last ast node possible. Default is False</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list[javascript_parser.symbols.Resolution]</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.AstToken.is_ast_token">
+<tt class="descname">is_ast_token</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.AstToken.is_ast_token" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.AstToken.is_try_catch_block">
+<tt class="descname">is_try_catch_block</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.AstToken.is_try_catch_block" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True is the ast node corresponds to javascript_parser.symbols.TryCatchBlock.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">Boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.AstToken.is_var_declaration">
+<tt class="descname">is_var_declaration</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.AstToken.is_var_declaration" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True is the ast node corresponds to javascript_parser.symbols.VarDeclaration.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">Boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.AstToken.is_let_declaration">
+<tt class="descname">is_let_declaration</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.AstToken.is_let_declaration" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True is the ast node corresponds to javascript_parser.symbols.VarDeclaration declared with <cite>let</cite> keyword.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">Boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.AstToken.is_const_declaration">
+<tt class="descname">is_const_declaration</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.AstToken.is_const_declaration" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True is the ast node corresponds to javascript_parser.symbols.VarDeclaration declared with <cite>const</cite> keyword.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">Boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.AstToken.is_new_statement">
+<tt class="descname">is_new_statement</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.AstToken.is_new_statement" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True is the ast node corresponds to javascript_parser.symbols.AnyStatement starting with <cite>new</cite> keyword.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">Boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.AstToken.is_export_statement">
+<tt class="descname">is_export_statement</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.AstToken.is_export_statement" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True is the ast node corresponds to javascript_parser.symbols.AnyStatement starting with <cite>export</cite> keyword.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">Boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.AstToken.is_export_default_statement">
+<tt class="descname">is_export_default_statement</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.AstToken.is_export_default_statement" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True is the ast node corresponds to javascript_parser.symbols.AnyStatement starting with <cite>export default</cite> keywords.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">Boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.AstToken.is_return_statement">
+<tt class="descname">is_return_statement</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.AstToken.is_return_statement" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True is the ast node corresponds to javascript_parser.symbols.AnyStatement starting with <cite>return</cite> keyword.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">Boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.AstToken.is_return_new_statement">
+<tt class="descname">is_return_new_statement</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.AstToken.is_return_new_statement" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True is the ast node corresponds to javascript_parser.symbols.AnyStatement starting with <cite>return new</cite> keywords.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">Boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.AstToken.is_continue_statement">
+<tt class="descname">is_continue_statement</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.AstToken.is_continue_statement" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True is the ast node corresponds to javascript_parser.symbols.AnyStatement starting with <cite>continue</cite> keyword.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">Boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.AstToken.is_import_statement">
+<tt class="descname">is_import_statement</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.AstToken.is_import_statement" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True is the ast node corresponds to javascript_parser.symbols.ImportStatement.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">Boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.AstToken.is_break_statement">
+<tt class="descname">is_break_statement</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.AstToken.is_break_statement" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True is the ast node corresponds to javascript_parser.symbols.AnyStatement starting with <cite>break</cite> keyword.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">Boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.AstToken.is_delete_statement">
+<tt class="descname">is_delete_statement</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.AstToken.is_delete_statement" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True is the ast node corresponds to javascript_parser.symbols.AnyStatement starting with <cite>delete</cite> keyword.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">Boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.AstToken.is_new_expression">
+<tt class="descname">is_new_expression</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.AstToken.is_new_expression" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True is the ast node corresponds to javascript_parser.symbols.AnyExpression starting with <cite>new</cite> keyword.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">Boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.AstToken.is_loop">
+<tt class="descname">is_loop</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.AstToken.is_loop" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True is the ast node corresponds to javascript_parser.symbols.LoopBlock or javascript_parser.symbols.FunctionCall considered as a loop.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">Boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.AstToken.is_for_block">
+<tt class="descname">is_for_block</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.AstToken.is_for_block" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True is the ast node corresponds to javascript_parser.symbols.ForBlock.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">Boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.AstToken.is_for_in_block">
+<tt class="descname">is_for_in_block</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.AstToken.is_for_in_block" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True is the ast node corresponds to javascript_parser.symbols.ForBlock with <cite>in</cite> keyword in expression.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">Boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.AstToken.is_identifier">
+<tt class="descname">is_identifier</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.AstToken.is_identifier" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True is the ast node corresponds to javascript_parser.symbols.Identifier.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">Boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.AstToken.is_function">
+<tt class="descname">is_function</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.AstToken.is_function" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True is the ast node corresponds to javascript_parser.symbols.Function.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">Boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.AstToken.is_class">
+<tt class="descname">is_class</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.AstToken.is_class" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True is the ast node corresponds to javascript_parser.symbols.Class.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">Boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.AstToken.is_arrow_function">
+<tt class="descname">is_arrow_function</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.AstToken.is_arrow_function" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True is the ast node corresponds to javascript_parser.symbols.ArrowFunction.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">Boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.AstToken.is_js_content">
+<tt class="descname">is_js_content</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.AstToken.is_js_content" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True is the ast node corresponds to javascript_parser.symbols.JsContent.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">Boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.AstToken.is_function_call">
+<tt class="descname">is_function_call</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.AstToken.is_function_call" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True is the ast node corresponds to javascript_parser.symbols.FunctionCall.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">Boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.AstToken.is_js_function_call">
+<tt class="descname">is_js_function_call</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.AstToken.is_js_function_call" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True is the ast node corresponds to javascript_parser.symbols.JSFunctionCall.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">Boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.AstToken.is_function_call_part">
+<tt class="descname">is_function_call_part</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.AstToken.is_function_call_part" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True is the ast node corresponds to javascript_parser.symbols.FunctionCallPart.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">Boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.AstToken.is_list">
+<tt class="descname">is_list</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.AstToken.is_list" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True is the ast node corresponds to javascript_parser.symbols.AstList.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">Boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.AstToken.is_string">
+<tt class="descname">is_string</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.AstToken.is_string" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True is the ast node corresponds to javascript_parser.symbols.AstString.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">Boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.AstToken.is_assignment">
+<tt class="descname">is_assignment</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.AstToken.is_assignment" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True is the ast node corresponds to javascript_parser.symbols.Assignment.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">Boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.AstToken.is_object_value">
+<tt class="descname">is_object_value</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.AstToken.is_object_value" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True is the ast node corresponds to javascript_parser.symbols.ObjectValue.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">Boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.AstToken.is_operator">
+<tt class="descname">is_operator</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.AstToken.is_operator" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True is the ast node corresponds to javascript_parser.symbols.AstOperator.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">Boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.AstToken.is_binary_expression">
+<tt class="descname">is_binary_expression</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.AstToken.is_binary_expression" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True is the ast node corresponds to javascript_parser.symbols.BinaryExpression.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">Boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.AstToken.is_addition_expression">
+<tt class="descname">is_addition_expression</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.AstToken.is_addition_expression" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True is the ast node corresponds to javascript_parser.symbols.AdditionExpression.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">Boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.AstToken.is_or_expression">
+<tt class="descname">is_or_expression</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.AstToken.is_or_expression" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True is the ast node corresponds to javascript_parser.symbols.OrExpression.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">Boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.AstToken.is_in_expression">
+<tt class="descname">is_in_expression</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.AstToken.is_in_expression" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True is the ast node corresponds to javascript_parser.symbols.InExpression.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">Boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.AstToken.is_unary_expression">
+<tt class="descname">is_unary_expression</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.AstToken.is_unary_expression" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True is the ast node corresponds to javascript_parser.symbols.UnaryExpression.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">Boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.AstToken.is_jsx_expression">
+<tt class="descname">is_jsx_expression</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.AstToken.is_jsx_expression" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True is the ast node corresponds to javascript_parser.symbols.JsxExpression.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">Boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.AstToken.is_if_ternary_expression">
+<tt class="descname">is_if_ternary_expression</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.AstToken.is_if_ternary_expression" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True is the ast node corresponds to javascript_parser.symbols.IfTernaryExpression.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">Boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.AstToken.is_not_expression">
+<tt class="descname">is_not_expression</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.AstToken.is_not_expression" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True is the ast node corresponds to javascript_parser.symbols.NotExpression.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">Boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.AstToken.is_equality_expression">
+<tt class="descname">is_equality_expression</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.AstToken.is_equality_expression" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True is the ast node corresponds to javascript_parser.symbols.EqualBinaryExpression or javascript_parser.symbols.NotEqualBinaryExpression.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">Boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.AstToken.is_switch_block">
+<tt class="descname">is_switch_block</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.AstToken.is_switch_block" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True is the ast node corresponds to javascript_parser.symbols.SwitchBlock.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">Boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.AstToken.is_method">
+<tt class="descname">is_method</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.AstToken.is_method" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True is the ast node corresponds to javascript_parser.symbols.Method.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">Boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.AstToken.is_constructor">
+<tt class="descname">is_constructor</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.AstToken.is_constructor" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True is the ast node corresponds to javascript_parser.symbols.Constructor.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">Boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<div class="section" id="statements">
+<h3>Statements<a class="headerlink" href="#statements" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="javascript_parser.symbols.StatementList">
+<em class="property">class </em><tt class="descclassname">javascript_parser.symbols.</tt><tt class="descname">StatementList</tt><big>(</big><em>token</em>, <em>parent</em><big>)</big><a class="headerlink" href="#javascript_parser.symbols.StatementList" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#javascript_parser.symbols.AstToken" title="javascript_parser.symbols.AstToken"><tt class="xref py py-class docutils literal"><span class="pre">javascript_parser.symbols.AstToken</span></tt></a></p>
+<blockquote>
+<div><dl class="method">
+<dt id="javascript_parser.symbols.StatementList.get_statements">
+<tt class="descname">get_statements</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.StatementList.get_statements" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">statements list</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list[javascript_parser.symbols.AstToken]</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</dd></dl>
+
+<dl class="class">
+<dt id="javascript_parser.symbols.JsContent">
+<em class="property">class </em><tt class="descclassname">javascript_parser.symbols.</tt><tt class="descname">JsContent</tt><big>(</big><em>token</em>, <em>parent</em>, <em>file=None</em>, <em>config=None</em>, <em>startRow=1</em>, <em>startCol=1</em><big>)</big><a class="headerlink" href="#javascript_parser.symbols.JsContent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">javascript_parser.symbols.KbSymbol</span></tt>, <a class="reference internal" href="#javascript_parser.symbols.StatementList" title="javascript_parser.symbols.StatementList"><tt class="xref py py-class docutils literal"><span class="pre">javascript_parser.symbols.StatementList</span></tt></a></p>
+<blockquote>
+<div><dl class="method">
+<dt id="javascript_parser.symbols.JsContent.get_file">
+<tt class="descname">get_file</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.JsContent.get_file" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div></blockquote>
+</dd></dl>
+
+<dl class="class">
+<dt id="javascript_parser.symbols.Identifier">
+<em class="property">class </em><tt class="descclassname">javascript_parser.symbols.</tt><tt class="descname">Identifier</tt><big>(</big><em>parent=None</em>, <em>name=None</em>, <em>token=None</em><big>)</big><a class="headerlink" href="#javascript_parser.symbols.Identifier" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#javascript_parser.symbols.AstToken" title="javascript_parser.symbols.AstToken"><tt class="xref py py-class docutils literal"><span class="pre">javascript_parser.symbols.AstToken</span></tt></a></p>
+<p>A identifier a or a.b or a.b.c ...</p>
+<blockquote>
+<div><dl class="method">
+<dt id="javascript_parser.symbols.Identifier.get_prefix">
+<tt class="descname">get_prefix</tt><big>(</big><em>evenIfExpr=False</em><big>)</big><a class="headerlink" href="#javascript_parser.symbols.Identifier.get_prefix" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>evenIfExpr</strong> (<em>Boolean</em>) &#8211; If True, the prefix will be returned, event it is an expression instead of a string (default is False)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">str if evenIfExpr is False or str or javascript_parser.symbols.AstToken if evenIfExpr is True</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Identifier.get_fullname">
+<tt class="descname">get_fullname</tt><big>(</big><big>)</big><a class="headerlink" href="#Identifier.get_fullname" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fullname of identifier.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</dd></dl>
+
+<dl class="class">
+<dt id="javascript_parser.symbols.AstOperator">
+<em class="property">class </em><tt class="descclassname">javascript_parser.symbols.</tt><tt class="descname">AstOperator</tt><big>(</big><em>token</em>, <em>parent</em>, <em>name=None</em><big>)</big><a class="headerlink" href="#javascript_parser.symbols.AstOperator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#javascript_parser.symbols.AstToken" title="javascript_parser.symbols.AstToken"><tt class="xref py py-class docutils literal"><span class="pre">javascript_parser.symbols.AstToken</span></tt></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="javascript_parser.symbols.AstString">
+<em class="property">class </em><tt class="descclassname">javascript_parser.symbols.</tt><tt class="descname">AstString</tt><big>(</big><em>token</em>, <em>parent</em>, <em>text</em><big>)</big><a class="headerlink" href="#javascript_parser.symbols.AstString" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#javascript_parser.symbols.AstToken" title="javascript_parser.symbols.AstToken"><tt class="xref py py-class docutils literal"><span class="pre">javascript_parser.symbols.AstToken</span></tt></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="javascript_parser.symbols.IfStatement">
+<em class="property">class </em><tt class="descclassname">javascript_parser.symbols.</tt><tt class="descname">IfStatement</tt><big>(</big><em>token</em>, <em>parent</em><big>)</big><a class="headerlink" href="#javascript_parser.symbols.IfStatement" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#javascript_parser.symbols.AstToken" title="javascript_parser.symbols.AstToken"><tt class="xref py py-class docutils literal"><span class="pre">javascript_parser.symbols.AstToken</span></tt></a></p>
+<p>Represents an If... Then...Else block.</p>
+<blockquote>
+<div><dl class="method">
+<dt id="javascript_parser.symbols.IfStatement.get_if_block">
+<tt class="descname">get_if_block</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.IfStatement.get_if_block" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the if block</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">javascript_parser.symbols.IfBlock</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.IfStatement.get_else_if_blocks">
+<tt class="descname">get_else_if_blocks</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.IfStatement.get_else_if_blocks" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the else if blocks</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list[javascript_parser.symbols.ElseIfBlock]</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.IfStatement.get_else_block">
+<tt class="descname">get_else_block</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.IfStatement.get_else_block" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the else block</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">javascript_parser.symbols.ElseBlock</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</dd></dl>
+
+<dl class="class">
+<dt id="javascript_parser.symbols.IfBlock">
+<em class="property">class </em><tt class="descclassname">javascript_parser.symbols.</tt><tt class="descname">IfBlock</tt><big>(</big><em>token</em>, <em>parent</em><big>)</big><a class="headerlink" href="#javascript_parser.symbols.IfBlock" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">javascript_parser.symbols.ExpressionBlock</span></tt></p>
+<p>Represents an If block (the If part of an If statement)</p>
+<blockquote>
+<div><dl class="method">
+<dt id="javascript_parser.symbols.IfBlock.get_expression">
+<tt class="descname">get_expression</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.IfBlock.get_expression" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the block expression</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">javascript_parser.symbols.AstToken</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</dd></dl>
+
+<dl class="class">
+<dt id="javascript_parser.symbols.ElseIfBlock">
+<em class="property">class </em><tt class="descclassname">javascript_parser.symbols.</tt><tt class="descname">ElseIfBlock</tt><big>(</big><em>token</em>, <em>parent</em><big>)</big><a class="headerlink" href="#javascript_parser.symbols.ElseIfBlock" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">javascript_parser.symbols.ExpressionBlock</span></tt></p>
+<p>Represents an Else If block (the else if part of an If statement)</p>
+<blockquote>
+<div><dl class="method">
+<dt id="javascript_parser.symbols.ElseIfBlock.get_expression">
+<tt class="descname">get_expression</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.ElseIfBlock.get_expression" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the block expression</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">javascript_parser.symbols.AstToken</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</dd></dl>
+
+<dl class="class">
+<dt id="javascript_parser.symbols.ElseBlock">
+<em class="property">class </em><tt class="descclassname">javascript_parser.symbols.</tt><tt class="descname">ElseBlock</tt><big>(</big><em>token</em>, <em>parent</em><big>)</big><a class="headerlink" href="#javascript_parser.symbols.ElseBlock" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">javascript_parser.symbols.Block</span></tt></p>
+<p>Represents an Else block (the else part of an If statement)</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="javascript_parser.symbols.WhileBlock">
+<em class="property">class </em><tt class="descclassname">javascript_parser.symbols.</tt><tt class="descname">WhileBlock</tt><big>(</big><em>token</em>, <em>parent</em><big>)</big><a class="headerlink" href="#javascript_parser.symbols.WhileBlock" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">javascript_parser.symbols.LoopBlock</span></tt></p>
+<blockquote>
+<div><dl class="method">
+<dt id="javascript_parser.symbols.WhileBlock.get_expression">
+<tt class="descname">get_expression</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.WhileBlock.get_expression" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the while expression</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">javascript_parser.symbols.AstToken</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</dd></dl>
+
+<dl class="class">
+<dt id="javascript_parser.symbols.ForBlock">
+<em class="property">class </em><tt class="descclassname">javascript_parser.symbols.</tt><tt class="descname">ForBlock</tt><big>(</big><em>token</em>, <em>parent</em><big>)</big><a class="headerlink" href="#javascript_parser.symbols.ForBlock" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">javascript_parser.symbols.LoopBlock</span></tt></p>
+<blockquote>
+<div><dl class="method">
+<dt id="javascript_parser.symbols.ForBlock.get_start_expressions">
+<tt class="descname">get_start_expressions</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.ForBlock.get_start_expressions" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the start expressions</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list[javascript_parser.symbols.AstToken]</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.ForBlock.get_termination_expression">
+<tt class="descname">get_termination_expression</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.ForBlock.get_termination_expression" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the termination expression</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">javascript_parser.symbols.AstToken</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.ForBlock.get_forward_expression">
+<tt class="descname">get_forward_expression</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.ForBlock.get_forward_expression" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the forward expression</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">javascript_parser.symbols.AstToken</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</dd></dl>
+
+<dl class="class">
+<dt id="javascript_parser.symbols.ForEachBlock">
+<em class="property">class </em><tt class="descclassname">javascript_parser.symbols.</tt><tt class="descname">ForEachBlock</tt><big>(</big><em>token</em>, <em>parent</em><big>)</big><a class="headerlink" href="#javascript_parser.symbols.ForEachBlock" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">javascript_parser.symbols.LoopBlock</span></tt></p>
+<blockquote>
+<div><dl class="method">
+<dt id="javascript_parser.symbols.ForEachBlock.get_expression">
+<tt class="descname">get_expression</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.ForEachBlock.get_expression" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The block expression</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">javascript_parser.symbols.AstToken</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</dd></dl>
+
+<dl class="class">
+<dt id="javascript_parser.symbols.DoBlock">
+<em class="property">class </em><tt class="descclassname">javascript_parser.symbols.</tt><tt class="descname">DoBlock</tt><big>(</big><em>token</em>, <em>parent</em><big>)</big><a class="headerlink" href="#javascript_parser.symbols.DoBlock" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">javascript_parser.symbols.LoopBlock</span></tt></p>
+<blockquote>
+<div><dl class="method">
+<dt id="javascript_parser.symbols.DoBlock.get_expression">
+<tt class="descname">get_expression</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.DoBlock.get_expression" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The expression</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">javascript_parser.symbols.AstToken</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</dd></dl>
+
+<dl class="class">
+<dt id="javascript_parser.symbols.SwitchStatement">
+<em class="property">class </em><tt class="descclassname">javascript_parser.symbols.</tt><tt class="descname">SwitchStatement</tt><big>(</big><em>token</em>, <em>parent</em><big>)</big><a class="headerlink" href="#javascript_parser.symbols.SwitchStatement" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#javascript_parser.symbols.AstToken" title="javascript_parser.symbols.AstToken"><tt class="xref py py-class docutils literal"><span class="pre">javascript_parser.symbols.AstToken</span></tt></a></p>
+<blockquote>
+<div><dl class="method">
+<dt id="javascript_parser.symbols.SwitchStatement.get_expression">
+<tt class="descname">get_expression</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.SwitchStatement.get_expression" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The switch expression</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">javascript_parser.symbols.AstToken</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.SwitchStatement.get_case_blocks">
+<tt class="descname">get_case_blocks</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.SwitchStatement.get_case_blocks" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The case blocks</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list[javascript_parser.symbols.SwitchCaseBlock]</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.SwitchStatement.get_default_block">
+<tt class="descname">get_default_block</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.SwitchStatement.get_default_block" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The default block</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">javascript_parser.symbols.SwitchDefaultBlock</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</dd></dl>
+
+<dl class="class">
+<dt id="javascript_parser.symbols.SwitchCaseBlock">
+<em class="property">class </em><tt class="descclassname">javascript_parser.symbols.</tt><tt class="descname">SwitchCaseBlock</tt><big>(</big><em>token</em>, <em>parent</em><big>)</big><a class="headerlink" href="#javascript_parser.symbols.SwitchCaseBlock" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">javascript_parser.symbols.ExpressionBlock</span></tt></p>
+<p>Represents a switch case block (the case part of an switch statement)</p>
+<blockquote>
+<div><dl class="method">
+<dt id="javascript_parser.symbols.SwitchCaseBlock.get_expression">
+<tt class="descname">get_expression</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.SwitchCaseBlock.get_expression" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the block expression</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">javascript_parser.symbols.AstToken</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</dd></dl>
+
+<dl class="class">
+<dt id="javascript_parser.symbols.SwitchDefaultBlock">
+<em class="property">class </em><tt class="descclassname">javascript_parser.symbols.</tt><tt class="descname">SwitchDefaultBlock</tt><big>(</big><em>token</em>, <em>parent</em><big>)</big><a class="headerlink" href="#javascript_parser.symbols.SwitchDefaultBlock" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">javascript_parser.symbols.Block</span></tt></p>
+<p>Represents a switch default block (the default part of an switch statement)</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="javascript_parser.symbols.AstBlock">
+<em class="property">class </em><tt class="descclassname">javascript_parser.symbols.</tt><tt class="descname">AstBlock</tt><big>(</big><em>token</em>, <em>parent</em><big>)</big><a class="headerlink" href="#javascript_parser.symbols.AstBlock" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#javascript_parser.symbols.StatementList" title="javascript_parser.symbols.StatementList"><tt class="xref py py-class docutils literal"><span class="pre">javascript_parser.symbols.StatementList</span></tt></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="javascript_parser.symbols.TryCatchBlock">
+<em class="property">class </em><tt class="descclassname">javascript_parser.symbols.</tt><tt class="descname">TryCatchBlock</tt><big>(</big><em>token</em>, <em>parent</em><big>)</big><a class="headerlink" href="#javascript_parser.symbols.TryCatchBlock" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#javascript_parser.symbols.AstToken" title="javascript_parser.symbols.AstToken"><tt class="xref py py-class docutils literal"><span class="pre">javascript_parser.symbols.AstToken</span></tt></a></p>
+<blockquote>
+<div><dl class="method">
+<dt id="javascript_parser.symbols.TryCatchBlock.get_try_block">
+<tt class="descname">get_try_block</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.TryCatchBlock.get_try_block" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The try block</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">javascript_parser.symbols.AstBlock</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.TryCatchBlock.get_catch_blocks">
+<tt class="descname">get_catch_blocks</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.TryCatchBlock.get_catch_blocks" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The catch blocks</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list[javascript_parser.symbols.CatchBlock]</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.TryCatchBlock.get_finally_block">
+<tt class="descname">get_finally_block</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.TryCatchBlock.get_finally_block" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The finally block</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">javascript_parser.symbols.FinallyBlock</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</dd></dl>
+
+<dl class="class">
+<dt id="javascript_parser.symbols.CatchBlock">
+<em class="property">class </em><tt class="descclassname">javascript_parser.symbols.</tt><tt class="descname">CatchBlock</tt><big>(</big><em>token</em>, <em>parent</em><big>)</big><a class="headerlink" href="#javascript_parser.symbols.CatchBlock" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">javascript_parser.symbols.ExpressionBlock</span></tt></p>
+<blockquote>
+<div><dl class="method">
+<dt id="javascript_parser.symbols.CatchBlock.get_expression">
+<tt class="descname">get_expression</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.CatchBlock.get_expression" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the block expression</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">javascript_parser.symbols.AstToken</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</dd></dl>
+
+<dl class="class">
+<dt id="javascript_parser.symbols.FinallyBlock">
+<em class="property">class </em><tt class="descclassname">javascript_parser.symbols.</tt><tt class="descname">FinallyBlock</tt><big>(</big><em>token</em>, <em>parent</em><big>)</big><a class="headerlink" href="#javascript_parser.symbols.FinallyBlock" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">javascript_parser.symbols.Block</span></tt></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="javascript_parser.symbols.AstList">
+<em class="property">class </em><tt class="descclassname">javascript_parser.symbols.</tt><tt class="descname">AstList</tt><big>(</big><em>token</em>, <em>parent</em><big>)</big><a class="headerlink" href="#javascript_parser.symbols.AstList" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#javascript_parser.symbols.AstToken" title="javascript_parser.symbols.AstToken"><tt class="xref py py-class docutils literal"><span class="pre">javascript_parser.symbols.AstToken</span></tt></a></p>
+<p>A bracketed list.</p>
+<blockquote>
+<div><dl class="method">
+<dt id="javascript_parser.symbols.AstList.get_values">
+<tt class="descname">get_values</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.AstList.get_values" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">list values</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list[javascript_parser.symbols.AstToken]</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</dd></dl>
+
+<dl class="class">
+<dt id="javascript_parser.symbols.ObjectValue">
+<em class="property">class </em><tt class="descclassname">javascript_parser.symbols.</tt><tt class="descname">ObjectValue</tt><big>(</big><em>token</em>, <em>parent</em><big>)</big><a class="headerlink" href="#javascript_parser.symbols.ObjectValue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#javascript_parser.symbols.AstToken" title="javascript_parser.symbols.AstToken"><tt class="xref py py-class docutils literal"><span class="pre">javascript_parser.symbols.AstToken</span></tt></a></p>
+<p>A curly bracketed block.</p>
+<blockquote>
+<div><dl class="method">
+<dt id="javascript_parser.symbols.ObjectValue.get_item">
+<tt class="descname">get_item</tt><big>(</big><em>name</em>, <em>recurse=False</em><big>)</big><a class="headerlink" href="#javascript_parser.symbols.ObjectValue.get_item" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>name</strong> (<em>str</em>) &#8211; item name</li>
+<li><strong>recurse</strong> (<em>Boolean</em>) &#8211; True if the search must be recursive in the object value (default is False)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the item with name in parameter</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">javascript_parser.symbols.AstToken</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</dd></dl>
+
+<dl class="class">
+<dt id="javascript_parser.symbols.Function">
+<em class="property">class </em><tt class="descclassname">javascript_parser.symbols.</tt><tt class="descname">Function</tt><big>(</big><em>name</em>, <em>prefix</em>, <em>parent</em>, <em>token</em>, <em>file=None</em>, <em>isThis=False</em>, <em>emptyLines=None</em><big>)</big><a class="headerlink" href="#javascript_parser.symbols.Function" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">javascript_parser.symbols.KbSymbol</span></tt>, <a class="reference internal" href="#javascript_parser.symbols.StatementList" title="javascript_parser.symbols.StatementList"><tt class="xref py py-class docutils literal"><span class="pre">javascript_parser.symbols.StatementList</span></tt></a></p>
+<p>A function.</p>
+<blockquote>
+<div><dl class="method">
+<dt id="javascript_parser.symbols.Function.is_anonymous">
+<tt class="descname">is_anonymous</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.Function.is_anonymous" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True if the function is anonymous (has no name)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">Boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.Function.get_prefix">
+<tt class="descname">get_prefix</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.Function.get_prefix" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The function name prefix</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Function.get_fullname">
+<tt class="descname">get_fullname</tt><big>(</big><big>)</big><a class="headerlink" href="#Function.get_fullname" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fullname of function.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.Function.get_parameters">
+<tt class="descname">get_parameters</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.Function.get_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The function parameters</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list[javascript_parser.symbols.AstToken]</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</dd></dl>
+
+<dl class="class">
+<dt id="javascript_parser.symbols.ArrowFunction">
+<em class="property">class </em><tt class="descclassname">javascript_parser.symbols.</tt><tt class="descname">ArrowFunction</tt><big>(</big><em>name</em>, <em>prefix</em>, <em>parent</em>, <em>token</em>, <em>file=None</em>, <em>isThis=False</em>, <em>emptyLines=None</em><big>)</big><a class="headerlink" href="#javascript_parser.symbols.ArrowFunction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#javascript_parser.symbols.Function" title="javascript_parser.symbols.Function"><tt class="xref py py-class docutils literal"><span class="pre">javascript_parser.symbols.Function</span></tt></a></p>
+<p>A function.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="javascript_parser.symbols.FunctionCall">
+<em class="property">class </em><tt class="descclassname">javascript_parser.symbols.</tt><tt class="descname">FunctionCall</tt><big>(</big><em>identifier</em>, <em>token</em>, <em>parent</em>, <em>isLoop=False</em><big>)</big><a class="headerlink" href="#javascript_parser.symbols.FunctionCall" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#javascript_parser.symbols.AstToken" title="javascript_parser.symbols.AstToken"><tt class="xref py py-class docutils literal"><span class="pre">javascript_parser.symbols.AstToken</span></tt></a></p>
+<p>A function call. f() or f().g() ...</p>
+<blockquote>
+<div><dl class="method">
+<dt id="javascript_parser.symbols.FunctionCall.get_function_call_parts">
+<tt class="descname">get_function_call_parts</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.FunctionCall.get_function_call_parts" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">List of function call parts</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list[javascript_parser.symbols.FunctionCallPart]</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</dd></dl>
+
+<dl class="class">
+<dt id="javascript_parser.symbols.FunctionCallPart">
+<em class="property">class </em><tt class="descclassname">javascript_parser.symbols.</tt><tt class="descname">FunctionCallPart</tt><big>(</big><em>identifier</em>, <em>tokens</em><big>)</big><a class="headerlink" href="#javascript_parser.symbols.FunctionCallPart" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#javascript_parser.symbols.AstToken" title="javascript_parser.symbols.AstToken"><tt class="xref py py-class docutils literal"><span class="pre">javascript_parser.symbols.AstToken</span></tt></a></p>
+<p>Part of a FunctionCall.
+Ex: a().b() is composed of 2 FunctionCallPart</p>
+<blockquote>
+<div><dl class="method">
+<dt id="javascript_parser.symbols.FunctionCallPart.get_identifier">
+<tt class="descname">get_identifier</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.FunctionCallPart.get_identifier" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The identifier of the function call part</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">javascript_parser.symbols.Identifier</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.FunctionCallPart.get_parameters">
+<tt class="descname">get_parameters</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.FunctionCallPart.get_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">FunctionCallPart parameters</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list[javascript_parser.symbols.AstToken]</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="FunctionCallPart.get_fullname">
+<tt class="descname">get_fullname</tt><big>(</big><big>)</big><a class="headerlink" href="#FunctionCallPart.get_fullname" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fullname.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</dd></dl>
+
+<dl class="class">
+<dt id="javascript_parser.symbols.ImportStatement">
+<em class="property">class </em><tt class="descclassname">javascript_parser.symbols.</tt><tt class="descname">ImportStatement</tt><big>(</big><em>token</em>, <em>parent</em>, <em>isType</em><big>)</big><a class="headerlink" href="#javascript_parser.symbols.ImportStatement" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">javascript_parser.symbols.AstStatement</span></tt></p>
+<p>import &#8216;react-select/dist/react-select.css&#8217;;
+import React from &#8216;react&#8217;;
+import { isGeneratedId } from &#8220;devtools-source-map&#8221;;
+import type { SymbolDeclaration, AstLocation } from &#8221;../reducers/types&#8221;;
+import * as Actions from &#8216;./img-context-menu-actions&#8217;;</p>
+<blockquote>
+<div><dl class="method">
+<dt id="javascript_parser.symbols.ImportStatement.get_what">
+<tt class="descname">get_what</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.ImportStatement.get_what" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">list of tuples. For import a, b1 as b2 from ..., [(a, None), (b1, b2)]</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list[(javascript_parser.symbols.Identifier, javascript_parser.symbols.Identifier or None)]</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.ImportStatement.get_from">
+<tt class="descname">get_from</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.ImportStatement.get_from" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The from ast node</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">javascript_parser.symbols.AstString</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.ImportStatement.get_from_js_content">
+<tt class="descname">get_from_js_content</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.ImportStatement.get_from_js_content" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The javascript source code corresponding to the from resolution.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">javascript_parser.symbols.JsContent</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</dd></dl>
+
+<dl class="class">
+<dt id="javascript_parser.symbols.AnyStatement">
+<em class="property">class </em><tt class="descclassname">javascript_parser.symbols.</tt><tt class="descname">AnyStatement</tt><big>(</big><em>token</em>, <em>parent</em><big>)</big><a class="headerlink" href="#javascript_parser.symbols.AnyStatement" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">javascript_parser.symbols.AstStatement</span></tt></p>
+<p>statements which are not detailed</p>
+<blockquote>
+<div><dl class="method">
+<dt id="javascript_parser.symbols.AnyStatement.get_elements">
+<tt class="descname">get_elements</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.AnyStatement.get_elements" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The ast node elements.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list[javascript_parser.symbols.AstToken]</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.AnyStatement.is_return_statement">
+<tt class="descname">is_return_statement</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.AnyStatement.is_return_statement" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True is the ast node corresponds to javascript_parser.symbols.AnyStatement starting with <cite>return</cite> keyword.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">Boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.AnyStatement.is_continue_statement">
+<tt class="descname">is_continue_statement</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.AnyStatement.is_continue_statement" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True is the ast node corresponds to javascript_parser.symbols.AnyStatement starting with <cite>continue</cite> keyword.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">Boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.AnyStatement.is_export_statement">
+<tt class="descname">is_export_statement</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.AnyStatement.is_export_statement" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True is the ast node corresponds to javascript_parser.symbols.AnyStatement starting with <cite>export</cite> keyword.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">Boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.AnyStatement.is_export_default_statement">
+<tt class="descname">is_export_default_statement</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.AnyStatement.is_export_default_statement" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True is the ast node corresponds to javascript_parser.symbols.AnyStatement starting with <cite>export default</cite> keywords.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">Boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.AnyStatement.is_break_statement">
+<tt class="descname">is_break_statement</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.AnyStatement.is_break_statement" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True is the ast node corresponds to javascript_parser.symbols.AnyStatement starting with <cite>break</cite> keyword.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">Boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.AnyStatement.is_return_new_statement">
+<tt class="descname">is_return_new_statement</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.AnyStatement.is_return_new_statement" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True is the ast node corresponds to javascript_parser.symbols.AnyStatement starting with <cite>return new</cite> keywords.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">Boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.AnyStatement.is_delete_statement">
+<tt class="descname">is_delete_statement</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.AnyStatement.is_delete_statement" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True is the ast node corresponds to javascript_parser.symbols.AnyStatement starting with <cite>delete</cite> keyword.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">Boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</dd></dl>
+
+<dl class="class">
+<dt id="javascript_parser.symbols.VarDeclaration">
+<em class="property">class </em><tt class="descclassname">javascript_parser.symbols.</tt><tt class="descname">VarDeclaration</tt><big>(</big><em>token</em>, <em>parent</em>, <em>isLet=False</em>, <em>isConst=False</em><big>)</big><a class="headerlink" href="#javascript_parser.symbols.VarDeclaration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">javascript_parser.symbols.AstStatement</span></tt></p>
+<p>A var declaration.
+var a = 1, b, d = function() {};</p>
+<blockquote>
+<div><dl class="method">
+<dt id="javascript_parser.symbols.VarDeclaration.get_elements">
+<tt class="descname">get_elements</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.VarDeclaration.get_elements" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Elements corresponding to different declarations/assignments.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list[javascript_parser.symbols.Assignment or javascript_parser.symbols.Identifier]</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</dd></dl>
+
+<dl class="class">
+<dt id="javascript_parser.symbols.Assignment">
+<em class="property">class </em><tt class="descclassname">javascript_parser.symbols.</tt><tt class="descname">Assignment</tt><big>(</big><em>token</em>, <em>parent</em>, <em>isVar=False</em>, <em>exported=False</em><big>)</big><a class="headerlink" href="#javascript_parser.symbols.Assignment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">javascript_parser.symbols.AstStatement</span></tt></p>
+<p>An assignment.</p>
+<blockquote>
+<div><dl class="method">
+<dt id="Assignment.is_var">
+<tt class="descname">is_var</tt><big>(</big><big>)</big><a class="headerlink" href="#Assignment.is_var" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True if the assignment is part of a VarDeclaration</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">Boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.Assignment.is_exported">
+<tt class="descname">is_exported</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.Assignment.is_exported" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True if the assignment is part of an exported VarDeclaration</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">Boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.Assignment.get_left_operand">
+<tt class="descname">get_left_operand</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.Assignment.get_left_operand" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">left operand of the assignment.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">javascript_parser.symbols.AstToken</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.Assignment.get_right_operand">
+<tt class="descname">get_right_operand</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.Assignment.get_right_operand" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">right operand of the assignment.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">javascript_parser.symbols.AstToken</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</dd></dl>
+
+<dl class="class">
+<dt id="javascript_parser.symbols.Class">
+<em class="property">class </em><tt class="descclassname">javascript_parser.symbols.</tt><tt class="descname">Class</tt><big>(</big><em>name</em>, <em>prefix</em>, <em>parent</em>, <em>token</em>, <em>file=None</em>, <em>emptyLines=None</em><big>)</big><a class="headerlink" href="#javascript_parser.symbols.Class" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">javascript_parser.symbols.KbSymbol</span></tt>, <a class="reference internal" href="#javascript_parser.symbols.StatementList" title="javascript_parser.symbols.StatementList"><tt class="xref py py-class docutils literal"><span class="pre">javascript_parser.symbols.StatementList</span></tt></a></p>
+<p>A class.</p>
+<blockquote>
+<div><dl class="method">
+<dt id="Class.get_fullname">
+<tt class="descname">get_fullname</tt><big>(</big><big>)</big><a class="headerlink" href="#Class.get_fullname" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fullname.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.Class.get_methods">
+<tt class="descname">get_methods</tt><big>(</big><em>name=None</em><big>)</big><a class="headerlink" href="#javascript_parser.symbols.Class.get_methods" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> (<em>str</em>) &#8211; method name (default is None for all methods)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the methods with name in parameter.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">javascript_parser.symbols.Function (may be a Method, Function or ArrowFunction)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.Class.get_method">
+<tt class="descname">get_method</tt><big>(</big><em>name</em>, <em>static=False</em>, <em>includeInheritance=False</em><big>)</big><a class="headerlink" href="#javascript_parser.symbols.Class.get_method" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>name</strong> (<em>str</em>) &#8211; method name</li>
+<li><strong>static</strong> (<em>Boolean</em>) &#8211; True for the static method if several methods with same name (default is False)</li>
+<li><strong>includeInheritance</strong> (<em>Boolean</em>) &#8211; True if the method must be searched in mother classes (default is False)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the method with name in parameter. The unicity is assured with the static parameter if several methods with same name are present.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">javascript_parser.symbols.Function (may be a Method, Function or ArrowFunction)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</dd></dl>
+
+<dl class="class">
+<dt id="javascript_parser.symbols.Method">
+<em class="property">class </em><tt class="descclassname">javascript_parser.symbols.</tt><tt class="descname">Method</tt><big>(</big><em>name</em>, <em>parent</em>, <em>token</em>, <em>file</em>, <em>emptyLines</em>, <em>isConstructor</em><big>)</big><a class="headerlink" href="#javascript_parser.symbols.Method" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#javascript_parser.symbols.Function" title="javascript_parser.symbols.Function"><tt class="xref py py-class docutils literal"><span class="pre">javascript_parser.symbols.Function</span></tt></a></p>
+<p>A method.</p>
+<blockquote>
+<div><dl class="method">
+<dt id="javascript_parser.symbols.Method.is_static">
+<tt class="descname">is_static</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.Method.is_static" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True if the method is static.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">Boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.Method.is_constructor">
+<tt class="descname">is_constructor</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.Method.is_constructor" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True if the method is a constructor.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">Boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</dd></dl>
+
+<dl class="class">
+<dt id="javascript_parser.symbols.JSFunctionCall">
+<em class="property">class </em><tt class="descclassname">javascript_parser.symbols.</tt><tt class="descname">JSFunctionCall</tt><big>(</big><em>token</em>, <em>func</em>, <em>parent</em><big>)</big><a class="headerlink" href="#javascript_parser.symbols.JSFunctionCall" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">javascript_parser.symbols.AstStatement</span></tt></p>
+<p>A JS function call. (function() {}).call(...)</p>
+<blockquote>
+<div><dl class="method">
+<dt id="javascript_parser.symbols.JSFunctionCall.get_function">
+<tt class="descname">get_function</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.JSFunctionCall.get_function" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The function.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">javascript_parser.symbols.Function</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</dd></dl>
+
+</div>
+<div class="section" id="expressions">
+<h3>Expressions<a class="headerlink" href="#expressions" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="javascript_parser.symbols.AnyExpression">
+<em class="property">class </em><tt class="descclassname">javascript_parser.symbols.</tt><tt class="descname">AnyExpression</tt><big>(</big><em>token</em>, <em>parent</em><big>)</big><a class="headerlink" href="#javascript_parser.symbols.AnyExpression" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#javascript_parser.symbols.AstToken" title="javascript_parser.symbols.AstToken"><tt class="xref py py-class docutils literal"><span class="pre">javascript_parser.symbols.AstToken</span></tt></a></p>
+<p>expression which is not detailed</p>
+<blockquote>
+<div><dl class="method">
+<dt id="javascript_parser.symbols.AnyExpression.get_elements">
+<tt class="descname">get_elements</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.AnyExpression.get_elements" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">List of elements</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list[javascript_parser.symbols.AstToken]</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.AnyExpression.is_new_expression">
+<tt class="descname">is_new_expression</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.AnyExpression.is_new_expression" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True if the expression starts with <cite>new</cite> keyword</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">Boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</dd></dl>
+
+<dl class="class">
+<dt id="javascript_parser.symbols.UnaryExpression">
+<em class="property">class </em><tt class="descclassname">javascript_parser.symbols.</tt><tt class="descname">UnaryExpression</tt><big>(</big><em>token</em>, <em>parent</em><big>)</big><a class="headerlink" href="#javascript_parser.symbols.UnaryExpression" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#javascript_parser.symbols.AstToken" title="javascript_parser.symbols.AstToken"><tt class="xref py py-class docutils literal"><span class="pre">javascript_parser.symbols.AstToken</span></tt></a></p>
+<p>A unary expression.</p>
+<blockquote>
+<div><dl class="method">
+<dt id="javascript_parser.symbols.UnaryExpression.get_operand">
+<tt class="descname">get_operand</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.UnaryExpression.get_operand" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Expression operand.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">javascript_parser.symbols.AstToken</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</dd></dl>
+
+<dl class="class">
+<dt id="javascript_parser.symbols.BinaryExpression">
+<em class="property">class </em><tt class="descclassname">javascript_parser.symbols.</tt><tt class="descname">BinaryExpression</tt><big>(</big><em>token</em>, <em>parent</em><big>)</big><a class="headerlink" href="#javascript_parser.symbols.BinaryExpression" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#javascript_parser.symbols.AstToken" title="javascript_parser.symbols.AstToken"><tt class="xref py py-class docutils literal"><span class="pre">javascript_parser.symbols.AstToken</span></tt></a></p>
+<p>A binary expression.</p>
+<blockquote>
+<div><dl class="method">
+<dt id="javascript_parser.symbols.BinaryExpression.set_left_operand">
+<tt class="descname">set_left_operand</tt><big>(</big><em>operand</em><big>)</big><a class="headerlink" href="#javascript_parser.symbols.BinaryExpression.set_left_operand" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.BinaryExpression.set_right_operand">
+<tt class="descname">set_right_operand</tt><big>(</big><em>operand</em><big>)</big><a class="headerlink" href="#javascript_parser.symbols.BinaryExpression.set_right_operand" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div></blockquote>
+</dd></dl>
+
+<dl class="class">
+<dt id="javascript_parser.symbols.EqualBinaryExpression">
+<em class="property">class </em><tt class="descclassname">javascript_parser.symbols.</tt><tt class="descname">EqualBinaryExpression</tt><big>(</big><em>token</em>, <em>parent</em><big>)</big><a class="headerlink" href="#javascript_parser.symbols.EqualBinaryExpression" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#javascript_parser.symbols.BinaryExpression" title="javascript_parser.symbols.BinaryExpression"><tt class="xref py py-class docutils literal"><span class="pre">javascript_parser.symbols.BinaryExpression</span></tt></a></p>
+<p>A == binary expression.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="javascript_parser.symbols.NotEqualBinaryExpression">
+<em class="property">class </em><tt class="descclassname">javascript_parser.symbols.</tt><tt class="descname">NotEqualBinaryExpression</tt><big>(</big><em>token</em>, <em>parent</em><big>)</big><a class="headerlink" href="#javascript_parser.symbols.NotEqualBinaryExpression" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#javascript_parser.symbols.BinaryExpression" title="javascript_parser.symbols.BinaryExpression"><tt class="xref py py-class docutils literal"><span class="pre">javascript_parser.symbols.BinaryExpression</span></tt></a></p>
+<p>A != binary expression.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="javascript_parser.symbols.IfTernaryExpression">
+<em class="property">class </em><tt class="descclassname">javascript_parser.symbols.</tt><tt class="descname">IfTernaryExpression</tt><big>(</big><em>token</em>, <em>parent</em><big>)</big><a class="headerlink" href="#javascript_parser.symbols.IfTernaryExpression" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#javascript_parser.symbols.AstToken" title="javascript_parser.symbols.AstToken"><tt class="xref py py-class docutils literal"><span class="pre">javascript_parser.symbols.AstToken</span></tt></a></p>
+<p>A If ternary expression.</p>
+<blockquote>
+<div><dl class="method">
+<dt id="javascript_parser.symbols.IfTernaryExpression.get_if_operand">
+<tt class="descname">get_if_operand</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.IfTernaryExpression.get_if_operand" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">If operand</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">javascript_parser.symbols.AstToken</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.IfTernaryExpression.get_then_operand">
+<tt class="descname">get_then_operand</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.IfTernaryExpression.get_then_operand" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Then operand</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">javascript_parser.symbols.AstToken</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.IfTernaryExpression.get_else_operand">
+<tt class="descname">get_else_operand</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.IfTernaryExpression.get_else_operand" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Else operand</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">javascript_parser.symbols.AstToken</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</dd></dl>
+
+<dl class="class">
+<dt id="javascript_parser.symbols.AdditionExpression">
+<em class="property">class </em><tt class="descclassname">javascript_parser.symbols.</tt><tt class="descname">AdditionExpression</tt><big>(</big><em>token</em>, <em>parent</em>, <em>shortForm=False</em><big>)</big><a class="headerlink" href="#javascript_parser.symbols.AdditionExpression" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#javascript_parser.symbols.BinaryExpression" title="javascript_parser.symbols.BinaryExpression"><tt class="xref py py-class docutils literal"><span class="pre">javascript_parser.symbols.BinaryExpression</span></tt></a></p>
+<p>An addition expression.
+self.shortForm = True if addition is of &#8220;+=&#8221; form (expression as a statement)</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="javascript_parser.symbols.OrExpression">
+<em class="property">class </em><tt class="descclassname">javascript_parser.symbols.</tt><tt class="descname">OrExpression</tt><big>(</big><em>token</em>, <em>parent</em><big>)</big><a class="headerlink" href="#javascript_parser.symbols.OrExpression" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#javascript_parser.symbols.BinaryExpression" title="javascript_parser.symbols.BinaryExpression"><tt class="xref py py-class docutils literal"><span class="pre">javascript_parser.symbols.BinaryExpression</span></tt></a></p>
+<p>An || expression.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="javascript_parser.symbols.InExpression">
+<em class="property">class </em><tt class="descclassname">javascript_parser.symbols.</tt><tt class="descname">InExpression</tt><big>(</big><em>token</em>, <em>parent</em><big>)</big><a class="headerlink" href="#javascript_parser.symbols.InExpression" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#javascript_parser.symbols.BinaryExpression" title="javascript_parser.symbols.BinaryExpression"><tt class="xref py py-class docutils literal"><span class="pre">javascript_parser.symbols.BinaryExpression</span></tt></a></p>
+<p>A in expression.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="javascript_parser.symbols.NotExpression">
+<em class="property">class </em><tt class="descclassname">javascript_parser.symbols.</tt><tt class="descname">NotExpression</tt><big>(</big><em>token</em>, <em>parent</em><big>)</big><a class="headerlink" href="#javascript_parser.symbols.NotExpression" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#javascript_parser.symbols.UnaryExpression" title="javascript_parser.symbols.UnaryExpression"><tt class="xref py py-class docutils literal"><span class="pre">javascript_parser.symbols.UnaryExpression</span></tt></a></p>
+<p>A not expression.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="javascript_parser.symbols.JsxExpression">
+<em class="property">class </em><tt class="descclassname">javascript_parser.symbols.</tt><tt class="descname">JsxExpression</tt><big>(</big><em>token</em>, <em>parent</em><big>)</big><a class="headerlink" href="#javascript_parser.symbols.JsxExpression" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#javascript_parser.symbols.AstToken" title="javascript_parser.symbols.AstToken"><tt class="xref py py-class docutils literal"><span class="pre">javascript_parser.symbols.AstToken</span></tt></a></p>
+<p>A jsx expression &lt;tag1 attr1=value1 attr2=value2&gt;...&lt;/tag1&gt;</p>
+<blockquote>
+<div><dl class="method">
+<dt id="javascript_parser.symbols.JsxExpression.get_tag">
+<tt class="descname">get_tag</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.JsxExpression.get_tag" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">jsx expression tag.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">javascript_parser.symbols.HtmlTextWithPosition</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.JsxExpression.get_attributes_values_full_ast">
+<tt class="descname">get_attributes_values_full_ast</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.JsxExpression.get_attributes_values_full_ast" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">values as full ast expressions by attribute name if values are expressions (between {})</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">collections.OrderedDict(str,javascript_parser.symbols.AstToken)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.JsxExpression.get_attributes_values">
+<tt class="descname">get_attributes_values</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.JsxExpression.get_attributes_values" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">values as tokens by attribute name</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">collections.OrderedDict(str,list[javascript_parser.light_parser.Token])</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="javascript_parser.symbols.JsxExpression.get_sub_expressions">
+<tt class="descname">get_sub_expressions</tt><big>(</big><big>)</big><a class="headerlink" href="#javascript_parser.symbols.JsxExpression.get_sub_expressions" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">sub jsx expressions</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list[javascript_parser.symbols.JsxExpression]</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="writing-tests">
+<h2>Writing tests<a class="headerlink" href="#writing-tests" title="Permalink to this headline">¶</a></h2>
+<p>Sample of a test</p>
+<div class="highlight-python"><div class="highlight"><pre>import unittest
+    import cast.analysers.test
+    import cast.analysers.ua
+
+class Test(unittest.TestCase):
+
+    def test_ok1(self):
+
+        analysis = cast.analysers.test.UATestAnalysis(&#39;HTML5&#39;)
+        analysis.add_selection(&#39;test1&#39;)
+        analysis.add_dependency(r&#39;C:\ProgramData\CAST\CAST\Extensions\com.castsoftware.html5.2.1.1-funcrel&#39;)
+        analysis.run()
+
+        f = analysis.get_object_by_name(&#39;f&#39;, &#39;CAST_HTML5_JavaScript_Function&#39;)
+        self.assertTrue(f)
+        _value = f.get_value(&#39;CAST_Html5Diags_Metric_UseOfBreakInWhile.numberOfBreakInWhile&#39;)
+        self.assertEqual(&#39;1&#39;, _value)
+
+
+if __name__ == &#39;__main__&#39;:
+    unittest.main()
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>You need to add a dependency to the folder containing com.castsoftware.html5, for example</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">analysis</span><span class="o">.</span><span class="n">add_dependency</span><span class="p">(</span><span class="s">r&#39;C:\ProgramData\CAST\CAST\Extensions\com.castsoftware.html5.2.1.1-funcrel&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="last">For that you need to have downloaded the extension through CAST ExtensionDowloader:
+see <a class="reference external" href="https://doc.castsoftware.com/display/EXTEND/CAST+Extension+Downloader">https://doc.castsoftware.com/display/EXTEND/CAST+Extension+Downloader</a></p>
+</div>
+</div>
+<div class="section" id="categories-and-types-for-quality-rules">
+<span id="html5-categories"></span><h2>Categories and types for quality rules<a class="headerlink" href="#categories-and-types-for-quality-rules" title="Permalink to this headline">¶</a></h2>
+<p>For adding a quality rule on</p>
+<ul class="simple">
+<li>Category <cite>CAST_HTML5_JavaScript_Metrics_Category</cite></li>
+</ul>
+</div>
+<div class="section" id="quality-rule-scopes">
+<span id="html5-scopes"></span><h2>Quality rule scopes<a class="headerlink" href="#quality-rule-scopes" title="Permalink to this headline">¶</a></h2>
+<p>Existing quality rule scopes are :</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="8%" />
+<col width="92%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>1020000</td>
+<td>HTML5 artifacts (Javascript functions, methods, constructors, javascript source code, source code fragments)</td>
+</tr>
+<tr class="row-even"><td>1020001</td>
+<td>Javascript functions, methods and constructors</td>
+</tr>
+<tr class="row-odd"><td>1020005</td>
+<td>HTML5 source code, JSP, ASP, ASPX, HTC contents, Jade source code</td>
+</tr>
+<tr class="row-even"><td>1020006</td>
+<td>CSS source code, CSS source code fragments</td>
+</tr>
+<tr class="row-odd"><td>1020007</td>
+<td>Javascript class</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="html5-technologies">
+<h2>HTML5 technologies<a class="headerlink" href="#html5-technologies" title="Permalink to this headline">¶</a></h2>
+<p>Values for technology to be used in IMPLTechnologies.xml for filter value</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="44%" />
+<col width="56%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>HTML5</td>
+<td>1020000</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="debugging.html" class="btn btn-neutral float-right" title="Debugging" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="mainframe.html" class="btn btn-neutral" title="Mainframe Analyser specificities" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014, CAST.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.6.6',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

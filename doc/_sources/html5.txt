@@ -1,0 +1,494 @@
+HTML5/Javascript Analyser specificities
+***************************************
+
+.. note::
+    This documentation applies to CAIP >= 8.3.x and com.castsoftware.html5 >= 2.1.1-funcrel.
+
+
+.. toctree::
+   :maxdepth: 5
+
+
+HowTo
+=====
+
+Create your own UA extension, then react to the "add_quality_rules" event received from HTML5/Javascript extension.
+With this event, you can send any interpreters of your choice, which will be used by HTML5/Javascript.
+These interpreters will have "start_XXX" and/or "end_XXX" methods where XXX is the ast node type you are interested in.
+They must have also a "finish" method.
+
+Sample of UA extension code :: 
+
+    import cast.analysers.ua
+    from cast import Event
+    from cast.analysers import log
+    
+    from interpreter import Interpreter
+            
+    class Html5Diag(cast.analysers.ua.Extension):
+    
+        @Event('com.castsoftware.html5', 'add_quality_rules')
+        def add_quality_rules(self, externalQualityRules):
+    
+            interpreter = Interpreter()
+            externalQualityRules.add_interpreter(interpreter, self.get_plugin())
+
+Sample of interpreter code :: 
+
+    class Interpreter:
+        
+        def __init__(self):
+            pass
+    
+        def start_JsContent(self, ast):
+            pass
+    
+        def end_JsContent(self, ast):
+            pass
+    
+    	def finish(self):
+            pass
+
+
+A complete sample can be found here : :ref:`starter-kit`.
+
+
+Javascript ast nodes types
+==========================
+
+
+.. autoclass:: javascript_parser.symbols.AstToken
+
+    .. automethod:: javascript_parser.symbols.AstToken.get_children
+    .. automethod:: javascript_parser.symbols.AstToken.get_name
+    .. automethod:: javascript_parser.symbols.AstToken.get_kb_object
+    .. automethod:: javascript_parser.symbols.AstToken.get_first_kb_parent
+    .. automethod:: javascript_parser.symbols.AstToken.get_begin_line
+    .. automethod:: javascript_parser.symbols.AstToken.get_begin_column
+    .. automethod:: javascript_parser.symbols.AstToken.get_end_line
+    .. automethod:: javascript_parser.symbols.AstToken.get_end_column
+    .. automethod:: javascript_parser.symbols.AstToken.get_resolutions
+    .. automethod:: javascript_parser.symbols.AstToken.is_ast_token
+    .. automethod:: javascript_parser.symbols.AstToken.is_try_catch_block
+    .. automethod:: javascript_parser.symbols.AstToken.is_var_declaration
+    .. automethod:: javascript_parser.symbols.AstToken.is_let_declaration
+    .. automethod:: javascript_parser.symbols.AstToken.is_const_declaration
+    .. automethod:: javascript_parser.symbols.AstToken.is_new_statement
+    .. automethod:: javascript_parser.symbols.AstToken.is_export_statement
+    .. automethod:: javascript_parser.symbols.AstToken.is_export_default_statement
+    .. automethod:: javascript_parser.symbols.AstToken.is_return_statement
+    .. automethod:: javascript_parser.symbols.AstToken.is_return_new_statement
+    .. automethod:: javascript_parser.symbols.AstToken.is_continue_statement
+    .. automethod:: javascript_parser.symbols.AstToken.is_import_statement
+    .. automethod:: javascript_parser.symbols.AstToken.is_break_statement
+    .. automethod:: javascript_parser.symbols.AstToken.is_delete_statement
+    .. automethod:: javascript_parser.symbols.AstToken.is_new_expression
+    .. automethod:: javascript_parser.symbols.AstToken.is_loop
+    .. automethod:: javascript_parser.symbols.AstToken.is_for_block
+    .. automethod:: javascript_parser.symbols.AstToken.is_for_in_block
+    .. automethod:: javascript_parser.symbols.AstToken.is_identifier
+    .. automethod:: javascript_parser.symbols.AstToken.is_function
+    .. automethod:: javascript_parser.symbols.AstToken.is_class
+    .. automethod:: javascript_parser.symbols.AstToken.is_arrow_function
+    .. automethod:: javascript_parser.symbols.AstToken.is_js_content
+    .. automethod:: javascript_parser.symbols.AstToken.is_function_call
+    .. automethod:: javascript_parser.symbols.AstToken.is_js_function_call
+    .. automethod:: javascript_parser.symbols.AstToken.is_function_call_part
+    .. automethod:: javascript_parser.symbols.AstToken.is_list
+    .. automethod:: javascript_parser.symbols.AstToken.is_string
+    .. automethod:: javascript_parser.symbols.AstToken.is_assignment
+    .. automethod:: javascript_parser.symbols.AstToken.is_object_value
+    .. automethod:: javascript_parser.symbols.AstToken.is_operator
+    .. automethod:: javascript_parser.symbols.AstToken.is_binary_expression
+    .. automethod:: javascript_parser.symbols.AstToken.is_addition_expression
+    .. automethod:: javascript_parser.symbols.AstToken.is_or_expression
+    .. automethod:: javascript_parser.symbols.AstToken.is_in_expression
+    .. automethod:: javascript_parser.symbols.AstToken.is_unary_expression
+    .. automethod:: javascript_parser.symbols.AstToken.is_jsx_expression
+    .. automethod:: javascript_parser.symbols.AstToken.is_if_ternary_expression
+    .. automethod:: javascript_parser.symbols.AstToken.is_not_expression
+    .. automethod:: javascript_parser.symbols.AstToken.is_equality_expression
+    .. automethod:: javascript_parser.symbols.AstToken.is_switch_block
+    .. automethod:: javascript_parser.symbols.AstToken.is_method
+    .. automethod:: javascript_parser.symbols.AstToken.is_constructor
+
+
+Statements
+----------
+
+.. autoclass:: javascript_parser.symbols.StatementList
+   :show-inheritance:
+
+    .. automethod:: javascript_parser.symbols.StatementList.get_statements
+
+
+.. autoclass:: javascript_parser.symbols.JsContent
+   :show-inheritance:
+
+    .. automethod:: javascript_parser.symbols.JsContent.get_file
+		
+
+.. autoclass:: javascript_parser.symbols.Identifier
+   :show-inheritance:
+
+    .. automethod:: javascript_parser.symbols.Identifier.get_prefix
+    .. method:: get_fullname()
+        
+        Fullname of identifier.
+        
+        :rtype: str
+
+
+.. autoclass:: javascript_parser.symbols.AstOperator
+   :show-inheritance:
+
+
+.. autoclass:: javascript_parser.symbols.AstString
+   :show-inheritance:
+
+
+.. autoclass:: javascript_parser.symbols.IfStatement
+   :show-inheritance:
+
+    .. automethod:: javascript_parser.symbols.IfStatement.get_if_block
+    .. automethod:: javascript_parser.symbols.IfStatement.get_else_if_blocks
+    .. automethod:: javascript_parser.symbols.IfStatement.get_else_block
+
+
+.. autoclass:: javascript_parser.symbols.IfBlock
+   :show-inheritance:
+
+    .. automethod:: javascript_parser.symbols.IfBlock.get_expression
+
+
+.. autoclass:: javascript_parser.symbols.ElseIfBlock
+   :show-inheritance:
+
+    .. automethod:: javascript_parser.symbols.ElseIfBlock.get_expression
+
+
+.. autoclass:: javascript_parser.symbols.ElseBlock
+   :show-inheritance:
+
+
+.. autoclass:: javascript_parser.symbols.WhileBlock
+   :show-inheritance:
+
+    .. automethod:: javascript_parser.symbols.WhileBlock.get_expression
+
+
+.. autoclass:: javascript_parser.symbols.ForBlock
+   :show-inheritance:
+
+    .. automethod:: javascript_parser.symbols.ForBlock.get_start_expressions
+    .. automethod:: javascript_parser.symbols.ForBlock.get_termination_expression
+    .. automethod:: javascript_parser.symbols.ForBlock.get_forward_expression
+
+
+.. autoclass:: javascript_parser.symbols.ForEachBlock
+   :show-inheritance:
+
+    .. automethod:: javascript_parser.symbols.ForEachBlock.get_expression
+
+
+.. autoclass:: javascript_parser.symbols.DoBlock
+   :show-inheritance:
+
+    .. automethod:: javascript_parser.symbols.DoBlock.get_expression
+
+
+.. autoclass:: javascript_parser.symbols.SwitchStatement
+   :show-inheritance:
+
+    .. automethod:: javascript_parser.symbols.SwitchStatement.get_expression
+    .. automethod:: javascript_parser.symbols.SwitchStatement.get_case_blocks
+    .. automethod:: javascript_parser.symbols.SwitchStatement.get_default_block
+
+
+.. autoclass:: javascript_parser.symbols.SwitchCaseBlock
+   :show-inheritance:
+
+    .. automethod:: javascript_parser.symbols.SwitchCaseBlock.get_expression
+
+
+.. autoclass:: javascript_parser.symbols.SwitchDefaultBlock
+   :show-inheritance:
+
+
+.. autoclass:: javascript_parser.symbols.AstBlock
+   :show-inheritance:
+
+
+.. autoclass:: javascript_parser.symbols.TryCatchBlock
+   :show-inheritance:
+
+    .. automethod:: javascript_parser.symbols.TryCatchBlock.get_try_block
+    .. automethod:: javascript_parser.symbols.TryCatchBlock.get_catch_blocks
+    .. automethod:: javascript_parser.symbols.TryCatchBlock.get_finally_block
+
+
+.. autoclass:: javascript_parser.symbols.CatchBlock
+   :show-inheritance:
+
+    .. automethod:: javascript_parser.symbols.CatchBlock.get_expression
+
+
+.. autoclass:: javascript_parser.symbols.FinallyBlock
+   :show-inheritance:
+
+
+.. autoclass:: javascript_parser.symbols.AstList
+   :show-inheritance:
+
+    .. automethod:: javascript_parser.symbols.AstList.get_values
+
+
+.. autoclass:: javascript_parser.symbols.ObjectValue
+   :show-inheritance:
+
+    .. automethod:: javascript_parser.symbols.ObjectValue.get_item
+
+
+.. autoclass:: javascript_parser.symbols.Function
+   :show-inheritance:
+
+    .. automethod:: javascript_parser.symbols.Function.is_anonymous
+    .. automethod:: javascript_parser.symbols.Function.get_prefix
+
+    .. method:: get_fullname()
+        
+        Fullname of function.
+        
+        :rtype: str
+
+    .. automethod:: javascript_parser.symbols.Function.get_parameters
+
+
+.. autoclass:: javascript_parser.symbols.ArrowFunction
+   :show-inheritance:
+
+
+.. autoclass:: javascript_parser.symbols.FunctionCall
+   :show-inheritance:
+
+    .. automethod:: javascript_parser.symbols.FunctionCall.get_function_call_parts
+
+
+.. autoclass:: javascript_parser.symbols.FunctionCallPart
+   :show-inheritance:
+
+    .. automethod:: javascript_parser.symbols.FunctionCallPart.get_identifier
+    .. automethod:: javascript_parser.symbols.FunctionCallPart.get_parameters
+    .. method:: get_fullname()
+        
+        Fullname.
+        
+        :rtype: str
+
+
+.. autoclass:: javascript_parser.symbols.ImportStatement
+   :show-inheritance:
+
+    .. automethod:: javascript_parser.symbols.ImportStatement.get_what
+    .. automethod:: javascript_parser.symbols.ImportStatement.get_from
+    .. automethod:: javascript_parser.symbols.ImportStatement.get_from_js_content
+
+
+.. autoclass:: javascript_parser.symbols.AnyStatement
+   :show-inheritance:
+
+    .. automethod:: javascript_parser.symbols.AnyStatement.get_elements
+    .. automethod:: javascript_parser.symbols.AnyStatement.is_return_statement
+    .. automethod:: javascript_parser.symbols.AnyStatement.is_continue_statement
+    .. automethod:: javascript_parser.symbols.AnyStatement.is_export_statement
+    .. automethod:: javascript_parser.symbols.AnyStatement.is_export_default_statement
+    .. automethod:: javascript_parser.symbols.AnyStatement.is_break_statement
+    .. automethod:: javascript_parser.symbols.AnyStatement.is_return_new_statement
+    .. automethod:: javascript_parser.symbols.AnyStatement.is_delete_statement
+
+
+.. autoclass:: javascript_parser.symbols.VarDeclaration
+   :show-inheritance:
+
+    .. automethod:: javascript_parser.symbols.VarDeclaration.get_elements
+
+
+.. autoclass:: javascript_parser.symbols.Assignment
+   :show-inheritance:
+
+    .. method:: is_var()
+        
+        :return: True if the assignment is part of a VarDeclaration
+        :rtype: Boolean
+    
+    .. automethod:: javascript_parser.symbols.Assignment.is_exported
+    .. automethod:: javascript_parser.symbols.Assignment.get_left_operand
+    .. automethod:: javascript_parser.symbols.Assignment.get_right_operand
+
+
+.. autoclass:: javascript_parser.symbols.Class
+   :show-inheritance:
+
+    .. method:: get_fullname()
+        
+        Fullname.
+        
+        :rtype: str
+
+    .. automethod:: javascript_parser.symbols.Class.get_methods
+    .. automethod:: javascript_parser.symbols.Class.get_method
+
+
+.. autoclass:: javascript_parser.symbols.Method
+   :show-inheritance:
+
+    .. automethod:: javascript_parser.symbols.Method.is_static
+    .. automethod:: javascript_parser.symbols.Method.is_constructor
+
+
+.. autoclass:: javascript_parser.symbols.JSFunctionCall
+   :show-inheritance:
+
+    .. automethod:: javascript_parser.symbols.JSFunctionCall.get_function
+
+
+
+Expressions
+-----------
+
+.. autoclass:: javascript_parser.symbols.AnyExpression
+   :show-inheritance:
+
+    .. automethod:: javascript_parser.symbols.AnyExpression.get_elements
+    .. automethod:: javascript_parser.symbols.AnyExpression.is_new_expression
+
+
+.. autoclass:: javascript_parser.symbols.UnaryExpression
+   :show-inheritance:
+
+    .. automethod:: javascript_parser.symbols.UnaryExpression.get_operand
+
+
+.. autoclass:: javascript_parser.symbols.BinaryExpression
+   :show-inheritance:
+
+    .. automethod:: javascript_parser.symbols.BinaryExpression.set_left_operand
+    .. automethod:: javascript_parser.symbols.BinaryExpression.set_right_operand
+
+
+.. autoclass:: javascript_parser.symbols.EqualBinaryExpression
+   :show-inheritance:
+
+
+.. autoclass:: javascript_parser.symbols.NotEqualBinaryExpression
+   :show-inheritance:
+
+
+.. autoclass:: javascript_parser.symbols.IfTernaryExpression
+   :show-inheritance:
+
+    .. automethod:: javascript_parser.symbols.IfTernaryExpression.get_if_operand
+    .. automethod:: javascript_parser.symbols.IfTernaryExpression.get_then_operand
+    .. automethod:: javascript_parser.symbols.IfTernaryExpression.get_else_operand
+
+
+.. autoclass:: javascript_parser.symbols.AdditionExpression
+   :show-inheritance:
+
+
+.. autoclass:: javascript_parser.symbols.OrExpression
+   :show-inheritance:
+
+
+.. autoclass:: javascript_parser.symbols.InExpression
+   :show-inheritance:
+
+
+.. autoclass:: javascript_parser.symbols.NotExpression
+   :show-inheritance:
+
+
+.. autoclass:: javascript_parser.symbols.JsxExpression
+   :show-inheritance:
+
+    .. automethod:: javascript_parser.symbols.JsxExpression.get_tag
+    .. automethod:: javascript_parser.symbols.JsxExpression.get_attributes_values_full_ast
+    .. automethod:: javascript_parser.symbols.JsxExpression.get_attributes_values
+    .. automethod:: javascript_parser.symbols.JsxExpression.get_sub_expressions
+
+
+Writing tests
+=============
+
+Sample of a test :: 
+
+
+    import unittest
+	import cast.analysers.test
+	import cast.analysers.ua    
+    
+    class Test(unittest.TestCase):
+        
+        def test_ok1(self):
+            
+            analysis = cast.analysers.test.UATestAnalysis('HTML5')
+            analysis.add_selection('test1')
+            analysis.add_dependency(r'C:\ProgramData\CAST\CAST\Extensions\com.castsoftware.html5.2.1.1-funcrel')
+            analysis.run()
+            
+            f = analysis.get_object_by_name('f', 'CAST_HTML5_JavaScript_Function')
+            self.assertTrue(f)
+            _value = f.get_value('CAST_Html5Diags_Metric_UseOfBreakInWhile.numberOfBreakInWhile')
+            self.assertEqual('1', _value)
+
+
+    if __name__ == '__main__':
+        unittest.main()
+
+
+.. note::
+    You need to add a dependency to the folder containing com.castsoftware.html5, for example ::
+        
+        analysis.add_dependency(r'C:\ProgramData\CAST\CAST\Extensions\com.castsoftware.html5.2.1.1-funcrel')
+
+    For that you need to have downloaded the extension through CAST ExtensionDowloader:
+    see https://doc.castsoftware.com/display/EXTEND/CAST+Extension+Downloader
+
+
+.. _HTML5_categories:
+
+Categories and types for quality rules
+======================================
+
+For adding a quality rule on 
+ 
+* Category `CAST_HTML5_JavaScript_Metrics_Category`
+
+
+.. _HTML5_scopes:
+
+Quality rule scopes
+===================
+
+Existing quality rule scopes are :
+
++---------+-------------------------------------------------------------------------------------------------------------+
+| 1020000 | HTML5 artifacts (Javascript functions, methods, constructors, javascript source code, source code fragments)|
++---------+-------------------------------------------------------------------------------------------------------------+
+| 1020001 | Javascript functions, methods and constructors                                                              |
++---------+-------------------------------------------------------------------------------------------------------------+
+| 1020005 | HTML5 source code, JSP, ASP, ASPX, HTC contents, Jade source code                                           |
++---------+-------------------------------------------------------------------------------------------------------------+
+| 1020006 | CSS source code, CSS source code fragments                                                                  |
++---------+-------------------------------------------------------------------------------------------------------------+
+| 1020007 | Javascript class                                                                                            |
++---------+-------------------------------------------------------------------------------------------------------------+
+
+HTML5 technologies
+======================
+
+Values for technology to be used in IMPLTechnologies.xml for filter value
+
++-------+---------+
+| HTML5 | 1020000 |
++-------+---------+
