@@ -50,6 +50,9 @@ More details
 :doc:`mainframe` 
     Mainframe analyser level specifics.
 
+:doc:`html5` 
+    HTML5/Javascript analyser level specifics.
+
 :doc:`debugging` 
 	Instructions on how to debug plugins from development environment.
 
@@ -87,6 +90,7 @@ Indices and tables
    data_exchange
    analysers_specif
    mainframe
+   html5
    debugging
    writing_quality_rule
    code_reference

@@ -9,13 +9,13 @@ Mainframe Analyser specificities
    :maxdepth: 5
 
 
+A complete sample can be found here : :ref:`starter-kit`.
+
 Mainframe Extension
 ===================
 
 
 .. autoclass:: cast.analysers.mainframe.Extension
-
-
 
 
 

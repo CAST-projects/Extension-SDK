@@ -1,20 +1,25 @@
 Writing quality rules
 *********************
 
-Tutorial for COBOL
-==================
+Tutorial
+========
 
 This tutorial applies to **COBOL** but can be translated to other technologies.
 
+.. _starter-kit:
 
-Starter kit
------------
+Starter kits
+------------
 
-A sample project is available here : 
-https://github.com/CAST-projects/Extension-SDK/tree/master/samples/analyzer_level/mainframe/mainframe.quality_rule
+Here are some sample projects that demonstrate the complete development of a quality rule.
 
-Have a look at git history.
-https://github.com/CAST-projects/Extension-SDK/commits/master/samples/analyzer_level/mainframe/mainframe.quality_rule
+* COBOL
+
+ * `COBOL sample project <https://github.com/CAST-projects/Extension-SDK/tree/master/samples/analyzer_level/mainframe/mainframe.quality_rule>`_ you can have a look at its git history for more details.
+
+* HTML5/Javascript
+
+ * `HTML5/Javascript sample project <https://github.com/CAST-projects/Extension-SDK/tree/master/samples/analyzer_level/html5/html5.quality_rule>`_
 
 Initialization
 --------------
