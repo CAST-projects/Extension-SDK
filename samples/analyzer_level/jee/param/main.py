@@ -15,6 +15,7 @@ class J2EEParam(cast.analysers.jee.Extension):
         
         """ 
         options.add_parameterization("java.sql.Statement.executeQuery(java.lang.String)", [1], self.my_callback)
+        options.add_parameterization("Template.execute(java.lang.String)", [1], self.my_callback2)
         
 
     def my_callback(self, values, caller, line, column):
@@ -23,5 +24,10 @@ class J2EEParam(cast.analysers.jee.Extension):
         for value in values[1]:
             log.debug("  %s" % str(value))
         
+    def my_callback2(self, values, caller, line, column):
+        
+        log.debug("Method %s is calling ... at line %s with the following possible values for parameter 1" % (str(caller.get_fullname()), str(line)))
+        for value in values[1]:
+            log.debug("  %s" % str(value))
         
         

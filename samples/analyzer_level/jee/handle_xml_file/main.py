@@ -11,5 +11,5 @@ class HandleXMLFile(cast.analysers.jee.Extension):
 
     def start_xml_file(self, file):
         # we get it + all other xml files
-        log.debug("We have access to this xml file " + str(file))
+        log.info("We have access to this xml file " + str(file))
         

@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<root>
+  	<metric id="10201" type="sizing-measure" originalName="Backfired Function Points" active="true" detached="false" ignored="false"/>
+	<metric id="61001" type="technical-criterion" originalName="Architecture - Multi-Layers and Data Access" active="true" detached="false" ignored="false"/>
+	<metric id="61003" type="technical-criterion" originalName="Programming Practices - OO Inheritance and Polymorphism" active="true" detached="false" ignored="false"/>
+	<metric id="61004" type="technical-criterion" originalName="Architecture - OS and Platform Independence" active="true" detached="false" ignored="false"/>
+	<metric id="61006" type="technical-criterion" originalName="Documentation - Style Conformity" active="true" detached="false" ignored="false"/>
+	<metric id="61009" type="technical-criterion" originalName="Complexity - Algorithmic and Control Structure Complexity" active="true" detached="false" ignored="false"/>
+	<metric id="61014" type="technical-criterion" originalName="Programming Practices - Error and Exception Handling" active="true" detached="false" ignored="false"/>
+	<metric id="61018" type="technical-criterion" originalName="Efficiency - Memory, Network and Disk Space Management" active="true" detached="false" ignored="false"/>
+  	<metric id='61019' type='technical-criterion' originalName='Efficiency - SQL and Data Handling Performance' active='true' detached='false' ignored='false' />
+	<metric id="61027" type="technical-criterion" originalName="Dead code (static)" active="true" detached="false" ignored="false"/>
+  	<metric id='61028' type='technical-criterion' originalName='Documentation - Volume of Comments' active='true' detached='false' ignored='false' />
+	<metric id="65105" type="quality-distribution" originalName="Size Distribution" active="true" detached="false" ignored="false"/>
+	<metric id="65350" type="quality-distribution" originalName="Coupling Distribution" active="true" detached="false" ignored="false"/>
+	<metric id="65501" type="quality-distribution" originalName="Cyclomatic Complexity Distribution" active="true" detached="false" ignored="false"/>
+  	<metric id="66010" type="quality-distribution" originalName="Reuse by Call Distribution" active="true" detached="false" ignored="false"/>
+	<metric id="66062" type="technical-criterion" originalName="Secure Coding - Input Validation" active="true" detached="false" ignored="false"/>
+	<metric id="66063" type="technical-criterion" originalName="Secure Coding - API Abuse" active="true" detached="false" ignored="false"/>
+  	<metric id="66064" type="technical-criterion" originalName="Secure Coding - Weak Security Features" active="true" detached="false" ignored="false"/>
+	<metric id="66066" type="technical-criterion" originalName="Secure Coding - Encapsulation" active="true" detached="false" ignored="false"/>
+	<metric id="66068" type="technical-criterion" originalName="Efficiency - Expensive Calls in Loops" active="true" detached="false" ignored="false"/>
+	<metric id="66069" type="technical-criterion" originalName="Programming Practices - Unexpected Behavior" active="true" detached="false" ignored="false"/>
+    <!-- 
+    Ids are between 2001000 and 2001999
+    -->
+	<metric id="2001000" type="quality-rule" originalName="Avoid using break in while" active="true" detached="false" ignored="false"/>
+</root>

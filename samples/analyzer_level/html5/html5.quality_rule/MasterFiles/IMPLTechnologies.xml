@@ -1,0 +1,4 @@
+<?xml version='1.0' encoding='utf-8'?>
+<root>
+  	<metric id="2001000" type="quality-rule" originalName="Avoid using break in while" filter="1020000" filterLabel="HTML5" />
+</root>

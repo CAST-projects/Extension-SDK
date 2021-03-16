@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <metric id="2001000" type="quality-rule" originalName="Avoid using break in while" section="associatedValueName">
+    <english>Number of violation occurrences</english>
+  </metric>
+  <metric id="2001000" type="quality-rule" originalName="Avoid using break in while" section="description">
+    <english>This rule checks that there is no break statement in a while loop</english>
+  </metric>
+  <metric id="2001000" type="quality-rule" originalName="Avoid using break in while" section="name">
+    <english>Avoid using break in while</english>
+  </metric>
+  <metric id="2001000" type="quality-rule" originalName="Avoid using break in while" section="rationale">
+    <english>The loop exit condition should be in the while expression</english>
+  </metric>
+  <metric id="2001000" type="quality-rule" originalName="Avoid using break in while" section="reference">
+    <english>http://www.google.com</english>
+  </metric>
+  <metric id="2001000" type="quality-rule" originalName="Avoid using break in while" section="remediation">
+    <english>Put the loop exit condition in the while expression</english>
+  </metric>
+  <metric id="2001000" type="quality-rule" originalName="Avoid using break in while" section="sample">
+    <english>i = 0;
+	while (true) {
+		i = i + 1;
+		if ( i == 6)
+			break;
+	}</english>
+  </metric>
+  <metric id="2001000" type="quality-rule" originalName="Avoid using break in while" section="remediationSample">
+    <english>i = 0;
+	while (i &lt; 6) {
+		i = i + 1;
+	}</english>
+  </metric>
+  <metric id="2001000" type="quality-rule" originalName="Avoid using break in while" section="output">
+    <english>Associated to each violation, the following information is provided:
+- The number of violation occurences
+- Bookmarks for violation occurences found in the source code</english>
+  </metric>
+  <metric id="2001000" type="quality-rule" originalName="Avoid using break in while" section="total">
+    <english>Number of HTML5/Javascript Artifacts</english>
+  </metric>
+</root>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<metaModel file_level="client" file_no="0">
+    <!-- Html5Diags Types -->
+
+	<category name="CAST_Html5Diags_Metric_UseOfBreakInWhile" rid="0">
+		<description>Store Avoid using break in while metric results</description>
+    	<property name="numberOfBreakInWhile" type="integer" merge="sum" rid="0">
+			<description>Number of break in while</description>
+			<attribute name="INF_TYPE" intValue="1020300"/>
+			<attribute name="INF_SUB_TYPE" intValue="15"/>
+			<attribute name="ACCESS_APPVIEW" intValue="1"/>
+			<attribute name="ACCESS_HTML" intValue="1"/>
+			<attribute name="ACCESS_CVS" intValue="1"/>
+		</property>
+	</category>
+
+	<partialCategory name="CAST_HTML5_JavaScript_Metrics_Category">
+        <inheritedCategory name="CAST_Html5Diags_Metric_UseOfBreakInWhile" />
+	</partialCategory>
+
+</metaModel>
