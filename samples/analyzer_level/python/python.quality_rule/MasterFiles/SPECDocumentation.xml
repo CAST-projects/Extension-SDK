@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <metric id="2021000" type="quality-rule" originalName="Avoid using invalid objects in __all__" section="associatedValueName">
+    <english>Number of violation occurrences</english>
+  </metric>
+  <metric id="2021000" type="quality-rule" originalName="Avoid using invalid objects in __all__" section="description">
+    <english>This rule checks that the items inside __all__ are of string type</english>
+  </metric>
+  <metric id="2021000" type="quality-rule" originalName="Avoid using invalid objects in __all__" section="name">
+    <english>Avoid using invalid objects in __all__</english>
+  </metric>
+  <metric id="2021000" type="quality-rule" originalName="Avoid using invalid objects in __all__" section="rationale">
+    <english>Using non-string items inside __all__ can raise a NameError or TypeError exception</english>
+  </metric>
+  <metric id="2021000" type="quality-rule" originalName="Avoid using invalid objects in __all__" section="reference">
+    <english>https://vald-phoenix.github.io/pylint-errors/plerr/errors/variables/E0604.html</english>
+  </metric>
+  <metric id="2021000" type="quality-rule" originalName="Avoid using invalid objects in __all__" section="remediation">
+    <english>Refer to objects being exported by a list of strings</english>
+  </metric>
+  <metric id="2021000" type="quality-rule" originalName="Avoid using invalid objects in __all__" section="sample">
+    <english>__all__ = [f1, f2]
+def f1: pass
+def f2: pass
+    </english>
+  </metric>
+  <metric id="2021000" type="quality-rule" originalName="Avoid using invalid objects in __all__" section="remediationSample">
+    <english>__all__ = ['f1', 'f2']
+def f1: pass
+def f2: pass
+    </english>
+  </metric>
+  <metric id="2021000" type="quality-rule" originalName="Avoid using invalid objects in __all__" section="output">
+    <english>Associated to each violation, the following information is provided:
+- The number of violation occurences
+- Bookmarks for violation occurences found in the source code</english>
+  </metric>
+  <metric id="2021000" type="quality-rule" originalName="Avoid using invalid objects in __all__" section="total">
+    <english>Number of Python modules</english>
+  </metric>
+</root>

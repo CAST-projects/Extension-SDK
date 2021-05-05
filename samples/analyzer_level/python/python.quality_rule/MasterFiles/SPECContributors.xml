@@ -1,0 +1,4 @@
+<?xml version='1.0' encoding='utf-8'?>
+<root>
+  	<metric id="66069" type="technical-criterion" originalName="Programming Practices - Unexpected Behavior" contributorId="2021000" contributorType="quality-rule" contributorOriginalName="Avoid using invalid objects in __all__" critical="false" weight="7"/>
+</root>

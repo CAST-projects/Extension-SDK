@@ -1,0 +1,4 @@
+<?xml version='1.0' encoding='utf-8'?>
+<root>
+  	<metric id="2021000" type="quality-rule" originalName="Avoid using invalid objects in __all__" thresholdToGet1="50.0" thresholdToGet2="90.0" thresholdToGet3="95.0" thresholdToGet4="99.0"/>
+</root>

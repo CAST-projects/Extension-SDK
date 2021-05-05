@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!-- 
+'file_no' should be customized with an available number.
+The corresponding id ranges are from 20{file_no}000-20{file_no}999
+-->
+
+<metaModel file_level="client" file_no="21">
+    
+    <!-- Extending with new rules category from com.castsoftware.python 
+         It is recommended that new rules (i.e. properties) are named
+         with a custom prefix so that name clashes are avoided.
+    -->
+    <partialCategory name="CAST_Python_Rule">
+
+        <!-- Convenient property for prototyping before giving a definitive name to the rule. 
+             Note that once the name/id of a category/type/property element has been
+             set (registed in the KB) it must be kept untouched to assure data integrity.
+             Other fields such as the description can be freely updated. 
+        -->
+        <property name="PREFIX_PrototypedQualityRule" type="integer" merge="sum" id="2021000">
+            <description>Prototyped Quality Rule</description>
+            
+            <!-- The pair (INF_TYPE, INF_SUB_TYPE) should be unique -->
+            <attribute name="INF_TYPE" intValue="2021000"/>
+            <attribute name="INF_SUB_TYPE" intValue="0"/>
+            
+            <!-- visibility parameters -->
+            <attribute name="ACCESS_APPVIEW" intValue="1"/>
+            <attribute name="ACCESS_HTML" intValue="1"/>
+            <attribute name="ACCESS_CVS" intValue="1"/>
+        </property>
+        
+        <!-- A rule is represened by a property -->
+        <property name="PREFIX_AvoidUsingInvalidObjectsInAll" type="integer" merge="sum" id="2021001">  <!-- +1 -->
+            <description>Avoid using invalid objects in __all__</description>
+            
+            <!-- The pair (INF_TYPE, INF_SUB_TYPE) should be unique -->
+            <attribute name="INF_TYPE" intValue="2021000"/>
+            <attribute name="INF_SUB_TYPE" intValue="1"/>      <!-- +1 -->
+            
+            <!-- visibility parameters -->
+            <attribute name="ACCESS_APPVIEW" intValue="1"/>
+            <attribute name="ACCESS_HTML" intValue="1"/>
+            <attribute name="ACCESS_CVS" intValue="1"/>
+        </property>
+        
+        <!-- A new rule 
+        <property name="PREFIX_AnotherRule" type="integer" merge="sum" id="2021002">
+            <description>Another rule ...</description>
+            <attribute name="INF_TYPE" intValue="2021000"/>
+            <attribute name="INF_SUB_TYPE" intValue="2"/>     
+            <attribute name="ACCESS_APPVIEW" intValue="1"/>
+            <attribute name="ACCESS_HTML" intValue="1"/>
+            <attribute name="ACCESS_CVS" intValue="1"/>
+        </property>
+        -->     
+
+    </partialCategory>
+    
+</metaModel>

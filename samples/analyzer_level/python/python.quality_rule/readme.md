@@ -1,0 +1,1 @@
+This project is a sample of quality rule development for Python analyzer.
