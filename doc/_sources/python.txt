@@ -1,0 +1,672 @@
+Python Analyser specificities
+*****************************
+
+.. note::
+    This documentation applies to CAIP >= 8.3.x and com.castsoftware.python >= 1.4.0-beta2.
+
+
+.. toctree::
+   :maxdepth: 5
+
+
+HowTo
+=====
+
+Create your own UA extension, then react to the "add_quality_rules" event received from Python extension.
+With this event, you can send any interpreters of your choice, which will be used by the extension.
+These interpreters will have "start_XXX" and/or "end_XXX" methods where XXX is the *ast* node type you are interested in.
+They can also have also a "finish" method that is called after all python files have been analyzed.
+
+Sample of UA extension code :: 
+
+    import cast.analysers.ua
+    from cast import Event
+    from cast.analysers import log
+    
+    from interpreters import Interpreter1, Interpreter2
+            
+    class CustomPythonDiag(cast.analysers.ua.Extension):
+    
+        @Event('com.castsoftware.python', 'add_quality_rules')
+        def add_quality_rules(self, externalQualityRules):
+            
+            # Add the interpreters
+            externalQualityRules.add_interpreter(Interpreter1, self.get_plugin())
+            externalQualityRules.add_interpreter(Interpreter2, self.get_plugin())
+            ...
+            
+
+Sample of a simple interpreter code :: 
+
+    class Interpreter:
+        
+        def __init__(self):
+            pass
+    
+        def start_MethodCall(self, ast):
+            ...
+    
+        def end_MethodCall(self, ast):
+            ...
+            
+        def start_XXX(self, ast):
+            ...
+
+        def end_XXX(self, ast):
+            ...
+            
+        ...
+            
+
+
+A complete sample is available here: :ref:`starter-kit`.
+
+
+Python ast node types
+=====================
+
+Here we present the main classes and methods that form 
+the API to exploit the information contained in the abstract 
+syntax tree (AST) of a python file.
+
+
+Basic elements
+--------------
+
+The AST returned by the Python analyzer is composed 
+of nodes (Node type) and tokens (Token type). Tokens are 
+the most basic elements. All nodes do contain sub-items 
+(other sub-nodes and tokens). In some specific contexts one might 
+not distinguish between nodes and tokens as they are treaded
+similarly.
+
+All nodes inherit direcly or indirectly from *light_parser.Node*.
+Some nodes might inherit from some generic intermediate
+classes (*Statement*, *BlockStatement*, *Term*) used internally for
+parsing purposes. The character of the node (expression vs statement) 
+is loosely correlated to the the name of these clases for certain 
+nodes. These intermediate classes do not contribute to the API. 
+ 
+
+.. autoclass:: light_parser.Token
+
+    .. method:: get_begin_line()
+        
+        :return: the ast node begin line
+        :rtype: int
+        
+    .. method:: get_begin_column()
+        
+        :return: the ast node begin column
+        :rtype: int
+        
+    .. method:: get_end_line()
+        
+        :return: the ast node end line
+        :rtype: int
+
+    .. method:: get_end_column()
+        
+        :return: the ast node end column
+        :rtype: int
+
+    .. method:: get_type()
+        
+        :return: the name of the token type
+        :rtype: str
+
+    .. method:: get_children()
+    
+        Convenient method to comply with 'light_parser.Node' interface.
+    
+        :return: empty list
+        
+    .. method:: get_sub_nodes()
+    
+        Convenient method to comply with 'light_parser.Node' interface.
+    
+        :return: empty list        
+
+    .. method:: __eq__(self, other):
+        
+        Equality.
+        
+        Can compare to text directly. (case insensitive).
+
+.. autoclass:: light_parser.Node
+   :members: get_type, get_sub_nodes, get_children,
+             print_tree
+   :undoc-members:
+   
+    .. method:: get_begin_line()
+        
+        :return: the ast node begin line
+        :rtype: int
+        
+    .. method:: get_begin_column()
+        
+        :return: the ast node begin column
+        :rtype: int
+        
+    .. method:: get_end_line()
+        
+        :return: the ast node end line
+        :rtype: int
+
+    .. method:: get_end_column()
+        
+        :return: the ast node end column
+        :rtype: int
+
+    .. method:: get_type()
+        
+        :return: the name of the node
+        :rtype: str
+       
+        
+
+The following intermediate classes inherit from Node, but
+do not contribute to the API.
+
+.. class:: light_parser.Statement
+.. class:: light_parser.BlockStatement
+.. class:: light_parser.Term
+    
+
+
+Base classes
+------------
+The classes below conveniently factorize common code
+among certain type of nodes. These are not explicit
+nodes of the AST.
+
+.. The choice of keeping these classes separated in different sections from 
+.. sub-classes is to avoid confusion in the reader about expected nodes
+.. in the AST. Note that having the link to the base classes renders the
+.. navigation between sections straightforward. 
+
+
+.. autoclass:: python_parser.PythonStatement
+   :members:
+   :undoc-members:
+   
+.. autoclass:: python_parser.PythonBlockStatement
+   :members:
+   :undoc-members:
+
+.. autoclass:: python_parser.WithDocString
+   :members:
+   :undoc-members:
+   :exclude-members: get_header_comments, get_body_comments
+   
+.. autoclass:: python_parser.WithExpression
+   :members:
+   :undoc-members:
+   :exclude-members: get_header_comments, get_body_comments
+
+.. autoclass:: python_parser.PythonSimpleStatement
+   :members:
+   :undoc-members:
+   :exclude-members: get_header_comments, get_body_comments
+
+.. autoclass:: python_parser.Class
+   :show-inheritance:
+   :members:
+   :undoc-members:
+   :exclude-members: on_end
+   
+.. autoclass:: python_parser.While
+   :exclude-members: on_end
+   
+.. autoclass:: python_parser.With
+   :exclude-members: on_end   
+
+Statements
+----------
+
+Definition statements
+^^^^^^^^^^^^^^^^^^^^^
+
+.. autoclass:: python_parser.ClassBlock
+   :show-inheritance:
+
+.. autoclass:: python_parser.ClassOneLine
+   :show-inheritance:
+   
+.. autoclass:: python_parser.FunctionBlock
+   :show-inheritance:
+
+.. autoclass:: python_parser.FunctionOneLine
+   :show-inheritance:
+   
+.. autoclass:: python_parser.Global
+
+.. autoclass:: python_parser.NonLocal
+
+   
+Simple statements
+^^^^^^^^^^^^^^^^^
+
+.. autoclass:: python_parser.ExpressionStatement
+   :show-inheritance:
+   :members:
+   :undoc-members:
+   :exclude-members: begin, end, consume_end, on_end
+
+.. autoclass:: python_parser.Import
+   :show-inheritance:
+   :members:
+   :undoc-members:
+   :exclude-members: begin, end, consume_end, on_end
+   
+.. autoclass:: python_parser.Return
+   :show-inheritance:
+   :members:
+   :undoc-members:
+   :exclude-members: begin, end, consume_end, on_end
+
+.. autoclass:: python_parser.Yield
+   :show-inheritance:
+   :members:
+   :undoc-members:
+   :exclude-members: begin, end, consume_end, on_end
+
+.. autoclass:: python_parser.YieldFrom
+   :show-inheritance:
+   :members:
+   :undoc-members:
+   :exclude-members: begin, end, consume_end, on_end
+
+.. autoclass:: python_parser.Await
+   :show-inheritance:
+   :members:
+   :undoc-members:
+   :exclude-members: begin, end, consume_end, on_end
+
+.. autoclass:: python_parser.Delete
+   :show-inheritance:
+   :members:
+   :undoc-members:
+   :exclude-members: begin, end, consume_end, on_end
+
+.. autoclass:: python_parser.Break
+   :show-inheritance:
+   :members:
+   :undoc-members:
+   :exclude-members: begin, end, consume_end, on_end
+
+.. autoclass:: python_parser.Continue
+   :show-inheritance:
+   :members:
+   :undoc-members:
+   :exclude-members: begin, end, consume_end, on_end
+
+.. autoclass:: python_parser.Raise
+   :show-inheritance:
+   :members:
+   :undoc-members:
+   :exclude-members: begin, end, consume_end, on_end
+
+.. autoclass:: python_parser.Print
+   :show-inheritance:
+   :members:
+   :undoc-members:
+   :exclude-members: begin, end, consume_end, on_end
+
+.. autoclass:: python_parser.Exec
+   :show-inheritance:
+   :members:
+   :undoc-members:
+   :exclude-members: begin, end, consume_end, on_end
+
+.. autoclass:: python_parser.Assert
+   :show-inheritance:
+   :members:
+   :undoc-members:
+   :exclude-members: begin, end, consume_end, on_end
+
+.. autoclass:: python_parser.Pass
+   :show-inheritance:
+   :members:
+   :undoc-members:
+   :exclude-members: begin, end, consume_end, on_end
+
+.. autoclass:: python_parser.EllipsisObject
+   :show-inheritance:
+   :members:
+   :undoc-members:
+   :exclude-members: begin, end, consume_end, on_end
+
+
+Block statements
+^^^^^^^^^^^^^^^^
+Statements containing other statements.
+
+.. autoclass:: python_parser.ForBlock
+   :show-inheritance:
+   :members:
+   :undoc-members:
+   :exclude-members: begin, end, consume_end, on_end
+
+.. autoclass:: python_parser.ForOneLine
+   :show-inheritance:
+   :members:
+   :undoc-members:
+   :exclude-members: begin, end, consume_end, on_end
+
+.. autoclass:: python_parser.WhileBlock
+   :show-inheritance:
+   :members:
+   :undoc-members:
+   :exclude-members: begin, end, consume_end, on_end
+
+.. autoclass:: python_parser.WhileOneLine
+   :show-inheritance:
+   :members:
+   :undoc-members:
+   :exclude-members: begin, end, consume_end, on_end
+
+.. autoclass:: python_parser.TryBlock
+   :show-inheritance:
+   :members:
+   :undoc-members:
+   :exclude-members: begin, end, consume_end, on_end
+
+.. autoclass:: python_parser.TryOneLine
+   :show-inheritance:
+   :members:
+   :undoc-members:
+   :exclude-members: begin, end, consume_end, on_end, get_statements
+
+.. autoclass:: python_parser.ExceptBlock
+   :show-inheritance:
+   :members:
+   :undoc-members:
+   :exclude-members: begin, end, consume_end, on_end
+
+.. autoclass:: python_parser.ExceptOneLine
+   :show-inheritance:
+   :members:
+   :undoc-members:
+   :exclude-members: begin, end, consume_end, on_end
+
+.. autoclass:: python_parser.WithBlock
+   :show-inheritance:
+   :members:
+   :undoc-members:
+   :exclude-members: begin, end, consume_end, on_end
+
+.. autoclass:: python_parser.WithOneLine
+   :show-inheritance:
+   :members:
+   :undoc-members:
+   :exclude-members: begin, end, consume_end, on_end
+
+.. autoclass:: python_parser.FinallyBlock
+   :show-inheritance:
+   :members:
+   :undoc-members:
+   :exclude-members: begin, end, consume_end, on_end
+
+.. autoclass:: python_parser.FinallyOneLine
+   :show-inheritance:
+   :members:
+   :undoc-members:
+   :exclude-members: begin, end, consume_end, on_end
+
+.. autoclass:: python_parser.IfThenElseBlock
+   :show-inheritance:
+   :members:
+   :undoc-members:
+   :exclude-members: begin, end, consume_end, on_end
+
+.. autoclass:: python_parser.IfThenElseOneLine
+   :show-inheritance:
+   :members:
+   :undoc-members:
+   :exclude-members: begin, end, consume_end, on_end
+
+
+Expressions
+-----------
+
+.. autoclass:: python_parser.Identifier
+   :show-inheritance:
+   :members:
+   :undoc-members:
+
+.. autoclass:: python_parser.BinaryOperation
+   :show-inheritance:
+   :members:
+   :undoc-members:
+
+.. autoclass:: python_parser.Assignment
+   :show-inheritance:
+   :members:
+   :undoc-members:
+   :exclude-members: get_assigned_expressions
+   
+.. autoclass:: python_parser.Decorators
+   :show-inheritance:
+   :members:
+   :undoc-members:
+   :exclude-members: begin, end, consume_end, on_end
+   
+.. autoclass:: python_parser.Unpacking
+   :show-inheritance:
+   :members:
+   :undoc-members: 
+   
+.. autoclass:: python_parser.Constant
+   :show-inheritance:
+   :members:
+   :undoc-members:
+   :exclude-members: string_marks
+   
+.. autoclass:: python_parser.DotAccess
+   :show-inheritance:
+   :members:
+   :undoc-members:  
+   
+.. autoclass:: python_parser.ArrayAccess
+   :show-inheritance:
+   :members:
+   :undoc-members: 
+   
+.. autoclass:: python_parser.MethodCall
+   :show-inheritance:
+   :members:
+   :undoc-members:
+   :exclude-members: has_signature_of
+   
+.. autoclass:: python_parser.Array
+   :show-inheritance:
+   :members:
+   :undoc-members: 
+   
+.. autoclass:: python_parser.ComprehensionLoop
+   :show-inheritance:
+   :members:
+   :undoc-members:
+   
+.. autoclass:: python_parser.ComprehensionFor   
+   :show-inheritance:
+   :members:
+   :undoc-members:
+   
+.. autoclass:: python_parser.Map
+   :show-inheritance:
+   :members:
+   :undoc-members: 
+
+.. autoclass:: python_parser.Lambda
+   :show-inheritance:
+   :members:
+   :undoc-members: 
+   
+.. autoclass:: python_parser.LambdaParameters
+   :show-inheritance:
+   :members:
+   :undoc-members: 
+   
+.. autoclass:: python_parser.Unary
+   :show-inheritance:
+   :members:
+   :undoc-members: 
+
+.. autoclass:: python_parser.UnaryNot
+   :show-inheritance:
+   :members:
+   :undoc-members: 
+   
+.. autoclass:: python_parser.AdditionExpression   
+   :show-inheritance:
+   :members:
+   :undoc-members: 
+   
+.. autoclass:: python_parser.StringInterpolation
+   :show-inheritance:
+   :members:
+   :undoc-members: 
+   
+.. autoclass:: python_parser.IfTernaryExpression
+   :show-inheritance:
+   :members:
+   :undoc-members:   
+   
+.. autoclass:: python_parser.ExpressionList
+   :show-inheritance:
+   :members:
+   :undoc-members:   
+
+Other structural nodes
+----------------------
+
+.. autoclass:: python_parser.Parenthesis
+
+.. autoclass:: python_parser.SquareBracketedBlock
+
+.. autoclass:: python_parser.BracketedBlock
+
+.. autoclass:: python_parser.IndentBlock
+
+
+Symbols
+=======
+
+Symbols closely represent the structure of metamodel objects, 
+among other functionalities. They are also used for resolution
+purposes for certain nodes.
+
+.. autoclass:: symbols.Symbol
+   :members: 
+   :undoc-members:
+   :exclude-members: add_import, get_code_only_crc, get_final_guid, clean_ast,
+                     save, save_violations, save_candidate_violations,
+                     create_symbols, update_symbols, get_kb_object,
+                     get_header_comments_line_count, get_body_comments_line_count,
+                     get_line_count, get_header_comments, get_body_comments,
+                     get_imports, get_decorators, get_imported_symbols
+                     
+                   
+.. autoclass:: symbols.Module
+   :show-inheritance:
+   :members: 
+   :undoc-members:
+   :exclude-members: light_parse, resolve_globals, set_imports_resolved, has_imports_resolved,
+                     fully_parse, get_variable, get_library, is_analysed, get_text, create_symbols,
+                     get_resource_services, add_server_operation, get_server_operations,
+                     add_db_query,
+                     add_resource_service, add_db_file_query, add_sqlalchemy_reference,
+                     add_external_call, get_db_queries, get_db_file_queries, get_sqlalchemy_references,
+                     get_external_calls, update_calling_asts,
+                     save_main, save_external_calls, save_links, save_services, save_operations,
+                     save_db_queries, save_db_file_queries, save_db_sqlalchemy_references
+                     
+   
+.. autoclass:: symbols.Class
+   :show-inheritance:
+   :members: 
+   :undoc-members:
+   :exclude-members: add_member, declare_member, get_return_type
+
+.. autoclass:: symbols.Function
+   :show-inheritance:
+   :members: 
+   :undoc-members: 
+   :exclude-members: add_caller, remove_caller, get_return_type
+
+
+Writing tests
+=============
+
+Sample of a test :: 
+
+    import unittest
+    import cast.analysers.test
+    import cast.analysers.ua    
+    
+    class Test(unittest.TestCase):
+        
+        def test_ok1(self):
+            
+            analysis = cast.analysers.test.UATestAnalysis('PYTHON')  # set Python language
+            analysis.add_selection('test1')
+            analysis.add_dependency(r'C:\ProgramData\CAST\CAST\Extensions\com.castsoftware.python.1.4.0-beta2')
+            analysis.run()
+            
+            f = analysis.get_object_by_name('f', 'CAST_Python_Function')
+            self.assertTrue(f)
+            value = f.get_value('CAST_Python_Rule.AvoidUsingInvalidObjectsInAll')
+            self.assertEqual('1', value)
+
+
+    if __name__ == '__main__':
+        unittest.main()
+
+
+.. note::
+    You need to add a dependency by absolute path or relative to the folder containing com.castsoftware.python, for example ::
+        
+        analysis.add_dependency(r'C:\ProgramData\CAST\CAST\Extensions\com.castsoftware.python.1.4.0-beta2')
+
+    For that you need to have downloaded the extension through CAST ExtensionDowloader:
+    see https://doc.castsoftware.com/display/EXTEND/CAST+Extension+Downloader
+
+
+.. _Python_categories:
+
+Categories and types for quality rules
+======================================
+
+For adding a quality rule use the following categories 
+ 
+* Category `CAST_Python_Rule` (for artifacts), `CAST_Python_ClassRule` (only for classes).
+
+
+.. _Python_scopes:
+
+Quality rule scopes
+===================
+
+Available basic quality rule scopes are :
+
++---------+--------------------------------------------------------------------+
+| 1021000 | Callable Python artifacts (includes functions methods and modules) |
++---------+--------------------------------------------------------------------+
+| 1021008 | Python Functions (includes functions and methods)                  |
++---------+--------------------------------------------------------------------+
+| 1021011 | Python Classes                                                     |
++---------+--------------------------------------------------------------------+
+| 1021012 | Python Modules                                                     |
++---------+--------------------------------------------------------------------+
+
+
+Python technologies
+===================
+
+Values for technology to be used in IMPLTechnologies.xml for filter value
+
++--------+---------+
+| Python | 1021000 |
++--------+---------+

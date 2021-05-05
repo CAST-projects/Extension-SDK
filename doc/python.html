@@ -1,0 +1,1822 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Python Analyser specificities &mdash; CAST Extension SDK 1.6.6 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="CAST Extension SDK 1.6.6 documentation" href="index.html"/>
+        <link rel="next" title="Debugging" href="debugging.html"/>
+        <link rel="prev" title="HTML5/Javascript Analyser specificities" href="html5.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> CAST Extension SDK
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.6.6
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="my_first_plugin.html">Tutorial : My first plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="deployment.html">Deploying plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="manual.html">Creating a plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="analyser_level.html">Running during analysis of an existing analyser</a></li>
+<li class="toctree-l1"><a class="reference internal" href="application_level.html">Running code after analyzers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data_exchange.html">Exchanging data between analysis level and application level</a></li>
+<li class="toctree-l1"><a class="reference internal" href="analysers_specif.html">Analysers specific events</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mainframe.html">Mainframe Analyser specificities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="html5.html">HTML5/Javascript Analyser specificities</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Python Analyser specificities</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#howto">HowTo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#python-ast-node-types">Python ast node types</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#basic-elements">Basic elements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#base-classes">Base classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#statements">Statements</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#definition-statements">Definition statements</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#simple-statements">Simple statements</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#block-statements">Block statements</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#expressions">Expressions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#other-structural-nodes">Other structural nodes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#symbols">Symbols</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#writing-tests">Writing tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#categories-and-types-for-quality-rules">Categories and types for quality rules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#quality-rule-scopes">Quality rule scopes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#python-technologies">Python technologies</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="debugging.html">Debugging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="writing_quality_rule.html">Writing quality rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="code_reference.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="version_compatibility.html">Features and Bugs per CAIP versions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tips_and_tricks.html">Tips and tricks</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">CAST Extension SDK</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Python Analyser specificities</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="_sources/python.txt" rel="nofollow"> View page source</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="python-analyser-specificities">
+<h1>Python Analyser specificities<a class="headerlink" href="#python-analyser-specificities" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This documentation applies to CAIP &gt;= 8.3.x and com.castsoftware.python &gt;= 1.4.0-beta2.</p>
+</div>
+<div class="toctree-wrapper compound">
+<ul class="simple">
+</ul>
+</div>
+<div class="section" id="howto">
+<h2>HowTo<a class="headerlink" href="#howto" title="Permalink to this headline">¶</a></h2>
+<p>Create your own UA extension, then react to the &#8220;add_quality_rules&#8221; event received from Python extension.
+With this event, you can send any interpreters of your choice, which will be used by the extension.
+These interpreters will have &#8220;start_XXX&#8221; and/or &#8220;end_XXX&#8221; methods where XXX is the <em>ast</em> node type you are interested in.
+They can also have also a &#8220;finish&#8221; method that is called after all python files have been analyzed.</p>
+<p>Sample of UA extension code</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">cast.analysers.ua</span>
+<span class="kn">from</span> <span class="nn">cast</span> <span class="kn">import</span> <span class="n">Event</span>
+<span class="kn">from</span> <span class="nn">cast.analysers</span> <span class="kn">import</span> <span class="n">log</span>
+
+<span class="kn">from</span> <span class="nn">interpreters</span> <span class="kn">import</span> <span class="n">Interpreter1</span><span class="p">,</span> <span class="n">Interpreter2</span>
+
+<span class="k">class</span> <span class="nc">CustomPythonDiag</span><span class="p">(</span><span class="n">cast</span><span class="o">.</span><span class="n">analysers</span><span class="o">.</span><span class="n">ua</span><span class="o">.</span><span class="n">Extension</span><span class="p">):</span>
+
+    <span class="nd">@Event</span><span class="p">(</span><span class="s">&#39;com.castsoftware.python&#39;</span><span class="p">,</span> <span class="s">&#39;add_quality_rules&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">add_quality_rules</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">externalQualityRules</span><span class="p">):</span>
+
+        <span class="c"># Add the interpreters</span>
+        <span class="n">externalQualityRules</span><span class="o">.</span><span class="n">add_interpreter</span><span class="p">(</span><span class="n">Interpreter1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_plugin</span><span class="p">())</span>
+        <span class="n">externalQualityRules</span><span class="o">.</span><span class="n">add_interpreter</span><span class="p">(</span><span class="n">Interpreter2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_plugin</span><span class="p">())</span>
+        <span class="o">...</span>
+</pre></div>
+</div>
+<p>Sample of a simple interpreter code</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Interpreter</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">start_MethodCall</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ast</span><span class="p">):</span>
+        <span class="o">...</span>
+
+    <span class="k">def</span> <span class="nf">end_MethodCall</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ast</span><span class="p">):</span>
+        <span class="o">...</span>
+
+    <span class="k">def</span> <span class="nf">start_XXX</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ast</span><span class="p">):</span>
+        <span class="o">...</span>
+
+    <span class="k">def</span> <span class="nf">end_XXX</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ast</span><span class="p">):</span>
+        <span class="o">...</span>
+
+    <span class="o">...</span>
+</pre></div>
+</div>
+<p>A complete sample is available here: <a class="reference internal" href="writing_quality_rule.html#starter-kit"><em>Starter kits</em></a>.</p>
+</div>
+<div class="section" id="python-ast-node-types">
+<h2>Python ast node types<a class="headerlink" href="#python-ast-node-types" title="Permalink to this headline">¶</a></h2>
+<p>Here we present the main classes and methods that form
+the API to exploit the information contained in the abstract
+syntax tree (AST) of a python file.</p>
+<div class="section" id="basic-elements">
+<h3>Basic elements<a class="headerlink" href="#basic-elements" title="Permalink to this headline">¶</a></h3>
+<p>The AST returned by the Python analyzer is composed
+of nodes (Node type) and tokens (Token type). Tokens are
+the most basic elements. All nodes do contain sub-items
+(other sub-nodes and tokens). In some specific contexts one might
+not distinguish between nodes and tokens as they are treaded
+similarly.</p>
+<p>All nodes inherit direcly or indirectly from <em>light_parser.Node</em>.
+Some nodes might inherit from some generic intermediate
+classes (<em>Statement</em>, <em>BlockStatement</em>, <em>Term</em>) used internally for
+parsing purposes. The character of the node (expression vs statement)
+is loosely correlated to the the name of these clases for certain
+nodes. These intermediate classes do not contribute to the API.</p>
+<dl class="class">
+<dt id="light_parser.Token">
+<em class="property">class </em><tt class="descclassname">light_parser.</tt><tt class="descname">Token</tt><big>(</big><em>text=None</em>, <em>type=None</em><big>)</big><a class="headerlink" href="#light_parser.Token" title="Permalink to this definition">¶</a></dt>
+<dd><p>A token with code position.</p>
+<dl class="method">
+<dt id="Token.get_begin_line">
+<tt class="descname">get_begin_line</tt><big>(</big><big>)</big><a class="headerlink" href="#Token.get_begin_line" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the ast node begin line</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Token.get_begin_column">
+<tt class="descname">get_begin_column</tt><big>(</big><big>)</big><a class="headerlink" href="#Token.get_begin_column" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the ast node begin column</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Token.get_end_line">
+<tt class="descname">get_end_line</tt><big>(</big><big>)</big><a class="headerlink" href="#Token.get_end_line" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the ast node end line</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Token.get_end_column">
+<tt class="descname">get_end_column</tt><big>(</big><big>)</big><a class="headerlink" href="#Token.get_end_column" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the ast node end column</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Token.get_type">
+<tt class="descname">get_type</tt><big>(</big><big>)</big><a class="headerlink" href="#Token.get_type" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the name of the token type</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Token.get_children">
+<tt class="descname">get_children</tt><big>(</big><big>)</big><a class="headerlink" href="#Token.get_children" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenient method to comply with &#8216;light_parser.Node&#8217; interface.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">empty list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Token.get_sub_nodes">
+<tt class="descname">get_sub_nodes</tt><big>(</big><big>)</big><a class="headerlink" href="#Token.get_sub_nodes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenient method to comply with &#8216;light_parser.Node&#8217; interface.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">empty list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<tt class="descname">__eq__(self, other):</tt></dt>
+<dd><p>Equality.</p>
+<p>Can compare to text directly. (case insensitive).</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="light_parser.Node">
+<em class="property">class </em><tt class="descclassname">light_parser.</tt><tt class="descname">Node</tt><a class="headerlink" href="#light_parser.Node" title="Permalink to this definition">¶</a></dt>
+<dd><p>An AST node</p>
+<blockquote>
+<div><dl class="method">
+<dt id="Node.get_begin_line">
+<tt class="descname">get_begin_line</tt><big>(</big><big>)</big><a class="headerlink" href="#Node.get_begin_line" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the ast node begin line</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Node.get_begin_column">
+<tt class="descname">get_begin_column</tt><big>(</big><big>)</big><a class="headerlink" href="#Node.get_begin_column" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the ast node begin column</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Node.get_end_line">
+<tt class="descname">get_end_line</tt><big>(</big><big>)</big><a class="headerlink" href="#Node.get_end_line" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the ast node end line</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Node.get_end_column">
+<tt class="descname">get_end_column</tt><big>(</big><big>)</big><a class="headerlink" href="#Node.get_end_column" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the ast node end column</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Node.get_type">
+<tt class="descname">get_type</tt><big>(</big><big>)</big><a class="headerlink" href="#Node.get_type" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the name of the node</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+<dl class="method">
+<dt id="light_parser.Node.get_type">
+<tt class="descname">get_type</tt><big>(</big><big>)</big><a class="headerlink" href="#light_parser.Node.get_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="light_parser.Node.get_children">
+<tt class="descname">get_children</tt><big>(</big><big>)</big><a class="headerlink" href="#light_parser.Node.get_children" title="Permalink to this definition">¶</a></dt>
+<dd><p>An iterator on tokens and children that skips whitespaces and comments</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="light_parser.Node.get_sub_nodes">
+<tt class="descname">get_sub_nodes</tt><big>(</big><em>_type=None</em><big>)</big><a class="headerlink" href="#light_parser.Node.get_sub_nodes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return sub AST nodes</p>
+<p>if a _type is provided returns only sub nodes of that type.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="light_parser.Node.print_tree">
+<tt class="descname">print_tree</tt><big>(</big><em>depth=0</em><big>)</big><a class="headerlink" href="#light_parser.Node.print_tree" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print as a tree.</p>
+</dd></dl>
+
+</dd></dl>
+
+<p>The following intermediate classes inherit from Node, but
+do not contribute to the API.</p>
+<dl class="class">
+<dt id="light_parser.Statement">
+<em class="property">class </em><tt class="descclassname">light_parser.</tt><tt class="descname">Statement</tt><a class="headerlink" href="#light_parser.Statement" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="light_parser.BlockStatement">
+<em class="property">class </em><tt class="descclassname">light_parser.</tt><tt class="descname">BlockStatement</tt><a class="headerlink" href="#light_parser.BlockStatement" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="light_parser.Term">
+<em class="property">class </em><tt class="descclassname">light_parser.</tt><tt class="descname">Term</tt><a class="headerlink" href="#light_parser.Term" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="base-classes">
+<h3>Base classes<a class="headerlink" href="#base-classes" title="Permalink to this headline">¶</a></h3>
+<p>The classes below conveniently factorize common code
+among certain type of nodes. These are not explicit
+nodes of the AST.</p>
+<dl class="class">
+<dt id="python_parser.PythonStatement">
+<em class="property">class </em><tt class="descclassname">python_parser.</tt><tt class="descname">PythonStatement</tt><a class="headerlink" href="#python_parser.PythonStatement" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="python_parser.PythonStatement.get_container_block">
+<tt class="descname">get_container_block</tt><big>(</big><big>)</big><a class="headerlink" href="#python_parser.PythonStatement.get_container_block" title="Permalink to this definition">¶</a></dt>
+<dd><p>Access to block, if, for etc... that contains that statement</p>
+<p>&#64;return: None for top level statements</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="python_parser.PythonBlockStatement">
+<em class="property">class </em><tt class="descclassname">python_parser.</tt><tt class="descname">PythonBlockStatement</tt><a class="headerlink" href="#python_parser.PythonBlockStatement" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="python_parser.PythonBlockStatement.get_statements">
+<tt class="descname">get_statements</tt><big>(</big><big>)</big><a class="headerlink" href="#python_parser.PythonBlockStatement.get_statements" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="python_parser.WithDocString">
+<em class="property">class </em><tt class="descclassname">python_parser.</tt><tt class="descname">WithDocString</tt><a class="headerlink" href="#python_parser.WithDocString" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="python_parser.WithDocString.get_docstring">
+<tt class="descname">get_docstring</tt><big>(</big><em>unstripped=False</em><big>)</big><a class="headerlink" href="#python_parser.WithDocString.get_docstring" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return python docstring of element</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="python_parser.WithDocString.get_decorators">
+<tt class="descname">get_decorators</tt><big>(</big><big>)</big><a class="headerlink" href="#python_parser.WithDocString.get_decorators" title="Permalink to this definition">¶</a></dt>
+<dd><p>Access to decorators of object.</p>
+<p>&#64;rtype: list of Decorator</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="python_parser.WithExpression">
+<em class="property">class </em><tt class="descclassname">python_parser.</tt><tt class="descname">WithExpression</tt><a class="headerlink" href="#python_parser.WithExpression" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="python_parser.WithExpression.get_expression">
+<tt class="descname">get_expression</tt><big>(</big><em>strip_parentheses=True</em><big>)</big><a class="headerlink" href="#python_parser.WithExpression.get_expression" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="python_parser.PythonSimpleStatement">
+<em class="property">class </em><tt class="descclassname">python_parser.</tt><tt class="descname">PythonSimpleStatement</tt><a class="headerlink" href="#python_parser.PythonSimpleStatement" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="python_parser.PythonSimpleStatement.end">
+<tt class="descname">end</tt><em class="property"> = Or(;,Token.LineFeed)</em><a class="headerlink" href="#python_parser.PythonSimpleStatement.end" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="python_parser.Class">
+<em class="property">class </em><tt class="descclassname">python_parser.</tt><tt class="descname">Class</tt><a class="headerlink" href="#python_parser.Class" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#python_parser.PythonStatement" title="python_parser.PythonStatement"><tt class="xref py py-class docutils literal"><span class="pre">python_parser.PythonStatement</span></tt></a>, <a class="reference internal" href="#python_parser.WithDocString" title="python_parser.WithDocString"><tt class="xref py py-class docutils literal"><span class="pre">python_parser.WithDocString</span></tt></a></p>
+<p>Base class for Python classes</p>
+<dl class="method">
+<dt id="python_parser.Class.is_class">
+<tt class="descname">is_class</tt><big>(</big><big>)</big><a class="headerlink" href="#python_parser.Class.is_class" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="python_parser.Class.get_name">
+<tt class="descname">get_name</tt><big>(</big><big>)</big><a class="headerlink" href="#python_parser.Class.get_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Access to class name</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="python_parser.Class.get_inheritance">
+<tt class="descname">get_inheritance</tt><big>(</big><big>)</big><a class="headerlink" href="#python_parser.Class.get_inheritance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Access to inheritance</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="python_parser.While">
+<em class="property">class </em><tt class="descclassname">python_parser.</tt><tt class="descname">While</tt><a class="headerlink" href="#python_parser.While" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="python_parser.With">
+<em class="property">class </em><tt class="descclassname">python_parser.</tt><tt class="descname">With</tt><a class="headerlink" href="#python_parser.With" title="Permalink to this definition">¶</a></dt>
+<dd><p>Common class for with statement</p>
+</dd></dl>
+
+</div>
+<div class="section" id="statements">
+<h3>Statements<a class="headerlink" href="#statements" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="definition-statements">
+<h4>Definition statements<a class="headerlink" href="#definition-statements" title="Permalink to this headline">¶</a></h4>
+<dl class="class">
+<dt id="python_parser.ClassBlock">
+<em class="property">class </em><tt class="descclassname">python_parser.</tt><tt class="descname">ClassBlock</tt><a class="headerlink" href="#python_parser.ClassBlock" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#python_parser.Class" title="python_parser.Class"><tt class="xref py py-class docutils literal"><span class="pre">python_parser.Class</span></tt></a>, <a class="reference internal" href="#light_parser.BlockStatement" title="light_parser.BlockStatement"><tt class="xref py py-class docutils literal"><span class="pre">light_parser.BlockStatement</span></tt></a></p>
+<p>Class definition containing an indented statement block</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="python_parser.ClassOneLine">
+<em class="property">class </em><tt class="descclassname">python_parser.</tt><tt class="descname">ClassOneLine</tt><a class="headerlink" href="#python_parser.ClassOneLine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#python_parser.Class" title="python_parser.Class"><tt class="xref py py-class docutils literal"><span class="pre">python_parser.Class</span></tt></a>, <a class="reference internal" href="#light_parser.Statement" title="light_parser.Statement"><tt class="xref py py-class docutils literal"><span class="pre">light_parser.Statement</span></tt></a></p>
+<p>Class definition in one line</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="python_parser.FunctionBlock">
+<em class="property">class </em><tt class="descclassname">python_parser.</tt><tt class="descname">FunctionBlock</tt><a class="headerlink" href="#python_parser.FunctionBlock" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">python_parser.Function</span></tt>, <a class="reference internal" href="#light_parser.BlockStatement" title="light_parser.BlockStatement"><tt class="xref py py-class docutils literal"><span class="pre">light_parser.BlockStatement</span></tt></a></p>
+<p>Function definition containing an indented statement block</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="python_parser.FunctionOneLine">
+<em class="property">class </em><tt class="descclassname">python_parser.</tt><tt class="descname">FunctionOneLine</tt><a class="headerlink" href="#python_parser.FunctionOneLine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">python_parser.Function</span></tt>, <a class="reference internal" href="#light_parser.Statement" title="light_parser.Statement"><tt class="xref py py-class docutils literal"><span class="pre">light_parser.Statement</span></tt></a></p>
+<p>Function definition in one line</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="python_parser.Global">
+<em class="property">class </em><tt class="descclassname">python_parser.</tt><tt class="descname">Global</tt><a class="headerlink" href="#python_parser.Global" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="python_parser.NonLocal">
+<em class="property">class </em><tt class="descclassname">python_parser.</tt><tt class="descname">NonLocal</tt><a class="headerlink" href="#python_parser.NonLocal" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="simple-statements">
+<h4>Simple statements<a class="headerlink" href="#simple-statements" title="Permalink to this headline">¶</a></h4>
+<dl class="class">
+<dt id="python_parser.ExpressionStatement">
+<em class="property">class </em><tt class="descclassname">python_parser.</tt><tt class="descname">ExpressionStatement</tt><a class="headerlink" href="#python_parser.ExpressionStatement" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#light_parser.Statement" title="light_parser.Statement"><tt class="xref py py-class docutils literal"><span class="pre">light_parser.Statement</span></tt></a>, <a class="reference internal" href="#python_parser.PythonSimpleStatement" title="python_parser.PythonSimpleStatement"><tt class="xref py py-class docutils literal"><span class="pre">python_parser.PythonSimpleStatement</span></tt></a></p>
+<dl class="method">
+<dt id="python_parser.ExpressionStatement.get_expression">
+<tt class="descname">get_expression</tt><big>(</big><big>)</big><a class="headerlink" href="#python_parser.ExpressionStatement.get_expression" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="python_parser.ExpressionStatement.is_expression_statement">
+<tt class="descname">is_expression_statement</tt><big>(</big><big>)</big><a class="headerlink" href="#python_parser.ExpressionStatement.is_expression_statement" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="python_parser.Import">
+<em class="property">class </em><tt class="descclassname">python_parser.</tt><tt class="descname">Import</tt><a class="headerlink" href="#python_parser.Import" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#light_parser.Statement" title="light_parser.Statement"><tt class="xref py py-class docutils literal"><span class="pre">light_parser.Statement</span></tt></a>, <a class="reference internal" href="#python_parser.PythonSimpleStatement" title="python_parser.PythonSimpleStatement"><tt class="xref py py-class docutils literal"><span class="pre">python_parser.PythonSimpleStatement</span></tt></a></p>
+<dl class="method">
+<dt id="python_parser.Import.is_import">
+<tt class="descname">is_import</tt><big>(</big><big>)</big><a class="headerlink" href="#python_parser.Import.is_import" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="python_parser.Import.get_module_references">
+<tt class="descname">get_module_references</tt><big>(</big><big>)</big><a class="headerlink" href="#python_parser.Import.get_module_references" title="Permalink to this definition">¶</a></dt>
+<dd><p>Access to the imported module</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">&#8216;a.b&#8217; for <cite>import a.b</cite></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="python_parser.Import.get_imported_elements">
+<tt class="descname">get_imported_elements</tt><big>(</big><big>)</big><a class="headerlink" href="#python_parser.Import.get_imported_elements" title="Permalink to this definition">¶</a></dt>
+<dd><p>from ... import &lt;imported elements&gt;</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="python_parser.Return">
+<em class="property">class </em><tt class="descclassname">python_parser.</tt><tt class="descname">Return</tt><a class="headerlink" href="#python_parser.Return" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#light_parser.Statement" title="light_parser.Statement"><tt class="xref py py-class docutils literal"><span class="pre">light_parser.Statement</span></tt></a>, <a class="reference internal" href="#python_parser.PythonSimpleStatement" title="python_parser.PythonSimpleStatement"><tt class="xref py py-class docutils literal"><span class="pre">python_parser.PythonSimpleStatement</span></tt></a>, <a class="reference internal" href="#python_parser.WithExpression" title="python_parser.WithExpression"><tt class="xref py py-class docutils literal"><span class="pre">python_parser.WithExpression</span></tt></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="python_parser.Yield">
+<em class="property">class </em><tt class="descclassname">python_parser.</tt><tt class="descname">Yield</tt><a class="headerlink" href="#python_parser.Yield" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#light_parser.Statement" title="light_parser.Statement"><tt class="xref py py-class docutils literal"><span class="pre">light_parser.Statement</span></tt></a>, <a class="reference internal" href="#python_parser.PythonSimpleStatement" title="python_parser.PythonSimpleStatement"><tt class="xref py py-class docutils literal"><span class="pre">python_parser.PythonSimpleStatement</span></tt></a>, <a class="reference internal" href="#python_parser.WithExpression" title="python_parser.WithExpression"><tt class="xref py py-class docutils literal"><span class="pre">python_parser.WithExpression</span></tt></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="python_parser.YieldFrom">
+<em class="property">class </em><tt class="descclassname">python_parser.</tt><tt class="descname">YieldFrom</tt><a class="headerlink" href="#python_parser.YieldFrom" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#light_parser.Statement" title="light_parser.Statement"><tt class="xref py py-class docutils literal"><span class="pre">light_parser.Statement</span></tt></a>, <a class="reference internal" href="#python_parser.PythonSimpleStatement" title="python_parser.PythonSimpleStatement"><tt class="xref py py-class docutils literal"><span class="pre">python_parser.PythonSimpleStatement</span></tt></a>, <a class="reference internal" href="#python_parser.WithExpression" title="python_parser.WithExpression"><tt class="xref py py-class docutils literal"><span class="pre">python_parser.WithExpression</span></tt></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="python_parser.Await">
+<em class="property">class </em><tt class="descclassname">python_parser.</tt><tt class="descname">Await</tt><a class="headerlink" href="#python_parser.Await" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#light_parser.Statement" title="light_parser.Statement"><tt class="xref py py-class docutils literal"><span class="pre">light_parser.Statement</span></tt></a>, <a class="reference internal" href="#python_parser.PythonSimpleStatement" title="python_parser.PythonSimpleStatement"><tt class="xref py py-class docutils literal"><span class="pre">python_parser.PythonSimpleStatement</span></tt></a>, <a class="reference internal" href="#python_parser.WithExpression" title="python_parser.WithExpression"><tt class="xref py py-class docutils literal"><span class="pre">python_parser.WithExpression</span></tt></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="python_parser.Delete">
+<em class="property">class </em><tt class="descclassname">python_parser.</tt><tt class="descname">Delete</tt><a class="headerlink" href="#python_parser.Delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#light_parser.Statement" title="light_parser.Statement"><tt class="xref py py-class docutils literal"><span class="pre">light_parser.Statement</span></tt></a>, <a class="reference internal" href="#python_parser.PythonSimpleStatement" title="python_parser.PythonSimpleStatement"><tt class="xref py py-class docutils literal"><span class="pre">python_parser.PythonSimpleStatement</span></tt></a>, <a class="reference internal" href="#python_parser.WithExpression" title="python_parser.WithExpression"><tt class="xref py py-class docutils literal"><span class="pre">python_parser.WithExpression</span></tt></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="python_parser.Break">
+<em class="property">class </em><tt class="descclassname">python_parser.</tt><tt class="descname">Break</tt><a class="headerlink" href="#python_parser.Break" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#light_parser.Statement" title="light_parser.Statement"><tt class="xref py py-class docutils literal"><span class="pre">light_parser.Statement</span></tt></a>, <a class="reference internal" href="#python_parser.PythonSimpleStatement" title="python_parser.PythonSimpleStatement"><tt class="xref py py-class docutils literal"><span class="pre">python_parser.PythonSimpleStatement</span></tt></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="python_parser.Continue">
+<em class="property">class </em><tt class="descclassname">python_parser.</tt><tt class="descname">Continue</tt><a class="headerlink" href="#python_parser.Continue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#light_parser.Statement" title="light_parser.Statement"><tt class="xref py py-class docutils literal"><span class="pre">light_parser.Statement</span></tt></a>, <a class="reference internal" href="#python_parser.PythonSimpleStatement" title="python_parser.PythonSimpleStatement"><tt class="xref py py-class docutils literal"><span class="pre">python_parser.PythonSimpleStatement</span></tt></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="python_parser.Raise">
+<em class="property">class </em><tt class="descclassname">python_parser.</tt><tt class="descname">Raise</tt><a class="headerlink" href="#python_parser.Raise" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#light_parser.Statement" title="light_parser.Statement"><tt class="xref py py-class docutils literal"><span class="pre">light_parser.Statement</span></tt></a>, <a class="reference internal" href="#python_parser.PythonSimpleStatement" title="python_parser.PythonSimpleStatement"><tt class="xref py py-class docutils literal"><span class="pre">python_parser.PythonSimpleStatement</span></tt></a>, <a class="reference internal" href="#python_parser.WithExpression" title="python_parser.WithExpression"><tt class="xref py py-class docutils literal"><span class="pre">python_parser.WithExpression</span></tt></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="python_parser.Print">
+<em class="property">class </em><tt class="descclassname">python_parser.</tt><tt class="descname">Print</tt><a class="headerlink" href="#python_parser.Print" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#light_parser.Statement" title="light_parser.Statement"><tt class="xref py py-class docutils literal"><span class="pre">light_parser.Statement</span></tt></a>, <a class="reference internal" href="#python_parser.PythonSimpleStatement" title="python_parser.PythonSimpleStatement"><tt class="xref py py-class docutils literal"><span class="pre">python_parser.PythonSimpleStatement</span></tt></a>, <a class="reference internal" href="#python_parser.WithExpression" title="python_parser.WithExpression"><tt class="xref py py-class docutils literal"><span class="pre">python_parser.WithExpression</span></tt></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="python_parser.Exec">
+<em class="property">class </em><tt class="descclassname">python_parser.</tt><tt class="descname">Exec</tt><a class="headerlink" href="#python_parser.Exec" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#light_parser.Statement" title="light_parser.Statement"><tt class="xref py py-class docutils literal"><span class="pre">light_parser.Statement</span></tt></a>, <a class="reference internal" href="#python_parser.PythonSimpleStatement" title="python_parser.PythonSimpleStatement"><tt class="xref py py-class docutils literal"><span class="pre">python_parser.PythonSimpleStatement</span></tt></a>, <a class="reference internal" href="#python_parser.WithExpression" title="python_parser.WithExpression"><tt class="xref py py-class docutils literal"><span class="pre">python_parser.WithExpression</span></tt></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="python_parser.Assert">
+<em class="property">class </em><tt class="descclassname">python_parser.</tt><tt class="descname">Assert</tt><a class="headerlink" href="#python_parser.Assert" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#light_parser.Statement" title="light_parser.Statement"><tt class="xref py py-class docutils literal"><span class="pre">light_parser.Statement</span></tt></a>, <a class="reference internal" href="#python_parser.PythonSimpleStatement" title="python_parser.PythonSimpleStatement"><tt class="xref py py-class docutils literal"><span class="pre">python_parser.PythonSimpleStatement</span></tt></a>, <a class="reference internal" href="#python_parser.WithExpression" title="python_parser.WithExpression"><tt class="xref py py-class docutils literal"><span class="pre">python_parser.WithExpression</span></tt></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="python_parser.Pass">
+<em class="property">class </em><tt class="descclassname">python_parser.</tt><tt class="descname">Pass</tt><a class="headerlink" href="#python_parser.Pass" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#light_parser.Statement" title="light_parser.Statement"><tt class="xref py py-class docutils literal"><span class="pre">light_parser.Statement</span></tt></a>, <a class="reference internal" href="#python_parser.PythonSimpleStatement" title="python_parser.PythonSimpleStatement"><tt class="xref py py-class docutils literal"><span class="pre">python_parser.PythonSimpleStatement</span></tt></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="python_parser.EllipsisObject">
+<em class="property">class </em><tt class="descclassname">python_parser.</tt><tt class="descname">EllipsisObject</tt><a class="headerlink" href="#python_parser.EllipsisObject" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#light_parser.Statement" title="light_parser.Statement"><tt class="xref py py-class docutils literal"><span class="pre">light_parser.Statement</span></tt></a>, <a class="reference internal" href="#python_parser.PythonSimpleStatement" title="python_parser.PythonSimpleStatement"><tt class="xref py py-class docutils literal"><span class="pre">python_parser.PythonSimpleStatement</span></tt></a></p>
+</dd></dl>
+
+</div>
+<div class="section" id="block-statements">
+<h4>Block statements<a class="headerlink" href="#block-statements" title="Permalink to this headline">¶</a></h4>
+<p>Statements containing other statements.</p>
+<dl class="class">
+<dt id="python_parser.ForBlock">
+<em class="property">class </em><tt class="descclassname">python_parser.</tt><tt class="descname">ForBlock</tt><a class="headerlink" href="#python_parser.ForBlock" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#python_parser.PythonBlockStatement" title="python_parser.PythonBlockStatement"><tt class="xref py py-class docutils literal"><span class="pre">python_parser.PythonBlockStatement</span></tt></a>, <tt class="xref py py-class docutils literal"><span class="pre">python_parser.For</span></tt></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="python_parser.ForOneLine">
+<em class="property">class </em><tt class="descclassname">python_parser.</tt><tt class="descname">ForOneLine</tt><a class="headerlink" href="#python_parser.ForOneLine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#light_parser.Statement" title="light_parser.Statement"><tt class="xref py py-class docutils literal"><span class="pre">light_parser.Statement</span></tt></a>, <tt class="xref py py-class docutils literal"><span class="pre">python_parser.For</span></tt></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="python_parser.WhileBlock">
+<em class="property">class </em><tt class="descclassname">python_parser.</tt><tt class="descname">WhileBlock</tt><a class="headerlink" href="#python_parser.WhileBlock" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#python_parser.PythonBlockStatement" title="python_parser.PythonBlockStatement"><tt class="xref py py-class docutils literal"><span class="pre">python_parser.PythonBlockStatement</span></tt></a>, <a class="reference internal" href="#python_parser.While" title="python_parser.While"><tt class="xref py py-class docutils literal"><span class="pre">python_parser.While</span></tt></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="python_parser.WhileOneLine">
+<em class="property">class </em><tt class="descclassname">python_parser.</tt><tt class="descname">WhileOneLine</tt><a class="headerlink" href="#python_parser.WhileOneLine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#light_parser.Statement" title="light_parser.Statement"><tt class="xref py py-class docutils literal"><span class="pre">light_parser.Statement</span></tt></a>, <a class="reference internal" href="#python_parser.While" title="python_parser.While"><tt class="xref py py-class docutils literal"><span class="pre">python_parser.While</span></tt></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="python_parser.TryBlock">
+<em class="property">class </em><tt class="descclassname">python_parser.</tt><tt class="descname">TryBlock</tt><a class="headerlink" href="#python_parser.TryBlock" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#python_parser.PythonBlockStatement" title="python_parser.PythonBlockStatement"><tt class="xref py py-class docutils literal"><span class="pre">python_parser.PythonBlockStatement</span></tt></a>, <a class="reference internal" href="#python_parser.PythonStatement" title="python_parser.PythonStatement"><tt class="xref py py-class docutils literal"><span class="pre">python_parser.PythonStatement</span></tt></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="python_parser.TryOneLine">
+<em class="property">class </em><tt class="descclassname">python_parser.</tt><tt class="descname">TryOneLine</tt><a class="headerlink" href="#python_parser.TryOneLine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#light_parser.Statement" title="light_parser.Statement"><tt class="xref py py-class docutils literal"><span class="pre">light_parser.Statement</span></tt></a>, <a class="reference internal" href="#python_parser.PythonStatement" title="python_parser.PythonStatement"><tt class="xref py py-class docutils literal"><span class="pre">python_parser.PythonStatement</span></tt></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="python_parser.ExceptBlock">
+<em class="property">class </em><tt class="descclassname">python_parser.</tt><tt class="descname">ExceptBlock</tt><a class="headerlink" href="#python_parser.ExceptBlock" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#python_parser.PythonBlockStatement" title="python_parser.PythonBlockStatement"><tt class="xref py py-class docutils literal"><span class="pre">python_parser.PythonBlockStatement</span></tt></a>, <a class="reference internal" href="#python_parser.PythonStatement" title="python_parser.PythonStatement"><tt class="xref py py-class docutils literal"><span class="pre">python_parser.PythonStatement</span></tt></a>, <a class="reference internal" href="#python_parser.WithExpression" title="python_parser.WithExpression"><tt class="xref py py-class docutils literal"><span class="pre">python_parser.WithExpression</span></tt></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="python_parser.ExceptOneLine">
+<em class="property">class </em><tt class="descclassname">python_parser.</tt><tt class="descname">ExceptOneLine</tt><a class="headerlink" href="#python_parser.ExceptOneLine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#light_parser.Statement" title="light_parser.Statement"><tt class="xref py py-class docutils literal"><span class="pre">light_parser.Statement</span></tt></a>, <a class="reference internal" href="#python_parser.PythonStatement" title="python_parser.PythonStatement"><tt class="xref py py-class docutils literal"><span class="pre">python_parser.PythonStatement</span></tt></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="python_parser.WithBlock">
+<em class="property">class </em><tt class="descclassname">python_parser.</tt><tt class="descname">WithBlock</tt><a class="headerlink" href="#python_parser.WithBlock" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#python_parser.PythonBlockStatement" title="python_parser.PythonBlockStatement"><tt class="xref py py-class docutils literal"><span class="pre">python_parser.PythonBlockStatement</span></tt></a>, <a class="reference internal" href="#python_parser.With" title="python_parser.With"><tt class="xref py py-class docutils literal"><span class="pre">python_parser.With</span></tt></a></p>
+<p>A &#8216;with&#8217; statement of the form:</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>with ... as ...:</dt>
+<dd>stmt
+stmt
+...</dd>
+</dl>
+</div></blockquote>
+</dd></dl>
+
+<dl class="class">
+<dt id="python_parser.WithOneLine">
+<em class="property">class </em><tt class="descclassname">python_parser.</tt><tt class="descname">WithOneLine</tt><a class="headerlink" href="#python_parser.WithOneLine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#light_parser.Statement" title="light_parser.Statement"><tt class="xref py py-class docutils literal"><span class="pre">light_parser.Statement</span></tt></a>, <a class="reference internal" href="#python_parser.With" title="python_parser.With"><tt class="xref py py-class docutils literal"><span class="pre">python_parser.With</span></tt></a></p>
+<dl class="docutils">
+<dt>with statement </dt>
+<dd>with ... as ...: ...; ...;</dd>
+</dl>
+<dl class="method">
+<dt id="python_parser.WithOneLine.get_statements">
+<tt class="descname">get_statements</tt><big>(</big><big>)</big><a class="headerlink" href="#python_parser.WithOneLine.get_statements" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="python_parser.FinallyBlock">
+<em class="property">class </em><tt class="descclassname">python_parser.</tt><tt class="descname">FinallyBlock</tt><a class="headerlink" href="#python_parser.FinallyBlock" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#python_parser.PythonBlockStatement" title="python_parser.PythonBlockStatement"><tt class="xref py py-class docutils literal"><span class="pre">python_parser.PythonBlockStatement</span></tt></a>, <a class="reference internal" href="#python_parser.PythonStatement" title="python_parser.PythonStatement"><tt class="xref py py-class docutils literal"><span class="pre">python_parser.PythonStatement</span></tt></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="python_parser.FinallyOneLine">
+<em class="property">class </em><tt class="descclassname">python_parser.</tt><tt class="descname">FinallyOneLine</tt><a class="headerlink" href="#python_parser.FinallyOneLine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#light_parser.Statement" title="light_parser.Statement"><tt class="xref py py-class docutils literal"><span class="pre">light_parser.Statement</span></tt></a>, <a class="reference internal" href="#python_parser.PythonStatement" title="python_parser.PythonStatement"><tt class="xref py py-class docutils literal"><span class="pre">python_parser.PythonStatement</span></tt></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="python_parser.IfThenElseBlock">
+<em class="property">class </em><tt class="descclassname">python_parser.</tt><tt class="descname">IfThenElseBlock</tt><a class="headerlink" href="#python_parser.IfThenElseBlock" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#python_parser.PythonBlockStatement" title="python_parser.PythonBlockStatement"><tt class="xref py py-class docutils literal"><span class="pre">python_parser.PythonBlockStatement</span></tt></a>, <tt class="xref py py-class docutils literal"><span class="pre">python_parser.IfThenElse</span></tt></p>
+<p>Classical block</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="python_parser.IfThenElseOneLine">
+<em class="property">class </em><tt class="descclassname">python_parser.</tt><tt class="descname">IfThenElseOneLine</tt><a class="headerlink" href="#python_parser.IfThenElseOneLine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#light_parser.Statement" title="light_parser.Statement"><tt class="xref py py-class docutils literal"><span class="pre">light_parser.Statement</span></tt></a>, <tt class="xref py py-class docutils literal"><span class="pre">python_parser.IfThenElse</span></tt></p>
+<p>an if can be on one line : 
+if .... : statement1; ... statementN;</p>
+<dl class="method">
+<dt id="python_parser.IfThenElseOneLine.get_statements">
+<tt class="descname">get_statements</tt><big>(</big><big>)</big><a class="headerlink" href="#python_parser.IfThenElseOneLine.get_statements" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="expressions">
+<h3>Expressions<a class="headerlink" href="#expressions" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="python_parser.Identifier">
+<em class="property">class </em><tt class="descclassname">python_parser.</tt><tt class="descname">Identifier</tt><a class="headerlink" href="#python_parser.Identifier" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">python_parser.Expression</span></tt></p>
+<p>An identifier, e.g. :
+- a
+- f</p>
+<p>No dots here, see DotAccess</p>
+<dl class="method">
+<dt id="python_parser.Identifier.get_name">
+<tt class="descname">get_name</tt><big>(</big><big>)</big><a class="headerlink" href="#python_parser.Identifier.get_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="python_parser.Identifier.is_identifier">
+<tt class="descname">is_identifier</tt><big>(</big><big>)</big><a class="headerlink" href="#python_parser.Identifier.is_identifier" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="python_parser.Identifier.get_assigned_expression">
+<tt class="descname">get_assigned_expression</tt><big>(</big><big>)</big><a class="headerlink" href="#python_parser.Identifier.get_assigned_expression" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="python_parser.Identifier.get_resolution">
+<tt class="descname">get_resolution</tt><big>(</big><big>)</big><a class="headerlink" href="#python_parser.Identifier.get_resolution" title="Permalink to this definition">¶</a></dt>
+<dd><p>One might use this instead of &#8216;get_resolutions&#8217;
+when it is highly unlikely to have 
+ambiguity in resolution (or not important).</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="python_parser.BinaryOperation">
+<em class="property">class </em><tt class="descclassname">python_parser.</tt><tt class="descname">BinaryOperation</tt><a class="headerlink" href="#python_parser.BinaryOperation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">python_parser.Expression</span></tt></p>
+<p>A binary operation of the form:</p>
+<blockquote>
+<div>left_expression op right_expression</div></blockquote>
+<dl class="method">
+<dt id="python_parser.BinaryOperation.get_left_expression">
+<tt class="descname">get_left_expression</tt><big>(</big><big>)</big><a class="headerlink" href="#python_parser.BinaryOperation.get_left_expression" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="python_parser.BinaryOperation.get_right_expression">
+<tt class="descname">get_right_expression</tt><big>(</big><big>)</big><a class="headerlink" href="#python_parser.BinaryOperation.get_right_expression" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="python_parser.BinaryOperation.is_binary_operation">
+<tt class="descname">is_binary_operation</tt><big>(</big><big>)</big><a class="headerlink" href="#python_parser.BinaryOperation.is_binary_operation" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">Boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="python_parser.BinaryOperation.get_operator">
+<tt class="descname">get_operator</tt><big>(</big><big>)</big><a class="headerlink" href="#python_parser.BinaryOperation.get_operator" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="python_parser.BinaryOperation.is_assignment">
+<tt class="descname">is_assignment</tt><big>(</big><big>)</big><a class="headerlink" href="#python_parser.BinaryOperation.is_assignment" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="python_parser.Assignment">
+<em class="property">class </em><tt class="descclassname">python_parser.</tt><tt class="descname">Assignment</tt><a class="headerlink" href="#python_parser.Assignment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#python_parser.BinaryOperation" title="python_parser.BinaryOperation"><tt class="xref py py-class docutils literal"><span class="pre">python_parser.BinaryOperation</span></tt></a></p>
+<p>A assignment (includes augmented assignments)</p>
+<dl class="attribute">
+<dt id="python_parser.Assignment.augassign">
+<tt class="descname">augassign</tt><em class="property"> = ['=', '+=', '-=', '*=', '/=', '&#64;=', '%=', '&amp;=', '|=', '^=', '&lt;&lt;=', '&gt;&gt;=', '**=', '//=']</em><a class="headerlink" href="#python_parser.Assignment.augassign" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="python_parser.Assignment.get_operator">
+<tt class="descname">get_operator</tt><big>(</big><big>)</big><a class="headerlink" href="#python_parser.Assignment.get_operator" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">light_parser.Token</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="python_parser.Assignment.is_assignment">
+<tt class="descname">is_assignment</tt><big>(</big><big>)</big><a class="headerlink" href="#python_parser.Assignment.is_assignment" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="python_parser.Assignment.get_assigned_variables">
+<tt class="descname">get_assigned_variables</tt><big>(</big><big>)</big><a class="headerlink" href="#python_parser.Assignment.get_assigned_variables" title="Permalink to this definition">¶</a></dt>
+<dd><p>Used for handling assignment destructuring</p>
+<dl class="docutils">
+<dt>Limitation:</dt>
+<dd>Unwrapping of parentheses not handled</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="python_parser.Assignment.get_assignee">
+<tt class="descname">get_assignee</tt><big>(</big><big>)</big><a class="headerlink" href="#python_parser.Assignment.get_assignee" title="Permalink to this definition">¶</a></dt>
+<dd><p>It returns the leftmost element in &#8216;get_assigned_variables&#8217;.</p>
+<dl class="docutils">
+<dt>Use this for simple variable assignments of type</dt>
+<dd>a = expression</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Leftmost variable of the assignment</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">python_parser.Node (Identifier, ...)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="python_parser.Decorators">
+<em class="property">class </em><tt class="descclassname">python_parser.</tt><tt class="descname">Decorators</tt><a class="headerlink" href="#python_parser.Decorators" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#light_parser.Statement" title="light_parser.Statement"><tt class="xref py py-class docutils literal"><span class="pre">light_parser.Statement</span></tt></a></p>
+<p>A suite of decorators.
+We use this for matching the block of decorators.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="python_parser.Unpacking">
+<em class="property">class </em><tt class="descclassname">python_parser.</tt><tt class="descname">Unpacking</tt><a class="headerlink" href="#python_parser.Unpacking" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">python_parser.Expression</span></tt></p>
+<p>Unpacking (unary) operation like in *args, and **kwargs.</p>
+<p>The name of the operator can be &#8216;*&#8217; or &#8216;**&#8217;.</p>
+<dl class="method">
+<dt id="python_parser.Unpacking.get_name">
+<tt class="descname">get_name</tt><big>(</big><big>)</big><a class="headerlink" href="#python_parser.Unpacking.get_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="python_parser.Constant">
+<em class="property">class </em><tt class="descclassname">python_parser.</tt><tt class="descname">Constant</tt><a class="headerlink" href="#python_parser.Constant" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">python_parser.Expression</span></tt></p>
+<dl class="method">
+<dt id="python_parser.Constant.get_value">
+<tt class="descname">get_value</tt><big>(</big><big>)</big><a class="headerlink" href="#python_parser.Constant.get_value" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="python_parser.Constant.is_constant">
+<tt class="descname">is_constant</tt><big>(</big><big>)</big><a class="headerlink" href="#python_parser.Constant.is_constant" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="python_parser.Constant.is_constant_string">
+<tt class="descname">is_constant_string</tt><big>(</big><big>)</big><a class="headerlink" href="#python_parser.Constant.is_constant_string" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="python_parser.Constant.is_fstring">
+<tt class="descname">is_fstring</tt><big>(</big><big>)</big><a class="headerlink" href="#python_parser.Constant.is_fstring" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="python_parser.Constant.get_string_value">
+<tt class="descname">get_string_value</tt><big>(</big><big>)</big><a class="headerlink" href="#python_parser.Constant.get_string_value" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="python_parser.DotAccess">
+<em class="property">class </em><tt class="descclassname">python_parser.</tt><tt class="descname">DotAccess</tt><a class="headerlink" href="#python_parser.DotAccess" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">python_parser.Expression</span></tt></p>
+<p>exp . accname</p>
+<dl class="method">
+<dt id="python_parser.DotAccess.get_expression">
+<tt class="descname">get_expression</tt><big>(</big><big>)</big><a class="headerlink" href="#python_parser.DotAccess.get_expression" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">exp</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">Expression</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="python_parser.DotAccess.get_identifier">
+<tt class="descname">get_identifier</tt><big>(</big><big>)</big><a class="headerlink" href="#python_parser.DotAccess.get_identifier" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">accname</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">Identifier</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="python_parser.DotAccess.get_name">
+<tt class="descname">get_name</tt><big>(</big><big>)</big><a class="headerlink" href="#python_parser.DotAccess.get_name" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="python_parser.DotAccess.is_dot_access">
+<tt class="descname">is_dot_access</tt><big>(</big><big>)</big><a class="headerlink" href="#python_parser.DotAccess.is_dot_access" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="python_parser.ArrayAccess">
+<em class="property">class </em><tt class="descclassname">python_parser.</tt><tt class="descname">ArrayAccess</tt><a class="headerlink" href="#python_parser.ArrayAccess" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">python_parser.Expression</span></tt></p>
+<p>exp [...]</p>
+<dl class="method">
+<dt id="python_parser.ArrayAccess.get_array_expression">
+<tt class="descname">get_array_expression</tt><big>(</big><big>)</big><a class="headerlink" href="#python_parser.ArrayAccess.get_array_expression" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="python_parser.ArrayAccess.get_indice">
+<tt class="descname">get_indice</tt><big>(</big><big>)</big><a class="headerlink" href="#python_parser.ArrayAccess.get_indice" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="python_parser.MethodCall">
+<em class="property">class </em><tt class="descclassname">python_parser.</tt><tt class="descname">MethodCall</tt><a class="headerlink" href="#python_parser.MethodCall" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">python_parser.Expression</span></tt></p>
+<p>exp (...)</p>
+<dl class="method">
+<dt id="python_parser.MethodCall.get_method">
+<tt class="descname">get_method</tt><big>(</big><big>)</big><a class="headerlink" href="#python_parser.MethodCall.get_method" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the expression without the parenthesis</p>
+<blockquote>
+<div>f()   -&gt; f
+a.b() -&gt; a.b
+...</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="python_parser.MethodCall.get_parameters">
+<tt class="descname">get_parameters</tt><big>(</big><big>)</big><a class="headerlink" href="#python_parser.MethodCall.get_parameters" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="python_parser.MethodCall.is_method_call">
+<tt class="descname">is_method_call</tt><big>(</big><big>)</big><a class="headerlink" href="#python_parser.MethodCall.is_method_call" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="python_parser.MethodCall.get_argument">
+<tt class="descname">get_argument</tt><big>(</big><em>position</em>, <em>keyword</em><big>)</big><a class="headerlink" href="#python_parser.MethodCall.get_argument" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns positional/keyword argument</p>
+<p>If found a match with positional argument, the keyword
+argument is neglected.</p>
+<dl class="docutils">
+<dt>Limitations </dt>
+<dd>Optional keyword arguments with no defined position
+can be retrieved by keyword. However combinations
+with optional (non-keyword) arguments are not tested.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="python_parser.MethodCall.is_resolved_to">
+<tt class="descname">is_resolved_to</tt><big>(</big><em>qname</em><big>)</big><a class="headerlink" href="#python_parser.MethodCall.is_resolved_to" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="python_parser.Array">
+<em class="property">class </em><tt class="descclassname">python_parser.</tt><tt class="descname">Array</tt><a class="headerlink" href="#python_parser.Array" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">python_parser.Expression</span></tt></p>
+<p>An array expression :</p>
+<p>[..., ..., ...]</p>
+<dl class="method">
+<dt id="python_parser.Array.get_values">
+<tt class="descname">get_values</tt><big>(</big><big>)</big><a class="headerlink" href="#python_parser.Array.get_values" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="python_parser.ComprehensionLoop">
+<em class="property">class </em><tt class="descclassname">python_parser.</tt><tt class="descname">ComprehensionLoop</tt><a class="headerlink" href="#python_parser.ComprehensionLoop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">python_parser.Expression</span></tt></p>
+<p>[ ... for ... in ... ...]
+( ... for ... in ... ...)</p>
+<dl class="method">
+<dt id="python_parser.ComprehensionLoop.get_expression">
+<tt class="descname">get_expression</tt><big>(</big><big>)</big><a class="headerlink" href="#python_parser.ComprehensionLoop.get_expression" title="Permalink to this definition">¶</a></dt>
+<dd><p>return first expression</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="python_parser.ComprehensionLoop.get_comprehension_for">
+<tt class="descname">get_comprehension_for</tt><big>(</big><big>)</big><a class="headerlink" href="#python_parser.ComprehensionLoop.get_comprehension_for" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the for part</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="python_parser.ComprehensionFor">
+<em class="property">class </em><tt class="descclassname">python_parser.</tt><tt class="descname">ComprehensionFor</tt><a class="headerlink" href="#python_parser.ComprehensionFor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#light_parser.Node" title="light_parser.Node"><tt class="xref py py-class docutils literal"><span class="pre">light_parser.Node</span></tt></a>, <tt class="xref py py-class docutils literal"><span class="pre">python_parser.For</span></tt></p>
+<p>The sub part of a comprehension loop</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="python_parser.Map">
+<em class="property">class </em><tt class="descclassname">python_parser.</tt><tt class="descname">Map</tt><a class="headerlink" href="#python_parser.Map" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">python_parser.Expression</span></tt>, <tt class="xref py py-class docutils literal"><span class="pre">python_parser.WithResolution</span></tt></p>
+<p>A map expression:</p>
+<p>{...:..., ...:..., ...:...}</p>
+<dl class="method">
+<dt id="python_parser.Map.get_values">
+<tt class="descname">get_values</tt><big>(</big><big>)</big><a class="headerlink" href="#python_parser.Map.get_values" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="python_parser.Map.is_dict_like">
+<tt class="descname">is_dict_like</tt><big>(</big><big>)</big><a class="headerlink" href="#python_parser.Map.is_dict_like" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="python_parser.Lambda">
+<em class="property">class </em><tt class="descclassname">python_parser.</tt><tt class="descname">Lambda</tt><a class="headerlink" href="#python_parser.Lambda" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">python_parser.Expression</span></tt></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="python_parser.LambdaParameters">
+<em class="property">class </em><tt class="descclassname">python_parser.</tt><tt class="descname">LambdaParameters</tt><a class="headerlink" href="#python_parser.LambdaParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">python_parser.Expression</span></tt></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="python_parser.Unary">
+<em class="property">class </em><tt class="descclassname">python_parser.</tt><tt class="descname">Unary</tt><a class="headerlink" href="#python_parser.Unary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">python_parser.Expression</span></tt></p>
+<p>Unary expression</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="python_parser.UnaryNot">
+<em class="property">class </em><tt class="descclassname">python_parser.</tt><tt class="descname">UnaryNot</tt><a class="headerlink" href="#python_parser.UnaryNot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#python_parser.Unary" title="python_parser.Unary"><tt class="xref py py-class docutils literal"><span class="pre">python_parser.Unary</span></tt></a></p>
+<p>not expression</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="python_parser.AdditionExpression">
+<em class="property">class </em><tt class="descclassname">python_parser.</tt><tt class="descname">AdditionExpression</tt><a class="headerlink" href="#python_parser.AdditionExpression" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#python_parser.BinaryOperation" title="python_parser.BinaryOperation"><tt class="xref py py-class docutils literal"><span class="pre">python_parser.BinaryOperation</span></tt></a></p>
+<p>exp + exp</p>
+<dl class="method">
+<dt id="python_parser.AdditionExpression.is_addition">
+<tt class="descname">is_addition</tt><big>(</big><big>)</big><a class="headerlink" href="#python_parser.AdditionExpression.is_addition" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="python_parser.StringInterpolation">
+<em class="property">class </em><tt class="descclassname">python_parser.</tt><tt class="descname">StringInterpolation</tt><a class="headerlink" href="#python_parser.StringInterpolation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#python_parser.BinaryOperation" title="python_parser.BinaryOperation"><tt class="xref py py-class docutils literal"><span class="pre">python_parser.BinaryOperation</span></tt></a></p>
+<p>Expressions of type <em>exp</em> % <em>exp</em></p>
+<dl class="docutils">
+<dt>Limitations:</dt>
+<dd>It over-captures modulo-operator expressions</dd>
+</dl>
+<dl class="method">
+<dt id="python_parser.StringInterpolation.is_interpolation">
+<tt class="descname">is_interpolation</tt><big>(</big><big>)</big><a class="headerlink" href="#python_parser.StringInterpolation.is_interpolation" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="python_parser.IfTernaryExpression">
+<em class="property">class </em><tt class="descclassname">python_parser.</tt><tt class="descname">IfTernaryExpression</tt><a class="headerlink" href="#python_parser.IfTernaryExpression" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">python_parser.Expression</span></tt></p>
+<dl class="method">
+<dt id="python_parser.IfTernaryExpression.get_first_value">
+<tt class="descname">get_first_value</tt><big>(</big><big>)</big><a class="headerlink" href="#python_parser.IfTernaryExpression.get_first_value" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="python_parser.IfTernaryExpression.get_second_value">
+<tt class="descname">get_second_value</tt><big>(</big><big>)</big><a class="headerlink" href="#python_parser.IfTernaryExpression.get_second_value" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="python_parser.ExpressionList">
+<em class="property">class </em><tt class="descclassname">python_parser.</tt><tt class="descname">ExpressionList</tt><a class="headerlink" href="#python_parser.ExpressionList" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">python_parser.Expression</span></tt></p>
+<dl class="method">
+<dt id="python_parser.ExpressionList.is_expression_list">
+<tt class="descname">is_expression_list</tt><big>(</big><big>)</big><a class="headerlink" href="#python_parser.ExpressionList.is_expression_list" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="other-structural-nodes">
+<h3>Other structural nodes<a class="headerlink" href="#other-structural-nodes" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="python_parser.Parenthesis">
+<em class="property">class </em><tt class="descclassname">python_parser.</tt><tt class="descname">Parenthesis</tt><a class="headerlink" href="#python_parser.Parenthesis" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="python_parser.SquareBracketedBlock">
+<em class="property">class </em><tt class="descclassname">python_parser.</tt><tt class="descname">SquareBracketedBlock</tt><a class="headerlink" href="#python_parser.SquareBracketedBlock" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="python_parser.BracketedBlock">
+<em class="property">class </em><tt class="descclassname">python_parser.</tt><tt class="descname">BracketedBlock</tt><a class="headerlink" href="#python_parser.BracketedBlock" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="python_parser.IndentBlock">
+<em class="property">class </em><tt class="descclassname">python_parser.</tt><tt class="descname">IndentBlock</tt><a class="headerlink" href="#python_parser.IndentBlock" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+<div class="section" id="symbols">
+<h2>Symbols<a class="headerlink" href="#symbols" title="Permalink to this headline">¶</a></h2>
+<p>Symbols closely represent the structure of metamodel objects,
+among other functionalities. They are also used for resolution
+purposes for certain nodes.</p>
+<dl class="class">
+<dt id="symbols.Symbol">
+<em class="property">class </em><tt class="descclassname">symbols.</tt><tt class="descname">Symbol</tt><big>(</big><em>name</em>, <em>parent=None</em><big>)</big><a class="headerlink" href="#symbols.Symbol" title="Permalink to this definition">¶</a></dt>
+<dd><p>base class for symbols</p>
+<dl class="method">
+<dt id="symbols.Symbol.get_parent_symbol">
+<tt class="descname">get_parent_symbol</tt><big>(</big><big>)</big><a class="headerlink" href="#symbols.Symbol.get_parent_symbol" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="symbols.Symbol.get_root_symbol">
+<tt class="descname">get_root_symbol</tt><big>(</big><big>)</big><a class="headerlink" href="#symbols.Symbol.get_root_symbol" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="symbols.Symbol.get_name">
+<tt class="descname">get_name</tt><big>(</big><big>)</big><a class="headerlink" href="#symbols.Symbol.get_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return name</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="symbols.Symbol.get_qualified_name">
+<tt class="descname">get_qualified_name</tt><big>(</big><big>)</big><a class="headerlink" href="#symbols.Symbol.get_qualified_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Qualified name</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="symbols.Symbol.get_ast">
+<tt class="descname">get_ast</tt><big>(</big><big>)</big><a class="headerlink" href="#symbols.Symbol.get_ast" title="Permalink to this definition">¶</a></dt>
+<dd><p>Access to AST of symbol.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="symbols.Symbol.print_tree">
+<tt class="descname">print_tree</tt><big>(</big><em>depth=0</em><big>)</big><a class="headerlink" href="#symbols.Symbol.print_tree" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print as a tree.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="symbols.Symbol.get_statements">
+<tt class="descname">get_statements</tt><big>(</big><big>)</big><a class="headerlink" href="#symbols.Symbol.get_statements" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the statements of the symbol.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="symbols.Symbol.get_class">
+<tt class="descname">get_class</tt><big>(</big><em>name</em>, <em>begin_line=None</em><big>)</big><a class="headerlink" href="#symbols.Symbol.get_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a class by name.
+From the classes inside that symbol.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="symbols.Symbol.get_function">
+<tt class="descname">get_function</tt><big>(</big><em>name</em>, <em>begin_line=None</em><big>)</big><a class="headerlink" href="#symbols.Symbol.get_function" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a function by name
+From the functions inside that symbol.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="symbols.Symbol.get_begin_line">
+<tt class="descname">get_begin_line</tt><big>(</big><big>)</big><a class="headerlink" href="#symbols.Symbol.get_begin_line" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="symbols.Symbol.get_begin_column">
+<tt class="descname">get_begin_column</tt><big>(</big><big>)</big><a class="headerlink" href="#symbols.Symbol.get_begin_column" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="symbols.Symbol.get_end_line">
+<tt class="descname">get_end_line</tt><big>(</big><big>)</big><a class="headerlink" href="#symbols.Symbol.get_end_line" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="symbols.Symbol.get_end_column">
+<tt class="descname">get_end_column</tt><big>(</big><big>)</big><a class="headerlink" href="#symbols.Symbol.get_end_column" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="symbols.Symbol.get_violations">
+<tt class="descname">get_violations</tt><big>(</big><em>property_name</em><big>)</big><a class="headerlink" href="#symbols.Symbol.get_violations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns all violations for a given rule.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="symbols.Symbol.add_violation">
+<tt class="descname">add_violation</tt><big>(</big><em>property_name</em>, <em>ast</em>, <em>*additional_asts</em><big>)</big><a class="headerlink" href="#symbols.Symbol.add_violation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a violation for a quality rule.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>property_name</strong> &#8211; fullname of the property</li>
+<li><strong>ast</strong> &#8211; location of the violation</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="symbols.Symbol.set_property">
+<tt class="descname">set_property</tt><big>(</big><em>property_name</em>, <em>value</em><big>)</big><a class="headerlink" href="#symbols.Symbol.set_property" title="Permalink to this definition">¶</a></dt>
+<dd><p>Used to set a generic property on object</p>
+<p>mainly used for quality rules</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>property_name</strong> &#8211; fullname of the property</li>
+<li><strong>value</strong> &#8211; value of the property</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="symbols.Symbol.is_class">
+<tt class="descname">is_class</tt><big>(</big><big>)</big><a class="headerlink" href="#symbols.Symbol.is_class" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="symbols.Symbol.is_function">
+<tt class="descname">is_function</tt><big>(</big><big>)</big><a class="headerlink" href="#symbols.Symbol.is_function" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="symbols.Module">
+<em class="property">class </em><tt class="descclassname">symbols.</tt><tt class="descname">Module</tt><big>(</big><em>path</em>, <em>_file=None</em>, <em>text=None</em><big>)</big><a class="headerlink" href="#symbols.Module" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#symbols.Symbol" title="symbols.Symbol"><tt class="xref py py-class docutils literal"><span class="pre">symbols.Symbol</span></tt></a></p>
+<p>A Python file</p>
+<dl class="attribute">
+<dt id="symbols.Module.metamodel_type">
+<tt class="descname">metamodel_type</tt><em class="property"> = 'CAST_Python_SourceCode'</em><a class="headerlink" href="#symbols.Module.metamodel_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="symbols.Module.is_package">
+<tt class="descname">is_package</tt><big>(</big><big>)</big><a class="headerlink" href="#symbols.Module.is_package" title="Permalink to this definition">¶</a></dt>
+<dd><p>True when module is a package.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="symbols.Module.get_path">
+<tt class="descname">get_path</tt><big>(</big><big>)</big><a class="headerlink" href="#symbols.Module.get_path" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="symbols.Module.get_file">
+<tt class="descname">get_file</tt><big>(</big><big>)</big><a class="headerlink" href="#symbols.Module.get_file" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="symbols.Module.get_qualified_name">
+<tt class="descname">get_qualified_name</tt><big>(</big><big>)</big><a class="headerlink" href="#symbols.Module.get_qualified_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Qualified name</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="symbols.Module.get_statements">
+<tt class="descname">get_statements</tt><big>(</big><big>)</big><a class="headerlink" href="#symbols.Module.get_statements" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the statements of the symbol.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="symbols.Module.get_main">
+<tt class="descname">get_main</tt><big>(</big><big>)</big><a class="headerlink" href="#symbols.Module.get_main" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the &#8216;main&#8217; found in that module</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="symbols.Module.get_fullname">
+<tt class="descname">get_fullname</tt><big>(</big><big>)</big><a class="headerlink" href="#symbols.Module.get_fullname" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="symbols.Module.find_local_symbols">
+<tt class="descname">find_local_symbols</tt><big>(</big><em>name</em>, <em>types=[]</em><big>)</big><a class="headerlink" href="#symbols.Module.find_local_symbols" title="Permalink to this definition">¶</a></dt>
+<dd><p>Override for modules.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="symbols.Class">
+<em class="property">class </em><tt class="descclassname">symbols.</tt><tt class="descname">Class</tt><big>(</big><em>name</em>, <em>parent</em><big>)</big><a class="headerlink" href="#symbols.Class" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#symbols.Symbol" title="symbols.Symbol"><tt class="xref py py-class docutils literal"><span class="pre">symbols.Symbol</span></tt></a></p>
+<p>A python class</p>
+<dl class="attribute">
+<dt id="symbols.Class.metamodel_type">
+<tt class="descname">metamodel_type</tt><em class="property"> = 'CAST_Python_Class'</em><a class="headerlink" href="#symbols.Class.metamodel_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="symbols.Class.get_inheritance">
+<tt class="descname">get_inheritance</tt><big>(</big><big>)</big><a class="headerlink" href="#symbols.Class.get_inheritance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inherited classes.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list of python_parser.Reference</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="symbols.Class.get_ordered_inheritances">
+<tt class="descname">get_ordered_inheritances</tt><big>(</big><big>)</big><a class="headerlink" href="#symbols.Class.get_ordered_inheritances" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the list of all inherited classes ordered
+by the Python Method Resolution Order (known as MRO,
+introduced in Python 2.3). Only those resolved classes
+are returned.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list of symbols.Class</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="symbols.Class.find_method">
+<tt class="descname">find_method</tt><big>(</big><em>name</em><big>)</big><a class="headerlink" href="#symbols.Class.find_method" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find a method of the class, using inheritance</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="symbols.Class.find_member">
+<tt class="descname">find_member</tt><big>(</big><em>name</em><big>)</big><a class="headerlink" href="#symbols.Class.find_member" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="symbols.Class.is_callable">
+<tt class="descname">is_callable</tt><big>(</big><em>method</em><big>)</big><a class="headerlink" href="#symbols.Class.is_callable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Says that :param method: is callable on that class.</p>
+<p>Handle override.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="symbols.Class.is_callable_by_name">
+<tt class="descname">is_callable_by_name</tt><big>(</big><em>name</em><big>)</big><a class="headerlink" href="#symbols.Class.is_callable_by_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Says that :param method: is callable on that class.</p>
+<p>Handle override.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="symbols.Class.get_fullname">
+<tt class="descname">get_fullname</tt><big>(</big><big>)</big><a class="headerlink" href="#symbols.Class.get_fullname" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="symbols.Class.get_members">
+<tt class="descname">get_members</tt><big>(</big><big>)</big><a class="headerlink" href="#symbols.Class.get_members" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="symbols.Class.get_classes">
+<tt class="descname">get_classes</tt><big>(</big><big>)</big><a class="headerlink" href="#symbols.Class.get_classes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="symbols.Class.get_functions">
+<tt class="descname">get_functions</tt><big>(</big><big>)</big><a class="headerlink" href="#symbols.Class.get_functions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="symbols.Class.is_class">
+<tt class="descname">is_class</tt><big>(</big><big>)</big><a class="headerlink" href="#symbols.Class.is_class" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="symbols.Function">
+<em class="property">class </em><tt class="descclassname">symbols.</tt><tt class="descname">Function</tt><big>(</big><em>name</em>, <em>parent</em>, <em>return_type=None</em><big>)</big><a class="headerlink" href="#symbols.Function" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#symbols.Symbol" title="symbols.Symbol"><tt class="xref py py-class docutils literal"><span class="pre">symbols.Symbol</span></tt></a></p>
+<p>A Python function or method</p>
+<dl class="attribute">
+<dt id="symbols.Function.metamodel_type">
+<tt class="descname">metamodel_type</tt><em class="property"> = 'CAST_Python_Method'</em><a class="headerlink" href="#symbols.Function.metamodel_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="symbols.Function.get_fullname">
+<tt class="descname">get_fullname</tt><big>(</big><big>)</big><a class="headerlink" href="#symbols.Function.get_fullname" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="symbols.Function.is_function">
+<tt class="descname">is_function</tt><big>(</big><big>)</big><a class="headerlink" href="#symbols.Function.is_function" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="writing-tests">
+<h2>Writing tests<a class="headerlink" href="#writing-tests" title="Permalink to this headline">¶</a></h2>
+<p>Sample of a test</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">unittest</span>
+<span class="kn">import</span> <span class="nn">cast.analysers.test</span>
+<span class="kn">import</span> <span class="nn">cast.analysers.ua</span>
+
+<span class="k">class</span> <span class="nc">Test</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">test_ok1</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="n">analysis</span> <span class="o">=</span> <span class="n">cast</span><span class="o">.</span><span class="n">analysers</span><span class="o">.</span><span class="n">test</span><span class="o">.</span><span class="n">UATestAnalysis</span><span class="p">(</span><span class="s">&#39;PYTHON&#39;</span><span class="p">)</span>  <span class="c"># set Python language</span>
+        <span class="n">analysis</span><span class="o">.</span><span class="n">add_selection</span><span class="p">(</span><span class="s">&#39;test1&#39;</span><span class="p">)</span>
+        <span class="n">analysis</span><span class="o">.</span><span class="n">add_dependency</span><span class="p">(</span><span class="s">r&#39;C:\ProgramData\CAST\CAST\Extensions\com.castsoftware.python.1.4.0-beta2&#39;</span><span class="p">)</span>
+        <span class="n">analysis</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+
+        <span class="n">f</span> <span class="o">=</span> <span class="n">analysis</span><span class="o">.</span><span class="n">get_object_by_name</span><span class="p">(</span><span class="s">&#39;f&#39;</span><span class="p">,</span> <span class="s">&#39;CAST_Python_Function&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span><span class="s">&#39;CAST_Python_Rule.AvoidUsingInvalidObjectsInAll&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;1&#39;</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>You need to add a dependency by absolute path or relative to the folder containing com.castsoftware.python, for example</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">analysis</span><span class="o">.</span><span class="n">add_dependency</span><span class="p">(</span><span class="s">r&#39;C:\ProgramData\CAST\CAST\Extensions\com.castsoftware.python.1.4.0-beta2&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="last">For that you need to have downloaded the extension through CAST ExtensionDowloader:
+see <a class="reference external" href="https://doc.castsoftware.com/display/EXTEND/CAST+Extension+Downloader">https://doc.castsoftware.com/display/EXTEND/CAST+Extension+Downloader</a></p>
+</div>
+</div>
+<div class="section" id="categories-and-types-for-quality-rules">
+<span id="python-categories"></span><h2>Categories and types for quality rules<a class="headerlink" href="#categories-and-types-for-quality-rules" title="Permalink to this headline">¶</a></h2>
+<p>For adding a quality rule use the following categories</p>
+<ul class="simple">
+<li>Category <cite>CAST_Python_Rule</cite> (for artifacts), <cite>CAST_Python_ClassRule</cite> (only for classes).</li>
+</ul>
+</div>
+<div class="section" id="quality-rule-scopes">
+<span id="python-scopes"></span><h2>Quality rule scopes<a class="headerlink" href="#quality-rule-scopes" title="Permalink to this headline">¶</a></h2>
+<p>Available basic quality rule scopes are :</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="12%" />
+<col width="88%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>1021000</td>
+<td>Callable Python artifacts (includes functions methods and modules)</td>
+</tr>
+<tr class="row-even"><td>1021008</td>
+<td>Python Functions (includes functions and methods)</td>
+</tr>
+<tr class="row-odd"><td>1021011</td>
+<td>Python Classes</td>
+</tr>
+<tr class="row-even"><td>1021012</td>
+<td>Python Modules</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="python-technologies">
+<h2>Python technologies<a class="headerlink" href="#python-technologies" title="Permalink to this headline">¶</a></h2>
+<p>Values for technology to be used in IMPLTechnologies.xml for filter value</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="47%" />
+<col width="53%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>Python</td>
+<td>1021000</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="debugging.html" class="btn btn-neutral float-right" title="Debugging" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="html5.html" class="btn btn-neutral" title="HTML5/Javascript Analyser specificities" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014, CAST.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.6.6',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

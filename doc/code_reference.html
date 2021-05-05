@@ -94,6 +94,7 @@
 <li class="toctree-l1"><a class="reference internal" href="analysers_specif.html">Analysers specific events</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mainframe.html">Mainframe Analyser specificities</a></li>
 <li class="toctree-l1"><a class="reference internal" href="html5.html">HTML5/Javascript Analyser specificities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python.html">Python Analyser specificities</a></li>
 <li class="toctree-l1"><a class="reference internal" href="debugging.html">Debugging</a></li>
 <li class="toctree-l1"><a class="reference internal" href="writing_quality_rule.html">Writing quality rules</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="">API Reference</a><ul>
@@ -1524,10 +1525,13 @@ number of links</p>
 <dd><p>Specialised case for Universal Analyser.</p>
 <p>Simplest way of use is :</p>
 <blockquote>
-<div><p>analysis = UATestAnalysis(&#8216;PHP&#8217;)</p>
-<p>analysis.add_selection(&#8216;path to my php code&#8217;)</p>
-<p>analysis.run()</p>
-</div></blockquote>
+<div>analysis = UATestAnalysis(&#8216;PHP&#8217;)
+analysis.add_selection(&#8216;path to my php code&#8217;)
+analysis.run()</div></blockquote>
+<dl class="docutils">
+<dt>When several UA languages should be activated :</dt>
+<dd>analysis = UATestAnalysis([&#8216;PHP&#8217;, &#8216;Shell&#8217;])</dd>
+</dl>
 </dd></dl>
 
 <dl class="class">

@@ -21,6 +21,11 @@ Here are some sample projects that demonstrate the complete development of a qua
 
  * `HTML5/Javascript sample project <https://github.com/CAST-projects/Extension-SDK/tree/master/samples/analyzer_level/html5/html5.quality_rule>`_
 
+* Python
+
+ * `Python sample project <https://github.com/CAST-projects/Extension-SDK/tree/master/samples/analyzer_level/python/python.quality_rule>`_ 
+
+
 Initialization
 --------------
 

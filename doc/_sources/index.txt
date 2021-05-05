@@ -52,6 +52,9 @@ More details
 
 :doc:`html5` 
     HTML5/Javascript analyser level specifics.
+    
+:doc:`python` 
+    Python analyser level specifics.
 
 :doc:`debugging` 
 	Instructions on how to debug plugins from development environment.
@@ -91,6 +94,7 @@ Indices and tables
    analysers_specif
    mainframe
    html5
+   python
    debugging
    writing_quality_rule
    code_reference
