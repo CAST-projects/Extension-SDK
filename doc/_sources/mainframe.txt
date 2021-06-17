@@ -822,6 +822,11 @@ Expressions
     .. automethod:: cast.analysers.mainframe.Extension.end_length_of
 
 
+    .. automethod:: cast.analysers.mainframe.Extension.start_function_call
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_function_call
+
+
 Specific objects
 ================
 
