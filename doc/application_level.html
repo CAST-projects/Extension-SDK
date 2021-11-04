@@ -112,6 +112,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#a-reference-finder">A reference finder</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#reading-files">Reading files</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#logging">Logging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#publishing-reports">Publishing reports</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#testing">Testing</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#setting-up-the-initial-state">Setting up the initial state</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#running-the-code-to-be-tested">Running the code to be tested</a></li>
@@ -186,9 +187,9 @@
 <h1>Running code after analyzers<a class="headerlink" href="#running-code-after-analyzers" title="Permalink to this headline">¶</a></h1>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">This is documentation for cast.application version 1.5.27.
+<p class="last">This is documentation for cast.application version 1.6.11.
 This API can be upgraded separately from AIP.
-See <a class="reference external" href="https://github.com/CAST-projects/Extension-SDK/tree/master/api/1.5.27">api 1.5.27</a></p>
+See <a class="reference external" href="https://github.com/CAST-projects/Extension-SDK/tree/master/api/1.6.11">api 1.6.11</a></p>
 </div>
 <p>After all analysis job have ran some code can be launched on the resulting knowledge base.</p>
 <p>During this step, you :</p>
@@ -449,7 +450,20 @@ This query can then be refined using the method chaining pattern API.</p>
 <dl class="method">
 <dt id="save_property">
 <tt class="descname">save_property</tt><big>(</big><em>prop</em>, <em>value</em><big>)</big><a class="headerlink" href="#save_property" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Save a property on current link.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>prop</strong> &#8211; the property to save. Either a string for the fullname of the property or an integer for the property id.</li>
+<li><strong>value</strong> &#8211; the value to set, either a integer, a string or a list of those, it should respect the type declared in metamodel</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -458,6 +472,27 @@ This query can then be refined using the method chaining pattern API.</p>
 <p>Example:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">link</span> <span class="o">=</span> <span class="n">create_link</span><span class="p">(</span><span class="s">&#39;callLink&#39;</span><span class="p">,</span> <span class="n">o1</span><span class="p">,</span> <span class="n">o2</span><span class="p">)</span>
 <span class="n">link</span><span class="o">.</span><span class="n">save_property</span><span class="p">(</span><span class="s">&#39;physicalLink.inferenceEngineRequests&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;virtual call&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>Created links can receive any number of bookmarks :</p>
+<dl class="method">
+<dt id="add_bookmark">
+<tt class="descname">add_bookmark</tt><big>(</big><em>bookmark</em><big>)</big><a class="headerlink" href="#add_bookmark" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>bookmark</strong> &#8211; a position for the link of type <a class="reference internal" href="code_reference.html#cast.application.Bookmark" title="cast.application.Bookmark"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.Bookmark</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">link</span> <span class="o">=</span> <span class="n">create_link</span><span class="p">(</span><span class="s">&#39;callLink&#39;</span><span class="p">,</span> <span class="n">o1</span><span class="p">,</span> <span class="n">o2</span><span class="p">)</span>
+<span class="n">link</span><span class="o">.</span><span class="n">add_bookmark</span><span class="p">(</span><span class="n">bookmark1</span><span class="p">)</span>
+<span class="n">link</span><span class="o">.</span><span class="n">add_bookmark</span><span class="p">(</span><span class="n">bookmark2</span><span class="p">)</span>
+<span class="n">link</span><span class="o">.</span><span class="n">add_bookmark</span><span class="p">(</span><span class="n">bookmark3</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Created links can be marked as uncertain. They are then eligible to Dynamic Link Manager.</p>
@@ -553,6 +588,30 @@ The &#8216;reaction&#8217; to those patterns found is totally open to developer.
         <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;hello </span><span class="si">%s</span><span class="s">&quot;</span><span class="p">,</span>  <span class="s">&#39;world!&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="section" id="publishing-reports">
+<h2>Publishing reports<a class="headerlink" href="#publishing-reports" title="Permalink to this headline">¶</a></h2>
+<p>An extension can publish one or several reports at each global step.
+Those reports are then available both in CAST-MS and Console.</p>
+<dl class="function">
+<dt id="cast.application.publish_report">
+<tt class="descclassname">cast.application.</tt><tt class="descname">publish_report</tt><big>(</big><em>name</em>, <em>status</em>, <em>label</em>, <em>value</em>, <em>secondary_label=None</em>, <em>secondary_value=None</em>, <em>detail_report_path=None</em><big>)</big><a class="headerlink" href="#cast.application.publish_report" title="Permalink to this definition">¶</a></dt>
+<dd><p>Publish a custom report that will be visible in CAST-MS.</p>
+<p>&#64;param name: str
+&#64;param status: one of &#8216;OK&#8217;, &#8216;KO&#8217;, &#8216;Warning&#8217; or None
+&#64;param label: str
+&#64;param value: str
+&#64;param secondary_label: str or None
+&#64;param secondary_value: str or None
+&#64;param detail_report_path: str or None</p>
+<p>Available in 8.3 and above.</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.5.12.</span></p>
+</div>
+</dd></dl>
+
+<p>By using the status you can write custom sanity checks.
+By creating a result file you can also provide details about checks or actions.</p>
 </div>
 <div class="section" id="testing">
 <h2>Testing<a class="headerlink" href="#testing" title="Permalink to this headline">¶</a></h2>

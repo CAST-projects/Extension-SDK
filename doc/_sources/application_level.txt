@@ -2,9 +2,9 @@ Running code after analyzers
 ============================
 
 .. note::
-    This is documentation for cast.application version 1.5.27.
+    This is documentation for cast.application version 1.6.11.
     This API can be upgraded separately from AIP. 
-    See `api 1.5.27 <https://github.com/CAST-projects/Extension-SDK/tree/master/api/1.5.27>`_ 
+    See `api 1.6.11 <https://github.com/CAST-projects/Extension-SDK/tree/master/api/1.6.11>`_ 
 
 
 After all analysis job have ran some code can be launched on the resulting knowledge base. 
@@ -286,14 +286,36 @@ Created links can receive properties :
 
 .. method:: save_property(prop, value)
 
+    Save a property on current link.
+    
+    :param prop: the property to save. Either a string for the fullname of the property or an integer for the property id. 
+    :param value: the value to set, either a integer, a string or a list of those, it should respect the type declared in metamodel
+
 .. note::
 
     No need to declare property ownership for saving property on newly created links. 
+
 
 Example::
 
     link = create_link('callLink', o1, o2)
     link.save_property('physicalLink.inferenceEngineRequests', ['virtual call'])
+
+
+Created links can receive any number of bookmarks :
+
+.. method:: add_bookmark(bookmark)
+
+    :param bookmark: a position for the link of type :class:`cast.application.Bookmark` 
+
+
+Example::
+
+    link = create_link('callLink', o1, o2)
+    link.add_bookmark(bookmark1)
+    link.add_bookmark(bookmark2)
+    link.add_bookmark(bookmark3)
+
 
 Created links can be marked as uncertain. They are then eligible to Dynamic Link Manager.
 
@@ -384,6 +406,17 @@ Use the standard python `logging <https://docs.python.org/3/library/logging.html
         
             logging.info("hello %s",  'world!')
 
+
+Publishing reports
+------------------
+
+An extension can publish one or several reports at each global step.
+Those reports are then available both in CAST-MS and Console.
+
+.. autofunction:: cast.application.publish_report
+
+By using the status you can write custom sanity checks. 
+By creating a result file you can also provide details about checks or actions.
 
 
 Testing

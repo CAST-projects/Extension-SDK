@@ -5916,7 +5916,8 @@ Call this to change to mainframe_environment.</p>
     <span class="k">def</span> <span class="nf">test_ok1</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 
         <span class="n">analysis</span> <span class="o">=</span> <span class="n">MainframeTestAnalysis</span><span class="p">()</span>
-        <span class="n">analysis</span><span class="o">.</span><span class="n">add_dependency</span><span class="p">(</span><span class="s">r&#39;C:\ProgramData\CAST\CAST\Extensions\com.castsoftware.mainframe.1.0.0-alpha1&#39;</span><span class="p">)</span>
+        <span class="n">analysis</span><span class="o">.</span><span class="n">add_dependency</span><span class="p">(</span><span class="s">r&#39;C:\ProgramData\CAST\CAST\Extensions\com.castsoftware.internal.platform.0.9.4&#39;</span><span class="p">)</span>
+        <span class="n">analysis</span><span class="o">.</span><span class="n">add_dependency</span><span class="p">(</span><span class="s">r&#39;C:\ProgramData\CAST\CAST\Extensions\com.castsoftware.mainframe.1.0.11-funcrel&#39;</span><span class="p">)</span>
         <span class="n">analysis</span><span class="o">.</span><span class="n">add_selection</span><span class="p">(</span><span class="s">&#39;binary_depending/pgmok1.cob&#39;</span><span class="p">)</span>
         <span class="n">analysis</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
 
