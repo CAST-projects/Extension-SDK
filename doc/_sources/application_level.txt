@@ -422,6 +422,9 @@ By creating a result file you can also provide details about checks or actions.
 Testing
 -------
 
+Unit testing
+************
+
 .. note::
 	New in 1.5.13
 
@@ -463,7 +466,7 @@ For example, let's say that you have a main.py containing a ApplicationLevelExte
 	       
 
 Setting up the initial state
-****************************
+############################
 
 The main entry point is to create a :class:`cast.application.test.TestKnowledgeBase` instance
 
@@ -490,7 +493,7 @@ Properties can be added on object and link using :
 
 
 Running the code to be tested
-*****************************
+#############################
 
 Use the following method:
 
@@ -509,7 +512,7 @@ Example:
 		"""
 
 Asserting the results
-*********************
+#####################
 
 :meth:`cast.application.test.TestKnowledgeBase.run` returns an object of type :class:`cast.application.Application` so classical 
 queries can be done to retreive results.
@@ -543,12 +546,26 @@ For example, a basic test of web linker ::
 
 
 What cannot be tested this way
-******************************
+##############################
 
 The following elements cannot be tested this way :
 
 * :func:`cast.application.Application.sql_tool`
 * :func:`cast.application.Application.update_cast_knowledge_base`
+
+
+Running on an existing schema
+***************************** 
+
+You can run your application level code on an existing schema using the following function.
+
+.. automethod:: cast.application.test.run
+
+
+
+For example ::
+
+    run(kb_name='illustration_local', application_name='Illustration')
 
 
 

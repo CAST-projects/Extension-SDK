@@ -114,10 +114,14 @@
 <li class="toctree-l2"><a class="reference internal" href="#logging">Logging</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#publishing-reports">Publishing reports</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#testing">Testing</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#setting-up-the-initial-state">Setting up the initial state</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#running-the-code-to-be-tested">Running the code to be tested</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#asserting-the-results">Asserting the results</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#what-cannot-be-tested-this-way">What cannot be tested this way</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#unit-testing">Unit testing</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#setting-up-the-initial-state">Setting up the initial state</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#running-the-code-to-be-tested">Running the code to be tested</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#asserting-the-results">Asserting the results</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#what-cannot-be-tested-this-way">What cannot be tested this way</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#running-on-an-existing-schema">Running on an existing schema</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#using-legacy-tools">Using legacy tools</a><ul>
@@ -615,6 +619,8 @@ By creating a result file you can also provide details about checks or actions.<
 </div>
 <div class="section" id="testing">
 <h2>Testing<a class="headerlink" href="#testing" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="unit-testing">
+<h3>Unit testing<a class="headerlink" href="#unit-testing" title="Permalink to this headline">¶</a></h3>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">New in 1.5.13</p>
@@ -655,7 +661,7 @@ By creating a result file you can also provide details about checks or actions.<
 </pre></div>
 </div>
 <div class="section" id="setting-up-the-initial-state">
-<h3>Setting up the initial state<a class="headerlink" href="#setting-up-the-initial-state" title="Permalink to this headline">¶</a></h3>
+<h4>Setting up the initial state<a class="headerlink" href="#setting-up-the-initial-state" title="Permalink to this headline">¶</a></h4>
 <p>The main entry point is to create a <a class="reference internal" href="#cast.application.test.TestKnowledgeBase" title="cast.application.test.TestKnowledgeBase"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.test.TestKnowledgeBase</span></tt></a> instance</p>
 <blockquote>
 <div><dl class="class">
@@ -772,7 +778,7 @@ property must have INF_TYPE/INF_SUB_TYPE</p>
 
 </div>
 <div class="section" id="running-the-code-to-be-tested">
-<h3>Running the code to be tested<a class="headerlink" href="#running-the-code-to-be-tested" title="Permalink to this headline">¶</a></h3>
+<h4>Running the code to be tested<a class="headerlink" href="#running-the-code-to-be-tested" title="Permalink to this headline">¶</a></h4>
 <p>Use the following method:</p>
 <dl class="method">
 <dt id="cast.application.test.TestKnowledgeBase.run">
@@ -796,7 +802,7 @@ property must have INF_TYPE/INF_SUB_TYPE</p>
 </div></blockquote>
 </div>
 <div class="section" id="asserting-the-results">
-<h3>Asserting the results<a class="headerlink" href="#asserting-the-results" title="Permalink to this headline">¶</a></h3>
+<h4>Asserting the results<a class="headerlink" href="#asserting-the-results" title="Permalink to this headline">¶</a></h4>
 <p><a class="reference internal" href="#cast.application.test.TestKnowledgeBase.run" title="cast.application.test.TestKnowledgeBase.run"><tt class="xref py py-meth docutils literal"><span class="pre">cast.application.test.TestKnowledgeBase.run()</span></tt></a> returns an object of type <a class="reference internal" href="code_reference.html#cast.application.Application" title="cast.application.Application"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.Application</span></tt></a> so classical
 queries can be done to retreive results.</p>
 <p>For example, a basic test of web linker</p>
@@ -828,12 +834,36 @@ queries can be done to retreive results.</p>
 </div>
 </div>
 <div class="section" id="what-cannot-be-tested-this-way">
-<h3>What cannot be tested this way<a class="headerlink" href="#what-cannot-be-tested-this-way" title="Permalink to this headline">¶</a></h3>
+<h4>What cannot be tested this way<a class="headerlink" href="#what-cannot-be-tested-this-way" title="Permalink to this headline">¶</a></h4>
 <p>The following elements cannot be tested this way :</p>
 <ul class="simple">
 <li><a class="reference internal" href="code_reference.html#cast.application.Application.sql_tool" title="cast.application.Application.sql_tool"><tt class="xref py py-func docutils literal"><span class="pre">cast.application.Application.sql_tool()</span></tt></a></li>
 <li><a class="reference internal" href="code_reference.html#cast.application.Application.update_cast_knowledge_base" title="cast.application.Application.update_cast_knowledge_base"><tt class="xref py py-func docutils literal"><span class="pre">cast.application.Application.update_cast_knowledge_base()</span></tt></a></li>
 </ul>
+</div>
+</div>
+<div class="section" id="running-on-an-existing-schema">
+<h3>Running on an existing schema<a class="headerlink" href="#running-on-an-existing-schema" title="Permalink to this headline">¶</a></h3>
+<p>You can run your application level code on an existing schema using the following function.</p>
+<dl class="method">
+<dt id="cast.application.test.run">
+<tt class="descclassname">test.</tt><tt class="descname">run</tt><big>(</big><em>kb_name</em>, <em>application_name</em>, <em>engine=None</em>, <em>event='end_application'</em><big>)</big><a class="headerlink" href="#cast.application.test.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run current app level plugin on a kb/application.</p>
+<p>The code calling this function should be located in a <em>tests</em> subfolder of the plugin.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>engine</strong> &#8211; sqlalchemy engine, see <a class="reference internal" href="#cast.application.create_postgres_engine" title="cast.application.create_postgres_engine"><tt class="xref py py-func docutils literal"><span class="pre">cast.application.create_postgres_engine()</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<p>For example</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">run</span><span class="p">(</span><span class="n">kb_name</span><span class="o">=</span><span class="s">&#39;illustration_local&#39;</span><span class="p">,</span> <span class="n">application_name</span><span class="o">=</span><span class="s">&#39;Illustration&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
 </div>
 </div>
 <div class="section" id="using-legacy-tools">
