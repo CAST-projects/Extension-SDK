@@ -2,9 +2,9 @@ Running code after analyzers
 ============================
 
 .. note::
-    This is documentation for cast.application version 1.6.11.
+    This is documentation for cast.application version 1.6.13.
     This API can be upgraded separately from AIP. 
-    See `api 1.6.11 <https://github.com/CAST-projects/Extension-SDK/tree/master/api/1.6.11>`_ 
+    See `api 1.6.13 <https://github.com/CAST-projects/Extension-SDK/tree/master/api/1.6.13>`_ 
 
 
 After all analysis job have ran some code can be launched on the resulting knowledge base. 
@@ -58,6 +58,8 @@ launching.
 A plugin can contain any number of ApplicationLevelExtension, they all will be called back.
 
 .. autoclass:: cast.application.ApplicationLevelExtension
+
+   .. automethod:: cast.application.ApplicationLevelExtension.end_application_create_objects
 
    .. automethod:: cast.application.ApplicationLevelExtension.end_application
 
@@ -165,6 +167,33 @@ Do not use application.search_objects(name=variable)
 
 Getting one object per name, whose name is variable will generate one query for each search and will be under-perfomant.
 
+
+Creating new objects
+********************
+
+For technologies where we do not have analysis level plugins available, you can create objects at application level with some restrictions.
+
+1. everything should be done in the event :func:`cast.application.ApplicationLevelExtension.end_application_create_object` (creating, saving, saving property, saving links)
+2. parent of a custom object is either an existing object or a saved custom object
+3. saving property on them require object to be saved but **does not require to use** :func:`cast.application.Application.declare_property_ownership`
+4. creating a link from or to those object require it to be saved 
+
+Example ::
+
+    custom = CustomObject()
+    custom.set_name('toto')
+    custom.set_parent(_file)
+    custom.set_type('C_CLASS')
+    
+    custom.save()
+    
+    custom.save_property('MyCategory.myProperty', 2)
+
+    logging.info('creating link...')
+    create_link('callLink', _file, custom)
+
+.. autoclass:: cast.application.CustomObject
+   :members:
    
 Decorating objects
 ******************

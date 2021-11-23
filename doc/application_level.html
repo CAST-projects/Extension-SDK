@@ -98,6 +98,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#do-not-use-application-search-objects-name-variable">Do not use application.search_objects(name=variable)</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#creating-new-objects">Creating new objects</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#decorating-objects">Decorating objects</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#bookmark">Bookmark</a></li>
 </ul>
@@ -191,9 +192,9 @@
 <h1>Running code after analyzers<a class="headerlink" href="#running-code-after-analyzers" title="Permalink to this headline">¶</a></h1>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">This is documentation for cast.application version 1.6.11.
+<p class="last">This is documentation for cast.application version 1.6.13.
 This API can be upgraded separately from AIP.
-See <a class="reference external" href="https://github.com/CAST-projects/Extension-SDK/tree/master/api/1.6.11">api 1.6.11</a></p>
+See <a class="reference external" href="https://github.com/CAST-projects/Extension-SDK/tree/master/api/1.6.13">api 1.6.13</a></p>
 </div>
 <p>After all analysis job have ran some code can be launched on the resulting knowledge base.</p>
 <p>During this step, you :</p>
@@ -248,6 +249,21 @@ launching.</p>
 <dd>...</dd>
 </dl>
 </div></blockquote>
+<dl class="method">
+<dt id="cast.application.ApplicationLevelExtension.end_application_create_objects">
+<tt class="descname">end_application_create_objects</tt><big>(</big><em>application</em><big>)</big><a class="headerlink" href="#cast.application.ApplicationLevelExtension.end_application_create_objects" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called at the end of application&#8217;s analysis, the first pass to create new objects.</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.6.0.</span></p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+</tbody>
+</table>
+</dd></dl>
+
 <dl class="method">
 <dt id="cast.application.ApplicationLevelExtension.end_application">
 <tt class="descname">end_application</tt><big>(</big><em>application</em><big>)</big><a class="headerlink" href="#cast.application.ApplicationLevelExtension.end_application" title="Permalink to this definition">¶</a></dt>
@@ -348,6 +364,139 @@ for otherthing in application.objects()...:
 <h4>Do not use application.search_objects(name=variable)<a class="headerlink" href="#do-not-use-application-search-objects-name-variable" title="Permalink to this headline">¶</a></h4>
 <p>Getting one object per name, whose name is variable will generate one query for each search and will be under-perfomant.</p>
 </div>
+</div>
+<div class="section" id="creating-new-objects">
+<h3>Creating new objects<a class="headerlink" href="#creating-new-objects" title="Permalink to this headline">¶</a></h3>
+<p>For technologies where we do not have analysis level plugins available, you can create objects at application level with some restrictions.</p>
+<ol class="arabic simple">
+<li>everything should be done in the event <tt class="xref py py-func docutils literal"><span class="pre">cast.application.ApplicationLevelExtension.end_application_create_object()</span></tt> (creating, saving, saving property, saving links)</li>
+<li>parent of a custom object is either an existing object or a saved custom object</li>
+<li>saving property on them require object to be saved but <strong>does not require to use</strong> <a class="reference internal" href="code_reference.html#cast.application.Application.declare_property_ownership" title="cast.application.Application.declare_property_ownership"><tt class="xref py py-func docutils literal"><span class="pre">cast.application.Application.declare_property_ownership()</span></tt></a></li>
+<li>creating a link from or to those object require it to be saved</li>
+</ol>
+<p>Example</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">custom</span> <span class="o">=</span> <span class="n">CustomObject</span><span class="p">()</span>
+<span class="n">custom</span><span class="o">.</span><span class="n">set_name</span><span class="p">(</span><span class="s">&#39;toto&#39;</span><span class="p">)</span>
+<span class="n">custom</span><span class="o">.</span><span class="n">set_parent</span><span class="p">(</span><span class="n">_file</span><span class="p">)</span>
+<span class="n">custom</span><span class="o">.</span><span class="n">set_type</span><span class="p">(</span><span class="s">&#39;C_CLASS&#39;</span><span class="p">)</span>
+
+<span class="n">custom</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
+<span class="n">custom</span><span class="o">.</span><span class="n">save_property</span><span class="p">(</span><span class="s">&#39;MyCategory.myProperty&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&#39;creating link...&#39;</span><span class="p">)</span>
+<span class="n">create_link</span><span class="p">(</span><span class="s">&#39;callLink&#39;</span><span class="p">,</span> <span class="n">_file</span><span class="p">,</span> <span class="n">custom</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="class">
+<dt id="cast.application.CustomObject">
+<em class="property">class </em><tt class="descclassname">cast.application.</tt><tt class="descname">CustomObject</tt><a class="headerlink" href="#cast.application.CustomObject" title="Permalink to this definition">¶</a></dt>
+<dd><p>For creating new objects at application level.</p>
+<p>Bookmarks (position) cannot be saved for now.</p>
+<dl class="method">
+<dt id="cast.application.CustomObject.set_name">
+<tt class="descname">set_name</tt><big>(</big><em>name</em><big>)</big><a class="headerlink" href="#cast.application.CustomObject.set_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the object name.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> &#8211; object&#8217;s name. String</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.CustomObject.set_fullname">
+<tt class="descname">set_fullname</tt><big>(</big><em>fullname</em><big>)</big><a class="headerlink" href="#cast.application.CustomObject.set_fullname" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the object&#8217;s fullname. Optional, if not provided, save() will
+calculate one : &lt;parent&#8217;s full name&gt;.&lt;name&gt;</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> &#8211; object&#8217;s fullname. String</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.CustomObject.set_type">
+<tt class="descname">set_type</tt><big>(</big><em>typename</em><big>)</big><a class="headerlink" href="#cast.application.CustomObject.set_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the type name.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>typename</strong> &#8211; Metamodel type name. String</td>
+</tr>
+</tbody>
+</table>
+<p>Type must respect some constraints for the object to be saved.
+...</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.CustomObject.set_parent">
+<tt class="descname">set_parent</tt><big>(</big><em>parent</em><big>)</big><a class="headerlink" href="#cast.application.CustomObject.set_parent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the parent.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>parent</strong> &#8211; the parent of type cast.application.Object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.CustomObject.set_guid">
+<tt class="descname">set_guid</tt><big>(</big><em>guid</em><big>)</big><a class="headerlink" href="#cast.application.CustomObject.set_guid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the GUID of the object. Optional, if not provided, save() will
+calculate one : &lt;typeid&gt;?&lt;fullname&gt;</p>
+<p>Generally speaking one does not have to bother about guids.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>guid</strong> &#8211; object&#8217;s GUID. String</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.CustomObject.save">
+<tt class="descname">save</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.CustomObject.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save the object to Analysis Service.</p>
+<p>Object require a non empty name, a saved parent and a type.
+The type must also follow constraints</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.CustomObject.save_property">
+<tt class="descname">save_property</tt><big>(</big><em>prop</em>, <em>value</em><big>)</big><a class="headerlink" href="#cast.application.CustomObject.save_property" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save a property on an object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>prop</strong> &#8211; the property to save. Either a string for the fullname of the property or an integer for the property id.</li>
+<li><strong>value</strong> &#8211; property value. String or Integer</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Object require to be saved.</p>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 <div class="section" id="decorating-objects">
 <h3>Decorating objects<a class="headerlink" href="#decorating-objects" title="Permalink to this headline">¶</a></h3>
