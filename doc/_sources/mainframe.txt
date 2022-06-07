@@ -199,7 +199,7 @@ Procedure Division
     .. automethod:: cast.analysers.mainframe.Extension.end_declaratives_paragraph
 
 
-Statements ACCEPT - EXIT
+Statements ACCEPT - FREE
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. autoclass:: cast.analysers.mainframe.Extension
@@ -223,6 +223,13 @@ Statements ACCEPT - EXIT
 
     .. automethod:: cast.analysers.mainframe.Extension.end_add_destination
 
+    .. automethod:: cast.analysers.mainframe.Extension.start_allocate
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_initialized
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_initialized
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_allocate
 
     .. automethod:: cast.analysers.mainframe.Extension.start_alter
 
@@ -358,6 +365,10 @@ Statements ACCEPT - EXIT
 
     .. automethod:: cast.analysers.mainframe.Extension.end_exit
 
+    .. automethod:: cast.analysers.mainframe.Extension.start_free
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_free
+
 Statements GOBACK - PERFORM
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -390,6 +401,22 @@ Statements GOBACK - PERFORM
 
     .. automethod:: cast.analysers.mainframe.Extension.start_initialize
 
+    .. automethod:: cast.analysers.mainframe.Extension.start_with_filler
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_with_filler
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_value_phrase
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_value_phrase
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_replacing
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_replacing
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_to_default
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_to_default
+
     .. automethod:: cast.analysers.mainframe.Extension.end_initialize
 
 
@@ -397,6 +424,13 @@ Statements GOBACK - PERFORM
 
     .. automethod:: cast.analysers.mainframe.Extension.end_inspect
 
+    .. automethod:: cast.analysers.mainframe.Extension.start_json_generate
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_json_generate
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_json_parse
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_json_parse
 
     .. automethod:: cast.analysers.mainframe.Extension.start_merge
 
