@@ -98,6 +98,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#equivalence-tree-events">Equivalence tree events</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#compatibility-over-time">Compatibility over time</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#accessing-sub-nodes">Accessing sub nodes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dumping-ast">Dumping AST</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#global-events">Global events</a></li>
@@ -116,6 +117,7 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#specific-objects">Specific objects</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#data">Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#file">File</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#ast-node-types">AST Node types</a></li>
 </ul>
 </li>
@@ -213,6 +215,45 @@ It means that in a future version we can add intermediate nodes or nodes with ne
 <h4>Accessing sub nodes<a class="headerlink" href="#accessing-sub-nodes" title="Permalink to this headline">¶</a></h4>
 <p>You can use <tt class="xref py py-func docutils literal"><span class="pre">cast.analyzers.mainframe.UnsavedObject.get_sub_nodes()</span></tt> that will resist future AST changes.</p>
 </div>
+<div class="section" id="dumping-ast">
+<h4>Dumping AST<a class="headerlink" href="#dumping-ast" title="Permalink to this headline">¶</a></h4>
+<p>For debugging purpose one can log the AST of a section, paragraph, statement the following way:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">cast.analysers</span> <span class="kn">import</span> <span class="n">log</span><span class="p">,</span> <span class="n">mainframe</span> <span class="c"># @UnresolvedImport</span>
+
+
+<span class="k">def</span> <span class="nf">display_node</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Display the AST node in the log for debugging.</span>
+
+<span class="sd">    Do not work at top level (for program).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">text</span> <span class="o">=</span> <span class="s">&#39; &#39;</span><span class="o">*</span><span class="n">indent</span> <span class="o">+</span> <span class="n">node</span><span class="o">.</span><span class="n">get_kind</span><span class="p">()</span>
+
+    <span class="n">name</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">name</span><span class="p">:</span>
+        <span class="n">text</span> <span class="o">+=</span> <span class="s">&#39; &#39;</span> <span class="o">+</span> <span class="n">name</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">text</span> <span class="o">+=</span> <span class="s">&#39; &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">get_value</span><span class="p">())</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">pass</span>
+
+    <span class="n">text</span> <span class="o">+=</span> <span class="s">&#39; line &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">get_position</span><span class="p">()</span><span class="o">.</span><span class="n">get_begin_line</span><span class="p">())</span> <span class="o">+</span> <span class="s">&#39; -&gt; &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">get_position</span><span class="p">()</span><span class="o">.</span><span class="n">get_end_line</span><span class="p">())</span>
+
+    <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">get_children</span><span class="p">():</span>
+        <span class="n">display_node</span><span class="p">(</span><span class="n">child</span><span class="p">,</span> <span class="n">indent</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">MyExtension</span><span class="p">(</span><span class="n">mainframe</span><span class="o">.</span><span class="n">Extension</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">start_paragraph</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="c"># display the content of the paragraph</span>
+        <span class="n">display_node</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
 </div>
 <div class="section" id="global-events">
 <h3>Global events<a class="headerlink" href="#global-events" title="Permalink to this headline">¶</a></h3>
@@ -300,6 +341,46 @@ It means that in a future version we can add intermediate nodes or nodes with ne
 </table>
 <div class="versionadded">
 <p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.1-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.start_end_of_line_comment">
+<tt class="descname">start_end_of_line_comment</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_end_of_line_comment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Comment at end of line 
+<a href="#id1"><span class="problematic" id="id2">*</span></a>&gt; ...
+// ...</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type node:Node</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.end_end_of_line_comment">
+<tt class="descname">end_end_of_line_comment</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.end_end_of_line_comment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Comment at end of line 
+<a href="#id3"><span class="problematic" id="id4">*</span></a>&gt; ...
+// ...</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type node:Node</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
 </div>
 </dd></dl>
 
@@ -1434,6 +1515,45 @@ index is of type <tt class="xref py py-class docutils literal"><span class="pre"
 </dd></dl>
 
 <dl class="method">
+<dt id="cast.analysers.mainframe.Extension.start_call_interface">
+<tt class="descname">start_call_interface</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_call_interface" title="Permalink to this definition">¶</a></dt>
+<dd><p>&gt;&gt;CALLINTERFACE compilation directive</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>node.get_name() will take following values:
+- &#8220;&#8221;
+- &#8220;DLL&#8221;
+- &#8220;STATIC&#8221;
+- &#8220;DYNAMIC&#8221;</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.end_call_interface">
+<tt class="descname">end_call_interface</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.end_call_interface" title="Permalink to this definition">¶</a></dt>
+<dd><p>&gt;&gt;CALLINTERFACE compilation directive</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
 <dt id="cast.analysers.mainframe.Extension.start_cancel">
 <tt class="descname">start_cancel</tt><big>(</big><em>cancel</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_cancel" title="Permalink to this definition">¶</a></dt>
 <dd><p>CANCEL statement.</p>
@@ -1604,6 +1724,114 @@ otherwise the code is expansed.</p>
 <p>&#64;type node:Node</p>
 <div class="versionadded">
 <p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.0-alpha3.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.start_replacement">
+<tt class="descname">start_replacement</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_replacement" title="Permalink to this definition">¶</a></dt>
+<dd><p>REPLACING ... BY ... clause in an COPY or REPLACE statement.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type node:Node</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.end_replacement">
+<tt class="descname">end_replacement</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.end_replacement" title="Permalink to this definition">¶</a></dt>
+<dd><p>REPLACING ... BY ... clause in an COPY or REPLACE statement.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type node:Node</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.start_replacement_leading">
+<tt class="descname">start_replacement_leading</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_replacement_leading" title="Permalink to this definition">¶</a></dt>
+<dd><p>REPLACING LEADING ... BY ... clause in an COPY or REPLACE statement.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type node:Node</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.end_replacement_leading">
+<tt class="descname">end_replacement_leading</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.end_replacement_leading" title="Permalink to this definition">¶</a></dt>
+<dd><p>REPLACING LEADING ... BY ... clause in an COPY or REPLACE statement.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type node:Node</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.start_replacement_trailing">
+<tt class="descname">start_replacement_trailing</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_replacement_trailing" title="Permalink to this definition">¶</a></dt>
+<dd><p>REPLACING TRAILING ... BY ... clause in an COPY or REPLACE statement.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type node:Node</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.end_replacement_trailing">
+<tt class="descname">end_replacement_trailing</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.end_replacement_trailing" title="Permalink to this definition">¶</a></dt>
+<dd><p>REPLACING TRAILING ... BY ... clause in an COPY or REPLACE statement.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type node:Node</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
 </div>
 </dd></dl>
 
@@ -2268,6 +2496,210 @@ otherwise the code is expansed.</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="cast.analysers.mainframe.Extension.start_exit_method">
+<tt class="descname">start_exit_method</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_exit_method" title="Permalink to this definition">¶</a></dt>
+<dd><p>EXIT METHOD statement</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.end_exit_method">
+<tt class="descname">end_exit_method</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.end_exit_method" title="Permalink to this definition">¶</a></dt>
+<dd><p>EXIT METHOD statement</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.start_exit_paragraph">
+<tt class="descname">start_exit_paragraph</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_exit_paragraph" title="Permalink to this definition">¶</a></dt>
+<dd><p>EXIT PARAGRAPH statement</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.end_exit_paragraph">
+<tt class="descname">end_exit_paragraph</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.end_exit_paragraph" title="Permalink to this definition">¶</a></dt>
+<dd><p>EXIT PARAGRAPH statement</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.start_exit_perform">
+<tt class="descname">start_exit_perform</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_exit_perform" title="Permalink to this definition">¶</a></dt>
+<dd><p>EXIT PERFORM statement</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.end_exit_perform">
+<tt class="descname">end_exit_perform</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.end_exit_perform" title="Permalink to this definition">¶</a></dt>
+<dd><p>EXIT PERFORM statement</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.start_exit_perform_cycle">
+<tt class="descname">start_exit_perform_cycle</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_exit_perform_cycle" title="Permalink to this definition">¶</a></dt>
+<dd><p>EXIT PERFORM CYCLE statement</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.end_exit_perform_cycle">
+<tt class="descname">end_exit_perform_cycle</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.end_exit_perform_cycle" title="Permalink to this definition">¶</a></dt>
+<dd><p>EXIT PERFORM CYCLE statement</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.start_exit_program">
+<tt class="descname">start_exit_program</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_exit_program" title="Permalink to this definition">¶</a></dt>
+<dd><p>EXIT PROGRAM statement</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.end_exit_program">
+<tt class="descname">end_exit_program</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.end_exit_program" title="Permalink to this definition">¶</a></dt>
+<dd><p>EXIT PROGRAM statement</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.start_exit_section">
+<tt class="descname">start_exit_section</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_exit_section" title="Permalink to this definition">¶</a></dt>
+<dd><p>EXIT SECTION statement</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.end_exit_section">
+<tt class="descname">end_exit_section</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.end_exit_section" title="Permalink to this definition">¶</a></dt>
+<dd><p>EXIT SECTION statement</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
 <dt id="cast.analysers.mainframe.Extension.start_free">
 <tt class="descname">start_free</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_free" title="Permalink to this definition">¶</a></dt>
 <dd><p>FREE statement.</p>
@@ -2400,6 +2832,74 @@ otherwise the code is expansed.</p>
 </tbody>
 </table>
 <p>&#64;type goto:Node</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.start_inline_off">
+<tt class="descname">start_inline_off</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_inline_off" title="Permalink to this definition">¶</a></dt>
+<dd><p>&gt;&gt;INLINE OFF compilation directive</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.end_inline_off">
+<tt class="descname">end_inline_off</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.end_inline_off" title="Permalink to this definition">¶</a></dt>
+<dd><p>&gt;&gt;INLINE OFF compilation directive</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.start_inline_on">
+<tt class="descname">start_inline_on</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_inline_on" title="Permalink to this definition">¶</a></dt>
+<dd><p>&gt;&gt;INLINE ON compilation directive</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.end_inline_on">
+<tt class="descname">end_inline_on</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.end_inline_on" title="Permalink to this definition">¶</a></dt>
+<dd><p>&gt;&gt;INLINE ON compilation directive</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
 </dd></dl>
 
 <dl class="method">
@@ -2563,6 +3063,7 @@ Children: initialized identifiers, with_filler clause, to_value, replacing, to_d
 </tbody>
 </table>
 <p>&#64;type replacing:Node</p>
+<p>replacing.has_then() will be True in case of THEN REPLACING.</p>
 <div class="versionadded">
 <p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.18-funcrel.</span></p>
 </div>
@@ -2733,6 +3234,428 @@ Children: identifiers</p>
 </table>
 <div class="versionadded">
 <p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.18-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.start_count_in">
+<tt class="descname">start_count_in</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_count_in" title="Permalink to this definition">¶</a></dt>
+<dd><p>COUNT IN ... clause in an JSON GENERATE, XML GENERATE or UNSTRING statement.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type node:Node</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.end_count_in">
+<tt class="descname">end_count_in</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.end_count_in" title="Permalink to this definition">¶</a></dt>
+<dd><p>COUNT IN ... clause in an JSON GENERATE, XML GENERATE or UNSTRING statement.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type node:Node</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.start_name_of">
+<tt class="descname">start_name_of</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_name_of" title="Permalink to this definition">¶</a></dt>
+<dd><p>NAME OF ... clause in an JSON GENERATE or XML GENERATE statement.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type node:Node</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.end_name_of">
+<tt class="descname">end_name_of</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.end_name_of" title="Permalink to this definition">¶</a></dt>
+<dd><p>NAME OF ... clause in an JSON GENERATE or XML GENERATE statement.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type node:Node</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.start_suppress">
+<tt class="descname">start_suppress</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_suppress" title="Permalink to this definition">¶</a></dt>
+<dd><p>SUPPRESS ... clause in an JSON GENERATE or XML GENERATE statement.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type node:Node</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.end_suppress">
+<tt class="descname">end_suppress</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.end_suppress" title="Permalink to this definition">¶</a></dt>
+<dd><p>SUPPRESS ... clause in an JSON GENERATE or XML GENERATE statement.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type node:Node</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.start_suppress_when">
+<tt class="descname">start_suppress_when</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_suppress_when" title="Permalink to this definition">¶</a></dt>
+<dd><p>WHEN ... clause in an JSON GENERATE or XML GENERATE statement.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type node:Node</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.end_suppress_when">
+<tt class="descname">end_suppress_when</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.end_suppress_when" title="Permalink to this definition">¶</a></dt>
+<dd><p>WHEN ... clause in an JSON GENERATE or XML GENERATE statement.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type node:Node</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.start_with_detail">
+<tt class="descname">start_with_detail</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_with_detail" title="Permalink to this definition">¶</a></dt>
+<dd><p>WITH DETAIL ... clause in an JSON PARSE statement.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type node:Node</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.end_with_detail">
+<tt class="descname">end_with_detail</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.end_with_detail" title="Permalink to this definition">¶</a></dt>
+<dd><p>WITH DETAIL ... clause in an JSON PARSE statement.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type node:Node</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.start_with_encoding">
+<tt class="descname">start_with_encoding</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_with_encoding" title="Permalink to this definition">¶</a></dt>
+<dd><p>WITH ENCODING ... clause in an XML GENERATE statement.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type node:Node</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.end_with_encoding">
+<tt class="descname">end_with_encoding</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.end_with_encoding" title="Permalink to this definition">¶</a></dt>
+<dd><p>WITH ENCODING ... clause in an XML GENERATE statement.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type node:Node</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.start_with_xml_declaration">
+<tt class="descname">start_with_xml_declaration</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_with_xml_declaration" title="Permalink to this definition">¶</a></dt>
+<dd><p>WITH XML-DECLARATION clause in an XML GENERATE statement.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type node:Node</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.end_with_xml_declaration">
+<tt class="descname">end_with_xml_declaration</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.end_with_xml_declaration" title="Permalink to this definition">¶</a></dt>
+<dd><p>WITH XML-DECLARATION clause in an XML GENERATE statement.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type node:Node</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.start_with_attributes">
+<tt class="descname">start_with_attributes</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_with_attributes" title="Permalink to this definition">¶</a></dt>
+<dd><p>WITH ATTRIBUTES clause in an XML GENERATE statement.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type node:Node</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.end_with_attributes">
+<tt class="descname">end_with_attributes</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.end_with_attributes" title="Permalink to this definition">¶</a></dt>
+<dd><p>WITH ATTRIBUTES clause in an XML GENERATE statement.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type node:Node</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.start_namespace">
+<tt class="descname">start_namespace</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_namespace" title="Permalink to this definition">¶</a></dt>
+<dd><p>NAMESPACE ... clause in an XML GENERATE statement.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type node:Node</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.end_namespace">
+<tt class="descname">end_namespace</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.end_namespace" title="Permalink to this definition">¶</a></dt>
+<dd><p>NAMESPACE ... clause in an XML GENERATE statement.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type node:Node</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.start_type_of">
+<tt class="descname">start_type_of</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_type_of" title="Permalink to this definition">¶</a></dt>
+<dd><p>TYPE OF ... clause in an XML GENERATE statement.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type node:Node</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.end_type_of">
+<tt class="descname">end_type_of</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.end_type_of" title="Permalink to this definition">¶</a></dt>
+<dd><p>TYPE OF ... clause in an XML GENERATE statement.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type node:Node</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.start_xml_type">
+<tt class="descname">start_xml_type</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_xml_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>One of 
+- ATTRIBUTE
+- ELEMENT
+- CONTENT
+- NUMERIC
+- NUMERIC ATTRIBUTE
+- NUMERIC ELEMENT
+- NUMERIC CONTENT
+- NONNUMERIC
+- NONNUMERIC ATTRIBUTE
+- NONNUMERIC ELEMENT
+- NONNUMERIC CONTENT
+in an XML GENERATE statement.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>node.get_name() will give the value</p>
+<p>&#64;type node:Node</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.end_xml_type">
+<tt class="descname">end_xml_type</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.end_xml_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>One of 
+- ATTRIBUTE
+- ELEMENT
+- CONTENT
+- NUMERIC
+- NUMERIC ATTRIBUTE
+- NUMERIC ELEMENT
+- NUMERIC CONTENT
+- NONNUMERIC
+- NONNUMERIC ATTRIBUTE
+- NONNUMERIC ELEMENT
+- NONNUMERIC CONTENT
+in an XML GENERATE statement.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>node.get_name() will give the value</p>
+<p>&#64;type node:Node</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
 </div>
 </dd></dl>
 
@@ -3381,6 +4304,44 @@ Children: identifiers</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="cast.analysers.mainframe.Extension.start_compilation_option">
+<tt class="descname">start_compilation_option</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_compilation_option" title="Permalink to this definition">¶</a></dt>
+<dd><p>Option inside a PROCESS statement</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type node:Node</p>
+<p>option.get_name() gives the option value</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.end_compilation_option">
+<tt class="descname">end_compilation_option</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.end_compilation_option" title="Permalink to this definition">¶</a></dt>
+<dd><p>Option inside a PROCESS statement</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type node:Node</p>
+<p>option.get_name() gives the option value</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
 <dt id="cast.analysers.mainframe.Extension.start_read">
 <tt class="descname">start_read</tt><big>(</big><em>_read</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_read" title="Permalink to this definition">¶</a></dt>
 <dd><p>READ statement.</p>
@@ -3503,6 +4464,40 @@ Children: identifiers</p>
 <p>&#64;type node:Node</p>
 <div class="versionadded">
 <p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.0-alpha3.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.start_replace">
+<tt class="descname">start_replace</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_replace" title="Permalink to this definition">¶</a></dt>
+<dd><p>REPLACE statement</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.end_replace">
+<tt class="descname">end_replace</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.end_replace" title="Permalink to this definition">¶</a></dt>
+<dd><p>REPLACE statement</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
 </div>
 </dd></dl>
 
@@ -4169,6 +5164,150 @@ Children: identifiers</p>
 </table>
 <div class="versionadded">
 <p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.1-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.start_returning_national">
+<tt class="descname">start_returning_national</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_returning_national" title="Permalink to this definition">¶</a></dt>
+<dd><p>RETURNING NATIONAL clause in an XML PARSE statement.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type node:Node</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.end_returning_national">
+<tt class="descname">end_returning_national</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.end_returning_national" title="Permalink to this definition">¶</a></dt>
+<dd><p>RETURNING NATIONAL clause in an XML PARSE statement.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type node:Node</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.start_validating">
+<tt class="descname">start_validating</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_validating" title="Permalink to this definition">¶</a></dt>
+<dd><p>VALIDATING ... clause in an XML PARSE statement.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type node:Node</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.end_validating">
+<tt class="descname">end_validating</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.end_validating" title="Permalink to this definition">¶</a></dt>
+<dd><p>VALIDATING ... clause in an XML PARSE statement.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type node:Node</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.start_validating_with_file">
+<tt class="descname">start_validating_with_file</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_validating_with_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>VALIDATING WITH FILE ... clause in an XML PARSE statement.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type node:Node</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.end_validating_with_file">
+<tt class="descname">end_validating_with_file</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.end_validating_with_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>VALIDATING WITH FILE ... clause in an XML PARSE statement.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type node:Node</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.start_processing_procedure">
+<tt class="descname">start_processing_procedure</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_processing_procedure" title="Permalink to this definition">¶</a></dt>
+<dd><p>PROCESSING PROCEDURE ... clause in an XML PARSE statement.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type node:Node</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.end_processing_procedure">
+<tt class="descname">end_processing_procedure</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.end_processing_procedure" title="Permalink to this definition">¶</a></dt>
+<dd><p>PROCESSING PROCEDURE ... clause in an XML PARSE statement.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type node:Node</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
 </div>
 </dd></dl>
 
@@ -5741,6 +6880,8 @@ For example</p>
 --&gt; None
 01 VAR PIC X(10) OCCURS 10 TO 20.
 --&gt; 20
+01 VAR PIC X(10) OCCURS 10 TO UNBOUNDED DEPENDING ON VAR2.
+--&gt; -1
 </pre></div>
 </div>
 <table class="docutils field-list" frame="void" rules="none">
@@ -5791,6 +6932,58 @@ For example</p>
 78 C VALUE &#39;A&#39; SYNCHRONIZED.
 --&gt; True                        
 </pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.SavedData.is_volatile">
+<tt class="descname">is_volatile</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.SavedData.is_volatile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retuns True if data is VOLATILE</p>
+<p>For example</p>
+<div class="highlight-python"><div class="highlight"><pre>01 VAR PIC X.
+--&gt; False
+78 C VALUE &#39;A&#39; VOLATILE.
+--&gt; True                        
+</pre></div>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.SavedData.is_data">
+<tt class="descname">is_data</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.SavedData.is_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retuns True</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.SavedData.is_index">
+<tt class="descname">is_index</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.SavedData.is_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retuns False</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.SavedData.is_file_description">
+<tt class="descname">is_file_description</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.SavedData.is_file_description" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retuns False</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.SavedData.is_sort_description">
+<tt class="descname">is_sort_description</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.SavedData.is_sort_description" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retuns False</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
 </div>
 </dd></dl>
 
@@ -5930,6 +7123,8 @@ For example</p>
 --&gt; None
 01 VAR PIC X(10) OCCURS 10 TO 20.
 --&gt; 20
+01 VAR PIC X(10) OCCURS 10 TO UNBOUNDED DEPENDING ON VAR2.
+--&gt; -1
 </pre></div>
 </div>
 <table class="docutils field-list" frame="void" rules="none">
@@ -5983,6 +7178,58 @@ For example</p>
 </div>
 </dd></dl>
 
+<dl class="method">
+<dt id="cast.analysers.mainframe.UnsavedData.is_volatile">
+<tt class="descname">is_volatile</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.UnsavedData.is_volatile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retuns True if data is VOLATILE</p>
+<p>For example</p>
+<div class="highlight-python"><div class="highlight"><pre>01 VAR PIC X.
+--&gt; False
+78 C VALUE &#39;A&#39; VOLATILE.
+--&gt; True                        
+</pre></div>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.UnsavedData.is_data">
+<tt class="descname">is_data</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.UnsavedData.is_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retuns True</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.UnsavedData.is_index">
+<tt class="descname">is_index</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.UnsavedData.is_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retuns False</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.UnsavedData.is_file_description">
+<tt class="descname">is_file_description</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.UnsavedData.is_file_description" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retuns False</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.UnsavedData.is_sort_description">
+<tt class="descname">is_sort_description</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.UnsavedData.is_sort_description" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retuns False</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
 </dd></dl>
 
 <p>Index have their own type</p>
@@ -5993,6 +7240,211 @@ For example</p>
 <div class="versionadded">
 <p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.0-alpha3.</span></p>
 </div>
+<dl class="method">
+<dt id="cast.analysers.mainframe.Index.is_data">
+<tt class="descname">is_data</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Index.is_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retuns False</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Index.is_index">
+<tt class="descname">is_index</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Index.is_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retuns True</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Index.is_file_description">
+<tt class="descname">is_file_description</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Index.is_file_description" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retuns False</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Index.is_sort_description">
+<tt class="descname">is_sort_description</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Index.is_sort_description" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retuns False</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="file">
+<h3>File<a class="headerlink" href="#file" title="Permalink to this headline">¶</a></h3>
+<p>FD objects.</p>
+<dl class="class">
+<dt id="cast.analysers.mainframe.SavedFileDescription">
+<em class="property">class </em><tt class="descclassname">cast.analysers.mainframe.</tt><tt class="descname">SavedFileDescription</tt><a class="headerlink" href="#cast.analysers.mainframe.SavedFileDescription" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="cast.analysers.mainframe.SavedFileDescription.is_data">
+<tt class="descname">is_data</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.SavedFileDescription.is_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retuns False</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.SavedFileDescription.is_index">
+<tt class="descname">is_index</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.SavedFileDescription.is_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retuns False</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.SavedFileDescription.is_file_description">
+<tt class="descname">is_file_description</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.SavedFileDescription.is_file_description" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retuns True</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.SavedFileDescription.is_sort_description">
+<tt class="descname">is_sort_description</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.SavedFileDescription.is_sort_description" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retuns False</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="cast.analysers.mainframe.UnsavedFileDescription">
+<em class="property">class </em><tt class="descclassname">cast.analysers.mainframe.</tt><tt class="descname">UnsavedFileDescription</tt><a class="headerlink" href="#cast.analysers.mainframe.UnsavedFileDescription" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="cast.analysers.mainframe.UnsavedFileDescription.is_data">
+<tt class="descname">is_data</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.UnsavedFileDescription.is_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retuns False</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.UnsavedFileDescription.is_index">
+<tt class="descname">is_index</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.UnsavedFileDescription.is_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retuns False</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.UnsavedFileDescription.is_file_description">
+<tt class="descname">is_file_description</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.UnsavedFileDescription.is_file_description" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retuns True</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.UnsavedFileDescription.is_sort_description">
+<tt class="descname">is_sort_description</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.UnsavedFileDescription.is_sort_description" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retuns False</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<p>SD objects.</p>
+<dl class="class">
+<dt id="cast.analysers.mainframe.SavedSortDescription">
+<em class="property">class </em><tt class="descclassname">cast.analysers.mainframe.</tt><tt class="descname">SavedSortDescription</tt><a class="headerlink" href="#cast.analysers.mainframe.SavedSortDescription" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="cast.analysers.mainframe.SavedSortDescription.is_data">
+<tt class="descname">is_data</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.SavedSortDescription.is_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retuns False</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.SavedSortDescription.is_index">
+<tt class="descname">is_index</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.SavedSortDescription.is_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retuns False</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.SavedSortDescription.is_file_description">
+<tt class="descname">is_file_description</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.SavedSortDescription.is_file_description" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retuns False</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.SavedSortDescription.is_sort_description">
+<tt class="descname">is_sort_description</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.SavedSortDescription.is_sort_description" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retuns True</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="cast.analysers.mainframe.UnsavedSortDescription">
+<em class="property">class </em><tt class="descclassname">cast.analysers.mainframe.</tt><tt class="descname">UnsavedSortDescription</tt><a class="headerlink" href="#cast.analysers.mainframe.UnsavedSortDescription" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="cast.analysers.mainframe.UnsavedSortDescription.is_data">
+<tt class="descname">is_data</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.UnsavedSortDescription.is_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retuns False</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.UnsavedSortDescription.is_index">
+<tt class="descname">is_index</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.UnsavedSortDescription.is_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retuns False</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.UnsavedSortDescription.is_file_description">
+<tt class="descname">is_file_description</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.UnsavedSortDescription.is_file_description" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retuns False</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.UnsavedSortDescription.is_sort_description">
+<tt class="descname">is_sort_description</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.UnsavedSortDescription.is_sort_description" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retuns True</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
 </dd></dl>
 
 </div>
@@ -6010,6 +7462,15 @@ For example</p>
 <dd><p>True when statement is closed by an explicit END XXX</p>
 <div class="versionadded">
 <p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.0-alpha2.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Node.has_then">
+<tt class="descname">has_then</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Node.has_then" title="Permalink to this definition">¶</a></dt>
+<dd><p>True for a THEN REPLACING clause.</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
 </div>
 </dd></dl>
 
@@ -6032,7 +7493,7 @@ all possible data.</p>
 <dl class="method">
 <dt id="cast.analysers.mainframe.Identifier.get_resolved_datas">
 <tt class="descname">get_resolved_datas</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Identifier.get_resolved_datas" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the list of data it points to, generally only one data or index.
+<dd><p>Returns the list of data/index/fd/sd it points to, generally only one value.
 For example</p>
 <div class="highlight-python"><div class="highlight"><pre>01 VAR PIC X.           &lt;-- the data
 ...

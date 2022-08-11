@@ -44,6 +44,47 @@ Accessing sub nodes
 
 You can use :func:`cast.analyzers.mainframe.UnsavedObject.get_sub_nodes` that will resist future AST changes.
 
+
+Dumping AST
+^^^^^^^^^^^
+
+For debugging purpose one can log the AST of a section, paragraph, statement the following way::
+
+    from cast.analysers import log, mainframe # @UnresolvedImport
+    
+    
+    def display_node(node, indent=0):
+        """
+        Display the AST node in the log for debugging.
+        
+        Do not work at top level (for program).
+        """
+        
+        text = ' '*indent + node.get_kind()
+        
+        name = node.get_name()
+        if name:
+            text += ' ' + name
+        
+        try:
+            text += ' ' + str(node.get_value())
+        except:
+            pass
+        
+        text += ' line ' + str(node.get_position().get_begin_line()) + ' -> ' + str(node.get_position().get_end_line())
+            
+        log.info(text)
+        for child in node.get_children():
+            display_node(child, indent+2)
+
+    
+    class MyExtension(mainframe.Extension):
+    
+        def start_paragraph(self, node):
+            # display the content of the paragraph
+            display_node(node)
+
+
 Global events
 -------------
 
@@ -66,6 +107,10 @@ COBOL Program
     .. automethod:: cast.analysers.mainframe.Extension.start_program_id
 
     .. automethod:: cast.analysers.mainframe.Extension.end_program_id
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_end_of_line_comment
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_end_of_line_comment
 
 
     .. automethod:: cast.analysers.mainframe.Extension.start_nested_program
@@ -245,6 +290,10 @@ Statements ACCEPT - FREE
 
     .. automethod:: cast.analysers.mainframe.Extension.end_call_target
 
+    .. automethod:: cast.analysers.mainframe.Extension.start_call_interface
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_call_interface
+
 
     .. automethod:: cast.analysers.mainframe.Extension.start_cancel
 
@@ -268,6 +317,18 @@ Statements ACCEPT - FREE
     .. automethod:: cast.analysers.mainframe.Extension.start_copy
 
     .. automethod:: cast.analysers.mainframe.Extension.end_copy
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_replacement
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_replacement
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_replacement_leading
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_replacement_leading
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_replacement_trailing
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_replacement_trailing
 
 
     .. automethod:: cast.analysers.mainframe.Extension.start_delete
@@ -365,6 +426,30 @@ Statements ACCEPT - FREE
 
     .. automethod:: cast.analysers.mainframe.Extension.end_exit
 
+    .. automethod:: cast.analysers.mainframe.Extension.start_exit_method
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_exit_method
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_exit_paragraph
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_exit_paragraph
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_exit_perform
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_exit_perform
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_exit_perform_cycle
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_exit_perform_cycle
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_exit_program
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_exit_program
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_exit_section
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_exit_section
+
     .. automethod:: cast.analysers.mainframe.Extension.start_free
 
     .. automethod:: cast.analysers.mainframe.Extension.end_free
@@ -387,6 +472,14 @@ Statements GOBACK - PERFORM
     .. automethod:: cast.analysers.mainframe.Extension.start_if
 
     .. automethod:: cast.analysers.mainframe.Extension.end_if
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_inline_off
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_inline_off
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_inline_on
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_inline_on
 
 
     .. automethod:: cast.analysers.mainframe.Extension.start_then
@@ -431,6 +524,52 @@ Statements GOBACK - PERFORM
     .. automethod:: cast.analysers.mainframe.Extension.start_json_parse
 
     .. automethod:: cast.analysers.mainframe.Extension.end_json_parse
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_count_in
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_count_in
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_name_of
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_name_of
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_suppress
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_suppress
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_suppress_when
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_suppress_when
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_with_detail
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_with_detail
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_with_encoding
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_with_encoding
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_with_xml_declaration
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_with_xml_declaration
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_with_attributes
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_with_attributes
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_namespace
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_namespace
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_type_of
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_type_of
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_xml_type
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_xml_type
+
 
     .. automethod:: cast.analysers.mainframe.Extension.start_merge
 
@@ -537,6 +676,10 @@ Statements PROCESS - XML PARSE
 
     .. automethod:: cast.analysers.mainframe.Extension.end_process
 
+    .. automethod:: cast.analysers.mainframe.Extension.start_compilation_option
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_compilation_option
+
 
     .. automethod:: cast.analysers.mainframe.Extension.start_read
 
@@ -556,6 +699,11 @@ Statements PROCESS - XML PARSE
     .. automethod:: cast.analysers.mainframe.Extension.start_ready_trace
 
     .. automethod:: cast.analysers.mainframe.Extension.end_ready_trace
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_replace
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_replace
 
 
     .. automethod:: cast.analysers.mainframe.Extension.start_reset_trace
@@ -659,6 +807,24 @@ Statements PROCESS - XML PARSE
 
     .. automethod:: cast.analysers.mainframe.Extension.end_xml_parse
     
+    .. automethod:: cast.analysers.mainframe.Extension.start_returning_national
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_returning_national
+    
+    .. automethod:: cast.analysers.mainframe.Extension.start_validating
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_validating
+    
+    .. automethod:: cast.analysers.mainframe.Extension.start_validating_with_file
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_validating_with_file
+    
+    .. automethod:: cast.analysers.mainframe.Extension.start_processing_procedure
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_processing_procedure
+    
+
+
 
 Common sub nodes
 ^^^^^^^^^^^^^^^^
@@ -900,6 +1066,25 @@ Index have their own type
 .. autoclass:: cast.analysers.mainframe.Index
    :members: 
 
+
+File
+----
+
+FD objects.
+
+.. autoclass:: cast.analysers.mainframe.SavedFileDescription
+   :members: 
+
+.. autoclass:: cast.analysers.mainframe.UnsavedFileDescription
+   :members: 
+
+SD objects.
+
+.. autoclass:: cast.analysers.mainframe.SavedSortDescription
+   :members: 
+
+.. autoclass:: cast.analysers.mainframe.UnsavedSortDescription
+   :members: 
 
 
 AST Node types
