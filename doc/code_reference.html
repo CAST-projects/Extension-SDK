@@ -1973,7 +1973,7 @@ See _mark_plugin_jobs_as_unused and _delete_unused_jobs.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>properties</strong> &#8211; str or int of list of those.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#cast.application.LinkQuery" title="cast.application.LinkQuery"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.LinkQuery</span></tt></a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#cast.application.ObjectQuery" title="cast.application.ObjectQuery"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.ObjectQuery</span></tt></a></td>
 </tr>
 </tbody>
 </table>
@@ -1991,7 +1991,7 @@ See _mark_plugin_jobs_as_unused and _delete_unused_jobs.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>properties</strong> &#8211; str or int of list of those.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#cast.application.LinkQuery" title="cast.application.LinkQuery"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.LinkQuery</span></tt></a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#cast.application.ObjectQuery" title="cast.application.ObjectQuery"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.ObjectQuery</span></tt></a></td>
 </tr>
 </tbody>
 </table>
@@ -2363,6 +2363,142 @@ But not programs.</p>
 </tr>
 </tbody>
 </table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.ObjectQuery.is_program_call">
+<tt class="descname">is_program_call</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.ObjectQuery.is_program_call" title="Permalink to this definition">¶</a></dt>
+<dd><p>Objects that are call to program.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#cast.application.ObjectQuery" title="cast.application.ObjectQuery"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.ObjectQuery</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.6.14.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.ObjectQuery.is_bean">
+<tt class="descname">is_bean</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.ObjectQuery.is_bean" title="Permalink to this definition">¶</a></dt>
+<dd><p>Objects that are beans.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#cast.application.ObjectQuery" title="cast.application.ObjectQuery"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.ObjectQuery</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.6.14.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.ObjectQuery.is_cloud_function">
+<tt class="descname">is_cloud_function</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.ObjectQuery.is_cloud_function" title="Permalink to this definition">¶</a></dt>
+<dd><p>Objects that are cloud functions.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#cast.application.ObjectQuery" title="cast.application.ObjectQuery"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.ObjectQuery</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.6.14.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.ObjectQuery.is_cloud_function_call">
+<tt class="descname">is_cloud_function_call</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.ObjectQuery.is_cloud_function_call" title="Permalink to this definition">¶</a></dt>
+<dd><p>Objects that are calls to cloud function.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#cast.application.ObjectQuery" title="cast.application.ObjectQuery"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.ObjectQuery</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.6.14.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.ObjectQuery.is_rpc_receive">
+<tt class="descname">is_rpc_receive</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.ObjectQuery.is_rpc_receive" title="Permalink to this definition">¶</a></dt>
+<dd><p>Objects that are receiving of RPC call.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#cast.application.ObjectQuery" title="cast.application.ObjectQuery"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.ObjectQuery</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.6.14.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.ObjectQuery.is_rpc_call">
+<tt class="descname">is_rpc_call</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.ObjectQuery.is_rpc_call" title="Permalink to this definition">¶</a></dt>
+<dd><p>Objects that are call to RPC.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#cast.application.ObjectQuery" title="cast.application.ObjectQuery"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.ObjectQuery</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.6.14.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.ObjectQuery.is_message_receive">
+<tt class="descname">is_message_receive</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.ObjectQuery.is_message_receive" title="Permalink to this definition">¶</a></dt>
+<dd><p>Objects that are receiving of message.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#cast.application.ObjectQuery" title="cast.application.ObjectQuery"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.ObjectQuery</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.6.14.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.ObjectQuery.is_message_send">
+<tt class="descname">is_message_send</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.ObjectQuery.is_message_send" title="Permalink to this definition">¶</a></dt>
+<dd><p>Objects that are send of message.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#cast.application.ObjectQuery" title="cast.application.ObjectQuery"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.ObjectQuery</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.6.14.</span></p>
+</div>
 </dd></dl>
 
 <dl class="method">
@@ -2749,6 +2885,78 @@ understanding the violation</li>
 <dd><p>&#8220;APM Forms&#8221;
 &#8220;APM IFPUG Transaction&#8221;
 &#8220;CAST_Web_File&#8221;</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.Object.is_program_call">
+<tt class="descname">is_program_call</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.Object.is_program_call" title="Permalink to this definition">¶</a></dt>
+<dd><p>True when object is a program call (client side).</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.6.14.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.Object.is_bean">
+<tt class="descname">is_bean</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.Object.is_bean" title="Permalink to this definition">¶</a></dt>
+<dd><p>True when object is a java bean.</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.6.14.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.Object.is_cloud_function">
+<tt class="descname">is_cloud_function</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.Object.is_cloud_function" title="Permalink to this definition">¶</a></dt>
+<dd><p>True when object is a cloud function (AWS Lambda, Azure function, ...).</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.6.14.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.Object.is_cloud_function_call">
+<tt class="descname">is_cloud_function_call</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.Object.is_cloud_function_call" title="Permalink to this definition">¶</a></dt>
+<dd><p>True when object is a call to a cloud function.</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.6.14.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.Object.is_rpc_receive">
+<tt class="descname">is_rpc_receive</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.Object.is_rpc_receive" title="Permalink to this definition">¶</a></dt>
+<dd><p>True when object is a RPC receive.</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.6.14.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.Object.is_rpc_call">
+<tt class="descname">is_rpc_call</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.Object.is_rpc_call" title="Permalink to this definition">¶</a></dt>
+<dd><p>True when object is a call to RPC.</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.6.14.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.Object.is_message_send">
+<tt class="descname">is_message_send</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.Object.is_message_send" title="Permalink to this definition">¶</a></dt>
+<dd><p>True when object is a send of a message.</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.6.14.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.Object.is_message_receive">
+<tt class="descname">is_message_receive</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.Object.is_message_receive" title="Permalink to this definition">¶</a></dt>
+<dd><p>True when object is a receiving of a message.</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.6.14.</span></p>
+</div>
 </dd></dl>
 
 <dl class="method">

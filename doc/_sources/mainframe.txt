@@ -141,7 +141,6 @@ Environment division
 
     .. automethod:: cast.analysers.mainframe.Extension.end_with_debugging_mode
 
-
     .. automethod:: cast.analysers.mainframe.Extension.start_select
 
     .. automethod:: cast.analysers.mainframe.Extension.end_select
@@ -169,6 +168,10 @@ Environment division
     .. automethod:: cast.analysers.mainframe.Extension.start_organization_is_sequential
 
     .. automethod:: cast.analysers.mainframe.Extension.end_organization_is_sequential
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_decimal_point_is_comma
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_decimal_point_is_comma
 
 
 Data division
