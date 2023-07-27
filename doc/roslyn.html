@@ -1,0 +1,1065 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Dotnet Analyser specificities &mdash; CAST Extension SDK 1.6.6 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="CAST Extension SDK 1.6.6 documentation" href="index.html"/>
+        <link rel="next" title="Debugging" href="debugging.html"/>
+        <link rel="prev" title="Python Analyser specificities" href="python.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> CAST Extension SDK
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.6.6
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="my_first_plugin.html">Tutorial : My first plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="deployment.html">Deploying plugins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="manual.html">Creating a plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="analyser_level.html">Running during analysis of an existing analyser</a></li>
+<li class="toctree-l1"><a class="reference internal" href="application_level.html">Running code after analyzers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data_exchange.html">Exchanging data between analysis level and application level</a></li>
+<li class="toctree-l1"><a class="reference internal" href="analysers_specif.html">Analysers specific events</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mainframe.html">Mainframe Analyser specificities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="html5.html">HTML5/Javascript Analyser specificities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python.html">Python Analyser specificities</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Dotnet Analyser specificities</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#presentation">Presentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#description">Description</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#the-abstractrulechecker-class">The AbstractRuleChecker class</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#example">Example</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#presentation-of-the-api">Presentation of the API</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#abstractrulechecker-constructor">“AbstractRuleChecker” Constructor</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#init-method">“Init” Method</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#reset-method">“Reset” Method</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#addviolation-methods">“AddViolation” Methods</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#getsymbol-method">“GetSymbol” Method</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#getrulename-method">“GetRuleName” Method</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#castpropertyname-method">“CastPropertyName” Method</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#violations-property">“Violations” Property</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#log-property">“Log” Property</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#annotations-identifying-a-qr">Annotations identifying a QR</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#castrulechecker-annotation">CastRuleChecker annotation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#diagnosticanalyzer-annotation">DiagnosticAnalyzer annotation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ruledescription-annotation">RuleDescription annotation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#creating-a-qr-with-castdotnetextension">Creating a QR with CastDotNetExtension</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#using-templatecastqualityrule-project-to-implement-a-qr">Using TemplateCastQualityRule project to implement a QR</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#metamodel">MetaModel</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#masterfiles">MasterFiles</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qr-implementation-files">QR implementation files</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#build-the-project">Build the project</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#naming-convention">Naming convention</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#using-templatequalityruletests-project-to-unitary-test-a-qr">Using TemplateQualityRuleTests project to unitary test a QR</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#setup-the-environment">Setup the environment</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#implement-the-test">Implement the test</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#launch-the-tests">Launch the tests</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#integration-in-carl">Integration in Carl</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="debugging.html">Debugging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="writing_quality_rule.html">Writing quality rules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="code_reference.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="version_compatibility.html">Features and Bugs per CAIP versions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tips_and_tricks.html">Tips and tricks</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">CAST Extension SDK</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Dotnet Analyser specificities</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="_sources/roslyn.txt" rel="nofollow"> View page source</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="dotnet-analyser-specificities">
+<h1>Dotnet Analyser specificities<a class="headerlink" href="#dotnet-analyser-specificities" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul class="simple">
+</ul>
+</div>
+<div class="section" id="presentation">
+<h2>Presentation<a class="headerlink" href="#presentation" title="Permalink to this headline">¶</a></h2>
+<p>This document describes a way to implement DotNet Quality Rules (aka QR)
+based on Microsoft DiagnosticAnalyzer framework using an SDK named
+CastDotNetExtension.</p>
+<p>These QR can be written in C# language and are designed to be processed
+by the analyzer itself, using its own environment (i.e. the context of
+the analysis).</p>
+<p>In a nutshell, this mechanism allows a user to attach callback functions
+to some nodes of an AST generated by Roslyn. During the visit of this
+AST by the analyzer, these functions will be automatically called each
+time these nodes are encountered.</p>
+<p>A template has been developed to help implementing these rules and the
+corresponding unit tests (independent from Cast ecosystem).</p>
+</div>
+<div class="section" id="description">
+<h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
+<p>During its initialization, the DotNet analyzer browses through all the
+existing extensions and searches for all the assemblies which name
+contains &#8220;CastQualityRules&#8221; (e.g. &#8220;RobustnessCastQualityRules.dll&#8221;).
+These assemblies will then be loaded and all the QRs will be added to
+the analyzer’s internal QRs list.</p>
+<p>To identify a QR, the analyzer will look at 2 points:</p>
+<ol class="arabic simple">
+<li>A QR is a class inheriting from
+<strong>CastDotNetExtension.AbstractRuleChecker</strong>.</li>
+<li>Some mandatory annotations should be present to activate and identify
+the QR.</li>
+</ol>
+<div class="section" id="the-abstractrulechecker-class">
+<h3>The AbstractRuleChecker class<a class="headerlink" href="#the-abstractrulechecker-class" title="Permalink to this headline">¶</a></h3>
+<p>This class is the backbone of a QR. It contains all the methods and
+properties required to define and execute a QR. It will also provide the
+results after being processed.</p>
+<p>To create a QR, you have to inherit from this class and override the
+abstract method “<strong>Init</strong>”. Here you will declare all the
+associations between AST nodes and the corresponding callbacks.</p>
+<p>In these callbacks you can call the method “<strong>AddViolation</strong>” to
+record a new violation of the QR.</p>
+<p>Then, you can get the results through the “<strong>Violations</strong>” property.</p>
+<div class="section" id="example">
+<h4>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h4>
+<p>First, let’s see a simple example of a basic QR: Avoid Using Goto in
+your code.</p>
+<p>Here would be the implementation of this rule, based on
+<strong>AbstractRuleChecker</strong>:</p>
+<div class="highlight-python"><div class="highlight"><pre>public class AvoidUseOfGoto : AbstractRuleChecker
+{
+    public override void Init(AnalysisContext context)
+    {
+        context.RegisterSyntaxNodeAction(this.VisitGoto, SyntaxKind.GotoStatement);
+    }
+
+    private void VisitGoto(SyntaxNodeAnalysisContext nodeContext)
+    {
+        AddViolation(nodeContext);
+    }
+}
+</pre></div>
+</div>
+<p>In this example, we have declared the callback function: <strong>VisitGoto.</strong>
+Then we have associated this function to a type of nodes
+(<strong>SyntaxKind.GotoStatement</strong>) using the method
+<strong>AnalysisContext.RegisterSyntaxNodeAction()</strong>.</p>
+</div>
+<div class="section" id="presentation-of-the-api">
+<h4>Presentation of the API<a class="headerlink" href="#presentation-of-the-api" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-python"><div class="highlight"><pre>namespace CastDotNetExtension
+{
+  public abstract class AbstractRuleChecker : DiagnosticAnalyzer, IDisposable
+  {
+    protected AbstractRuleChecker();
+    protected AbstractRuleChecker(ViolationCreationMode creationMode)
+
+    public virtual string GetRuleName()
+    public override ImmutableArray&lt;DiagnosticDescriptor&gt; SupportedDiagnostics { get; }
+
+    public abstract void Init(AnalysisContext context);
+    public virtual void Reset();
+
+    public void AddViolation(SyntaxNodeAnalysisContext node, bool setBookmark = true);
+    public void AddViolation(SyntaxNodeAnalysisContext node,
+                      IEnumerable&lt;FileLinePositionSpan&gt; bookmarks);
+    public void AddViolation(ISymbol symbol, IEnumerable&lt;FileLinePositionSpan&gt; bookmarks,
+                      SyntaxTreeAnalysisContext context);
+    public void AddViolation(ISymbol symbol, IEnumerable&lt;FileLinePositionSpan&gt; bookmarks);
+
+    public ViolationBuilder Violations { get; set; }
+
+    public ILog Log;
+
+    public ISymbol GetSymbol(SyntaxNodeAnalysisContext node);
+  }
+}
+</pre></div>
+</div>
+</div>
+<div class="section" id="abstractrulechecker-constructor">
+<h4>“AbstractRuleChecker” Constructor<a class="headerlink" href="#abstractrulechecker-constructor" title="Permalink to this headline">¶</a></h4>
+<p>A creation mode can be provided in order to indicate the kind of
+bookmarking that will be applied:</p>
+<ul class="simple">
+<li><strong>NoViolation</strong>: no bookmark registered. Usually used for metrics.</li>
+<li><strong>OneViolationPerNode</strong>: Each AST node or bookmark provided will be
+registered as a violation with one bookmark.</li>
+<li><strong>ViolationWithAdditionalBookmarks</strong>: When reporting a violation with
+a list of bookmarks, only one violation will be recorded at the first
+position of the list, the remaining bookmarks will simply be
+associated to it as “additional bookmarks”.</li>
+</ul>
+<p>The default value is “<strong>OneViolationPerNode</strong>”.</p>
+</div>
+<div class="section" id="init-method">
+<h4>“Init” Method<a class="headerlink" href="#init-method" title="Permalink to this headline">¶</a></h4>
+<p>This method will be automatically called each time a new context is
+setup in the analyzer (i.e. before starting the visit of an AST).</p>
+<p>This method must contain the registrations of all the callback functions
+you want to set up.</p>
+<p>A callback function must have the following signature:</p>
+<div class="highlight-python"><div class="highlight"><pre>private void &lt;NameOfTheFunction&gt;(SyntaxNodeAnalysisContext nodeContext)
+</pre></div>
+</div>
+<p>Where <strong>&lt;NameOfTheFunction&gt;</strong> is the callback’s name of your choice.</p>
+<p>Note: <strong>Init</strong> is an abstract method therefore it must be defined for
+each QR.</p>
+</div>
+<div class="section" id="reset-method">
+<h4>“Reset” Method<a class="headerlink" href="#reset-method" title="Permalink to this headline">¶</a></h4>
+<p>This method optional. It is virtual and can be overridden if you need to
+initialize and/or clean your own specific data.</p>
+<p>This function is called during the initialization (just before calling
+the aforementioned “<strong>Init</strong>” method) and when the QR is being
+disposed of.</p>
+</div>
+<div class="section" id="addviolation-methods">
+<h4>“AddViolation” Methods<a class="headerlink" href="#addviolation-methods" title="Permalink to this headline">¶</a></h4>
+<p>The purpose of this method is to record a new violation for the current
+instance of the QR.</p>
+<p>If a context is provided, then the diagnostic will also be reported to
+the <strong>CodeAnalysis</strong> environment (calling <strong>ReportDiagnostic</strong> method on
+the given context)</p>
+<p>This method has 4 overloads:</p>
+<ol class="arabic simple">
+<li>Automatic bookmarking. Depending on the value of the <strong>setBookmark</strong>
+parameter, this method will add a violation at the position of the
+given node (<strong>setBookmark=true</strong>) or at the position of the
+containing symbol (<strong>setBookmark=false</strong>).</li>
+</ol>
+<div class="highlight-python"><div class="highlight"><pre>public void AddViolation(SyntaxNodeAnalysisContext node, bool setBookmark = true);
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li>User bookmarking. The violation will be recorded with the given
+bookmarks. If the list of bookmarks is empty, then the behavior is
+the same as the previous overload with <strong>setBookmark=false</strong>.</li>
+</ol>
+<div class="highlight-python"><div class="highlight"><pre>public void AddViolation(SyntaxNodeAnalysisContext node,
+                         IEnumerable&lt;FileLinePositionSpan&gt; bookmarks);
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li>User symbol and User bookmarking. The violation will be recorded with
+the given bookmarks and associated to the given symbol (<strong>ISymbol</strong>
+type). The <strong>SyntaxTreeAnalysisContext</strong> parameter is only provided
+to report the diagnostic to <strong>CodeAnalysis</strong> environment.</li>
+</ol>
+<div class="highlight-python"><div class="highlight"><pre>public void AddViolation(ISymbol symbol, IEnumerable&lt;FileLinePositionSpan&gt; bookmarks,
+                         SyntaxTreeAnalysisContext context);
+</pre></div>
+</div>
+<ol class="arabic simple" start="4">
+<li>User symbol and User bookmarking. The violation will be recorded with
+the given bookmarks and associated to the given symbol (<strong>ISymbol</strong>
+type).</li>
+</ol>
+<div class="highlight-python"><div class="highlight"><pre>public void AddViolation(ISymbol symbol, IEnumerable&lt;FileLinePositionSpan&gt; bookmarks);
+</pre></div>
+</div>
+</div>
+<div class="section" id="getsymbol-method">
+<h4>“GetSymbol” Method<a class="headerlink" href="#getsymbol-method" title="Permalink to this headline">¶</a></h4>
+<p>This function returns the closest symbol containing the given node.</p>
+<p><em>Note: a symbol has the same definition as in Roslyn: it represents a
+symbol (namespace, class, method, parameter, etc.) exposed by the
+compiler.</em></p>
+</div>
+<div class="section" id="getrulename-method">
+<h4>“GetRuleName” Method<a class="headerlink" href="#getrulename-method" title="Permalink to this headline">¶</a></h4>
+<p>This method returns the Title property of the configured RuleDescription
+attribute (see below).</p>
+</div>
+<div class="section" id="castpropertyname-method">
+<h4>“CastPropertyName” Method<a class="headerlink" href="#castpropertyname-method" title="Permalink to this headline">¶</a></h4>
+<p>This property contains the name of the QR in the Cast analyzer
+ecosystem, i.e. the MetaModel property name qualified with the
+containing category name.</p>
+<p>Example: “<strong>AvoidUsingGoto.number</strong>” where “<strong>AvoidUsingGoto</strong>”
+is the category and “<strong>number</strong>” is the property.</p>
+<p>The value of this property is automatically set when the QR is loaded
+from the extension (see the RuleDescription Attribute description below)</p>
+</div>
+<div class="section" id="violations-property">
+<h4>“Violations” Property<a class="headerlink" href="#violations-property" title="Permalink to this headline">¶</a></h4>
+<p>This property is valued with the list of all the violations found during
+the visit of an AST. In other words, all the violations, added using the
+<strong>AddViolation</strong> method, are stored in this property.</p>
+</div>
+<div class="section" id="log-property">
+<h4>“Log” Property<a class="headerlink" href="#log-property" title="Permalink to this headline">¶</a></h4>
+<p>This property is based on Log4Net</p>
+</div>
+</div>
+<div class="section" id="annotations-identifying-a-qr">
+<h3>Annotations identifying a QR<a class="headerlink" href="#annotations-identifying-a-qr" title="Permalink to this headline">¶</a></h3>
+<p>Your specialization of <strong>CastDotNetExtension.AbstractRuleChecker</strong>
+allows you to implement the QR behaviour. But the analyzer will need
+some way to identify the QR and this is done using annotations.</p>
+<p>There are 3 annotations which must be associated with your QR:
+<strong>CastRuleChecker</strong>, <strong>DiagnosticAnalyzer</strong> and <strong>RuleDescription</strong>.</p>
+<div class="section" id="castrulechecker-annotation">
+<h4>CastRuleChecker annotation<a class="headerlink" href="#castrulechecker-annotation" title="Permalink to this headline">¶</a></h4>
+<p>This annotation is very simple and not parametrized. It is merely a flag
+indicating to the DotNet Analyzer that this is an active
+CastDotNetExtension.</p>
+<p>If this annotation is removed, then the analyzer will simply ignore this
+QR.</p>
+</div>
+<div class="section" id="diagnosticanalyzer-annotation">
+<h4>DiagnosticAnalyzer annotation<a class="headerlink" href="#diagnosticanalyzer-annotation" title="Permalink to this headline">¶</a></h4>
+<p>This annotation is used by <strong>Microsoft.CodeAnalysis</strong> mechanism. It is
+parametrized by the language of the code to analyze. Typically,
+<strong>LanguageNames.CSharp</strong>, <strong>LanguageNames.FSharp</strong> or
+<strong>LanguageNames.VisualBasic</strong>.</p>
+</div>
+<div class="section" id="ruledescription-annotation">
+<h4>RuleDescription annotation<a class="headerlink" href="#ruledescription-annotation" title="Permalink to this headline">¶</a></h4>
+<p>This annotation is used to provide some functional information about the
+QR. It is parametrized by 2 types of data:</p>
+<ol class="arabic">
+<li><p class="first">All the parameters required by
+<strong>Microsoft.CodeAnalysis.DiagnosticDescriptor</strong> such as its Id,
+Title, Description, etc. All these data are used by the
+<strong>Microsoft.CodeAnalysis</strong> environment.</p>
+</li>
+<li><div class="first line-block">
+<div class="line">One Cast specific AND mandatory parameter: <strong>CastProperty</strong> which
+must be valued with the MetaModel Property name (qualified by its
+Category name) corresponding to the QR you are defining. E.g.
+“<strong>AvoidClassesWithTooManyConstructorsAnalyzer.number</strong>”.</div>
+<div class="line">This information will be the one stored in the <strong>ViolationName</strong>
+property of the <strong>AbstractRuleChecker</strong> class.</div>
+</div>
+</li>
+</ol>
+<p>Example: The example seen above would become this:</p>
+<div class="highlight-python"><div class="highlight"><pre>[CastRuleChecker]
+[DiagnosticAnalyzer(LanguageNames.CSharp)]
+[RuleDescription(
+   Id = &quot;AvoidUseOfGoto&quot;,
+   Title = &quot;Use of goto statement&quot;,
+   MessageFormat = &quot;Avoid using goto statement other than goto case&quot;,
+   Category = &quot;Maintainability&quot;,
+   DefaultSeverity = DiagnosticSeverity.Warning,
+   ConstRemediationCost = 2,
+   CastProperty = &quot;AvoidUseOfGoto.number&quot;
+)]
+public class AvoidUseOfGoto : AbstractRuleChecker
+{
+    public override void Init(AnalysisContext context)
+    {
+        context.RegisterSyntaxNodeAction(this.VisitGoto, SyntaxKind.GotoStatement);
+    }
+
+    private void VisitGoto(SyntaxNodeAnalysisContext nodeContext)
+    {
+        AddViolation(nodeContext);
+    }
+}
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="creating-a-qr-with-castdotnetextension">
+<h2>Creating a QR with CastDotNetExtension<a class="headerlink" href="#creating-a-qr-with-castdotnetextension" title="Permalink to this headline">¶</a></h2>
+<p>Now that we have seen how to implement the QR, we need to see how it can
+be turned into an extension that can be integrated into the Cast
+environment.</p>
+<p>An extension is basically one (or more) assemblies providing some
+services (analyzer, QualityRules or Dataflow computation, etc.) It
+should come in a package of self-sufficient assemblies and configuration
+files. Practically, this usually means providing all the external
+assemblies required by the QR, the MetaModel and AssessmentModel files.</p>
+<p>In order to ease the development of these extensions, Cast provides a
+small Development Kit containing a simple template of an extension (i.e.
+<strong>TemplateCastQualityRules</strong>) and a basic Unit Testing project (i.e.
+<strong>UnitTestTemplateCastQualityRules</strong>). These 2 projects come ready to
+use and they contain all the required assemblies.</p>
+<p>A Visual solution and the 2 projects are provided in order to set
+everything in place: TemplateCastQualityRules.sln</p>
+<a class="reference internal image-reference" href="_images/roslyn_template.png"><img alt="_images/roslyn_template.png" src="_images/roslyn_template.png" style="width: 6.5in; height: 3.925in;" /></a>
+<p>Figure 1 - The CastDotNetExtension template solution</p>
+<p>In this template, all the names are obviously generic and should be
+changed to adapt to your own needs. This applies of course to the name
+of the QR but also to all the files and projects (sln, csproj and xml
+files).</p>
+<div class="section" id="using-templatecastqualityrule-project-to-implement-a-qr">
+<h3>Using TemplateCastQualityRule project to implement a QR<a class="headerlink" href="#using-templatecastqualityrule-project-to-implement-a-qr" title="Permalink to this headline">¶</a></h3>
+<p>This is the central project of the solution. Building this project will
+generate a ready to use extension. Therefore, you have to provide a name
+for the resulting assembly corresponding to the set of QRs it will
+contain. You are free to give any name as long as it ends with the
+discriminating postfix “<strong>CastQualityRule</strong>”. E.g.
+<strong>PerformanceDiagnosticsCastQualityRules.dll</strong></p>
+<p><em>Note: In order to help using the template, we have added some tags in
+the files of the project and in this doc in order to easily find each
+element. These tags are as follow:</em> <strong>[TODO#&lt;index&gt;]</strong> <em>where &lt;index&gt; is
+a number. E.g.</em> <strong>[TODO#1]</strong><em>,</em> <strong>[TODO#7]</strong><em>, etc.</em></p>
+<div class="section" id="metamodel">
+<h4>MetaModel<a class="headerlink" href="#metamodel" title="Permalink to this headline">¶</a></h4>
+<p>The project contains some nested folders
+(“Configuration\Languages\DotNet”) that should contain all the
+MetaModel xml files required by your extension.</p>
+<p>You can have as many files as you wish with any name as you like but
+these names must end with the “<strong>MetaModel.xml</strong>” postfix. E.g.
+<strong>PerformanceDiagnosticsMetaModel.xml</strong>. At runtime, all the MetaModel
+files will be loaded and aggregated in memory.</p>
+<p>In Cast products each QualityRule is identified by a property. It can be
+identified in 2 ways:</p>
+<ul>
+<li><div class="first line-block">
+<div class="line">The property name (qualified with the name of the category it
+belongs to).</div>
+<div class="line">Ex: “<strong>ExampleCustomQualityRules.myQualityRule</strong>”</div>
+</div>
+</li>
+<li><p class="first">The property id (numerical) that must be unique (among the other
+property ids). See below.</p>
+</li>
+</ul>
+<div class="line-block">
+<div class="line">In order to simplify the handling of unique ids across the whole Cast
+environment, we provide a mechanism allowing the use of relative ids.
+To do so, you simply have to set your MetaModel as “client” (in
+opposition to the default “core” status of the standard MetaModel
+files) and then, define an offset that will be apply to all your
+relative ids.</div>
+<div class="line">Here is the declaration of a client MetaModel file:</div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>&lt;metaModel file_level=&quot;client&quot; file_no=&quot;99&quot;&gt;
+   &lt;!-- your declarations here --&gt;
+&lt;/metaModel&gt;
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">In this example, the “<strong>file_level</strong>” attribute has been se to
+“<strong>client</strong>” and the “<strong>file_no</strong>” defines the offset that
+will be applied to all the relative ids found inside this tag.</div>
+<div class="line">Once this is defined, you can identify all the ids using the attribute
+“rid” for all the categories and properties. The resulting absolute
+ids will be computed as follow:</div>
+</div>
+<p>absolute_id = 2000000 + 1000 * file_no + rid</p>
+<div class="line-block">
+<div class="line"><em>Example: declaring a category with a rid = 17 would generate the
+following absolute id:</em></div>
+<div class="line"><em>absolute_id = 2000000 + 1000 * 99 + 17 = 2099017</em></div>
+</div>
+<p>For more information on this topic, please refer to
+<a class="reference external" href="http://cast-projects.github.io/Extension-SDK/doc/writing_quality_rule.html#metamodel-ids">http://cast-projects.github.io/Extension-SDK/doc/writing_quality_rule.html#metamodel-ids</a></p>
+<p>To declare the QR, you have to declare one property per QR. Each of
+these properties must belong to a category. You can associate as many
+properties as you want to a single category. This is [TOTO#1].</p>
+<p><em>Note: The Category and Property sets of ids are independent and so you
+can have the same id for a Category and a property.</em></p>
+<p>Here is a minimal QR MetaModel declaration:</p>
+<div class="highlight-python"><div class="highlight"><pre>&lt;category name=&quot;ExampleCustomQualityRules&quot; rid=&quot;61&quot;&gt;
+  &lt;description&gt;Example of a list of Custom Quality Rules&lt;/description&gt;
+
+  &lt;property name=&quot;qualityRuleOne&quot; type=&quot;integer&quot; merge=”sum” rid=&quot;8&quot;&gt;
+    &lt;description&gt;Example of a Custom Quality Rule&lt;/description&gt;
+  &lt;/property&gt;
+
+  &lt;property name=&quot;qualityRuleTwo&quot; type=&quot;integer&quot; merge=”sum” rid=&quot;17&quot;&gt;
+    &lt;description&gt;Another example of a Custom Quality Rule&lt;/description&gt;
+  &lt;/property&gt;
+
+&lt;/category&gt;
+</pre></div>
+</div>
+<p>In addition to this basic declaration, you need some additional data
+(i.e. attributes) in order to be compatible with all the AIP’s
+applications:</p>
+<div class="highlight-python"><div class="highlight"><pre>&lt;category name=&quot;ExampleCustomQualityRules&quot; rid=&quot;61&quot;&gt;
+  &lt;description&gt;Example of a Custom Quality Rule&lt;/description&gt;
+  &lt;property name=&quot;qualityRuleOne&quot; type=&quot;integer&quot; merge=”sum” rid=&quot;8&quot;&gt;
+    &lt;description&gt;Example of a Custom Quality Rule&lt;/description&gt;
+    &lt;attribute name=&quot;INF_TYPE&quot;       intValue=&quot;3333333&quot;/&gt;
+    &lt;attribute name=&quot;INF_SUB_TYPE&quot;   intValue=&quot;17&quot; /&gt;
+    &lt;attribute name=&quot;ACCESS_APPVIEW&quot; intValue=&quot;1&quot; /&gt;
+    &lt;attribute name=&quot;ACCESS_HTML&quot;    intValue=&quot;1&quot; /&gt;
+    &lt;attribute name=&quot;ACCESS_CVS&quot;     intValue=&quot;1&quot; /&gt;
+  &lt;/property&gt;
+&lt;/category&gt;
+</pre></div>
+</div>
+<p>Only 2 of these additional attributes are to be changed here: “INF_TYP”
+and INF_SUB_TYP”. These 2 data are somehow equivalent to the Category
+and Property MetaModel and are still in use by some applications from
+AIP ecosystem. You should have a range of possible values for these.
+Note that uniqueness here is on the pair of id (INF_TYP / INF_SUB_TYP).</p>
+<p>Usually, we choose one INF_TYP value for an analyzer or an extension (or
+even a “kind” of data) and we list all the QR by increasing the
+INF_SUB_TYP value from zero.</p>
+<p id="section-1">Finally, all the declared QualityRules have to be associated with the
+DotNet analyzer so that the system can process them.</p>
+<p>To do so, you have to make the category “<strong>CAST_DotNet_Metricable</strong>”
+inherit from all these newly created categories [TODO#2].</p>
+<p>Note: “<strong>CAST_DotNet_Metricable</strong>” is a partial category so you can
+have as many occurrences as you want. For instance, you can have several
+MetaModel files each of them containing this category with its local
+inheritances.</p>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre>&lt;partialCategory name=&quot;CAST_DotNet_Metricable&quot;&gt;
+  &lt;inheritedCategory name=&quot;ExampleCustomQualityRules&quot;/&gt;
+  &lt;inheritedCategory name=&quot;AnotherListOfCustomQualityRules&quot;/&gt;
+  &lt;inheritedCategory name=&quot;YetAnotherListOfCustomQualityRules&quot;/&gt;
+&lt;/partialCategory&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="masterfiles">
+<h4>MasterFiles<a class="headerlink" href="#masterfiles" title="Permalink to this headline">¶</a></h4>
+<p>These files represent a fragment of an Assessment Model for an
+extension. An Assessment Model contains the settings to trigger the rule
+and to calculate the quality indicators, as well as the rule
+documentation. A full documentation or even training should be provided
+by a Cast Consultant but here we are only going to present the small
+part required to compute QualityRules in the current context.</p>
+<p>The only 2 required files here are “<strong>IMPLQualityRules.xml</strong>” and
+“<strong>SPECDocumentation.xml</strong>”. They can be found in the
+“<strong>MasterFiles</strong>” folder of the project. Basic templates of these
+files are provided so you simply have to edit them to add all the QRs
+that have been developed. This will associate each MetaModel Property Id
+(which is internal) with the corresponding Violation Id (which will be
+published) and provide a documentation for each QR.</p>
+<p>These two files contain a list of tags named <strong>&lt;metric&gt;</strong>, each of them
+containing the definition of a QR. You have to add a new metric tag for
+each of your QR [TODO#3].</p>
+<p>First, you can define the documentation of your QR in the
+“<strong>SPECDocumentation.xml</strong>” file. Here you can specify the following
+data:</p>
+<ul>
+<li><div class="first line-block">
+<div class="line"><strong>id</strong>: this is the metric id of the QR, i.e. the identifier of the
+QR in the assessment model.</div>
+<div class="line"><strong>Beware that this Id must be an EVEN number greater than 2 000
+000.</strong></div>
+<div class="line">Usually a range should have been assigned to you. It must be unique
+in the whole Cast environment.</div>
+</div>
+</li>
+<li><p class="first"><strong>originalName</strong>: this is the name of the QR as it will appear in the
+resulting files.</p>
+</li>
+<li><p class="first"><strong>&lt;english&gt;&lt;/english&gt;</strong>: tag that contain the documentation of the
+QR.</p>
+</li>
+</ul>
+<p>Example: <strong>SPECDocumentation.xml</strong></p>
+<div class="highlight-python"><div class="highlight"><pre>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;root&gt;
+  &lt;metric id=&quot;2010154&quot; type=&quot;quality-rule&quot; originalName=&quot;Example of a Custom Quality Rule&quot; section=&quot;output&quot;&gt;
+    &lt;english&gt;This is the description of the QR&lt;/english&gt;
+  &lt;/metric&gt;
+&lt;/root&gt;
+</pre></div>
+</div>
+<p>Then you have to add the entries in <strong>IMPLQualityRules.xml</strong>. For each
+of metric tag, you have to setup at least 3 of its attributes:</p>
+<ul class="simple">
+<li><strong>id</strong>: The same as in the documentation.</li>
+<li><strong>originalName</strong>: The same as in the documentation.</li>
+<li><strong>propertyID</strong>: this is the Cast MetaModel property id of the QR. The
+absolute id corresponding to the property you have declared in the
+MetaModel file.</li>
+</ul>
+<p>We will not address the rest of Assessment model here. So, you can leave
+all the other tags with their default value for now.</p>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;root&gt;
+  &lt;metric id=&quot;2010154&quot; originalName=&quot;Example of a Custom Quality Rule&quot; propertyID=&quot;2099017&quot;
+   xxl=&quot;N/A&quot; unify=&quot;N/A&quot; type=&quot;quality-rule&quot; executionLocation=&quot;N/A&quot;
+   executionPrecedenceConstraint=&quot;N/A&quot; scopeID=&quot;2001000&quot; scopeLabel=&quot;SET_DotNet_Example&quot;
+   diagnosisValueType=&quot;integer&quot; localSiteInitialize=&quot;DSS_FILTER_SCOPE&quot;
+   localSiteDiagnose=&quot;DSS_DIAG_SCOPE_GENERIC_NUM&quot; localSiteCountViolations=&quot;count-distinct&quot;
+   localSiteCountTotal=&quot;DSS_DIAG_TOTAL_GENERIC&quot; centralSiteInitialize=&quot;N/A&quot; /&gt;
+
+&lt;/root&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="qr-implementation-files">
+<h4>QR implementation files<a class="headerlink" href="#qr-implementation-files" title="Permalink to this headline">¶</a></h4>
+<p>The template provides a typical implementation of a QR containing a
+generic implementation of each part.</p>
+<p>Here is this generic implementation:</p>
+<div class="highlight-python"><div class="highlight"><pre>namespace CastDotNetExtension
+{
+    [CastRuleChecker]
+    [DiagnosticAnalyzer(LanguageNames.CSharp)]
+    // [TODO#4] Enter here the description of your QR
+    [RuleDescription(
+        Id = &quot;YourCustomSpecificQRNameOrId&quot;,
+        Title = &quot;Your Custom Specific QR&quot;,
+        MessageFormat = &quot;The description of your QR&quot;,
+        Category = &quot;Maintainability&quot;,
+        DefaultSeverity = DiagnosticSeverity.Warning,
+        // [TODO#5] set the CastProperty to the qualified name of the Cast MetaModel property
+        //          identifying the Quality Rule (in the form: &quot;CategoryName.propertyName&quot;)
+        CastProperty = &quot;CastCategoryNameOfTheQualityRule.propNameOfTheQualityRule&quot;
+    )]
+</pre></div>
+</div>
+<p>// [<strong>TODO#6]</strong> name the class according to your QR</p>
+<div class="highlight-python"><div class="highlight"><pre>    public class TemplateCastQualityRule : AbstractRuleChecker
+    {
+        /// &lt;summary&gt;
+        /// Initialize the QR with the given context and register all the syntax nodes
+        /// to listen during the visit and provide a specific callback for each one
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;context&quot;&gt;&lt;/param&gt;
+        public override void Init(AnalysisContext context)
+        {
+            // [TODO#7] register the callbacks:
+            context.RegisterSyntaxNodeAction(AnalyzeIfStatement, SyntaxKind.IfStatement);
+        }
+
+        // [TODO#8] Implement your callback function
+        private void AnalyzeIfStatement(SyntaxNodeAnalysisContext nodeContext)
+        {
+            var ifStatement = nodeContext.Node as IfStatementSyntax;
+
+            // [TODO#9] if a violation is found, store it using the following:
+            if (ifStatement != null &amp;&amp; ifStatement.Else == null)
+            {
+                AddViolation(nodeContext);
+            }
+        }
+
+    }
+}
+</pre></div>
+</div>
+<div class="section" id="annotations-setup-the-qr-descriptor">
+<h5>Annotations: Setup the QR descriptor<a class="headerlink" href="#annotations-setup-the-qr-descriptor" title="Permalink to this headline">¶</a></h5>
+<p>First you have to fill the QR description parameters of the annotation
+<strong>RuleDescription</strong>.</p>
+<p>You will find all the ones corresponding to the
+<strong>Microsoft.CodeAnalysis.DiagnosticDescriptor</strong> (Id, Title, etc.). This
+is [TODO#4].</p>
+<p>Then you have to provide a value for the <strong>CastProperty</strong> parameter
+corresponding to the Category and Property names from the Cast
+MetaModel. This is [TODO#5].</p>
+</div>
+<div class="section" id="name-the-class">
+<span id="section-2"></span><h5>Name the class<a class="headerlink" href="#name-the-class" title="Permalink to this headline">¶</a></h5>
+<p>Since the name of the class will be the name exposed by the assembly, it
+should be unique amongst the DotNet analyzer extensions and represent
+your QR. This is [TODO#6].</p>
+</div>
+<div class="section" id="constructor">
+<span id="section-3"></span><h5>“Constructor”<a class="headerlink" href="#constructor" title="Permalink to this headline">¶</a></h5>
+<div class="line-block">
+<div class="line">The default constructor configures the QR as reporting one violation
+per provided bookmark. If you prefer to report a violation with
+several bookmarks, you can change this with the parametrized
+constructor.</div>
+<div class="line">Example:</div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>Public MyQualityRule() : base(ViolationCreationMode.ViolationWithAdditionalBookmarks) { }
+</pre></div>
+</div>
+</div>
+<div class="section" id="init-method-associate-callback-functions-to-some-ast-nodes">
+<span id="section-4"></span><h5>“Init” method: Associate callback functions to some AST nodes<a class="headerlink" href="#init-method-associate-callback-functions-to-some-ast-nodes" title="Permalink to this headline">¶</a></h5>
+<p>Edit the <strong>Init</strong> method in order to register all the callback functions
+with the AST node you want to be called during the visit by the
+analyzer. This is [TODO#7].</p>
+<p>The AST nodes are members of the enum
+<strong>Microsoft.CodeAnalysis.CSharp.SyntaxKind</strong>.</p>
+<p>The callback methods must have the signature defined above in this
+document (in the <strong>AbstractRuleChecker</strong> class description).</p>
+</div>
+<div class="section" id="declare-your-callback-functions">
+<span id="section-5"></span><h5>Declare your callback functions<a class="headerlink" href="#declare-your-callback-functions" title="Permalink to this headline">¶</a></h5>
+<p>All the functions associated to the AST nodes in the <strong>Init</strong> function
+must be declared here. This is [TODO#8].</p>
+<p>This is here that you a supposed to compute and detect the violations.
+Once you have a result, you can store it by calling the <strong>AddViolation</strong>
+function. This is [TODO#9].</p>
+</div>
+<div class="section" id="miscellaneous">
+<h5>Miscellaneous<a class="headerlink" href="#miscellaneous" title="Permalink to this headline">¶</a></h5>
+<p>In addition to all this, you can add a “<strong>Reset</strong>” method
+(overriding the one from the base class), add a constructor or any data
+or methods you might be needing to implement your QR.</p>
+</div>
+</div>
+<div class="section" id="build-the-project">
+<h4>Build the project<a class="headerlink" href="#build-the-project" title="Permalink to this headline">¶</a></h4>
+<p>Once you have built your project, you should get a folder
+<strong>Build\x64\Release</strong> (from the root of the project sources). This
+folder contains your extension that can be used directly with Carl.
+Before being able to use in with AIP you would have to build a whole
+Assessment model and register your extension in AIP environment (see AIP
+documents about extensions on this topic).</p>
+<p>For your information, the files generated by the build process are:</p>
+<ul class="simple">
+<li>Your assembly is in the <strong>Build\x64\Release</strong> folder.</li>
+<li>The Metamodel file should have been automatically copied to the to
+<strong>Build\x64\Release\Configuration\Languages\DotNet&nbsp;</strong></li>
+<li>The Assessment Model file should have been copied to
+<strong>Build\x64\Release\MasterFiles</strong></li>
+</ul>
+</div>
+<div class="section" id="naming-convention">
+<h4>Naming convention<a class="headerlink" href="#naming-convention" title="Permalink to this headline">¶</a></h4>
+<p>The folder containing your extension must have a name respecting a
+specific convention: &#8220;<strong>com.companyname.extensionname.x.y.z-stageNNN</strong>&#8221;,
+where</p>
+<ul class="simple">
+<li>&#8220;<strong>companyname</strong>&#8221; is your company or organisation name</li>
+<li>&#8220;<strong>extensionname</strong>&#8221; is the name of your extension</li>
+<li>&#8220;<strong>x.y.z</strong>&#8221; is the numerical version of your extension (e.g. 1.7.2)</li>
+<li>&#8220;<strong>stage</strong>&#8221; (optional) is the release level of your extension (e.g.
+alpha, beta, etc.)</li>
+<li>&#8220;<strong>NNN</strong>&#8221; (optional) is the build number.</li>
+</ul>
+<p>Example: &#8220;<strong>com.EID.DotNetQRExample.1.2.7</strong>&#8221; or
+&#8220;<strong>com.EID.DotNetQRExample.2.0.1-beta1243</strong>&#8220;</p>
+</div>
+</div>
+<div class="section" id="using-templatequalityruletests-project-to-unitary-test-a-qr">
+<h3>Using TemplateQualityRuleTests project to unitary test a QR<a class="headerlink" href="#using-templatequalityruletests-project-to-unitary-test-a-qr" title="Permalink to this headline">¶</a></h3>
+<p>The template solution also provides a project named
+<strong>TemplateQualityRuleTests</strong>, intending to unitary test the QR. These
+tests are based on <strong>NUnit</strong> framework and are integrated into Visual
+Studio Test Explorer. The main advantage here is to be able to test the
+QR outside from any Cast environment such as AIP or Carl.</p>
+<div class="section" id="setup-the-environment">
+<h4>Setup the environment<a class="headerlink" href="#setup-the-environment" title="Permalink to this headline">¶</a></h4>
+<p>First, you must add the assemblies containing the QRs to test to the
+references of the testing project.</p>
+<p>Then you can add all the source codes that will be used to test the QRs
+to the resources of the project. To do so, you can add these source
+files to the <strong>TestSources</strong> folder. Then, open the
+“<strong>SourcesToTest.resx</strong>” (in the folder <strong>Properties</strong>) and then add
+all the files from <strong>TestSources</strong>.</p>
+<p>You should get this kind of configuration:</p>
+<a class="reference internal image-reference" href="_images/roslyn_configuration.png"><img alt="_images/roslyn_configuration.png" src="_images/roslyn_configuration.png" style="width: 6.5in; height: 4.27639in;" /></a>
+<p>Figure 2 Add test files to the resources</p>
+<p><em>Note: We advise you to edit the properties for these source files in
+order to prevent them from being compiled together with your code. To do
+so, change the “***Build Action*</em><em>” from “***Compile*</em><em>”
+to “***None*</em><em>”.</em></p>
+</div>
+<div class="section" id="implement-the-test">
+<h4>Implement the test<a class="headerlink" href="#implement-the-test" title="Permalink to this headline">¶</a></h4>
+<p>As we saw for the implementation of the QR, we also provide a generic
+test case to test a QR. This frame can be replicated and adapted to the
+QR to test.</p>
+<p>To test a QR, you have to use the <strong>CastDotNetExtensionChecker</strong> class.
+It is generic and is to be parametrized with the class implementing the
+QR to test. This checker will then be used in 3 steps:</p>
+<ol class="arabic simple">
+<li>configure</li>
+<li>launch the analysis</li>
+<li>check the results</li>
+</ol>
+<p>Here is the basic test method:</p>
+<div class="highlight-python"><div class="highlight"><pre>[TestFixture]
+class TemplateQualityRuleTests
+{
+    /// Implementation of the test using the following template
+    [Test]
+    public void TestMethod1()
+    {
+        // [TODO#10] load the source code to test from resources
+        // note: a source file should have been added to the resources
+        //       using the Resource file &quot;SourcesToTest.resx&quot;
+        var testSrc = UnitTestTemplateCastQualityRules.Properties
+                                                      .SourcesToTest
+                                                      .SomeSourcesToTest;
+
+        // [TODO#11] create the checker object, parametrized with the type of the QR to test
+        var checker = CastDotNetExtensionChecker&lt;TemplateCastQualityRule&gt;.CreateInstance();
+        Assert.IsTrue(checker != null);
+
+        // [TODO#12] Configure the analysis
+        checker.AddAssemblyRef(@&quot;C:\Examples\Packages\myAssembly.dll&quot;);
+        checker.AddSource(@&quot;C:\Examples\Sources\toolbox.cs&quot;);
+        checker.AddSource(@&quot;C:\Examples\Sources\Config.xml&quot;);
+
+        // [TODO#13] launch the processing on the given source code
+        checker.Apply(testSrc);
+
+
+        // [TODO#14] setup the expected bookmarks
+        checker.AddExpected(10, 8).AddExpected(15, 8);
+
+        // Launch the validation
+        checker.Validate();
+
+        // [TODO#15] Compare the results with the expectation
+        Assert.IsTrue(checker.IsValid(), checker.getStatus());
+
+        // NOTE: You can also check in more details:
+        // Assert.IsFalse(checker.ResultsMissing.Any());
+        // Assert.IsFalse(checker.ResultsUnexpected.Any());
+    }
+}
+</pre></div>
+</div>
+<div class="section" id="configure-the-checker">
+<h5>Configure the checker<a class="headerlink" href="#configure-the-checker" title="Permalink to this headline">¶</a></h5>
+<p>First you have to retrieve the source code that will be used to test the
+QR, i.e. extract it from the resources. This is [TODO#10].</p>
+<p>Then you have to create an instance of the checker providing the class
+to test as a generic parameter. Here, the generic parameter
+“<strong>TemplateCastQualityRule</strong>” must be replaced by the name of the
+class to test. This is [TODO#11].</p>
+<p>Optionally, you can add all the references and additional files that
+could be required to fulfill the analysis. This is [TODO#12].</p>
+</div>
+<div class="section" id="launch-the-analysis">
+<h5>Launch the analysis<a class="headerlink" href="#launch-the-analysis" title="Permalink to this headline">¶</a></h5>
+<p>Once the checker has been configured, we call the Apply function of the
+checker in order to launch the analysis on the source code retrieved
+from the resources. This is [TODO#13].</p>
+</div>
+<div class="section" id="check-the-results">
+<h5>Check the results<a class="headerlink" href="#check-the-results" title="Permalink to this headline">¶</a></h5>
+<p>You can now add the expected results by adding the positions where some
+violations are supposed to be found. You can add as many bookmarks as
+you want, calling the AddExpected method for each of them. This is
+[TODO#14].</p>
+<p><em>Note: Skipping this step allow you to check that no violations are
+supposed to be found in order to implement some negative tests.</em></p>
+<p>Then, the validation is executed by calling the <strong>Validate</strong> method.</p>
+<p>Finally, you can compare the results with the expectation using one of
+the information provided by the checker:</p>
+<ul class="simple">
+<li>“IsValid” function: return true if the results are equal to the
+expectation.</li>
+<li>“getStatus” function: return a string listing the differences found.</li>
+<li>“ResultsMissing” property: a list of all the expected bookmarks
+missing from the results</li>
+<li>“ResultsUnexpected” property: a list of all the results produced but
+not expected.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="launch-the-tests">
+<h4>Launch the tests<a class="headerlink" href="#launch-the-tests" title="Permalink to this headline">¶</a></h4>
+<p>Once your extension and its related tests have been built with success,
+you should find all your test cases in Visual Studio Test Explorer.</p>
+<p><em>Note: Using a Visual Studio 2017 or older, requires the installation of
+the “***NUnit 2 Test Adapter*</em><em>”.</em></p>
+<p><em>Tip: Do not forget to set the “Test Settings / Default Processor
+Architecture” to “x64”.</em></p>
+<p><em>Here is an example of the Test Explorer with 3 tests:</em></p>
+<a class="reference internal image-reference" href="_images/roslyn_test.png"><img alt="_images/roslyn_test.png" src="_images/roslyn_test.png" style="width: 2.92708in; height: 3.58587in;" /></a>
+<p>Figure 3 Visual Studio Test Explorer</p>
+</div>
+</div>
+<div class="section" id="integration-in-carl">
+<h3>Integration in Carl<a class="headerlink" href="#integration-in-carl" title="Permalink to this headline">¶</a></h3>
+<p>Once your extension has been successfully implemented, tested and the
+resulting folder renamed according to the convention, you simply have to
+copy this folder to Carl’s “<strong>extensions</strong>” folder.</p>
+<p>Then you can launch Carl with your newly implemented extension on a
+bunch of C# sources.</p>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre>C:\CAST\com.castsoftware.carlcli.2.0.0-beta9&gt; CarlCLI.exe -s C:\SRC\examples -o C:\CarlOut -a Test
+</pre></div>
+</div>
+<p>Finally, you can retrieve the results in Carl output folder following
+the indications given at the end of the execution.</p>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre>-&gt; Results per source file: C:/CarlOutput/resultByFile
+-&gt; Results per Quality Rule: C:/CarlOutput/resultByQualityRule
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="debugging.html" class="btn btn-neutral float-right" title="Debugging" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="python.html" class="btn btn-neutral" title="Python Analyser specificities" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014, CAST.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.6.6',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

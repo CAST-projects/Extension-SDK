@@ -56,6 +56,10 @@ More details
 :doc:`python` 
     Python analyser level specifics.
 
+:doc:`roslyn` 
+    Writting quality rules based on AST in Dotnet analyser.
+
+
 :doc:`debugging` 
 	Instructions on how to debug plugins from development environment.
 
@@ -95,8 +99,10 @@ Indices and tables
    mainframe
    html5
    python
+   roslyn
    debugging
    writing_quality_rule
    code_reference
    version_compatibility
    tips_and_tricks
+
