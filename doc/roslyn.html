@@ -109,6 +109,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#getrulename-method">“GetRuleName” Method</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#castpropertyname-method">“CastPropertyName” Method</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#violations-property">“Violations” Property</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#getparametervalue-property">“GetParameterValue” Property</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#log-property">“Log” Property</a></li>
 </ul>
 </li>
@@ -136,6 +137,12 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#integration-in-carl">Integration in Carl</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#using-parameters-in-qr">Using Parameters in QR</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#declare-a-parameter">Declare a parameter</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#customize-the-values-of-the-parameters-in-carl-configuration-file">Customize the values of the parameters in Carl configuration file</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#retrieve-the-parameters-values-with-the-code-of-a-qr">Retrieve the parameters values with the code of a QR</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -284,6 +291,8 @@ Then we have associated this function to a type of nodes
 
     public ViolationBuilder Violations { get; set; }
 
+    public ParameterValue GetParameterValue(string name);
+
     public ILog Log;
 
     public ISymbol GetSymbol(SyntaxNodeAnalysisContext node);
@@ -401,6 +410,12 @@ from the extension (see the RuleDescription Attribute description below)</p>
 <p>This property is valued with the list of all the violations found during
 the visit of an AST. In other words, all the violations, added using the
 <strong>AddViolation</strong> method, are stored in this property.</p>
+</div>
+<div class="section" id="getparametervalue-property">
+<h4>“GetParameterValue” Property<a class="headerlink" href="#getparametervalue-property" title="Permalink to this headline">¶</a></h4>
+<p>This method retrieve the parameter value given a parameter&#8217;s name.
+The name is one of those defined in the AssessmentModel (in IMPLParameters.xml file).
+It returns an object of the <strong>ParameterValue</strong> class.</p>
 </div>
 <div class="section" id="log-property">
 <h4>“Log” Property<a class="headerlink" href="#log-property" title="Permalink to this headline">¶</a></h4>
@@ -989,6 +1004,165 @@ the indications given at the end of the execution.</p>
 <div class="highlight-python"><div class="highlight"><pre>-&gt; Results per source file: C:/CarlOutput/resultByFile
 -&gt; Results per Quality Rule: C:/CarlOutput/resultByQualityRule
 </pre></div>
+</div>
+</div>
+<div class="section" id="using-parameters-in-qr">
+<h3>Using Parameters in QR<a class="headerlink" href="#using-parameters-in-qr" title="Permalink to this headline">¶</a></h3>
+<p>The purpose is to access the value of an AssessmentModel&#8217;s parameter within the code of a QR. As we will see, the value of these parameters can be customized in Carl&#8217;s configuration file.</p>
+<p><strong>Important Note: a parameter is always associated to one (and only one) QR.</strong></p>
+<div class="section" id="declare-a-parameter">
+<h4>Declare a parameter<a class="headerlink" href="#declare-a-parameter" title="Permalink to this headline">¶</a></h4>
+<p>Open the <tt class="docutils literal"><span class="pre">IMPLParameters.xml</span></tt> file of the extension (that can be found in the MasterFiles folder). Add the parameter declarations you want associated with their respected QRs.</p>
+<p>Example:
+Let&#8217;s consider the following QR (defined in the IMPLQualityRules.xml file):</p>
+<div class="highlight-python"><div class="highlight"><pre>&lt;metric id=&quot;2200777&quot; type=&quot;quality-rule&quot; originalName=&quot;My first parametrized QR&quot; xxl=&quot;N/A&quot; unify=&quot;N/A&quot; executionLocation=&quot;local-central&quot; executionPrecedenceConstraint=&quot;N/A&quot; scopeID=&quot;610&quot; scopeLabel=&quot;SET_DOTNET_METHODS&quot; propertyID=&quot;2200770&quot; diagnosisValueType=&quot;integer&quot; localSiteInitialize=&quot;DSS_FILTER_SCOPE&quot; localSiteDiagnose=&quot;DSS_DIAG_SCOPE_GENERIC_NUM&quot; localSiteCountViolations=&quot;count&quot; localSiteCountTotal=&quot;DSS_DIAG_TOTAL_GENERIC&quot; centralSiteInitialize=&quot;N/A&quot; /&gt;
+</pre></div>
+</div>
+<p>We will associate 2 new parameters to this QR:</p>
+<div class="highlight-python"><div class="highlight"><pre>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;root&gt;
+        &lt;metric id=&quot;2200777&quot; type=&quot;quality-rule&quot; originalName=&quot;My first parametrized QR&quot; parameterName=&quot;PrefixSize&quot; parameterType=&quot;integer&quot; parameterIndex=&quot;1&quot; filter=&quot;0&quot; filterLabel=&quot;C#&quot; parameterDescription=&quot;Minimal size of the prefix&quot;&gt;
+                &lt;defaultValue&gt;5&lt;/defaultValue&gt;
+                &lt;defaultValuesList&gt;N/A&lt;/defaultValuesList&gt;
+        &lt;/metric&gt;
+        &lt;metric id=&quot;2200777&quot; type=&quot;quality-rule&quot; originalName=&quot;My first parametrized QR&quot; parameterName=&quot;ForbiddenPrefix&quot; parameterType=&quot;text-list&quot; parameterIndex=&quot;2&quot; filter=&quot;0&quot; filterLabel=&quot;C#&quot; parameterDescription=&quot;list of Forbidden prefixes&quot;&gt;
+                &lt;defaultValue&gt;&lt;/defaultValue&gt;
+                &lt;defaultValuesList&gt;test debug&lt;/defaultValuesList&gt;
+        &lt;/metric&gt;
+&lt;/root&gt;
+</pre></div>
+</div>
+<p>You have to add one &lt;metric&gt; entry per parameter.</p>
+<p>The attributes are declared as follow (see the AssessmentModel documentation for more detailed informations):</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">id</span></tt>, <tt class="docutils literal"><span class="pre">type</span></tt> and <tt class="docutils literal"><span class="pre">originalName</span></tt>: they define the QR associated to this new parameter.</li>
+<li><tt class="docutils literal"><span class="pre">parameterName</span></tt>: the name of your new parameter.</li>
+<li><tt class="docutils literal"><span class="pre">parameterType</span></tt>: the type of the parameter. It can have one of the following values: {<tt class="docutils literal"><span class="pre">&quot;integer&quot;</span></tt>, <tt class="docutils literal"><span class="pre">&quot;float&quot;</span></tt>, <tt class="docutils literal"><span class="pre">&quot;text&quot;</span></tt>, <tt class="docutils literal"><span class="pre">&quot;text-list&quot;</span></tt>, <tt class="docutils literal"><span class="pre">&quot;integer-list&quot;</span></tt>, <tt class="docutils literal"><span class="pre">&quot;float-list&quot;</span></tt>}</li>
+<li><tt class="docutils literal"><span class="pre">parameterIndex</span></tt>: This is the index of the parameter for the associated QR starting from 1. This is used in AIP only.</li>
+<li><tt class="docutils literal"><span class="pre">parameterDescription</span></tt>: The &#8220;human friendly&#8221; definition of the parameter.</li>
+</ul>
+<p>Each parameter comes with a default value depending on its type:</p>
+<ul class="simple">
+<li>If it is a single value (&#8220;integer&#8221;, &#8220;float&#8221;, &#8220;text&#8221;), the default value is indicated in the tag <tt class="docutils literal"><span class="pre">&lt;defaultValue&gt;&lt;/defaultValue&gt;</span></tt></li>
+<li>If it is a list of values (&#8220;text-list&#8221;, &#8220;integer-list&#8221;, &#8220;float-list&#8221;), the default values are in the tag <tt class="docutils literal"><span class="pre">&lt;defaultValuesList&gt;&lt;defaultValuesList&gt;</span></tt> as a list of values separated by spaces.</li>
+</ul>
+</div>
+<div class="section" id="customize-the-values-of-the-parameters-in-carl-configuration-file">
+<h4>Customize the values of the parameters in Carl configuration file<a class="headerlink" href="#customize-the-values-of-the-parameters-in-carl-configuration-file" title="Permalink to this headline">¶</a></h4>
+<p>The default values of the parameters can be replaced by new ones at runtime when launching Carl. To do simply have to add a new sub section <tt class="docutils literal"><span class="pre">&lt;RuleParameters&gt;</span></tt> under the section <tt class="docutils literal"><span class="pre">&lt;CARL&gt;</span></tt> of Carl Configuration file.</p>
+<p>Example:
+The parameters defined above can be changed as follow:</p>
+<div class="highlight-python"><div class="highlight"><pre>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;configurations&gt;
+        &lt;CARL&gt;
+                &lt;RuleParameters&gt;
+                        &lt;Rule id=&quot;2200020&quot; parameterType=&quot;integer&quot; parameterName=&quot;PrefixSize&quot; techno=&quot;DotNet&quot;&gt;
+                                &lt;value&gt;8&lt;/value&gt;
+                        &lt;/Rule&gt;
+                        &lt;Rule id=&quot;2200020&quot; parameterType=&quot;text-list&quot; parameterName=&quot;ForbiddenPrefix&quot; techno=&quot;DotNet&quot;&gt;
+                                &lt;value&gt;test debug demo&lt;/value&gt;
+                        &lt;/Rule&gt;
+                &lt;/RuleParameters&gt;
+        &lt;/CARL&gt;
+&lt;/configurations&gt;
+</pre></div>
+</div>
+<p>Each parameter is defined in a tag <tt class="docutils literal"><span class="pre">&lt;Rule&gt;</span></tt> which has the following attributes:
+* <tt class="docutils literal"><span class="pre">id</span></tt>: the id of the QR
+* <tt class="docutils literal"><span class="pre">parameterType</span></tt>, <tt class="docutils literal"><span class="pre">parameterName</span></tt>: the identification of the parameter (same values as in <tt class="docutils literal"><span class="pre">IMPLParameters.xml</span></tt> file)
+* <tt class="docutils literal"><span class="pre">techno</span></tt>: the techno of the QR (<tt class="docutils literal"><span class="pre">&quot;DotNet&quot;</span></tt> here obviously)
+Then, the new value(s) can be set in the sub section <tt class="docutils literal"><span class="pre">&lt;value&gt;</span></tt>. The values of a list must be separated by space as above.</p>
+</div>
+<div class="section" id="retrieve-the-parameters-values-with-the-code-of-a-qr">
+<h4>Retrieve the parameters values with the code of a QR<a class="headerlink" href="#retrieve-the-parameters-values-with-the-code-of-a-qr" title="Permalink to this headline">¶</a></h4>
+<p><strong>Important Note: As mentioned before, the parameters are associated with a QR (in the AssessmentModel) while the analyzer only deals with properties (from the MetaModel). You can easily find the correspondance in the ``IMPLQualityRules.xml`` file where each ``&lt;metric&gt;`` entry declares the associated property with the attribute ``propertyID``.</strong></p>
+<p>Once you have identified the property, you can edit the code of this rule and use the <tt class="docutils literal"><span class="pre">GetParameterValue(name)</span></tt> to retrieve the value of the parameter.
+This method returns an obect of the class <tt class="docutils literal"><span class="pre">ParameterValue</span></tt> defined as follow:</p>
+<div class="highlight-python"><div class="highlight"><pre>public enum ParameterType
+    { is_integer, is_float, is_string, is_stringlist, is_intlist, is_floatlist, unknown }
+
+public class ParameterValue
+{
+    public ParameterType Type { get; set; }
+
+    public string ValueString { get; set; }
+    public double ValueFloat { get; set; }
+    public int ValueInteger { get; set; }
+    public IEnumerable&lt;string&gt; ValueStringList { get; set; }
+    public IEnumerable&lt;int&gt; ValueIntegerList { get; set; }
+    public IEnumerable&lt;double&gt; ValueFloatList { get; set; }
+}
+</pre></div>
+</div>
+<div class="section" id="descriptions-of-the-properties">
+<h5>Descriptions of the properties:<a class="headerlink" href="#descriptions-of-the-properties" title="Permalink to this headline">¶</a></h5>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">Type</span></tt>: This is the type of the value corresponding to the definition of the parameter. Note: If the <tt class="docutils literal"><span class="pre">name</span></tt> argument provided to <tt class="docutils literal"><span class="pre">GetParameterValue</span></tt> is unknown for this QR, then the Type equals to <tt class="docutils literal"><span class="pre">ParameterType.unknown</span></tt>.</li>
+<li><tt class="docutils literal"><span class="pre">ValueString</span></tt>: the <tt class="docutils literal"><span class="pre">string</span></tt> value for an <tt class="docutils literal"><span class="pre">is_string</span></tt> parameter.</li>
+<li><tt class="docutils literal"><span class="pre">ValueFloat</span></tt>: the <tt class="docutils literal"><span class="pre">double</span></tt> value for an <tt class="docutils literal"><span class="pre">is_float</span></tt> parameter.</li>
+<li><tt class="docutils literal"><span class="pre">ValueInteger</span></tt>: the <tt class="docutils literal"><span class="pre">int</span></tt> value for an <tt class="docutils literal"><span class="pre">is_integer</span></tt> parameter.</li>
+<li><tt class="docutils literal"><span class="pre">ValueStringList</span></tt>: the <tt class="docutils literal"><span class="pre">list&lt;string&gt;</span></tt> value for an <tt class="docutils literal"><span class="pre">is_stringlist</span></tt> parameter.</li>
+<li><tt class="docutils literal"><span class="pre">ValueIntegerList</span></tt>: the <tt class="docutils literal"><span class="pre">list&lt;int&gt;</span></tt> value for an <tt class="docutils literal"><span class="pre">is_intlist</span></tt> parameter.</li>
+<li><tt class="docutils literal"><span class="pre">ValueFloatList</span></tt>: the <tt class="docutils literal"><span class="pre">list&lt;double&gt;</span></tt> value for an <tt class="docutils literal"><span class="pre">is_floatlist</span></tt> parameter.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<p>Retrieving values of the parameters defined above would be as follow:</p>
+<div class="highlight-python"><div class="highlight"><pre>[CastRuleChecker]
+[DiagnosticAnalyzer(LanguageNames.CSharp)]
+[RuleDescription(
+    Id = &quot;My first parametrized QR&quot;,
+    Title = &quot;My first parametrized QR&quot;,
+    MessageFormat = &quot;My first parametrized QR&quot;,
+    Category = &quot;Documentation - Style Conformity&quot;,
+    DefaultSeverity = DiagnosticSeverity.Warning,
+    CastProperty = &quot;EIDotNetQualityRules.MyFirstParametrizedQR&quot;
+)]
+public class MyFirstParametrizedQR : AbstractRuleChecker
+{
+
+    /// &lt;summary&gt;
+    /// Initialize the QR with the given context and register all the syntax nodes
+    /// to listen during the visit and provide a specific callback for each one
+    /// &lt;/summary&gt;
+    /// &lt;param name=&quot;context&quot;&gt;&lt;/param&gt;
+    public override void Init(AnalysisContext context)
+    {
+        context.RegisterSymbolAction(AnalyzeMethodName, SymbolKind.Method);
+    }
+
+    private void AnalyzeMethodName(SymbolAnalysisContext context)
+    {
+                    // --------------------------------------------------------------
+        // Get the parameter with the name &quot;PrefixSize&quot;
+        var prefixSize = GetParameterValue(&quot;PrefixSize&quot;);
+
+        // Get the parameter value corresponding to the expected type
+        int prefixSizeVal = 0;
+        if (prefixSize.Type == ParameterType.is_integer)
+        {
+            prefixSizeVal = prefixSize.ValueInteger;
+        }
+
+                    // --------------------------------------------------------------
+        // Get the parameter with the name &quot;ForbiddenPrefix&quot;
+        var forbiddenPrefix = GetParameterValue(&quot;ForbiddenPrefix&quot;);
+
+        IEnumerable&lt;string&gt; forbiddenPrefixList = null;
+        if (forbiddenPrefix.Type == ParameterType.is_stringlist)
+        {
+            forbiddenPrefixList = forbiddenPrefix.ValueStringList;
+        }
+        if (forbiddenPrefixList == null)
+            forbiddenPrefixList = new List&lt;string&gt;();
+
+        /* some code using prefixSizeVal and forbiddenPrefixList */
+
+                    /* ...... */
+    }
+}
+</pre></div>
+</div>
+</div>
 </div>
 </div>
 </div>

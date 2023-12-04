@@ -115,6 +115,8 @@ Presentation of the API
 
        public ViolationBuilder Violations { get; set; }
 
+       public ParameterValue GetParameterValue(string name);
+
        public ILog Log;
 
        public ISymbol GetSymbol(SyntaxNodeAnalysisContext node);
@@ -251,6 +253,13 @@ from the extension (see the RuleDescription Attribute description below)
 This property is valued with the list of all the violations found during
 the visit of an AST. In other words, all the violations, added using the
 **AddViolation** method, are stored in this property.
+
+“GetParameterValue” Property
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This method retrieve the parameter value given a parameter's name.
+The name is one of those defined in the AssessmentModel (in IMPLParameters.xml file).
+It returns an object of the **ParameterValue** class.
 
 “Log” Property
 ~~~~~~~~~~~~~~
@@ -948,3 +957,180 @@ Example:
 
       -> Results per source file: C:/CarlOutput/resultByFile
       -> Results per Quality Rule: C:/CarlOutput/resultByQualityRule
+
+
+Using Parameters in QR
+----------------------
+
+The purpose is to access the value of an AssessmentModel's parameter within the code of a QR. As we will see, the value of these parameters can be customized in Carl's configuration file.
+
+**Important Note: a parameter is always associated to one (and only one) QR.**
+
+Declare a parameter
+~~~~~~~~~~~~~~~~~~~
+
+Open the ``IMPLParameters.xml`` file of the extension (that can be found in the MasterFiles folder). Add the parameter declarations you want associated with their respected QRs. 
+
+Example:
+Let's consider the following QR (defined in the IMPLQualityRules.xml file):
+
+::
+
+  <metric id="2200777" type="quality-rule" originalName="My first parametrized QR" xxl="N/A" unify="N/A" executionLocation="local-central" executionPrecedenceConstraint="N/A" scopeID="610" scopeLabel="SET_DOTNET_METHODS" propertyID="2200770" diagnosisValueType="integer" localSiteInitialize="DSS_FILTER_SCOPE" localSiteDiagnose="DSS_DIAG_SCOPE_GENERIC_NUM" localSiteCountViolations="count" localSiteCountTotal="DSS_DIAG_TOTAL_GENERIC" centralSiteInitialize="N/A" />
+
+We will associate 2 new parameters to this QR:
+
+::
+
+   <?xml version="1.0" encoding="utf-8"?>
+   <root>
+	   <metric id="2200777" type="quality-rule" originalName="My first parametrized QR" parameterName="PrefixSize" parameterType="integer" parameterIndex="1" filter="0" filterLabel="C#" parameterDescription="Minimal size of the prefix">
+		   <defaultValue>5</defaultValue>
+		   <defaultValuesList>N/A</defaultValuesList>
+	   </metric>
+	   <metric id="2200777" type="quality-rule" originalName="My first parametrized QR" parameterName="ForbiddenPrefix" parameterType="text-list" parameterIndex="2" filter="0" filterLabel="C#" parameterDescription="list of Forbidden prefixes">
+		   <defaultValue></defaultValue>
+		   <defaultValuesList>test debug</defaultValuesList>
+	   </metric>
+   </root>
+
+You have to add one <metric> entry per parameter. 
+
+
+The attributes are declared as follow (see the AssessmentModel documentation for more detailed informations):
+
+* ``id``, ``type`` and ``originalName``: they define the QR associated to this new parameter.
+* ``parameterName``: the name of your new parameter.
+* ``parameterType``: the type of the parameter. It can have one of the following values: {``"integer"``, ``"float"``, ``"text"``, ``"text-list"``, ``"integer-list"``, ``"float-list"``}
+* ``parameterIndex``: This is the index of the parameter for the associated QR starting from 1. This is used in AIP only.
+* ``parameterDescription``: The "human friendly" definition of the parameter.
+
+Each parameter comes with a default value depending on its type:
+
+* If it is a single value ("integer", "float", "text"), the default value is indicated in the tag ``<defaultValue></defaultValue>``
+* If it is a list of values ("text-list", "integer-list", "float-list"), the default values are in the tag ``<defaultValuesList><defaultValuesList>`` as a list of values separated by spaces.
+
+Customize the values of the parameters in Carl configuration file
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The default values of the parameters can be replaced by new ones at runtime when launching Carl. To do simply have to add a new sub section ``<RuleParameters>`` under the section ``<CARL>`` of Carl Configuration file.
+
+Example:
+The parameters defined above can be changed as follow:
+::
+
+   <?xml version="1.0" encoding="utf-8"?>
+   <configurations>
+	   <CARL>
+		   <RuleParameters>
+			   <Rule id="2200020" parameterType="integer" parameterName="PrefixSize" techno="DotNet">
+				   <value>8</value>
+			   </Rule>
+			   <Rule id="2200020" parameterType="text-list" parameterName="ForbiddenPrefix" techno="DotNet">
+				   <value>test debug demo</value>
+			   </Rule>
+		   </RuleParameters>
+	   </CARL>
+   </configurations>
+
+Each parameter is defined in a tag ``<Rule>`` which has the following attributes:
+* ``id``: the id of the QR
+* ``parameterType``, ``parameterName``: the identification of the parameter (same values as in ``IMPLParameters.xml`` file)
+* ``techno``: the techno of the QR (``"DotNet"`` here obviously)
+Then, the new value(s) can be set in the sub section ``<value>``. The values of a list must be separated by space as above.
+
+Retrieve the parameters values with the code of a QR
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+**Important Note: As mentioned before, the parameters are associated with a QR (in the AssessmentModel) while the analyzer only deals with properties (from the MetaModel). You can easily find the correspondance in the ``IMPLQualityRules.xml`` file where each ``<metric>`` entry declares the associated property with the attribute ``propertyID``.**
+
+Once you have identified the property, you can edit the code of this rule and use the ``GetParameterValue(name)`` to retrieve the value of the parameter.
+This method returns an obect of the class ``ParameterValue`` defined as follow:
+::
+
+    public enum ParameterType
+        { is_integer, is_float, is_string, is_stringlist, is_intlist, is_floatlist, unknown }
+
+    public class ParameterValue
+    {
+        public ParameterType Type { get; set; }
+		
+        public string ValueString { get; set; }
+        public double ValueFloat { get; set; }
+        public int ValueInteger { get; set; }
+        public IEnumerable<string> ValueStringList { get; set; }
+        public IEnumerable<int> ValueIntegerList { get; set; }
+        public IEnumerable<double> ValueFloatList { get; set; }
+    }
+
+Descriptions of the properties:
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+* ``Type``: This is the type of the value corresponding to the definition of the parameter. Note: If the ``name`` argument provided to ``GetParameterValue`` is unknown for this QR, then the Type equals to ``ParameterType.unknown``.
+* ``ValueString``: the ``string`` value for an ``is_string`` parameter. 
+* ``ValueFloat``: the ``double`` value for an ``is_float`` parameter.
+* ``ValueInteger``: the ``int`` value for an ``is_integer`` parameter.
+* ``ValueStringList``: the ``list<string>`` value for an ``is_stringlist`` parameter.
+* ``ValueIntegerList``: the ``list<int>`` value for an ``is_intlist`` parameter.
+* ``ValueFloatList``: the ``list<double>`` value for an ``is_floatlist`` parameter.
+
+**Example:**
+
+Retrieving values of the parameters defined above would be as follow:
+
+::
+
+    [CastRuleChecker]
+    [DiagnosticAnalyzer(LanguageNames.CSharp)]
+    [RuleDescription(
+        Id = "My first parametrized QR",
+        Title = "My first parametrized QR",
+        MessageFormat = "My first parametrized QR",
+        Category = "Documentation - Style Conformity",
+        DefaultSeverity = DiagnosticSeverity.Warning,
+        CastProperty = "EIDotNetQualityRules.MyFirstParametrizedQR"
+    )]
+    public class MyFirstParametrizedQR : AbstractRuleChecker
+    {
+
+        /// <summary>
+        /// Initialize the QR with the given context and register all the syntax nodes
+        /// to listen during the visit and provide a specific callback for each one
+        /// </summary>
+        /// <param name="context"></param>
+        public override void Init(AnalysisContext context)
+        {
+            context.RegisterSymbolAction(AnalyzeMethodName, SymbolKind.Method);
+        }
+
+        private void AnalyzeMethodName(SymbolAnalysisContext context)
+        {
+			// --------------------------------------------------------------
+            // Get the parameter with the name "PrefixSize"
+            var prefixSize = GetParameterValue("PrefixSize");
+
+            // Get the parameter value corresponding to the expected type
+            int prefixSizeVal = 0;
+            if (prefixSize.Type == ParameterType.is_integer)
+            {
+                prefixSizeVal = prefixSize.ValueInteger;
+            }
+
+			// --------------------------------------------------------------
+            // Get the parameter with the name "ForbiddenPrefix"
+            var forbiddenPrefix = GetParameterValue("ForbiddenPrefix");
+
+            IEnumerable<string> forbiddenPrefixList = null;
+            if (forbiddenPrefix.Type == ParameterType.is_stringlist)
+            {
+                forbiddenPrefixList = forbiddenPrefix.ValueStringList;
+            }
+            if (forbiddenPrefixList == null)
+                forbiddenPrefixList = new List<string>();
+
+            /* some code using prefixSizeVal and forbiddenPrefixList */
+			
+			/* ...... */
+        }
+    }
+
