@@ -1104,6 +1104,30 @@ BLOCK CONTAINS ZERO TO 10 CHARACTERS first child is integer_literal for ZERO, se
 </dd></dl>
 
 <dl class="method">
+<dt id="cast.analysers.mainframe.Extension.start_renames">
+<tt class="descname">start_renames</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_renames" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called at the beginning of a RENAMES ...</p>
+<p>node is either of type 
+<tt class="xref py py-class docutils literal"><span class="pre">cast.analyzers.mainframe.SavedData</span></tt> or
+<tt class="xref py py-class docutils literal"><span class="pre">cast.analyzers.mainframe.UnsavedData</span></tt></p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.2.1-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.end_renames">
+<tt class="descname">end_renames</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.end_renames" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called at the end of a RENAMES ...</p>
+<p>node is either of type 
+<tt class="xref py py-class docutils literal"><span class="pre">cast.analyzers.mainframe.SavedData</span></tt> or
+<tt class="xref py py-class docutils literal"><span class="pre">cast.analyzers.mainframe.UnsavedData</span></tt></p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.2.1-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
 <dt id="cast.analysers.mainframe.Extension.start_indexed_by">
 <tt class="descname">start_indexed_by</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_indexed_by" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called at the beginning of a INDEXED BY ...</p>
@@ -6190,6 +6214,46 @@ Can be present in
 </dd></dl>
 
 <dl class="method">
+<dt id="cast.analysers.mainframe.Extension.start_real_literal">
+<tt class="descname">start_real_literal</tt><big>(</big><em>literal</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_real_literal" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>literal</strong> (<a class="reference internal" href="#cast.analysers.mainframe.RealLiteral" title="cast.analysers.mainframe.RealLiteral"><em>cast.analysers.mainframe.RealLiteral</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>&#64;type literal:cast.analyzer.mainframe.IntegerLiteral</dt>
+<dd><div class="first last versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.3.0-alpha1.</span></p>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.end_real_literal">
+<tt class="descname">end_real_literal</tt><big>(</big><em>literal</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.end_real_literal" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>literal</strong> (<a class="reference internal" href="#cast.analysers.mainframe.RealLiteral" title="cast.analysers.mainframe.RealLiteral"><em>cast.analysers.mainframe.RealLiteral</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>&#64;type literal:cast.analyzer.mainframe.RealLiteral</dt>
+<dd><div class="first last versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.3.0-alpha1.</span></p>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
 <dt id="cast.analysers.mainframe.Extension.start_boolean_literal">
 <tt class="descname">start_boolean_literal</tt><big>(</big><em>literal</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_boolean_literal" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
@@ -6524,7 +6588,7 @@ First child is A and second child is I.</p>
 </table>
 <p>&#64;type node:Node</p>
 <div class="versionadded">
-<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.7-funcrel.</span></p>
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.7-funcrel: </span>From version com.castsoftware.mainframe.1.3.0-alpha1 function name is available through node.get_name()</p>
 </div>
 </dd></dl>
 
@@ -7637,6 +7701,32 @@ GO TO  PARA1.      &lt;-- the procedure name
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="cast.analysers.mainframe.RealLiteral">
+<em class="property">class </em><tt class="descclassname">cast.analysers.mainframe.</tt><tt class="descname">RealLiteral</tt><a class="headerlink" href="#cast.analysers.mainframe.RealLiteral" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#cast.analysers.mainframe.UnsavedObject" title="cast.analysers.mainframe.UnsavedObject"><tt class="xref py py-class docutils literal"><span class="pre">cast.analysers.mainframe.UnsavedObject</span></tt></a></p>
+<p>A real literal in an AST.</p>
+<p>For example</p>
+<div class="highlight-python"><div class="highlight"><pre>MOVE -3.4 to VAR.
+     -
+</pre></div>
+</div>
+<dl class="method">
+<dt id="cast.analysers.mainframe.RealLiteral.get_value">
+<tt class="descname">get_value</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.RealLiteral.get_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the real value.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">float</td>
 </tr>
 </tbody>
 </table>

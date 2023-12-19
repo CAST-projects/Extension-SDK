@@ -219,6 +219,11 @@ Data division
     .. automethod:: cast.analysers.mainframe.Extension.end_redefines
 
 
+    .. automethod:: cast.analysers.mainframe.Extension.start_renames
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_renames
+
+
     .. automethod:: cast.analysers.mainframe.Extension.start_indexed_by
 
     .. automethod:: cast.analysers.mainframe.Extension.end_indexed_by
@@ -977,6 +982,11 @@ Expressions
     .. automethod:: cast.analysers.mainframe.Extension.end_integer_literal
 
 
+    .. automethod:: cast.analysers.mainframe.Extension.start_real_literal
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_real_literal
+
+
     .. automethod:: cast.analysers.mainframe.Extension.start_boolean_literal
 
     .. automethod:: cast.analysers.mainframe.Extension.end_boolean_literal
@@ -1130,6 +1140,10 @@ Constants
    :members: 
 
 .. autoclass:: cast.analysers.mainframe.BooleanLiteral
+   :show-inheritance:
+   :members: 
+
+.. autoclass:: cast.analysers.mainframe.RealLiteral
    :show-inheritance:
    :members: 
 
