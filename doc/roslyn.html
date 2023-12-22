@@ -1067,11 +1067,13 @@ The parameters defined above can be changed as follow:</p>
 &lt;/configurations&gt;
 </pre></div>
 </div>
-<p>Each parameter is defined in a tag <tt class="docutils literal"><span class="pre">&lt;Rule&gt;</span></tt> which has the following attributes:
-* <tt class="docutils literal"><span class="pre">id</span></tt>: the id of the QR
-* <tt class="docutils literal"><span class="pre">parameterType</span></tt>, <tt class="docutils literal"><span class="pre">parameterName</span></tt>: the identification of the parameter (same values as in <tt class="docutils literal"><span class="pre">IMPLParameters.xml</span></tt> file)
-* <tt class="docutils literal"><span class="pre">techno</span></tt>: the techno of the QR (<tt class="docutils literal"><span class="pre">&quot;DotNet&quot;</span></tt> here obviously)
-Then, the new value(s) can be set in the sub section <tt class="docutils literal"><span class="pre">&lt;value&gt;</span></tt>. The values of a list must be separated by space as above.</p>
+<p>Each parameter is defined in a tag <tt class="docutils literal"><span class="pre">&lt;Rule&gt;</span></tt> which has the following attributes:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">id</span></tt>: the id of the QR</li>
+<li><tt class="docutils literal"><span class="pre">parameterType</span></tt>, <tt class="docutils literal"><span class="pre">parameterName</span></tt>: the identification of the parameter (same values as in <tt class="docutils literal"><span class="pre">IMPLParameters.xml</span></tt> file)</li>
+<li><tt class="docutils literal"><span class="pre">techno</span></tt>: the techno of the QR (<tt class="docutils literal"><span class="pre">&quot;DotNet&quot;</span></tt> here obviously)</li>
+</ul>
+<p>Then, the new value(s) can be set in the sub section <tt class="docutils literal"><span class="pre">&lt;value&gt;</span></tt>. The values of a list must be separated by space as above.</p>
 </div>
 <div class="section" id="retrieve-the-parameters-values-with-the-code-of-a-qr">
 <h4>Retrieve the parameters values with the code of a QR<a class="headerlink" href="#retrieve-the-parameters-values-with-the-code-of-a-qr" title="Permalink to this headline">¶</a></h4>
@@ -1157,7 +1159,7 @@ public class MyFirstParametrizedQR : AbstractRuleChecker
 
         /* some code using prefixSizeVal and forbiddenPrefixList */
 
-                    /* ...... */
+        /* ...... */
     }
 }
 </pre></div>

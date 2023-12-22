@@ -173,6 +173,9 @@ Environment division
 
     .. automethod:: cast.analysers.mainframe.Extension.end_decimal_point_is_comma
 
+    .. automethod:: cast.analysers.mainframe.Extension.start_function_intrinsic
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_function_intrinsic
 
 Data division
 ^^^^^^^^^^^^^
@@ -222,6 +225,16 @@ Data division
     .. automethod:: cast.analysers.mainframe.Extension.start_renames
 
     .. automethod:: cast.analysers.mainframe.Extension.end_renames
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_dynamic_length
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_dynamic_length
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_limit
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_limit
 
 
     .. automethod:: cast.analysers.mainframe.Extension.start_indexed_by
@@ -549,6 +562,10 @@ Statements GOBACK - PERFORM
     .. automethod:: cast.analysers.mainframe.Extension.start_suppress_when
 
     .. automethod:: cast.analysers.mainframe.Extension.end_suppress_when
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_converting
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_converting
 
     .. automethod:: cast.analysers.mainframe.Extension.start_with_detail
 

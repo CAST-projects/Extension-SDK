@@ -1034,6 +1034,7 @@ The parameters defined above can be changed as follow:
    </configurations>
 
 Each parameter is defined in a tag ``<Rule>`` which has the following attributes:
+
 * ``id``: the id of the QR
 * ``parameterType``, ``parameterName``: the identification of the parameter (same values as in ``IMPLParameters.xml`` file)
 * ``techno``: the techno of the QR (``"DotNet"`` here obviously)
@@ -1129,8 +1130,8 @@ Retrieving values of the parameters defined above would be as follow:
                 forbiddenPrefixList = new List<string>();
 
             /* some code using prefixSizeVal and forbiddenPrefixList */
-			
-			/* ...... */
+
+            /* ...... */
         }
     }
 

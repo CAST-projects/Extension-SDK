@@ -833,6 +833,48 @@ It means that in a future version we can add intermediate nodes or nodes with ne
 </div>
 </dd></dl>
 
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.start_function_intrinsic">
+<tt class="descname">start_function_intrinsic</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_function_intrinsic" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>REPOSITORY paragraph.</dt>
+<dd>FUNCTION specifier INTRINSIC clause.</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type node:Node</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.3.0-alpha2.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.end_function_intrinsic">
+<tt class="descname">end_function_intrinsic</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.end_function_intrinsic" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>REPOSITORY paragraph.</dt>
+<dd>FUNCTION specifier INTRINSIC clause.</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type node:Node</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.3.0-alpha2.</span></p>
+</div>
+</dd></dl>
+
 </dd></dl>
 
 </div>
@@ -1124,6 +1166,54 @@ BLOCK CONTAINS ZERO TO 10 CHARACTERS first child is integer_literal for ZERO, se
 <tt class="xref py py-class docutils literal"><span class="pre">cast.analyzers.mainframe.UnsavedData</span></tt></p>
 <div class="versionadded">
 <p><span class="versionmodified">New in version com.castsoftware.mainframe.1.2.1-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.start_dynamic_length">
+<tt class="descname">start_dynamic_length</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_dynamic_length" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called at the beginning of a DYNAMIC ...</p>
+<p>node is either of type 
+<tt class="xref py py-class docutils literal"><span class="pre">cast.analyzers.mainframe.SavedData</span></tt> or
+<tt class="xref py py-class docutils literal"><span class="pre">cast.analyzers.mainframe.UnsavedData</span></tt></p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.3.0-alpha2.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.end_dynamic_length">
+<tt class="descname">end_dynamic_length</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.end_dynamic_length" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called at the end of a DYNAMIC ...</p>
+<p>node is either of type 
+<tt class="xref py py-class docutils literal"><span class="pre">cast.analyzers.mainframe.SavedData</span></tt> or
+<tt class="xref py py-class docutils literal"><span class="pre">cast.analyzers.mainframe.UnsavedData</span></tt></p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.3.0-alpha2.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.start_limit">
+<tt class="descname">start_limit</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_limit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called at the beginning of a LIMIT ...</p>
+<p>node is either of type 
+<tt class="xref py py-class docutils literal"><span class="pre">cast.analyzers.mainframe.SavedData</span></tt> or
+<tt class="xref py py-class docutils literal"><span class="pre">cast.analyzers.mainframe.UnsavedData</span></tt></p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.3.0-alpha2.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.end_limit">
+<tt class="descname">end_limit</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.end_limit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called at the end of a LIMIT ...</p>
+<p>node is either of type 
+<tt class="xref py py-class docutils literal"><span class="pre">cast.analyzers.mainframe.SavedData</span></tt> or
+<tt class="xref py py-class docutils literal"><span class="pre">cast.analyzers.mainframe.UnsavedData</span></tt></p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.3.0-alpha2.</span></p>
 </div>
 </dd></dl>
 
@@ -3437,6 +3527,42 @@ Children: identifiers</p>
 <p>&#64;type node:Node</p>
 <div class="versionadded">
 <p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.19-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.start_converting">
+<tt class="descname">start_converting</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_converting" title="Permalink to this definition">¶</a></dt>
+<dd><p>CONVERTING ... clause in an JSON GENERATE or JSON PARSE.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type node:Node</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.3.0-alpha2.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.end_converting">
+<tt class="descname">end_converting</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.end_converting" title="Permalink to this definition">¶</a></dt>
+<dd><p>CONVERTING ... clause in an JSON GENERATE or JSON PARSE.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type node:Node</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.3.0-alpha2.</span></p>
 </div>
 </dd></dl>
 
@@ -6227,7 +6353,7 @@ Can be present in
 <dl class="docutils">
 <dt>&#64;type literal:cast.analyzer.mainframe.IntegerLiteral</dt>
 <dd><div class="first last versionadded">
-<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.3.0-alpha1.</span></p>
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.3.0-alpha2.</span></p>
 </div>
 </dd>
 </dl>
@@ -6247,7 +6373,7 @@ Can be present in
 <dl class="docutils">
 <dt>&#64;type literal:cast.analyzer.mainframe.RealLiteral</dt>
 <dd><div class="first last versionadded">
-<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.3.0-alpha1.</span></p>
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.3.0-alpha2.</span></p>
 </div>
 </dd>
 </dl>
@@ -6588,7 +6714,7 @@ First child is A and second child is I.</p>
 </table>
 <p>&#64;type node:Node</p>
 <div class="versionadded">
-<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.7-funcrel: </span>From version com.castsoftware.mainframe.1.3.0-alpha1 function name is available through node.get_name()</p>
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.7-funcrel: </span>From version com.castsoftware.mainframe.1.3.0-alpha2 function name is available through node.get_name()</p>
 </div>
 </dd></dl>
 
