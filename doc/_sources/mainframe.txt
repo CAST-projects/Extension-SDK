@@ -386,6 +386,16 @@ Statements ACCEPT - FREE
     .. automethod:: cast.analysers.mainframe.Extension.end_evaluate_expression
 
 
+    .. automethod:: cast.analysers.mainframe.Extension.start_evaluate_directive
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_evaluate_directive
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_evaluate_directive_expression
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_evaluate_directive_expression
+
+
     .. automethod:: cast.analysers.mainframe.Extension.start_examine
 
     .. automethod:: cast.analysers.mainframe.Extension.start_examine_tayling
@@ -493,6 +503,47 @@ Statements GOBACK - PERFORM
     .. automethod:: cast.analysers.mainframe.Extension.start_if
 
     .. automethod:: cast.analysers.mainframe.Extension.end_if
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_if_directive
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_if_directive
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_then_directive
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_then_directive
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_else_directive
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_else_directive
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_define
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_define
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_compilation_variable
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_compilation_variable
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_when_directive
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_when_directive
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_when_directive_expression
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_when_directive_expression
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_other_directive
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_other_directive
+
 
     .. automethod:: cast.analysers.mainframe.Extension.start_inline_off
 
@@ -1133,6 +1184,11 @@ normal case it return a list with the data resolvec, and when the data is ambigu
 all possible data.
 
 .. autoclass:: cast.analysers.mainframe.Identifier
+   :show-inheritance:
+   :members: 
+
+
+.. autoclass:: cast.analysers.mainframe.CompilationVariable
    :show-inheritance:
    :members: 
 

@@ -2201,6 +2201,78 @@ otherwise the code is expansed.</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="cast.analysers.mainframe.Extension.start_evaluate_directive">
+<tt class="descname">start_evaluate_directive</tt><big>(</big><em>evaluate</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_evaluate_directive" title="Permalink to this definition">¶</a></dt>
+<dd><p>&gt;&gt;EVALUATE directive statement.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>evaluate</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type evaluate:Node</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.3.0-alpha3.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.end_evaluate_directive">
+<tt class="descname">end_evaluate_directive</tt><big>(</big><em>evaluate</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.end_evaluate_directive" title="Permalink to this definition">¶</a></dt>
+<dd><p>&gt;&gt;EVALUATE directive statement.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>evaluate</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type evaluate:Node</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.3.0-alpha3.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.start_evaluate_directive_expression">
+<tt class="descname">start_evaluate_directive_expression</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_evaluate_directive_expression" title="Permalink to this definition">¶</a></dt>
+<dd><p>Child is the evaluated expression in the &gt;&gt;EVALUATE directive statement.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type node:Node</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.3.0-alpha3.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.end_evaluate_directive_expression">
+<tt class="descname">end_evaluate_directive_expression</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.end_evaluate_directive_expression" title="Permalink to this definition">¶</a></dt>
+<dd><p>Child is the evaluated expression in the &gt;&gt;EVALUATE directive statement.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type node:Node</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.3.0-alpha3.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
 <dt id="cast.analysers.mainframe.Extension.start_examine">
 <tt class="descname">start_examine</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_examine" title="Permalink to this definition">¶</a></dt>
 <dd><p>EXAMINE statement.</p>
@@ -2984,6 +3056,295 @@ otherwise the code is expansed.</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="cast.analysers.mainframe.Extension.start_if_directive">
+<tt class="descname">start_if_directive</tt><big>(</big><em>_if</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_if_directive" title="Permalink to this definition">¶</a></dt>
+<dd><p>&gt;&gt;IF directive statement.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>_if</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type goto:Node</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.3.0-alpha3.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.end_if_directive">
+<tt class="descname">end_if_directive</tt><big>(</big><em>_if</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.end_if_directive" title="Permalink to this definition">¶</a></dt>
+<dd><p>&gt;&gt;IF directive statement.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>_if</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type goto:Node</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.3.0-alpha3.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.start_then_directive">
+<tt class="descname">start_then_directive</tt><big>(</big><em>then</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_then_directive" title="Permalink to this definition">¶</a></dt>
+<dd><p>THEN part in a &gt;&gt;IF directive statement.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>then</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type goto:Node</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.3.0-alpha3.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.end_then_directive">
+<tt class="descname">end_then_directive</tt><big>(</big><em>then</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.end_then_directive" title="Permalink to this definition">¶</a></dt>
+<dd><p>THEN part in a &gt;&gt;IF directive statement.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>then</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type goto:Node</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.3.0-alpha3.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.start_else_directive">
+<tt class="descname">start_else_directive</tt><big>(</big><em>_else</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_else_directive" title="Permalink to this definition">¶</a></dt>
+<dd><p>&gt;&gt;ELSE part in a &gt;&gt;IF directive statement.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>_else</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type goto:Node</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.3.0-alpha3.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.end_else_directive">
+<tt class="descname">end_else_directive</tt><big>(</big><em>_else</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.end_else_directive" title="Permalink to this definition">¶</a></dt>
+<dd><p>&gt;&gt;ELSE part in a &gt;&gt;IF directive statement.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>_else</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type goto:Node</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.3.0-alpha3.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.start_define">
+<tt class="descname">start_define</tt><big>(</big><em>define</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_define" title="Permalink to this definition">¶</a></dt>
+<dd><p>&gt;&gt;DEFINE directive clause.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>default</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type default:Node</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.3.0-alpha3.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.end_define">
+<tt class="descname">end_define</tt><big>(</big><em>define</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.end_define" title="Permalink to this definition">¶</a></dt>
+<dd><p>&gt;&gt;DEFINE directive clause.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>default</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type default:Node</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.3.0-alpha3.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.start_compilation_variable">
+<tt class="descname">start_compilation_variable</tt><big>(</big><em>define</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_compilation_variable" title="Permalink to this definition">¶</a></dt>
+<dd><p>&gt;&gt;compilation variable definition.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>default</strong> (<a class="reference internal" href="#cast.analysers.mainframe.CompilationVariable" title="cast.analysers.mainframe.CompilationVariable"><em>cast.analysers.mainframe.CompilationVariable</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type default:CompilationVariable</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.3.0-alpha3.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.end_compilation_variable">
+<tt class="descname">end_compilation_variable</tt><big>(</big><em>define</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.end_compilation_variable" title="Permalink to this definition">¶</a></dt>
+<dd><p>&gt;&gt;compilation variable definition.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>default</strong> (<a class="reference internal" href="#cast.analysers.mainframe.CompilationVariable" title="cast.analysers.mainframe.CompilationVariable"><em>cast.analysers.mainframe.CompilationVariable</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type default:CompilationVariable</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.3.0-alpha3.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.start_when_directive">
+<tt class="descname">start_when_directive</tt><big>(</big><em>when</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_when_directive" title="Permalink to this definition">¶</a></dt>
+<dd><p>Begin of a &gt;&gt;WHEN directive clause.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>when</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type when:Node</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.3.0-alpha3.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.end_when_directive">
+<tt class="descname">end_when_directive</tt><big>(</big><em>when</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.end_when_directive" title="Permalink to this definition">¶</a></dt>
+<dd><p>End of a &gt;&gt;WHEN directive clause.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>when</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type when:Node</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.3.0-alpha3.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.start_when_directive_expression">
+<tt class="descname">start_when_directive_expression</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_when_directive_expression" title="Permalink to this definition">¶</a></dt>
+<dd><p>Child is the evaluated expression in a &gt;&gt;WHEN directive clause.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type node:Node</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.3.0-alpha3.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.end_when_directive_expression">
+<tt class="descname">end_when_directive_expression</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.end_when_directive_expression" title="Permalink to this definition">¶</a></dt>
+<dd><p>Child is the evaluated expression in a &gt;&gt;WHEN directive clause.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type node:Node</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.3.0-alpha3.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.start_other_directive">
+<tt class="descname">start_other_directive</tt><big>(</big><em>other</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_other_directive" title="Permalink to this definition">¶</a></dt>
+<dd><p>OTHER expression in a &gt;&gt;WHEN OTHER directive</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>other</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type other:cast.analyzer.mainframe.Node</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.3.0-alpha3.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.end_other_directive">
+<tt class="descname">end_other_directive</tt><big>(</big><em>other</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.end_other_directive" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>OTHER expression in a &gt;&gt;WHEN OTHER directive</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>other</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type other:cast.analyzer.mainframe.Node</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.3.0-alpha3.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
 <dt id="cast.analysers.mainframe.Extension.start_inline_off">
 <tt class="descname">start_inline_off</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_inline_off" title="Permalink to this definition">¶</a></dt>
 <dd><p>&gt;&gt;INLINE OFF compilation directive</p>
@@ -3533,7 +3894,7 @@ Children: identifiers</p>
 <dl class="method">
 <dt id="cast.analysers.mainframe.Extension.start_converting">
 <tt class="descname">start_converting</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_converting" title="Permalink to this definition">¶</a></dt>
-<dd><p>CONVERTING ... clause in an JSON GENERATE or JSON PARSE.</p>
+<dd><p>CONVERTING ... clause in an JSON GENERATE or JSON PARSE statement.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -3551,7 +3912,7 @@ Children: identifiers</p>
 <dl class="method">
 <dt id="cast.analysers.mainframe.Extension.end_converting">
 <tt class="descname">end_converting</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.end_converting" title="Permalink to this definition">¶</a></dt>
-<dd><p>CONVERTING ... clause in an JSON GENERATE or JSON PARSE.</p>
+<dd><p>CONVERTING ... clause in an JSON GENERATE or JSON PARSE statement.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -7724,6 +8085,61 @@ For example</p>
 ...
 MOVE &quot;FOO&quot; TO VAR.      &lt;-- the identifier
 </pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="cast.analysers.mainframe.CompilationVariable">
+<em class="property">class </em><tt class="descclassname">cast.analysers.mainframe.</tt><tt class="descname">CompilationVariable</tt><a class="headerlink" href="#cast.analysers.mainframe.CompilationVariable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#cast.analysers.mainframe.UnsavedObject" title="cast.analysers.mainframe.UnsavedObject"><tt class="xref py py-class docutils literal"><span class="pre">cast.analysers.mainframe.UnsavedObject</span></tt></a></p>
+<p>A COBOL Compilation Variable.</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.3.0-alpha3.</span></p>
+</div>
+<dl class="method">
+<dt id="cast.analysers.mainframe.CompilationVariable.is_data">
+<tt class="descname">is_data</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.CompilationVariable.is_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retuns False</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.3.0-alpha3.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.CompilationVariable.is_index">
+<tt class="descname">is_index</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.CompilationVariable.is_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retuns False</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.3.0-alpha3.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.CompilationVariable.is_file_description">
+<tt class="descname">is_file_description</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.CompilationVariable.is_file_description" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retuns False</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.3.0-alpha3.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.CompilationVariable.is_sort_description">
+<tt class="descname">is_sort_description</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.CompilationVariable.is_sort_description" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retuns False</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.3.0-alpha3.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.CompilationVariable.is_compilation_variable">
+<tt class="descname">is_compilation_variable</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.CompilationVariable.is_compilation_variable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retuns True</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.3.0-alpha3.</span></p>
 </div>
 </dd></dl>
 
