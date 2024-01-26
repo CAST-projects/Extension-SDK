@@ -177,6 +177,32 @@ Environment division
 
     .. automethod:: cast.analysers.mainframe.Extension.end_function_intrinsic
 
+    .. automethod:: cast.analysers.mainframe.Extension.start_java_shareable_off
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_java_shareable_off
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_java_shareable_on
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_java_shareable_on
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_java_callable
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_java_callable
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_data_31bit
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_data_31bit
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_data_64bit
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_data_64bit
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_function_user_defined
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_function_user_defined
+
+
+
 Data division
 ^^^^^^^^^^^^^
 
@@ -212,6 +238,11 @@ Data division
     .. automethod:: cast.analysers.mainframe.Extension.end_value
 
 
+    .. automethod:: cast.analysers.mainframe.Extension.start_value_through
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_value_through
+
+
     .. automethod:: cast.analysers.mainframe.Extension.start_occurs_depending
 
     .. automethod:: cast.analysers.mainframe.Extension.end_occurs_depending
@@ -245,6 +276,11 @@ Data division
     .. automethod:: cast.analysers.mainframe.Extension.start_index
 
     .. automethod:: cast.analysers.mainframe.Extension.end_index
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_when_set_to_false
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_when_set_to_false
 
 
 Procedure Division
@@ -725,6 +761,11 @@ Statements GOBACK - PERFORM
     .. automethod:: cast.analysers.mainframe.Extension.start_until
 
     .. automethod:: cast.analysers.mainframe.Extension.end_until
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_until_exit
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_until_exit
 
 
     .. automethod:: cast.analysers.mainframe.Extension.start_varying
