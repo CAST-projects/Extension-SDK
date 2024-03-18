@@ -346,6 +346,42 @@ It means that in a future version we can add intermediate nodes or nodes with ne
 </dd></dl>
 
 <dl class="method">
+<dt id="cast.analysers.mainframe.Extension.start_function_id">
+<tt class="descname">start_function_id</tt><big>(</big><em>function</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_function_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called on a node FUNCTION-ID.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>function</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>Function name is available through function.get_name()</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.3.5-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.end_function_id">
+<tt class="descname">end_function_id</tt><big>(</big><em>function</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.end_function_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called on a node FUNCTION-ID.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>function</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>Function name is available through function.get_name()</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.3.5-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
 <dt id="cast.analysers.mainframe.Extension.start_end_of_line_comment">
 <tt class="descname">start_end_of_line_comment</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_end_of_line_comment" title="Permalink to this definition">¶</a></dt>
 <dd><p>Comment at end of line 

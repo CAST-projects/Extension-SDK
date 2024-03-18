@@ -108,6 +108,10 @@ COBOL Program
 
     .. automethod:: cast.analysers.mainframe.Extension.end_program_id
 
+    .. automethod:: cast.analysers.mainframe.Extension.start_function_id
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_function_id
+
     .. automethod:: cast.analysers.mainframe.Extension.start_end_of_line_comment
 
     .. automethod:: cast.analysers.mainframe.Extension.end_end_of_line_comment
