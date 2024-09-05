@@ -348,8 +348,7 @@ It means that in a future version we can add intermediate nodes or nodes with ne
 <dl class="method">
 <dt id="cast.analysers.mainframe.Extension.start_function">
 <tt class="descname">start_function</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_function" title="Permalink to this definition">¶</a></dt>
-<dd><p>Called at the beginning of analysis of a user function.</p>
-<div class="versionadded">
+<dd><div class="versionadded">
 <p><span class="versionmodified">New in version com.castsoftware.mainframe.1.4.0-beta3.</span></p>
 </div>
 </dd></dl>
@@ -357,8 +356,7 @@ It means that in a future version we can add intermediate nodes or nodes with ne
 <dl class="method">
 <dt id="cast.analysers.mainframe.Extension.end_function">
 <tt class="descname">end_function</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.end_function" title="Permalink to this definition">¶</a></dt>
-<dd><p>Called at the end of analysis of a user function.</p>
-<div class="versionadded">
+<dd><div class="versionadded">
 <p><span class="versionmodified">New in version com.castsoftware.mainframe.1.4.0-beta3.</span></p>
 </div>
 </dd></dl>
@@ -1684,6 +1682,36 @@ index is of type <tt class="xref py py-class docutils literal"><span class="pre"
 <div class="versionadded">
 <p><span class="versionmodified">New in version com.castsoftware.mainframe.1.0.0-alpha2.</span></p>
 </div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.start_entry">
+<tt class="descname">start_entry</tt><big>(</big><em>entry</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_entry" title="Permalink to this definition">¶</a></dt>
+<dd><p>ENTRY ... statement.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>entry</strong> (<a class="reference internal" href="#cast.analysers.mainframe.SavedObject" title="cast.analysers.mainframe.SavedObject"><em>cast.analysers.mainframe.SavedObject</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type entry:SavedObject</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.end_entry">
+<tt class="descname">end_entry</tt><big>(</big><em>entry</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.end_entry" title="Permalink to this definition">¶</a></dt>
+<dd><p>ENTRY ... statement.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>entry</strong> (<a class="reference internal" href="#cast.analysers.mainframe.SavedObject" title="cast.analysers.mainframe.SavedObject"><em>cast.analysers.mainframe.SavedObject</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type entry:SavedObject</p>
 </dd></dl>
 
 </dd></dl>
@@ -3877,7 +3905,8 @@ Children: initialized identifiers, with_filler clause, to_value, replacing, to_d
 <dl class="method">
 <dt id="cast.analysers.mainframe.Extension.start_replacing">
 <tt class="descname">start_replacing</tt><big>(</big><em>replacing</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_replacing" title="Permalink to this definition">¶</a></dt>
-<dd><p>REPLACING ... BY ... clause in an INITIALIZE statement.</p>
+<dd><p>REPLACING ... BY ... clause in an INITIALIZE statement.
+REPLACING ... clause in an UNSTRING statement.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -3896,7 +3925,8 @@ Children: initialized identifiers, with_filler clause, to_value, replacing, to_d
 <dl class="method">
 <dt id="cast.analysers.mainframe.Extension.end_replacing">
 <tt class="descname">end_replacing</tt><big>(</big><em>replacing</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.end_replacing" title="Permalink to this definition">¶</a></dt>
-<dd><p>REPLACING ... BY ... clause in an INITIALIZE statement.</p>
+<dd><p>REPLACING ... BY ... clause in an INITIALIZE statement.
+REPLACING ... clause in an UNSTRING statement.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -6981,6 +7011,275 @@ Can be present in
 </table>
 </dd></dl>
 
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.start_for">
+<tt class="descname">start_for</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_for" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start a FOR clause.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>Can be present in 
+- UNSTRING
+- ...</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.4.5-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.end_for">
+<tt class="descname">end_for</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.end_for" title="Permalink to this definition">¶</a></dt>
+<dd><p>End a FOR clause.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>Can be present in 
+- UNSTRING
+- ...</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.4.5-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.start_delimited">
+<tt class="descname">start_delimited</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_delimited" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start a DELIMITED (BY) clause.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>Can be present in 
+- STRING
+- UNSTRING
+- ...</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.4.3-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.end_delimited">
+<tt class="descname">end_delimited</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.end_delimited" title="Permalink to this definition">¶</a></dt>
+<dd><p>End a DELIMITED (BY) clause.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>Can be present in 
+- STRING
+- UNSTRING
+- ...</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.4.3-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.start_delimiter">
+<tt class="descname">start_delimiter</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_delimiter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start a DELIMITER (IN) clause.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>Can be present in 
+- UNSTRING
+- ...</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.4.5-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.end_delimiter">
+<tt class="descname">end_delimiter</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.end_delimiter" title="Permalink to this definition">¶</a></dt>
+<dd><p>End a DELIMITER (IN) clause.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>Can be present in 
+- UNSTRING
+- ...</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.4.5-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.start_pointer">
+<tt class="descname">start_pointer</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_pointer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start a (WITH) POINTER clause.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>Can be present in 
+- STRING
+- UNSTRING
+- ...</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.4.3-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.end_pointer">
+<tt class="descname">end_pointer</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.end_pointer" title="Permalink to this definition">¶</a></dt>
+<dd><p>End a (WITH) POINTER clause.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>Can be present in 
+- STRING
+- UNSTRING
+- ...</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.4.3-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.start_tallying">
+<tt class="descname">start_tallying</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_tallying" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start a TALLYING (IN) clause.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>Can be present in 
+- UNSTRING
+- ...</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.4.5-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.end_tallying">
+<tt class="descname">end_tallying</tt><big>(</big><em>node</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.end_tallying" title="Permalink to this definition">¶</a></dt>
+<dd><p>End a TALLYING (IN) clause.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>Can be present in 
+- UNSTRING
+- ...</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.4.5-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.start_inspect_tallying">
+<tt class="descname">start_inspect_tallying</tt><big>(</big><em>inspect</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_inspect_tallying" title="Permalink to this definition">¶</a></dt>
+<dd><p>TALLYING clause in INSPECT statement.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>inspect</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type inspect:Node
+Children: identifiers
+.. versionadded:: com.castsoftware.mainframe.1.4.2-funcrel</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.end_inspect_tallying">
+<tt class="descname">end_inspect_tallying</tt><big>(</big><em>inspect</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.end_inspect_tallying" title="Permalink to this definition">¶</a></dt>
+<dd><p>TALLYING clause in INSPECT statement.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>inspect</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type inspect:Node
+.. versionadded:: com.castsoftware.mainframe.1.4.2-funcrel</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.start_search_varying">
+<tt class="descname">start_search_varying</tt><big>(</big><em>varying</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_search_varying" title="Permalink to this definition">¶</a></dt>
+<dd><p>VARYING clause in SEARCH statement.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>_search</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type varying:Node
+.. versionadded:: com.castsoftware.mainframe.1.4.5-funcrel</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.Extension.end_search_varying">
+<tt class="descname">end_search_varying</tt><big>(</big><em>varying</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.end_search_varying" title="Permalink to this definition">¶</a></dt>
+<dd><p>VARYING clause in SEARCH statement.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>_search</strong> (<a class="reference internal" href="#cast.analysers.mainframe.Node" title="cast.analysers.mainframe.Node"><em>cast.analysers.mainframe.Node</em></a>) &#8211; the node</td>
+</tr>
+</tbody>
+</table>
+<p>&#64;type varying:Node
+.. versionadded:: com.castsoftware.mainframe.1.4.5-funcrel</p>
+</dd></dl>
+
 </dd></dl>
 
 </div>
@@ -8410,7 +8709,7 @@ For example</p>
 
 <p>Variable identifier represent usage of a data inside the code. Those identifiers are resolved
 to the data declaration. When the data is unresolved, the resolution returns an empty list. In
-normal case it return a list with the data resolvec, and when the data is ambiguous, it returns
+normal case it return a list with the data resolved, and when the data is ambiguous, it returns
 all possible data.</p>
 <dl class="class">
 <dt id="cast.analysers.mainframe.Identifier">
@@ -8423,6 +8722,22 @@ all possible data.</p>
 </pre></div>
 </div>
 <dl class="method">
+<dt id="cast.analysers.mainframe.Identifier.get_value">
+<tt class="descname">get_value</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Identifier.get_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the list of possible values of data it points to.
+Generally, the value is the default value of data.
+In some case, the runtime value is calculated, for example Identifier in a CALL statement.
+The runtime value for Identifier in conditional expressions can be calculated
+when using activate_evaluation_in_conditional in start_analysis (may increase runtime significantly):
+def start_analysis(self):</p>
+<blockquote>
+<div>mainframe.activate_evaluation_in_conditional()</div></blockquote>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.4.4-funcrel.</span></p>
+</div>
+</dd></dl>
+
+<dl class="method">
 <dt id="cast.analysers.mainframe.Identifier.get_resolved_datas">
 <tt class="descname">get_resolved_datas</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Identifier.get_resolved_datas" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the list of data/index/fd/sd it points to, generally only one value.
@@ -8434,6 +8749,16 @@ MOVE &quot;FOO&quot; TO VAR.      &lt;-- the identifier
 </div>
 </dd></dl>
 
+</dd></dl>
+
+<dl class="function">
+<dt id="cast.analysers.mainframe.activate_evaluation_in_conditional">
+<tt class="descclassname">cast.analysers.mainframe.</tt><tt class="descname">activate_evaluation_in_conditional</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.activate_evaluation_in_conditional" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use Inference Engine to evaluate Identifier in conditional expression
+May increase runtime significantly</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.4.4-funcrel.</span></p>
+</div>
 </dd></dl>
 
 <dl class="class">

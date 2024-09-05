@@ -308,6 +308,10 @@ Procedure Division
 
     .. automethod:: cast.analysers.mainframe.Extension.end_declaratives_paragraph
 
+    .. automethod:: cast.analysers.mainframe.Extension.start_entry
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_entry
+
 
 Statements ACCEPT - FREE
 ^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1078,10 +1082,44 @@ Those events/nodes can be found in several statements.
     .. automethod:: cast.analysers.mainframe.Extension.end_not_on_size_error
 
 
-
     .. automethod:: cast.analysers.mainframe.Extension.start_procedure_name
 
     .. automethod:: cast.analysers.mainframe.Extension.end_procedure_name
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_for
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_for
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_delimited
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_delimited
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_delimiter
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_delimiter
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_pointer
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_pointer
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_tallying
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_tallying
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_inspect_tallying
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_inspect_tallying
+
+
+    .. automethod:: cast.analysers.mainframe.Extension.start_search_varying
+
+    .. automethod:: cast.analysers.mainframe.Extension.end_search_varying
 
 
 Expressions
@@ -1229,12 +1267,15 @@ The generic node
 
 Variable identifier represent usage of a data inside the code. Those identifiers are resolved 
 to the data declaration. When the data is unresolved, the resolution returns an empty list. In 
-normal case it return a list with the data resolvec, and when the data is ambiguous, it returns 
+normal case it return a list with the data resolved, and when the data is ambiguous, it returns 
 all possible data.
 
 .. autoclass:: cast.analysers.mainframe.Identifier
    :show-inheritance:
    :members: 
+
+
+.. autofunction:: cast.analysers.mainframe.activate_evaluation_in_conditional
 
 
 .. autoclass:: cast.analysers.mainframe.CompilationVariable

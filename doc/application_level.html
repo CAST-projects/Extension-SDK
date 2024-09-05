@@ -92,7 +92,10 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="">Running code after analyzers</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#implementing-an-application-level-extension">Implementing An application level extension</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#objects">Objects</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#accessing-objects">Accessing objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#accessing-objects">Accessing objects</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#object-classification">Object classification</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="#special-note-on-performances">Special note on performances</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#query-inside-loop">Query inside loop</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#do-not-use-application-search-objects-name-variable">Do not use application.search_objects(name=variable)</a></li>
@@ -318,6 +321,8 @@ This query can be refined using <a class="reference external" href="https://en.w
 <li><a class="reference internal" href="code_reference.html#cast.application.Object" title="cast.application.Object"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.Object</span></tt></a></li>
 <li><a class="reference internal" href="code_reference.html#cast.application.File" title="cast.application.File"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.File</span></tt></a></li>
 </ul>
+<div class="section" id="object-classification">
+<h4>Object classification<a class="headerlink" href="#object-classification" title="Permalink to this headline">¶</a></h4>
 <p>We provide a high level classification of Objects :</p>
 <ul class="simple">
 <li><a class="reference internal" href="code_reference.html#cast.application.Object.is_file" title="cast.application.Object.is_file"><tt class="xref py py-func docutils literal"><span class="pre">cast.application.Object.is_file()</span></tt></a></li>
@@ -334,6 +339,7 @@ This query can be refined using <a class="reference external" href="https://en.w
 <li><a class="reference internal" href="code_reference.html#cast.application.Object.is_dbms" title="cast.application.Object.is_dbms"><tt class="xref py py-func docutils literal"><span class="pre">cast.application.Object.is_dbms()</span></tt></a></li>
 </ul>
 </div>
+</div>
 <div class="section" id="special-note-on-performances">
 <span id="performance-notes"></span><h3>Special note on performances<a class="headerlink" href="#special-note-on-performances" title="Permalink to this headline">¶</a></h3>
 <p>Here is a non complete list of bad practices found in code :</p>
@@ -348,6 +354,17 @@ This query can be refined using <a class="reference external" href="https://en.w
 </pre></div>
 </div>
 <p>This will do a query inside a loop which is killer in term of performance.</p>
+<p>Note that the following variation to the code above is similarly a bad practice:</p>
+<div class="highlight-python"><div class="highlight"><pre>objects1 = application.objects()...
+objects2 = application.objects()...
+
+for something in objects1:
+
+    for otherthing in objects2:
+
+       # ...
+</pre></div>
+</div>
 <p>You probably should rewrite in the following form:</p>
 <div class="highlight-python"><div class="highlight"><pre>my_collection = {}
 
@@ -1191,6 +1208,15 @@ They can be directly used from inside the plugin by using :</p>
 <dd><p>Get the schema size in bytes.</p>
 </dd></dl>
 
+<dl class="method">
+<dt id="cast.application.managment.ManagmentBase.update_license_key">
+<tt class="descname">update_license_key</tt><big>(</big><em>license_key</em><big>)</big><a class="headerlink" href="#cast.application.managment.ManagmentBase.update_license_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>Change the license key</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.6.21.</span></p>
+</div>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="class">
@@ -1495,6 +1521,15 @@ For Universal Analyzer return a list of selected technologies (there may be seve
 <dt id="cast.application.KnowledgeBase.get_size">
 <tt class="descname">get_size</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.KnowledgeBase.get_size" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the schema size in bytes.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.KnowledgeBase.update_license_key">
+<tt class="descname">update_license_key</tt><big>(</big><em>license_key</em><big>)</big><a class="headerlink" href="#cast.application.KnowledgeBase.update_license_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>Change the license key</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.6.21.</span></p>
+</div>
 </dd></dl>
 
 </dd></dl>

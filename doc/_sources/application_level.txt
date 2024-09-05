@@ -112,6 +112,9 @@ Objects from the applications will all be of one of the classes :
 * :class:`cast.application.Object`
 * :class:`cast.application.File`
 
+Object classification
+#####################
+
 We provide a high level classification of Objects :
 
 * :func:`cast.application.Object.is_file`
@@ -148,6 +151,17 @@ Sample of bad practice::
 			# ...
 
 This will do a query inside a loop which is killer in term of performance.
+
+Note that the following variation to the code above is similarly a bad practice::
+
+   objects1 = application.objects()...
+   objects2 = application.objects()...
+   
+   for something in objects1:
+       
+       for otherthing in objects2:
+       
+          # ...
 
 You probably should rewrite in the following form::
 

@@ -10,6 +10,8 @@ An analyser level extension is a subclass of one of :
 * :class:`cast.analysers.dotnet.Extension`
 * :class:`cast.analysers.abap.Extension`
 * :class:`cast.analysers.ua.Extension`
+* :class:`cast.analysers.mainframe.Extension`
+
 
 Any number of extension can be registered in a plugin.::
 
