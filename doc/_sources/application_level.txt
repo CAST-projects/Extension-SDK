@@ -35,7 +35,7 @@ See :ref:`choosing-level` for choosing between the two levels
 Implementing An application level extension
 -------------------------------------------
 
-A plugin can be called at the end of analysis by implementing a subclass of :class:`cast.application.ApplicationLevelExtension` and overriding :func:`cast.application.ApplicationLevelExtension.end_application` 
+A plugin can be called at different moment at the application level, by implementing a subclass of :class:`cast.application.ApplicationLevelExtension` and overriding :func:`cast.application.ApplicationLevelExtension.end_application` 
 
 For example::
 
@@ -59,13 +59,18 @@ A plugin can contain any number of ApplicationLevelExtension, they all will be c
 
 .. autoclass:: cast.application.ApplicationLevelExtension
 
+   .. automethod:: cast.application.ApplicationLevelExtension.start_application
+
    .. automethod:: cast.application.ApplicationLevelExtension.end_application_create_objects
 
    .. automethod:: cast.application.ApplicationLevelExtension.end_application
 
+   .. automethod:: cast.application.ApplicationLevelExtension.after_module
 
-Those call backs have the application as context :class:`cast.application.Application`
+   .. automethod:: cast.application.ApplicationLevelExtension.after_snapshot
 
+Those call backs have the application as context :class:`cast.application.Application` when operating on the konwledge base 
+and :class:`cast.application.central.Application` when operating on the central base. 
 
 Objects
 -------

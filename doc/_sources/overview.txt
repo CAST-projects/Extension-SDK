@@ -35,7 +35,7 @@ Once deployed and activated its code will be called at some predefined **extensi
 
 The general idea behind those extension points is that plugins are called back at some key points of the analysis, and they are given the chance to do something at those points.
 
-Plugins' extensions are called :
+Plugins' extension points are called :
 
 * at the very start of analysis (for CAIP version above 8.3.0) 
 * for each J2EE, DotNet, UA execution unit :

@@ -223,7 +223,7 @@ Thus <strong>classical bad practices</strong> still occurs here :</p>
 </div>
 <div class="section" id="implementing-an-application-level-extension">
 <h2>Implementing An application level extension<a class="headerlink" href="#implementing-an-application-level-extension" title="Permalink to this headline">¶</a></h2>
-<p>A plugin can be called at the end of analysis by implementing a subclass of <a class="reference internal" href="#cast.application.ApplicationLevelExtension" title="cast.application.ApplicationLevelExtension"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.ApplicationLevelExtension</span></tt></a> and overriding <a class="reference internal" href="#cast.application.ApplicationLevelExtension.end_application" title="cast.application.ApplicationLevelExtension.end_application"><tt class="xref py py-func docutils literal"><span class="pre">cast.application.ApplicationLevelExtension.end_application()</span></tt></a></p>
+<p>A plugin can be called at different moment at the application level, by implementing a subclass of <a class="reference internal" href="#cast.application.ApplicationLevelExtension" title="cast.application.ApplicationLevelExtension"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.ApplicationLevelExtension</span></tt></a> and overriding <a class="reference internal" href="#cast.application.ApplicationLevelExtension.end_application" title="cast.application.ApplicationLevelExtension.end_application"><tt class="xref py py-func docutils literal"><span class="pre">cast.application.ApplicationLevelExtension.end_application()</span></tt></a></p>
 <p>For example:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">cast.application</span>
 <span class="kn">import</span> <span class="nn">logging</span>
@@ -254,6 +254,21 @@ launching.</p>
 </dl>
 </div></blockquote>
 <dl class="method">
+<dt id="cast.application.ApplicationLevelExtension.start_application">
+<tt class="descname">start_application</tt><big>(</big><em>application</em><big>)</big><a class="headerlink" href="#cast.application.ApplicationLevelExtension.start_application" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called before analysis.</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version CAIP: </span>8.3</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="cast.application.ApplicationLevelExtension.end_application_create_objects">
 <tt class="descname">end_application_create_objects</tt><big>(</big><em>application</em><big>)</big><a class="headerlink" href="#cast.application.ApplicationLevelExtension.end_application_create_objects" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called at the end of application&#8217;s analysis, the first pass to create new objects.</p>
@@ -280,9 +295,41 @@ launching.</p>
 </table>
 </dd></dl>
 
+<dl class="method">
+<dt id="cast.application.ApplicationLevelExtension.after_module">
+<tt class="descname">after_module</tt><big>(</big><em>application</em><big>)</big><a class="headerlink" href="#cast.application.ApplicationLevelExtension.after_module" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called after module content creation.</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version CAIP: </span>8.3</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+</tbody>
+</table>
 </dd></dl>
 
-<p>Those call backs have the application as context <a class="reference internal" href="code_reference.html#cast.application.Application" title="cast.application.Application"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.Application</span></tt></a></p>
+<dl class="method">
+<dt id="cast.application.ApplicationLevelExtension.after_snapshot">
+<tt class="descname">after_snapshot</tt><big>(</big><em>application</em><big>)</big><a class="headerlink" href="#cast.application.ApplicationLevelExtension.after_snapshot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called after module content creation.
+Gives you the central&#8217;s application.</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version CAIP: </span>8.3</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<p>Those call backs have the application as context <a class="reference internal" href="code_reference.html#cast.application.Application" title="cast.application.Application"><tt class="xref py py-class docutils literal"><span class="pre">cast.application.Application</span></tt></a> when operating on the konwledge base
+and <tt class="xref py py-class docutils literal"><span class="pre">cast.application.central.Application</span></tt> when operating on the central base.</p>
 </div>
 <div class="section" id="objects">
 <h2>Objects<a class="headerlink" href="#objects" title="Permalink to this headline">¶</a></h2>
@@ -905,18 +952,13 @@ This is the result of an analysis. &#8216;Almost&#8217; an analysis unit result.
 <p>Links can be created using :</p>
 <dl class="method">
 <dt id="cast.application.test.TestProject.add_link">
-<tt class="descclassname">TestProject.</tt><tt class="descname">add_link</tt><big>(</big><em>_type</em>, <em>caller</em>, <em>callee</em><big>)</big><a class="headerlink" href="#cast.application.test.TestProject.add_link" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create a new link.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>_type</strong> &#8211; cast.application.LinkType</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-class docutils literal"><span class="pre">TestLink</span></tt></td>
-</tr>
-</tbody>
-</table>
+<tt class="descclassname">TestProject.</tt><tt class="descname">add_link</tt><big>(</big><em>_type</em>, <em>caller</em>, <em>callee</em>, <em>prop=0</em><big>)</big><a class="headerlink" href="#cast.application.test.TestProject.add_link" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new link.
+:param _type: cast.application.LinkType
+:param caller: cast.application.test.TestObject
+:param callee: cast.application.test.TestObject
+:param prop: int
+:rtype: <tt class="xref py py-class docutils literal"><span class="pre">TestLink</span></tt></p>
 </dd></dl>
 
 <p>Properties can be added on object and link using :</p>
@@ -1474,6 +1516,18 @@ For Universal Analyzer return a list of selected technologies (there may be seve
 <dt id="cast.application.KnowledgeBase.update_cast_system_views">
 <tt class="descname">update_cast_system_views</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.application.KnowledgeBase.update_cast_system_views" title="Permalink to this definition">¶</a></dt>
 <dd><p>Updates the Cast System Views.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.application.KnowledgeBase.categorize_link">
+<tt class="descname">categorize_link</tt><big>(</big><em>caller_type_id</em>, <em>callee_type_id</em><big>)</big><a class="headerlink" href="#cast.application.KnowledgeBase.categorize_link" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determine if a link is a remote link or not.</p>
+<p>&#64;param caller_type_id: int numeric id of the caller type or name or type
+&#64;param callee_type_id: int numeric id of the callee type or name or type</p>
+<p>&#64;return: &#8216;remote&#8217; or &#8216;local&#8217;</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.6.24.</span></p>
+</div>
 </dd></dl>
 
 <dl class="method">

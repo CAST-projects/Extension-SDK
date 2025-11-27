@@ -2494,6 +2494,7 @@ otherwise the code is expansed.</p>
 </tr>
 </tbody>
 </table>
+<p>evaluate.get_name() will give the conditional block in EVALUATE statement</p>
 <p>&#64;type evaluate:Node</p>
 </dd></dl>
 
@@ -2907,8 +2908,8 @@ otherwise the code is expansed.</p>
 <tt class="descname">start_exec_sql</tt><big>(</big><em>exec</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_exec_sql" title="Permalink to this definition">¶</a></dt>
 <dd><p>EXEC SQL statement.</p>
 <p>exec.get_name() will give the content.
-:param cast.analysers.mainframe.Node exec: the node</p>
-<p>&#64;type exec:Node</p>
+:param cast.analysers.mainframe.ExecSQL exec: the node</p>
+<p>&#64;type exec:ExecSQL</p>
 </dd></dl>
 
 <dl class="method">
@@ -2916,8 +2917,8 @@ otherwise the code is expansed.</p>
 <tt class="descname">end_exec_sql</tt><big>(</big><em>exec</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.end_exec_sql" title="Permalink to this definition">¶</a></dt>
 <dd><p>EXEC SQL statement.</p>
 <p>exec.get_name() will give the content.
-:param cast.analysers.mainframe.Node exec: the node</p>
-<p>&#64;type exec:Node</p>
+:param cast.analysers.mainframe.ExecSQL exec: the node</p>
+<p>&#64;type exec:ExecSQL</p>
 </dd></dl>
 
 <dl class="method">
@@ -3379,6 +3380,7 @@ otherwise the code is expansed.</p>
 </tr>
 </tbody>
 </table>
+<p>_if.get_name() will give the conditional block in IF statement</p>
 <p>&#64;type goto:Node</p>
 </dd></dl>
 
@@ -3757,7 +3759,7 @@ otherwise the code is expansed.</p>
 <dl class="method">
 <dt id="cast.analysers.mainframe.Extension.start_then">
 <tt class="descname">start_then</tt><big>(</big><em>then</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.start_then" title="Permalink to this definition">¶</a></dt>
-<dd><p>THEN part in a IF statement.</p>
+<dd><p>THEN part in a IF or WHENEVER statement.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -3772,7 +3774,7 @@ otherwise the code is expansed.</p>
 <dl class="method">
 <dt id="cast.analysers.mainframe.Extension.end_then">
 <tt class="descname">end_then</tt><big>(</big><em>then</em><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Extension.end_then" title="Permalink to this definition">¶</a></dt>
-<dd><p>THEN part in a IF statement.</p>
+<dd><p>THEN part in a IF or WHENEVER statement.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -6255,6 +6257,7 @@ in an XML GENERATE statement.</p>
 </tr>
 </tbody>
 </table>
+<p>when.get_name() will give the conditional block in WHEN statement</p>
 <p>&#64;type when:Node</p>
 </dd></dl>
 
@@ -8749,6 +8752,13 @@ MOVE &quot;FOO&quot; TO VAR.      &lt;-- the identifier
 </div>
 </dd></dl>
 
+<dl class="method">
+<dt id="cast.analysers.mainframe.Identifier.get_resolved_objects">
+<tt class="descname">get_resolved_objects</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.Identifier.get_resolved_objects" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the list of resolved target objects.
+..versionadded:: com.castsoftware.mainframe.1.6.5-funcrel</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="function">
@@ -8756,9 +8766,6 @@ MOVE &quot;FOO&quot; TO VAR.      &lt;-- the identifier
 <tt class="descclassname">cast.analysers.mainframe.</tt><tt class="descname">activate_evaluation_in_conditional</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.activate_evaluation_in_conditional" title="Permalink to this definition">¶</a></dt>
 <dd><p>Use Inference Engine to evaluate Identifier in conditional expression
 May increase runtime significantly</p>
-<div class="versionadded">
-<p><span class="versionmodified">New in version com.castsoftware.mainframe.1.4.4-funcrel.</span></p>
-</div>
 </dd></dl>
 
 <dl class="class">
@@ -8867,6 +8874,21 @@ GO TO  PARA1.      &lt;-- the procedure name
 </table>
 </dd></dl>
 
+<dl class="method">
+<dt id="cast.analysers.mainframe.StringLiteral.get_saved_literal">
+<tt class="descname">get_saved_literal</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.StringLiteral.get_saved_literal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the list of corresponding saved literal object when the save data structure 
+and save cobol literal options are activated, generally only one value.
+..versionadded:: com.castsoftware.mainframe.1.5.0-beta2</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.StringLiteral.get_resolved_objects">
+<tt class="descname">get_resolved_objects</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.StringLiteral.get_resolved_objects" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the list of resolved target objects.
+..versionadded:: com.castsoftware.mainframe.1.6.5-funcrel</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="class">
@@ -8891,6 +8913,14 @@ GO TO  PARA1.      &lt;-- the procedure name
 </tr>
 </tbody>
 </table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.IntegerLiteral.get_saved_literal">
+<tt class="descname">get_saved_literal</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.IntegerLiteral.get_saved_literal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the list of corresponding saved literal object when the save data structure 
+and save cobol literal options are activated, generally only one value.
+..versionadded:: com.castsoftware.mainframe.1.5.0-beta2</p>
 </dd></dl>
 
 </dd></dl>
@@ -8919,6 +8949,14 @@ GO TO  PARA1.      &lt;-- the procedure name
 </table>
 </dd></dl>
 
+<dl class="method">
+<dt id="cast.analysers.mainframe.BooleanLiteral.get_saved_literal">
+<tt class="descname">get_saved_literal</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.BooleanLiteral.get_saved_literal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the list of corresponding saved literal object when the save data structure 
+and save cobol literal options are activated, generally only one value.
+..versionadded:: com.castsoftware.mainframe.1.5.0-beta2</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="class">
@@ -8943,6 +8981,14 @@ GO TO  PARA1.      &lt;-- the procedure name
 </tr>
 </tbody>
 </table>
+</dd></dl>
+
+<dl class="method">
+<dt id="cast.analysers.mainframe.RealLiteral.get_saved_literal">
+<tt class="descname">get_saved_literal</tt><big>(</big><big>)</big><a class="headerlink" href="#cast.analysers.mainframe.RealLiteral.get_saved_literal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the list of corresponding saved literal object when the save data structure 
+and save cobol literal options are activated, generally only one value.
+..versionadded:: com.castsoftware.mainframe.1.5.0-beta2</p>
 </dd></dl>
 
 </dd></dl>
